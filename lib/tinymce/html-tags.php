@@ -118,6 +118,17 @@ function generate_html_tags_is($value){
   htmlTags[6].before = '<?php echo $before; ?>';
   htmlTags[6].after = '<?php echo $after; ?>';
 
+  <?php //トグルボタン
+  //$date_id = date("YmdHis");
+  $before = '<div class="toggle-wrap"><input id="toggle-checkbox-COCOON_DATE_ID" type="checkbox"> <label class="toggle-button" for="toggle-checkbox-COCOON_DATE_ID">'.__( 'トグルボタン見出し', THEME_NAME ).'</label><div class="toggle-content">';
+  $after = '</div></div>';
+  ?>
+  htmlTags[7] = new Array();
+  htmlTags[7].title  = '<?php echo __( 'トグルボタン', THEME_NAME ); ?>';
+  htmlTags[7].tag = '<?php echo $before.__( 'トグル内容', THEME_NAME ).$after; ?>';
+  htmlTags[7].before = '<?php echo $before; ?>';
+  htmlTags[7].after = '<?php echo $after; ?>';
+
   <?php
 
   echo '</script>';

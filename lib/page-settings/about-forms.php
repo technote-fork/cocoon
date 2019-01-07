@@ -20,11 +20,18 @@
     $all .= __( 'サイト名：', THEME_NAME ).get_bloginfo('name').PHP_EOL;
     $all .= __( 'サイトURL：', THEME_NAME ).site_url().PHP_EOL;
     $all .= __( 'ホームURL：', THEME_NAME ).home_url().PHP_EOL;
-    $all .= __( 'コンテンツURL：', THEME_NAME ).str_replace(home_url(), '', content_url()).PHP_EOL;
-    $all .= __( 'インクルードURL：', THEME_NAME ).str_replace(home_url(), '', includes_url()).PHP_EOL;
-    $all .= __( 'テンプレートURL：', THEME_NAME ).str_replace(home_url(), '', get_template_directory_uri()).PHP_EOL;
-    $all .= __( 'スタイルシートURL：', THEME_NAME ).str_replace(home_url(), '', get_stylesheet_directory_uri()).PHP_EOL;
-    $all .= __( '使用スキンURL：', THEME_NAME ).str_replace(home_url(), '', get_skin_url()).PHP_EOL;
+    $all .= __( 'コンテンツURL：', THEME_NAME ).get_remove_home_url(content_url()).PHP_EOL;
+    $all .= __( 'インクルードURL：', THEME_NAME ).get_remove_home_url(includes_url()).PHP_EOL;
+    $all .= __( 'テンプレートURL：', THEME_NAME ).get_remove_home_url(get_template_directory_uri()).PHP_EOL;
+    $all .= __( 'スタイルシートURL：', THEME_NAME ).get_remove_home_url(get_stylesheet_directory_uri()).PHP_EOL;
+    //子テーマ
+    if (is_child_theme()) {
+      $all .= __( '子テーマスタイル：', THEME_NAME ).get_remove_home_url(get_stylesheet_directory_uri().'/style.css').PHP_EOL;
+    }
+    //スキン
+    if (get_skin_url()) {
+      $all .= __( 'スキン：', THEME_NAME ).get_remove_home_url(get_skin_url()).PHP_EOL;
+    }
     $ip = @$_SERVER['REMOTE_ADDR'];
     if ($ip) {
       //IP形式の場合は表示しない
@@ -91,17 +98,31 @@
       }
     }
 
-      //plugin.phpを読み込む
-      include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-      $plugins = get_plugins();
-      if (!empty($plugins)) {
-        $all .= __('利用中のプラグイン：').PHP_EOL;
-        foreach ($plugins as $path => $plugin) {
-          if (is_plugin_active( $path )) {
-            $all .= $plugin['Name'];
-            $all .= ' '.$plugin['Version'].PHP_EOL;
-          }
+    //Cocoon設定
+    $all .= __( 'Gutenberg：', THEME_NAME ).intval(is_gutenberg_editor_enable()).PHP_EOL;
+    $all .= __( 'ホームイメージ：', THEME_NAME ).get_remove_home_url(get_ogp_home_image_url()).PHP_EOL;
+    $all .= $sep;
+
+    //高速化設定
+    $all .= __( 'ブラウザキャッシュ有効化：', THEME_NAME ).intval(is_browser_cache_enable()).PHP_EOL;
+    $all .= __( 'HTML縮小化：', THEME_NAME ).intval(is_html_minify_enable()).PHP_EOL;
+    $all .= __( 'CSS縮小化：', THEME_NAME ).intval(is_css_minify_enable()).PHP_EOL;
+    $all .= __( 'JavaScript縮小化：', THEME_NAME ).intval(is_js_minify_enable()).PHP_EOL;
+    $all .= __( 'Lazy Load：', THEME_NAME ).intval(is_lazy_load_enable()).PHP_EOL;
+    $all .= __( 'WEBフォントLazy Load：', THEME_NAME ).intval(is_web_font_lazy_load_enable()).PHP_EOL;
+    $all .= $sep;
+
+    //plugin.phpを読み込む
+    include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+    $plugins = get_plugins();
+    if (!empty($plugins)) {
+      $all .= __('利用中のプラグイン：').PHP_EOL;
+      foreach ($plugins as $path => $plugin) {
+        if (is_plugin_active( $path )) {
+          $all .= $plugin['Name'];
+          $all .= ' '.$plugin['Version'].PHP_EOL;
         }
+      }
       $all .= $sep;
     }
 
