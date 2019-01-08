@@ -149,28 +149,6 @@ span.btn-wrap{
 //   padding: 0;
 // }
 
-.wp-block,
-.edit-post-text-editor {
-  padding: 0;
-  margin: 0 auto;
-  max-width: 800px;
-}
-
-
-@media screen and (max-width: 600px){
-  div.edit-post-visual-editor .editor-block-list__block .editor-block-list__block-edit {
-    margin-left: 10%;
-    margin-right: 10%;
-  }
-  div.editor-block-list__block::before,
-  div.editor-block-list__layout .editor-block-list__block .editor-block-list__block-edit::before {
-    left: 0;
-    right: 0;
-  }
-  div.freeform-toolbar{
-    margin: 0;
-  }
-}
 // @media screen and (min-width: 960px){
 //   div.edit-post-text-editor {
 //     // padding-left: 10%;
@@ -179,7 +157,17 @@ span.btn-wrap{
 //   }
 // }
 
-div.mce-content-body{
-  line-height: inherit;
+//wpForoの入力フォームをiPhoneでみた場合横揺れする場合の対処
+.postbody.main{
+  width: auto;
 }
 
+.button-wrap-msg,
+.box-block-msg{
+  font-size: 10px;
+  text-align: center;
+}
+
+// .btn-wrap > a{
+//   pointer-events: none;
+// }

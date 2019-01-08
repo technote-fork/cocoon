@@ -40,8 +40,20 @@
   color: blue;
 }
 
+/*太字で青色*/
+.bold-blue{
+  font-weight:bold;
+  color: blue;
+}
+
 /*緑色*/
 .green{
+  color: green;
+}
+
+/*太字で緑色*/
+.bold-green{
+  font-weight:bold;
   color: green;
 }
 
@@ -210,11 +222,16 @@ $marker_u_blue: #a8dafb;
 }
 
 .block-box{
-  >p:first-child{
+  p:first-child{
     margin-top: 0;
   }
-  >p:last-child{
+  p:last-child{
     margin-bottom: 0;
+  }
+
+  ol,
+  ul{
+    margin: 0;
   }
 }
 
@@ -546,7 +563,7 @@ $bb_green: #3eb370;
   margin: 3em 0;
 }
 
-.search-form div{
+.search-form > div{
   border: 1px solid #555;
   border-radius: 2px;
   padding: 5px;
@@ -604,6 +621,7 @@ $bb_green: #3eb370;
 }
 
 .btn-wrap{
+    min-height: 2em;
   img[width="1"]{
     position: absolute;
     bottom: 0;
@@ -858,3 +876,21 @@ $bb_green: #3eb370;
 .bct-official .blogcard::before{
   content:$bct-official;
 }
+
+///////////////////////////////////////////
+// ボタンブロック
+///////////////////////////////////////////
+.button-block{
+  float: none;
+  margin: 6px 0;
+  &.alignleft{
+    text-align: left;
+  }
+  &.aligncenter{
+    text-align: center;
+  }
+  &.alignright{
+    text-align: right;
+  }
+}
+
