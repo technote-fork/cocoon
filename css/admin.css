@@ -131,11 +131,13 @@ body.wp-admin { color: #444; }
 ** 最近のコメントウィジェット
 ************************************/ /************************************
 ** フォーローボタウィジェット
-************************************/ /*拡張クラスを追加するスタイルシート*/ /*太字*/ /*赤色*/ /*太字で赤色*/ /*青色*/ /*緑色*/ /*赤のアンダーライン*/ /*マーカーの黄色のような色*/ /*下半分のマーカー色（km）*/ /*打ち消し線*/ /*キーボードキーのスタイル*/ /*ブートストラップのインフォメーションライクな囲みが表示される*/ /*サクセスメッセージ*/ /*インフォメッセージ*/ /*注意メッセージ*/ /*警告メッセージ*/ /*セカンダリー*/ /*ライト*/ /*ダーク*/ /*******************************
+************************************/ /*拡張クラスを追加するスタイルシート*/ /*太字*/ /*赤色*/ /*太字で赤色*/ /*青色*/ /*太字で青色*/ /*緑色*/ /*太字で緑色*/ /*赤のアンダーライン*/ /*マーカーの黄色のような色*/ /*下半分のマーカー色（km）*/ /*打ち消し線*/ /*キーボードキーのスタイル*/ /*ブートストラップのインフォメーションライクな囲みが表示される*/ /*サクセスメッセージ*/ /*インフォメッセージ*/ /*注意メッセージ*/ /*警告メッセージ*/ /*セカンダリー*/ /*ライト*/ /*ダーク*/ /*******************************
 * 補足説明
 ********************************/ /*******************************
 * 続きはWEBで的な検索ボックス
 ********************************/ /************************************
+** トグル表示ボタン
+************************************/ /************************************
 ** SNSフォローボタン
 ************************************/ /************************************
 ** 関連記事
@@ -249,11 +251,13 @@ body.wp-admin { color: #444; }
 ** 最近のコメントウィジェット
 ************************************/ /************************************
 ** フォーローボタウィジェット
-************************************/ /*拡張クラスを追加するスタイルシート*/ /*太字*/ /*赤色*/ /*太字で赤色*/ /*青色*/ /*緑色*/ /*赤のアンダーライン*/ /*マーカーの黄色のような色*/ /*下半分のマーカー色（km）*/ /*打ち消し線*/ /*キーボードキーのスタイル*/ /*ブートストラップのインフォメーションライクな囲みが表示される*/ /*サクセスメッセージ*/ /*インフォメッセージ*/ /*注意メッセージ*/ /*警告メッセージ*/ /*セカンダリー*/ /*ライト*/ /*ダーク*/ /*******************************
+************************************/ /*拡張クラスを追加するスタイルシート*/ /*太字*/ /*赤色*/ /*太字で赤色*/ /*青色*/ /*太字で青色*/ /*緑色*/ /*太字で緑色*/ /*赤のアンダーライン*/ /*マーカーの黄色のような色*/ /*下半分のマーカー色（km）*/ /*打ち消し線*/ /*キーボードキーのスタイル*/ /*ブートストラップのインフォメーションライクな囲みが表示される*/ /*サクセスメッセージ*/ /*インフォメッセージ*/ /*注意メッセージ*/ /*警告メッセージ*/ /*セカンダリー*/ /*ライト*/ /*ダーク*/ /*******************************
 * 補足説明
 ********************************/ /*******************************
 * 続きはWEBで的な検索ボックス
 ********************************/ /************************************
+** トグル表示ボタン
+************************************/ /************************************
 ** SNSフォローボタン
 ************************************/ /************************************
 ** 関連記事
@@ -302,7 +306,7 @@ body.wp-admin { color: #444; }
 ************************************/ /* Slider */ /* Mobile Menu Core Style
 */ /* IE6/7 support */ /* User Default Style Change the following styles to modify the appearance of the menu.
 */ /* Button */ /* Button Text */ /* Button Lines */ /*bbPressのスタイルを整える*/ /** Cocoon WordPress Theme @author: yhira @link: https://wp-cocoon.com/ @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later  Cocoon WordPress Theme incorporates code from "Youtube SpeedLoad" WordPress Plugin, Copyright 2017 Alexufo[http://habrahabr.ru/users/alexufo/]
-"Youtube SpeedLoad" WordPress Plugin is distributed under the terms of the GNU GPL v2 */ /* フォントの種類 */ font-family: "游ゴシック体", "Yu Gothic", "Hiragino Kaku Gothic Pro", "Meiryo", sans-serif; /* フォントのサイズ */ font-size: 18px; /* フォントの色 */ color: #333; /* カーニングの設定 */ /* 行間の設定 */ line-height: 1.75; margin: 0; overflow-wrap: break-word; overflow: auto; resize: both; background-color: #fafbfc; padding: 10px; border: 2px solid #ddd; }
+"Youtube SpeedLoad" WordPress Plugin is distributed under the terms of the GNU GPL v2 */ /* フォントの種類 */ font-family: "游ゴシック体", "Yu Gothic", "Hiragino Kaku Gothic Pro", "Meiryo", sans-serif; /* フォントのサイズ */ font-size: 18px; /* フォントの色 */ color: #333; /* カーニングの設定 */ /* 行間の設定 */ line-height: 1.8; margin: 0; overflow-wrap: break-word; overflow: auto; resize: both; background-color: #fafbfc; padding: 10px; border: 2px solid #ddd; }
 .admin-settings .demo .fz-12px { font-size: 12px; }
 .admin-settings .demo .fz-13px { font-size: 13px; }
 .admin-settings .demo .fz-14px { font-size: 14px; }
@@ -341,7 +345,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .ff-sawarabi-mincho { font-family: "Sawarabi Mincho" ,sans-serif; }
 .admin-settings .demo div.sub-caption { font-family: Tunga, "Trebuchet MS", Tahoma, Verdana, "Segoe UI", "游ゴシック体", "Yu Gothic", "Hiragino Kaku Gothic Pro", "Meiryo", sans-serif; font-weight: 400; font-size: 0.75em; opacity: 0.4; }
 .admin-settings .demo * { padding: 0; margin: 0; box-sizing: border-box; word-wrap: break-word; overflow-wrap: break-word; }
-.admin-settings .demo body { /* フォントの種類 */ font-family: "游ゴシック体", "Yu Gothic", "Hiragino Kaku Gothic Pro", "Meiryo", sans-serif; /* フォントのサイズ */ font-size: 18px; /* フォントの色 */ color: #333; /* カーニングの設定 */ /* 行間の設定 */ line-height: 1.75; margin: 0; overflow-wrap: break-word; /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */ background-attachment: fixed; }
+.admin-settings .demo body { /* フォントの種類 */ font-family: "游ゴシック体", "Yu Gothic", "Hiragino Kaku Gothic Pro", "Meiryo", sans-serif; /* フォントのサイズ */ font-size: 18px; /* フォントの色 */ color: #333; /* カーニングの設定 */ /* 行間の設定 */ line-height: 1.8; margin: 0; overflow-wrap: break-word; /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */ background-attachment: fixed; }
 .admin-settings .demo a { color: #1967d2; }
 .admin-settings .demo a:hover { color: #e53900; }
 .admin-settings .demo ol, .admin-settings .demo ul { margin: 1em 0; padding-left: 40px; }
@@ -356,9 +360,10 @@ body.wp-admin { color: #444; }
 @media all and (-ms-high-contrast: none) { .admin-settings .demo .main-scroll { position: static; top: auto; } }
 .admin-settings .demo .publisher { display: none; }
 .admin-settings .demo #wpadminbar { font-size: 13px; }
-.admin-settings .demo html body .aligncenter { display: block; margin-right: auto; margin-left: auto; }
-.admin-settings .demo html body .alignleft { float: left; margin-right: 10px; margin-bottom: 10px; }
-.admin-settings .demo html body .alignright { float: right; margin-left: 10px; margin-bottom: 10px; }
+.admin-settings .demo .wp-caption { margin: 1em 0; }
+.admin-settings .demo .aligncenter { display: block; margin-right: auto; margin-left: auto; }
+.admin-settings .demo .alignleft { float: left; margin-right: 10px; margin-bottom: 10px; }
+.admin-settings .demo .alignright { float: right; margin-left: 10px; margin-bottom: 10px; }
 .admin-settings .demo .wp-caption { padding-top: 4px; border: 1px solid #ddd; border-radius: 3px; background-color: #f3f4f5; text-align: center; max-width: 100%; }
 .admin-settings .demo .wp-caption-text, .admin-settings .demo .gallery-caption { font-size: 80%; }
 .admin-settings .demo .wp-caption img { margin: 0; padding: 0; border: 0 none; }
@@ -565,7 +570,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .tag-link, .admin-settings .demo .comment-reply-link { color: #333; text-decoration: none; display: inline-block; margin-right: 5px; padding: 1px 5px; font-size: 12px; border: 1px solid #999; border-radius: 2px; word-break: break-all; }
 .admin-settings .demo .tag-link::before, .admin-settings .demo .comment-reply-link::before { font-family: FontAwesome; content: ""; padding-right: 3px; }
 .admin-settings .demo .tag-link:hover, .admin-settings .demo .comment-reply-link:hover { background-color: #f5f8fa; transition: all 0.5s ease; color: #333; }
-.admin-settings .demo p { margin: 1em 0; }
+.admin-settings .demo p { margin: 1.2em 0; }
 .admin-settings .demo table { margin-bottom: 20px; max-width: 100%; width: 100%; border-collapse: collapse; border-spacing: 0; }
 .admin-settings .demo table th { background-color: #f3f4f5; }
 .admin-settings .demo table tr:nth-of-type(2n+1) { background-color: #fafbfc; }
@@ -580,7 +585,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .article ul li, .admin-settings .demo .article ol li { margin: 0.2em; }
 .admin-settings .demo .article ul ul, .admin-settings .demo .article ul ol, .admin-settings .demo .article ol ul, .admin-settings .demo .article ol ol { margin: 0; }
 .admin-settings .demo .article h1, .admin-settings .demo .article h2, .admin-settings .demo .article h3, .admin-settings .demo .article h4, .admin-settings .demo .article h5, .admin-settings .demo .article h6 { line-height: 1.25; font-weight: bold; }
-.admin-settings .demo .article h2, .admin-settings .demo .article h3, .admin-settings .demo .article h4, .admin-settings .demo .article h5, .admin-settings .demo .article h6 { margin: 2.2em 0 1em; }
+.admin-settings .demo .article h2, .admin-settings .demo .article h3, .admin-settings .demo .article h4, .admin-settings .demo .article h5, .admin-settings .demo .article h6 { margin: 2.4em 0 1em; }
 .admin-settings .demo .article h4, .admin-settings .demo .article h5, .admin-settings .demo .article h6 { font-size: 20px; padding: 6px 10px; }
 .admin-settings .demo .article h2 { font-size: 24px; padding: 25px; background-color: #f3f4f5; }
 .admin-settings .demo .article h3 { border-left: 6px solid #777; border-right: 1px solid #ccc; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; font-size: 22px; padding: 6px 20px; }
@@ -599,7 +604,6 @@ body.wp-admin { color: #444; }
 .admin-settings .demo span.external-icon, .admin-settings .demo span.internal-icon { margin-left: 3px; font-size: 0.8em; }
 .admin-settings .demo .login-user-only { text-align: center; padding: 2em; background-color: #fafbfc; border: 1px solid #ccc; margin: 1em 0; }
 .admin-settings .demo .no-post-date .post-date, .admin-settings .demo .no-post-update .post-update, .admin-settings .demo .no-post-author .author-info { display: none; }
-.admin-settings .demo .wp-caption { margin: 1em 0; }
 .admin-settings .demo .eye-catch-wrap { display: flex; }
 .admin-settings .demo .eye-catch { position: relative; margin-bottom: .6em; max-width: 100%; }
 .admin-settings .demo .eye-catch .cat-label { position: absolute; right: auto; top: 0.4em; bottom: auto; left: 0.4em; font-size: 14px; padding: 4px 8px; opacity: 0.9; border: 1px solid #eee; }
@@ -702,6 +706,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .widget-entry-cards figure { width: 120px; }
 .admin-settings .demo .widget-entry-cards .widget-entry-card-content { margin-left: 124px; }
 .admin-settings .demo .widget-entry-cards .widget-entry-card-pv { margin-left: 5px; font-style: italic; font-size: 0.8em; }
+.admin-settings .demo .widget-entry-cards .cat-label { display: none; }
 .admin-settings .demo .widget-entry-cards.not-default .a-wrap { max-width: 400px; }
 .admin-settings .demo .widget-entry-cards.not-default .e-card { font-size: 18px; }
 .admin-settings .demo .widget-entry-cards.not-default figure { float: none; width: 100%; }
@@ -746,7 +751,9 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .red { color: #E50202; }
 .admin-settings .demo .bold-red { font-weight: bold; color: #E50202; }
 .admin-settings .demo .blue { color: blue; }
+.admin-settings .demo .bold-blue { font-weight: bold; color: blue; }
 .admin-settings .demo .green { color: green; }
+.admin-settings .demo .bold-green { font-weight: bold; color: green; }
 .admin-settings .demo .red-under { border-bottom: 2px solid red; }
 .admin-settings .demo .marker { background-color: #ff9; }
 .admin-settings .demo .marker-red { background-color: #ffd0d1; }
@@ -765,8 +772,9 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .light-box { color: #818182; background-color: #fefefe; border-color: #fdfdfe; padding: 15px; border-radius: 4px; margin-bottom: 20px; }
 .admin-settings .demo .dark-box { color: #1b1e21; background-color: #d6d8d9; border-color: #c6c8ca; padding: 15px; border-radius: 4px; margin-bottom: 20px; }
 .admin-settings .demo .information-box, .admin-settings .demo .question-box, .admin-settings .demo .alert-box, .admin-settings .demo .information, .admin-settings .demo .question, .admin-settings .demo .alert, .admin-settings .demo .memo-box, .admin-settings .demo .comment-box, .admin-settings .demo .common-icon-box { padding: 20px 20px 20px 72px; border-radius: 4px; position: relative; display: block; margin-top: 1em; margin-bottom: 1em; }
-.admin-settings .demo .block-box > p:first-child { margin-top: 0; }
-.admin-settings .demo .block-box > p:last-child { margin-bottom: 0; }
+.admin-settings .demo .block-box p:first-child { margin-top: 0; }
+.admin-settings .demo .block-box p:last-child { margin-bottom: 0; }
+.admin-settings .demo .block-box ol, .admin-settings .demo .block-box ul { margin: 0; }
 .admin-settings .demo .information-box, .admin-settings .demo .information { background: #f3fafe; border: 1px solid #bde4fc; }
 .admin-settings .demo .question-box, .admin-settings .demo .question { background: #fff7cc; border: 1px solid #ffe766; }
 .admin-settings .demo .alert-box, .admin-settings .demo .alert { background: #fdf2f2; border: 1px solid #f6b9b9; }
@@ -826,7 +834,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .bb-bad::before { content: "\f165  BAD"; }
 .admin-settings .demo .bb-profile::before { content: "\f007  PROFILE"; }
 .admin-settings .demo .search-form { margin: 3em 0; }
-.admin-settings .demo .search-form div { border: 1px solid #555; border-radius: 2px; padding: 5px; margin-left: 10px; display: inline-block; }
+.admin-settings .demo .search-form > div { border: 1px solid #555; border-radius: 2px; padding: 5px; margin-left: 10px; display: inline-block; }
 .admin-settings .demo .search-form div.sform { min-width: 280px; background-color: #fff; }
 .admin-settings .demo .search-form div.sbtn { background-color: #1155EE; color: #fff; padding-left: 20px; padding-right: 30px; position: absolute; }
 .admin-settings .demo .search-form div.sbtn:before { content: "\f002"; font-family: FontAwesome; margin-right: 7px; }
@@ -835,14 +843,15 @@ body.wp-admin { color: #444; }
   .admin-settings .demo .search-form div.sform { min-width: 180px; }
   .admin-settings .demo .search-form div.sbtn { padding-left: 5px; padding-right: 10px; }
   .admin-settings .demo .search-form div.sbtn:after { font-size: 20px; margin-left: -10px; } }
+.admin-settings .demo .btn-wrap { min-height: 2em; }
 .admin-settings .demo .btn-wrap img[width="1"] { position: absolute; bottom: 0; right: 0; }
 .admin-settings .demo .btn, .admin-settings .demo .ranking-item-link-buttons a, .admin-settings .demo .btn-wrap > a, .admin-settings .demo .wp-block-freeform .btn-wrap > a { color: #fff; font-weight: bold; border-radius: 4px; display: inline-block; cursor: pointer; line-height: normal; padding: 10px 16px; text-decoration: none; text-align: center; font-size: 14px; border: 2px solid transparent; position: relative; }
 .admin-settings .demo .btn amp-img, .admin-settings .demo .ranking-item-link-buttons a amp-img, .admin-settings .demo .btn-wrap > a amp-img, .admin-settings .demo .wp-block-freeform .btn-wrap > a amp-img { position: absolute; }
 .admin-settings .demo .btn:before, .admin-settings .demo .ranking-item-link-buttons a:before, .admin-settings .demo .btn:after, .admin-settings .demo .ranking-item-link-buttons a:after, .admin-settings .demo .btn-wrap > a:before, .admin-settings .demo .btn-wrap > a:after { font-family: FontAwesome; margin-right: 12px; }
 .admin-settings .demo #container .btn:hover, .admin-settings .demo #container .ranking-item-link-buttons a:hover, .admin-settings .demo .ranking-item-link-buttons #container a:hover, .admin-settings .demo #container .btn-wrap > a:hover { color: #333; background-color: #fff; border: 2px solid #000; transition: all 0.5s ease; }
 .admin-settings .demo .btn-m, .admin-settings .demo .btn-wrap.btn-wrap-m > a { padding: 14px 45px; font-size: 16px; }
-.admin-settings .demo .btn-l, .admin-settings .demo .ranking-item-link-buttons a, .admin-settings .demo .btn-wrap.btn-wrap-l > a { padding: 20px 30px; font-size: 18px; display: block; margin: 1em; }
-.admin-settings .demo .btn-l::after, .admin-settings .demo .ranking-item-link-buttons a::after, .admin-settings .demo .btn-wrap.btn-wrap-l > a::after { content: "\f105"; position: absolute; right: 0; font-size: 30px; margin-top: -0.15em; }
+.admin-settings .demo .btn-l, .admin-settings .demo .ranking-item-link-buttons a, .admin-settings .demo .btn-wrap.btn-wrap-l > a { padding: 20px 30px; font-size: 18px; margin: 1em; display: flex; justify-content: center; align-items: center; }
+.admin-settings .demo .btn-l::after, .admin-settings .demo .ranking-item-link-buttons a::after, .admin-settings .demo .btn-wrap.btn-wrap-l > a::after { content: "\f105"; position: absolute; right: 0; font-size: 30px; }
 .admin-settings .demo .btn-white, .admin-settings .demo .btn-wrap.btn-wrap-white > a { color: #333; background-color: #fff; }
 .admin-settings .demo #container .btn-white:hover, .admin-settings .demo #container .btn-wrap.btn-wrap-white > a:hover { color: #333; }
 .admin-settings .demo .btn-red, .admin-settings .demo .ranking-item-link a, .admin-settings .demo .btn-wrap.btn-wrap-red > a { background-color: #f44336; }
@@ -898,6 +907,10 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .bct-together .blogcard::before { content: " あわせて読みたい"; }
 .admin-settings .demo .bct-detail .blogcard::before { content: " 詳細はこちら"; }
 .admin-settings .demo .bct-official .blogcard::before { content: " 公式サイト"; }
+.admin-settings .demo .button-block { float: none; margin: 6px 0; }
+.admin-settings .demo .button-block.alignleft { text-align: left; }
+.admin-settings .demo .button-block.aligncenter { text-align: center; }
+.admin-settings .demo .button-block.alignright { text-align: right; }
 .admin-settings .demo .column-wrap { display: flex; position: relative; margin: 1em 0; }
 .admin-settings .demo .column-wrap .column-wrap { margin: 0; }
 .admin-settings .demo .column-wrap .column-left { padding-left: 0; }
@@ -912,6 +925,28 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .column-2-4-1-3 .column-right { width: 75%; }
 .admin-settings .demo .column-2-4-3-1 .column-left { width: 75%; }
 .admin-settings .demo .column-2-4-3-1 .column-right { width: 25%; }
+.admin-settings .demo .toggle-wrap { margin: 1.2em 0; position: relative; }
+.admin-settings .demo .toggle-wrap > p { display: none; }
+.admin-settings .demo .toggle-button { display: block; cursor: pointer; padding: 3px 10px; background-color: #f3f4f5; border: 1px solid #ccc; text-align: center; border-radius: 4px; position: relative; margin: 0; }
+.admin-settings .demo .toggle-button::before { content: '\f067'; font-family: FontAwesome; margin-right: 0.4em; font-size: 0.8em; color: #999; }
+.admin-settings .demo .toggle-button:hover { opacity: 0.7; }
+.admin-settings .demo .toggle-checkbox { display: none; }
+.admin-settings .demo .toggle-content { visibility: hidden; opacity: 0; padding: 0 1em; height: 0; transition: all 0.5s ease; }
+.admin-settings .demo .toggle-checkbox:checked ~ .toggle-button { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+.admin-settings .demo .toggle-checkbox:checked ~ .toggle-button::before { content: '\f068'; }
+.admin-settings .demo .toggle-checkbox:checked ~ .toggle-content { visibility: visible; opacity: 1; height: 100%; transition: all 0.5s ease; padding: 1em; border: 1px solid #ccc; border-top-width: 0; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; }
+.admin-settings .demo .tb-yellow .toggle-button { border: 1px solid #fc9f4d; background: #fc9f4d; color: #fff; }
+.admin-settings .demo .tb-yellow .toggle-button::before { color: #ccc; }
+.admin-settings .demo .tb-yellow .toggle-checkbox:checked ~ .toggle-content { border-color: #fc9f4d; }
+.admin-settings .demo .tb-red .toggle-button { border: 1px solid #d05a6e; background: #d05a6e; color: #fff; }
+.admin-settings .demo .tb-red .toggle-button::before { color: #ccc; }
+.admin-settings .demo .tb-red .toggle-checkbox:checked ~ .toggle-content { border-color: #d05a6e; }
+.admin-settings .demo .tb-blue .toggle-button { border: 1px solid #2ea9df; background: #2ea9df; color: #fff; }
+.admin-settings .demo .tb-blue .toggle-button::before { color: #ccc; }
+.admin-settings .demo .tb-blue .toggle-checkbox:checked ~ .toggle-content { border-color: #2ea9df; }
+.admin-settings .demo .tb-green .toggle-button { border: 1px solid #3eb370; background: #3eb370; color: #fff; }
+.admin-settings .demo .tb-green .toggle-button::before { color: #ccc; }
+.admin-settings .demo .tb-green .toggle-checkbox:checked ~ .toggle-content { border-color: #3eb370; }
 .admin-settings .demo .sns-follow-buttons a { width: 100%; margin-right: 8px; margin-bottom: 8px; font-size: 30px; display: flex; align-items: center; align-content: center; justify-content: center; position: relative; }
 .admin-settings .demo .sns-follow-buttons a:last-child { margin-right: 0; }
 .admin-settings .demo .sns-follow-buttons a .follow-count { font-family: Arial, sans-serif; position: absolute; right: 3px; bottom: 3px; font-size: 12px; line-height: 1; }
@@ -1362,7 +1397,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .ff-sawarabi-mincho { font-family: "Sawarabi Mincho" ,sans-serif; }
 .admin-settings .demo div.sub-caption { font-family: Tunga, "Trebuchet MS", Tahoma, Verdana, "Segoe UI", "游ゴシック体", "Yu Gothic", "Hiragino Kaku Gothic Pro", "Meiryo", sans-serif; font-weight: 400; font-size: 0.75em; opacity: 0.4; }
 .admin-settings .demo * { padding: 0; margin: 0; box-sizing: border-box; word-wrap: break-word; overflow-wrap: break-word; }
-.admin-settings .demo body { /* フォントの種類 */ font-family: "游ゴシック体", "Yu Gothic", "Hiragino Kaku Gothic Pro", "Meiryo", sans-serif; /* フォントのサイズ */ font-size: 18px; /* フォントの色 */ color: #333; /* カーニングの設定 */ /* 行間の設定 */ line-height: 1.75; margin: 0; overflow-wrap: break-word; /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */ background-attachment: fixed; }
+.admin-settings .demo body { /* フォントの種類 */ font-family: "游ゴシック体", "Yu Gothic", "Hiragino Kaku Gothic Pro", "Meiryo", sans-serif; /* フォントのサイズ */ font-size: 18px; /* フォントの色 */ color: #333; /* カーニングの設定 */ /* 行間の設定 */ line-height: 1.8; margin: 0; overflow-wrap: break-word; /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */ background-attachment: fixed; }
 .admin-settings .demo a { color: #1967d2; }
 .admin-settings .demo a:hover { color: #e53900; }
 .admin-settings .demo ol, .admin-settings .demo ul { margin: 1em 0; padding-left: 40px; }
@@ -1377,9 +1412,10 @@ body.wp-admin { color: #444; }
 @media all and (-ms-high-contrast: none) { .admin-settings .demo .main-scroll { position: static; top: auto; } }
 .admin-settings .demo .publisher { display: none; }
 .admin-settings .demo #wpadminbar { font-size: 13px; }
-.admin-settings .demo html body .aligncenter { display: block; margin-right: auto; margin-left: auto; }
-.admin-settings .demo html body .alignleft { float: left; margin-right: 10px; margin-bottom: 10px; }
-.admin-settings .demo html body .alignright { float: right; margin-left: 10px; margin-bottom: 10px; }
+.admin-settings .demo .wp-caption { margin: 1em 0; }
+.admin-settings .demo .aligncenter { display: block; margin-right: auto; margin-left: auto; }
+.admin-settings .demo .alignleft { float: left; margin-right: 10px; margin-bottom: 10px; }
+.admin-settings .demo .alignright { float: right; margin-left: 10px; margin-bottom: 10px; }
 .admin-settings .demo .wp-caption { padding-top: 4px; border: 1px solid #ddd; border-radius: 3px; background-color: #f3f4f5; text-align: center; max-width: 100%; }
 .admin-settings .demo .wp-caption-text, .admin-settings .demo .gallery-caption { font-size: 80%; }
 .admin-settings .demo .wp-caption img { margin: 0; padding: 0; border: 0 none; }
@@ -1586,7 +1622,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .tag-link, .admin-settings .demo .comment-reply-link { color: #333; text-decoration: none; display: inline-block; margin-right: 5px; padding: 1px 5px; font-size: 12px; border: 1px solid #999; border-radius: 2px; word-break: break-all; }
 .admin-settings .demo .tag-link::before, .admin-settings .demo .comment-reply-link::before { font-family: FontAwesome; content: ""; padding-right: 3px; }
 .admin-settings .demo .tag-link:hover, .admin-settings .demo .comment-reply-link:hover { background-color: #f5f8fa; transition: all 0.5s ease; color: #333; }
-.admin-settings .demo p { margin: 1em 0; }
+.admin-settings .demo p { margin: 1.2em 0; }
 .admin-settings .demo table { margin-bottom: 20px; max-width: 100%; width: 100%; border-collapse: collapse; border-spacing: 0; }
 .admin-settings .demo table th { background-color: #f3f4f5; }
 .admin-settings .demo table tr:nth-of-type(2n+1) { background-color: #fafbfc; }
@@ -1601,7 +1637,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .article ul li, .admin-settings .demo .article ol li { margin: 0.2em; }
 .admin-settings .demo .article ul ul, .admin-settings .demo .article ul ol, .admin-settings .demo .article ol ul, .admin-settings .demo .article ol ol { margin: 0; }
 .admin-settings .demo .article h1, .admin-settings .demo .article h2, .admin-settings .demo .article h3, .admin-settings .demo .article h4, .admin-settings .demo .article h5, .admin-settings .demo .article h6 { line-height: 1.25; font-weight: bold; }
-.admin-settings .demo .article h2, .admin-settings .demo .article h3, .admin-settings .demo .article h4, .admin-settings .demo .article h5, .admin-settings .demo .article h6 { margin: 2.2em 0 1em; }
+.admin-settings .demo .article h2, .admin-settings .demo .article h3, .admin-settings .demo .article h4, .admin-settings .demo .article h5, .admin-settings .demo .article h6 { margin: 2.4em 0 1em; }
 .admin-settings .demo .article h4, .admin-settings .demo .article h5, .admin-settings .demo .article h6 { font-size: 20px; padding: 6px 10px; }
 .admin-settings .demo .article h2 { font-size: 24px; padding: 25px; background-color: #f3f4f5; }
 .admin-settings .demo .article h3 { border-left: 6px solid #777; border-right: 1px solid #ccc; border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; font-size: 22px; padding: 6px 20px; }
@@ -1620,7 +1656,6 @@ body.wp-admin { color: #444; }
 .admin-settings .demo span.external-icon, .admin-settings .demo span.internal-icon { margin-left: 3px; font-size: 0.8em; }
 .admin-settings .demo .login-user-only { text-align: center; padding: 2em; background-color: #fafbfc; border: 1px solid #ccc; margin: 1em 0; }
 .admin-settings .demo .no-post-date .post-date, .admin-settings .demo .no-post-update .post-update, .admin-settings .demo .no-post-author .author-info { display: none; }
-.admin-settings .demo .wp-caption { margin: 1em 0; }
 .admin-settings .demo .eye-catch-wrap { display: flex; }
 .admin-settings .demo .eye-catch { position: relative; margin-bottom: .6em; max-width: 100%; }
 .admin-settings .demo .eye-catch .cat-label { position: absolute; right: auto; top: 0.4em; bottom: auto; left: 0.4em; font-size: 14px; padding: 4px 8px; opacity: 0.9; border: 1px solid #eee; }
@@ -1723,6 +1758,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .widget-entry-cards figure { width: 120px; }
 .admin-settings .demo .widget-entry-cards .widget-entry-card-content { margin-left: 124px; }
 .admin-settings .demo .widget-entry-cards .widget-entry-card-pv { margin-left: 5px; font-style: italic; font-size: 0.8em; }
+.admin-settings .demo .widget-entry-cards .cat-label { display: none; }
 .admin-settings .demo .widget-entry-cards.not-default .a-wrap { max-width: 400px; }
 .admin-settings .demo .widget-entry-cards.not-default .e-card { font-size: 18px; }
 .admin-settings .demo .widget-entry-cards.not-default figure { float: none; width: 100%; }
@@ -1767,7 +1803,9 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .red { color: #E50202; }
 .admin-settings .demo .bold-red { font-weight: bold; color: #E50202; }
 .admin-settings .demo .blue { color: blue; }
+.admin-settings .demo .bold-blue { font-weight: bold; color: blue; }
 .admin-settings .demo .green { color: green; }
+.admin-settings .demo .bold-green { font-weight: bold; color: green; }
 .admin-settings .demo .red-under { border-bottom: 2px solid red; }
 .admin-settings .demo .marker { background-color: #ff9; }
 .admin-settings .demo .marker-red { background-color: #ffd0d1; }
@@ -1786,8 +1824,9 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .light-box { color: #818182; background-color: #fefefe; border-color: #fdfdfe; padding: 15px; border-radius: 4px; margin-bottom: 20px; }
 .admin-settings .demo .dark-box { color: #1b1e21; background-color: #d6d8d9; border-color: #c6c8ca; padding: 15px; border-radius: 4px; margin-bottom: 20px; }
 .admin-settings .demo .information-box, .admin-settings .demo .question-box, .admin-settings .demo .alert-box, .admin-settings .demo .information, .admin-settings .demo .question, .admin-settings .demo .alert, .admin-settings .demo .memo-box, .admin-settings .demo .comment-box, .admin-settings .demo .common-icon-box { padding: 20px 20px 20px 72px; border-radius: 4px; position: relative; display: block; margin-top: 1em; margin-bottom: 1em; }
-.admin-settings .demo .block-box > p:first-child { margin-top: 0; }
-.admin-settings .demo .block-box > p:last-child { margin-bottom: 0; }
+.admin-settings .demo .block-box p:first-child { margin-top: 0; }
+.admin-settings .demo .block-box p:last-child { margin-bottom: 0; }
+.admin-settings .demo .block-box ol, .admin-settings .demo .block-box ul { margin: 0; }
 .admin-settings .demo .information-box, .admin-settings .demo .information { background: #f3fafe; border: 1px solid #bde4fc; }
 .admin-settings .demo .question-box, .admin-settings .demo .question { background: #fff7cc; border: 1px solid #ffe766; }
 .admin-settings .demo .alert-box, .admin-settings .demo .alert { background: #fdf2f2; border: 1px solid #f6b9b9; }
@@ -1847,7 +1886,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .bb-bad::before { content: "\f165  BAD"; }
 .admin-settings .demo .bb-profile::before { content: "\f007  PROFILE"; }
 .admin-settings .demo .search-form { margin: 3em 0; }
-.admin-settings .demo .search-form div { border: 1px solid #555; border-radius: 2px; padding: 5px; margin-left: 10px; display: inline-block; }
+.admin-settings .demo .search-form > div { border: 1px solid #555; border-radius: 2px; padding: 5px; margin-left: 10px; display: inline-block; }
 .admin-settings .demo .search-form div.sform { min-width: 280px; background-color: #fff; }
 .admin-settings .demo .search-form div.sbtn { background-color: #1155EE; color: #fff; padding-left: 20px; padding-right: 30px; position: absolute; }
 .admin-settings .demo .search-form div.sbtn:before { content: "\f002"; font-family: FontAwesome; margin-right: 7px; }
@@ -1856,14 +1895,15 @@ body.wp-admin { color: #444; }
   .admin-settings .demo .search-form div.sform { min-width: 180px; }
   .admin-settings .demo .search-form div.sbtn { padding-left: 5px; padding-right: 10px; }
   .admin-settings .demo .search-form div.sbtn:after { font-size: 20px; margin-left: -10px; } }
+.admin-settings .demo .btn-wrap { min-height: 2em; }
 .admin-settings .demo .btn-wrap img[width="1"] { position: absolute; bottom: 0; right: 0; }
 .admin-settings .demo .btn, .admin-settings .demo .ranking-item-link-buttons a, .admin-settings .demo .btn-wrap > a, .admin-settings .demo .wp-block-freeform .btn-wrap > a { color: #fff; font-weight: bold; border-radius: 4px; display: inline-block; cursor: pointer; line-height: normal; padding: 10px 16px; text-decoration: none; text-align: center; font-size: 14px; border: 2px solid transparent; position: relative; }
 .admin-settings .demo .btn amp-img, .admin-settings .demo .ranking-item-link-buttons a amp-img, .admin-settings .demo .btn-wrap > a amp-img, .admin-settings .demo .wp-block-freeform .btn-wrap > a amp-img { position: absolute; }
 .admin-settings .demo .btn:before, .admin-settings .demo .ranking-item-link-buttons a:before, .admin-settings .demo .btn:after, .admin-settings .demo .ranking-item-link-buttons a:after, .admin-settings .demo .btn-wrap > a:before, .admin-settings .demo .btn-wrap > a:after { font-family: FontAwesome; margin-right: 12px; }
 .admin-settings .demo #container .btn:hover, .admin-settings .demo #container .ranking-item-link-buttons a:hover, .admin-settings .demo .ranking-item-link-buttons #container a:hover, .admin-settings .demo #container .btn-wrap > a:hover { color: #333; background-color: #fff; border: 2px solid #000; transition: all 0.5s ease; }
 .admin-settings .demo .btn-m, .admin-settings .demo .btn-wrap.btn-wrap-m > a { padding: 14px 45px; font-size: 16px; }
-.admin-settings .demo .btn-l, .admin-settings .demo .ranking-item-link-buttons a, .admin-settings .demo .btn-wrap.btn-wrap-l > a { padding: 20px 30px; font-size: 18px; display: block; margin: 1em; }
-.admin-settings .demo .btn-l::after, .admin-settings .demo .ranking-item-link-buttons a::after, .admin-settings .demo .btn-wrap.btn-wrap-l > a::after { content: "\f105"; position: absolute; right: 0; font-size: 30px; margin-top: -0.15em; }
+.admin-settings .demo .btn-l, .admin-settings .demo .ranking-item-link-buttons a, .admin-settings .demo .btn-wrap.btn-wrap-l > a { padding: 20px 30px; font-size: 18px; margin: 1em; display: flex; justify-content: center; align-items: center; }
+.admin-settings .demo .btn-l::after, .admin-settings .demo .ranking-item-link-buttons a::after, .admin-settings .demo .btn-wrap.btn-wrap-l > a::after { content: "\f105"; position: absolute; right: 0; font-size: 30px; }
 .admin-settings .demo .btn-white, .admin-settings .demo .btn-wrap.btn-wrap-white > a { color: #333; background-color: #fff; }
 .admin-settings .demo #container .btn-white:hover, .admin-settings .demo #container .btn-wrap.btn-wrap-white > a:hover { color: #333; }
 .admin-settings .demo .btn-red, .admin-settings .demo .ranking-item-link a, .admin-settings .demo .btn-wrap.btn-wrap-red > a { background-color: #f44336; }
@@ -1919,6 +1959,10 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .bct-together .blogcard::before { content: " あわせて読みたい"; }
 .admin-settings .demo .bct-detail .blogcard::before { content: " 詳細はこちら"; }
 .admin-settings .demo .bct-official .blogcard::before { content: " 公式サイト"; }
+.admin-settings .demo .button-block { float: none; margin: 6px 0; }
+.admin-settings .demo .button-block.alignleft { text-align: left; }
+.admin-settings .demo .button-block.aligncenter { text-align: center; }
+.admin-settings .demo .button-block.alignright { text-align: right; }
 .admin-settings .demo .column-wrap { display: flex; position: relative; margin: 1em 0; }
 .admin-settings .demo .column-wrap .column-wrap { margin: 0; }
 .admin-settings .demo .column-wrap .column-left { padding-left: 0; }
@@ -1933,6 +1977,28 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .column-2-4-1-3 .column-right { width: 75%; }
 .admin-settings .demo .column-2-4-3-1 .column-left { width: 75%; }
 .admin-settings .demo .column-2-4-3-1 .column-right { width: 25%; }
+.admin-settings .demo .toggle-wrap { margin: 1.2em 0; position: relative; }
+.admin-settings .demo .toggle-wrap > p { display: none; }
+.admin-settings .demo .toggle-button { display: block; cursor: pointer; padding: 3px 10px; background-color: #f3f4f5; border: 1px solid #ccc; text-align: center; border-radius: 4px; position: relative; margin: 0; }
+.admin-settings .demo .toggle-button::before { content: '\f067'; font-family: FontAwesome; margin-right: 0.4em; font-size: 0.8em; color: #999; }
+.admin-settings .demo .toggle-button:hover { opacity: 0.7; }
+.admin-settings .demo .toggle-checkbox { display: none; }
+.admin-settings .demo .toggle-content { visibility: hidden; opacity: 0; padding: 0 1em; height: 0; transition: all 0.5s ease; }
+.admin-settings .demo .toggle-checkbox:checked ~ .toggle-button { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+.admin-settings .demo .toggle-checkbox:checked ~ .toggle-button::before { content: '\f068'; }
+.admin-settings .demo .toggle-checkbox:checked ~ .toggle-content { visibility: visible; opacity: 1; height: 100%; transition: all 0.5s ease; padding: 1em; border: 1px solid #ccc; border-top-width: 0; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; }
+.admin-settings .demo .tb-yellow .toggle-button { border: 1px solid #fc9f4d; background: #fc9f4d; color: #fff; }
+.admin-settings .demo .tb-yellow .toggle-button::before { color: #ccc; }
+.admin-settings .demo .tb-yellow .toggle-checkbox:checked ~ .toggle-content { border-color: #fc9f4d; }
+.admin-settings .demo .tb-red .toggle-button { border: 1px solid #d05a6e; background: #d05a6e; color: #fff; }
+.admin-settings .demo .tb-red .toggle-button::before { color: #ccc; }
+.admin-settings .demo .tb-red .toggle-checkbox:checked ~ .toggle-content { border-color: #d05a6e; }
+.admin-settings .demo .tb-blue .toggle-button { border: 1px solid #2ea9df; background: #2ea9df; color: #fff; }
+.admin-settings .demo .tb-blue .toggle-button::before { color: #ccc; }
+.admin-settings .demo .tb-blue .toggle-checkbox:checked ~ .toggle-content { border-color: #2ea9df; }
+.admin-settings .demo .tb-green .toggle-button { border: 1px solid #3eb370; background: #3eb370; color: #fff; }
+.admin-settings .demo .tb-green .toggle-button::before { color: #ccc; }
+.admin-settings .demo .tb-green .toggle-checkbox:checked ~ .toggle-content { border-color: #3eb370; }
 .admin-settings .demo .sns-follow-buttons a { width: 100%; margin-right: 8px; margin-bottom: 8px; font-size: 30px; display: flex; align-items: center; align-content: center; justify-content: center; position: relative; }
 .admin-settings .demo .sns-follow-buttons a:last-child { margin-right: 0; }
 .admin-settings .demo .sns-follow-buttons a .follow-count { font-family: Arial, sans-serif; position: absolute; right: 3px; bottom: 3px; font-size: 12px; line-height: 1; }
@@ -2477,7 +2543,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo div#wpforo-wrap pre, .admin-settings .demo div#wpforo-wrap .wpforo-post .wpf-right code { background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border: medium none; font-size: 17px; }
 .admin-settings .demo div#wpforo-wrap .wpforo-post .wpf-right ol, .admin-settings .demo div#wpforo-wrap .wpforo-post .wpf-right ul { margin: 2em 1em; }
 .admin-settings .demo .wpforo-list-item p { margin: 0; }
-.admin-settings .demo div#wpforo-wrap .wpforo-post .wpf-right .wpforo-post-content p { line-height: 1.75; }
+.admin-settings .demo div#wpforo-wrap .wpforo-post .wpf-right .wpforo-post-content p { line-height: 1.8; }
 .admin-settings .demo .bleft { font-weight: bold; }
 .admin-settings .demo #wpf-form-wrapper .mce-edit-area iframe { min-height: 400px; }
 .admin-settings .demo .mce-wpf-emoji-extra-wrap { min-width: 300px !important; min-height: 300px !important; }
@@ -2495,6 +2561,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .video-title-grad { position: absolute; top: 0; left: 0; right: 0; background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAABiCAQAAAA7fHH2AAAAQUlEQVQYV22KQQoAIAzDyv7/Et/oVlGZVCfkkIYamsENXESyi8vc0u/PKZ6o8+7fZ0h8ShRYnD+BFKToRJkHFpkM2hZSxuyWpEYAAAAASUVORK5CYII="); background-position: center top; }
 .admin-settings .demo .video-title-text { color: #eeeeee; font-family: Roboto,Arial,Helvetica,sans-serif; font-size: 17px; overflow: hidden; padding: 12px 16px 4px; text-overflow: ellipsis; white-space: nowrap; }
 .admin-settings .demo #main .wp-block-embed__wrapper::before { display: none; }
+.admin-settings .demo .entry-content .wp-block-gallery .blocks-gallery-item { display: list-item; }
 @media screen and (max-width: 1023px) { .admin-settings .demo .navi-footer { float: none; margin: 0; width: 100%; }
   .admin-settings .demo .copyright { width: 100%; }
   .admin-settings .demo .navi-footer-in > ul { justify-content: center; padding: 1em; }

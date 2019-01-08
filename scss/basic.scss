@@ -128,27 +128,31 @@ ol, ul{
   font-size: 13px;
 }
 
+///////////////////////////////////////
+// キャプション表示
+///////////////////////////////////////
+.wp-caption{
+  margin: 1em 0;
+}
 
 /************************************
 ** WordPress Misc
 ************************************/
-html body{
-  .aligncenter {
-    display: block;
-    margin-right: auto;
-    margin-left: auto;
-  }
+.aligncenter {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
 
-  .alignleft {
-    float: left;
-    margin-right: 10px;
-    margin-bottom: 10px;
-  }
-  .alignright {
-    float: right;
-    margin-left: 10px;
-    margin-bottom: 10px;
-  }
+.alignleft {
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+.alignright {
+  float: right;
+  margin-left: 10px;
+  margin-bottom: 10px;
 }
 
 

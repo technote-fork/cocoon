@@ -12,7 +12,7 @@
 <title><?php echo wp_get_document_title(); ?></title>
 <?php //サイトアイコンの呼び出し
 if ($icon = get_site_favicon_url()): ?>
-<link rel="shortcut icon" href="<?php echo $icon; ?>" >
+<link rel="icon" href="<?php echo $icon; ?>" >
 <?php endif ?>
 <?php //canonicalタグの出力
 generate_canonical_tag() ?>
@@ -70,7 +70,7 @@ if (is_amp_image_zoom_effect_gallery()) {
 }
 
 //Font Awesome様のスタイルの読み込み
-echo '<link rel="stylesheet" href="'.FONT_AWESOME_CDN_URL.'">'.PHP_EOL;
+echo '<link rel="stylesheet" href="'.FONT_AWESOME4_CDN_URL.'">'.PHP_EOL;
 //Google Fontsスタイルの読み込み
 if (!is_site_font_family_local()) {
   echo '<link rel="stylesheet" href="'.get_site_font_source_url().'">'.PHP_EOL;

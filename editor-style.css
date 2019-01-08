@@ -128,3 +128,13 @@ span.btn-wrap {
 .instagram-media {
   position: relative !important;
 }
+
+.postbody.main {
+  width: auto;
+}
+
+.button-wrap-msg,
+.box-block-msg {
+  font-size: 10px;
+  text-align: center;
+}

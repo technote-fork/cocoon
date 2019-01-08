@@ -154,37 +154,7 @@ function to_adsense_format($format){
     case AD_FORMAT_DABBLE_RECTANGLE:
       $format = DATA_AD_FORMAT_RECTANGLE;
       break;
-    // case 'none':
-    //   $format = DATA_AD_FORMAT_RECTANGLE;
-    //   break;
   }
-
-  // switch ($format) {
-  //   case DATA_AD_FORMAT_AUTO:
-  //     $format = DATA_AD_FORMAT_AUTO;
-  //     break;
-  //   case DATA_AD_FORMAT_RECTANGLE:
-  //     $format = DATA_AD_FORMAT_RECTANGLE;
-  //     break;
-  //   case DATA_AD_FORMAT_HORIZONTAL:
-  //     $format = DATA_AD_FORMAT_HORIZONTAL;
-  //     break;
-  //   case DATA_AD_FORMAT_VERTICAL:
-  //     $format = DATA_AD_FORMAT_VERTICAL;
-  //     break;
-  //   case DATA_AD_FORMAT_AUTORELAXED:
-  //     $format = DATA_AD_FORMAT_AUTORELAXED;
-  //     break;
-  //   case DATA_AD_FORMAT_FLUID:
-  //     $format = DATA_AD_FORMAT_FLUID;
-  //     break;
-  //   case DATA_AD_FORMAT_LINK:
-  //     $format = DATA_AD_FORMAT_LINK;
-  //     break;
-  //   default:
-  //     $format = DATA_AD_FORMAT_RECTANGLE;
-  //     break;
-  // }
   return $format;
 }
 endif;
@@ -318,7 +288,7 @@ endif;
 if ( !function_exists( 'wp_enqueue_style_font_awesome' ) ):
 function wp_enqueue_style_font_awesome(){
   if (!is_web_font_lazy_load_enable() || is_admin()) {
-    wp_enqueue_style( 'font-awesome-style', FONT_AWESOME_CDN_URL );
+    wp_enqueue_style( 'font-awesome-style', FONT_AWESOME4_CDN_URL );
   }
 }
 endif;
@@ -351,6 +321,9 @@ endif;
 if ( !function_exists( 'wp_enqueue_script_theme_js' ) ):
 function wp_enqueue_script_theme_js(){
   wp_enqueue_script( THEME_JS, get_template_directory_uri() . '/javascript.js', array( 'jquery' ), false, true );
+
+  // TODO: ファイル読みこみ位置 もしくは HTML側に直接出力など よい方法を考慮
+  wp_enqueue_script( 'set-event-passive', get_template_directory_uri() . '/js/set-event-passive.js', array( ), false, true );
 }
 endif;
 
@@ -428,7 +401,7 @@ function wp_enqueue_web_font_lazy_load_js(){
   if ( is_web_font_lazy_load_enable() ){
     wp_enqueue_script( 'web-font-lazy-load-js', get_template_directory_uri().'/js/web-font-lazy-load.js', array(), false, true );
     $data = ('
-      loadWebFont("'.FONT_AWESOME_CDN_URL.'");
+      loadWebFont("'.FONT_AWESOME4_CDN_URL.'");
       loadWebFont("'.FONT_AICOMOON_URL.'");
     ');
     wp_add_inline_script( 'web-font-lazy-load-js', $data, 'after' ) ;
@@ -2244,5 +2217,12 @@ endif;
 if ( !function_exists( 'is_login_page' ) ):
 function is_login_page() {
   return in_array($GLOBALS['pagenow'], array('wp-login.php', 'wp-register.php'));
+}
+endif;
+
+//ホームURLを除いた文字列
+if ( !function_exists( 'get_remove_home_url' ) ):
+function get_remove_home_url($url){
+  return str_replace(home_url(), '', $url);
 }
 endif;
