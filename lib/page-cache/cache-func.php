@@ -10,7 +10,7 @@
 if ( !function_exists( 'delete_sns_count_caches' ) ):
 function delete_sns_count_caches(){
   if (is_user_administrator()) {
-    return delete_db_cache_records(TRANSIENT_SHARE_PREFIX) && delete_db_cache_records(TRANSIENT_FOLLOW_PREFIX);
+    return delete_db_cache_records(TRANSIENT_SHARE_PREFIX) || delete_db_cache_records(TRANSIENT_FOLLOW_PREFIX);
   }
 }
 endif;
@@ -46,7 +46,7 @@ endif;
 if ( !function_exists( 'delete_amazon_asin_cache' ) ):
 function delete_amazon_asin_cache($asin){
   if (is_user_administrator()) {
-    return delete_db_cache_records(TRANSIENT_AMAZON_API_PREFIX.$asin) &&
+    return delete_db_cache_records(TRANSIENT_AMAZON_API_PREFIX.$asin) ||
            delete_db_cache_records(TRANSIENT_BACKUP_AMAZON_API_PREFIX.$asin);
   }
 }
@@ -65,7 +65,7 @@ endif;
 if ( !function_exists( 'delete_rakuten_id_cache' ) ):
 function delete_rakuten_id_cache($id){
   if (is_user_administrator()) {
-    return delete_db_cache_records(TRANSIENT_RAKUTEN_API_PREFIX.$id) &&
+    return delete_db_cache_records(TRANSIENT_RAKUTEN_API_PREFIX.$id) ||
     delete_db_cache_records(TRANSIENT_BACKUP_RAKUTEN_API_PREFIX.$id);
   }
 }
@@ -74,10 +74,10 @@ endif;
 //全てのキャッシュを削除
 if ( !function_exists( 'delete_all_theme_caches' ) ):
 function delete_all_theme_caches(){
-  return delete_sns_count_caches() &&
-         delete_popular_entries_caches() &&
-         delete_blogcard_caches() &&
-         delete_amazon_api_caches() &&
+  return delete_sns_count_caches() ||
+         delete_popular_entries_caches() ||
+         delete_blogcard_caches() ||
+         delete_amazon_api_caches() ||
          delete_amp_caches();
 }
 endif;
@@ -87,8 +87,8 @@ endif;
 if ( !function_exists( 'delete_amp_caches' ) ):
 function delete_amp_caches(){
   if (is_user_administrator()) {
-    return remove_all_directory(get_theme_amp_cache_dir()) &&
-           delete_db_cache_records(TRANSIENT_AMP_PREFIX);
+	  remove_all_directory(get_theme_amp_cache_dir());
+    return delete_db_cache_records(TRANSIENT_AMP_PREFIX);
   }
 }
 endif;
