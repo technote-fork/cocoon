@@ -37,7 +37,7 @@
                 }
                 // _v($class);
                 // _v($widget);
-                echo '<li><input type="checkbox" name="'.OP_EXCLUDE_WIDGET_CLASSES.'[]" value="'.$class.'"'.$checked.'><b>' . $widget->name.'</b>：'.$widget->widget_options['description'].'</li>';
+                echo '<li><input type="checkbox" name="'.OP_EXCLUDE_WIDGET_CLASSES.'[]" value="'.$class.'"'.$checked.'><b>' . $widget->name.'</b>：'.(isset($widget->widget_options['description']) ? $widget->widget_options['description'] : '').'</li>';
               }
               ?>
             </ul>
