@@ -11,16 +11,14 @@ $list_url = IR_LIST_URL;
  ?>
 <form name="form1" method="post" action="<?php echo $list_url; ?>" class="item-ranking-delete">
   <?php
-  $id = isset($_GET['id']) ? $_GET['id'] : null;
+  $id = isset($_GET['id']) ? intval($_GET['id']) : null;
 
-  if ($id) {
-    $record = get_item_ranking($id);
-    if (!$record) {
-      //指定IDの関数テキストが存在しない場合は一覧にリダイレクト
-      redirect_to_url($list_url);
-    }
-    $edit_url = add_query_arg(array('action' => 'edit',   'id' => $id));
+  $record = get_item_ranking($id);
+  if (!$record) {
+	  //指定IDの関数テキストが存在しない場合は一覧にリダイレクト
+	  redirect_to_url($list_url);
   }
+  $edit_url = add_query_arg(array('action' => 'edit',   'id' => $id));
   ?>
   <p><?php _e( '以下の内容を削除しますか？', THEME_NAME ) ?></p>
 
