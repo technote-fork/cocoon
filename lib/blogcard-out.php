@@ -5,6 +5,7 @@
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
  */
+if ( !defined( 'ABSPATH' ) ) exit;
 
 //外部URLからブログをカードタグの取得
 if ( !function_exists( 'url_to_external_blog_card_tag' ) ):
@@ -124,7 +125,8 @@ function url_to_external_ogp_blogcard_tag($url){
   $params = get_url_params($url);
   $user_title = !empty($params['title']) ? $params['title'] : null;
   $user_snipet = !empty($params['snipet']) ? $params['snipet'] : null;
-  $url = add_query_arg(array('title' => null, 'snipet' => null), $url);
+  //$url = add_query_arg(array('title' => null, 'snipet' => null), $url);
+  //_v($url);
 
   $url_hash = TRANSIENT_BLOGCARD_PREFIX.md5( $url );
   $error_title = $url; //エラーの場合はURLを表示

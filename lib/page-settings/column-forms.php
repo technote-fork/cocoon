@@ -3,7 +3,9 @@
  * @author: yhira
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
- */ ?>
+ */
+if ( !defined( 'ABSPATH' ) ) exit; ?>
+
 <div class="metabox-holder">
 
 <!-- メインカラム -->
@@ -106,8 +108,8 @@
           </th>
           <td>
             <?php
-            generate_number_tag(OP_SIDEBAR_CONTENTS_WIDTH,  get_sidebar_contents_width(), 336, 300, 500, 10);
-            generate_tips_tag(__( 'サイドバーコンテンツ部分の幅を設定します。（最小：300px、最大：500px）', THEME_NAME ));
+            generate_number_tag(OP_SIDEBAR_CONTENTS_WIDTH,  get_sidebar_contents_width(), 336, 200, 500, 10);
+            generate_tips_tag(__( 'サイドバーコンテンツ部分の幅を設定します。（最小：200px、最大：500px）', THEME_NAME ));
             ?>
           </td>
         </tr>

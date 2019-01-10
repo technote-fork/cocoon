@@ -1,4 +1,11 @@
 <?php //Amazon商品リンク
+/**
+ * Cocoon WordPress Theme
+ * @author: yhira
+ * @link: https://wp-cocoon.com/
+ * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
+ */
+if ( !defined( 'ABSPATH' ) ) exit;
 
 //Amazon APIから情報の取得
 if ( !function_exists( 'get_amazon_itemlookup_xml' ) ):
@@ -101,7 +108,9 @@ function get_amazon_itemlookup_xml($asin){
 endif;
 
 //Amazon商品リンク作成
-add_shortcode('amazon', 'amazon_product_link_shortcode');
+if (!shortcode_exists('amazon')) {
+  add_shortcode('amazon', 'amazon_product_link_shortcode');
+}
 if ( !function_exists( 'amazon_product_link_shortcode' ) ):
 function amazon_product_link_shortcode($atts){
   extract( shortcode_atts( array(

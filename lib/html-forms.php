@@ -5,6 +5,7 @@
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
  */
+if ( !defined( 'ABSPATH' ) ) exit;
 
 //著者セレクトボックスをの取得
 if ( !function_exists( 'get_author_list_selectbox_tag' ) ):
@@ -594,8 +595,6 @@ endif;
 
 
 //カテゴリチェックリストの作成
-//require_once( ABSPATH . '/wp-admin/includes/template.php' );
-//add_shortcode('frontend-category-checklist', 'frontend_category_checklist');
 if ( !function_exists( 'generate_category_checklist' ) ):
 function generate_category_checklist( $post_id = 0, $descendants_and_self = 0, $selected_cats = false,
         $popular_cats = false, $walker = null, $checked_ontop = true) {
@@ -943,7 +942,7 @@ endif;
 
 //汎用エントリーウィジェットのタグ生成
 if ( !function_exists( 'generate_widget_entries_tag' ) ):
-function generate_widget_entries_tag($entry_count = 5, $entry_type = ET_DEFAULT, $cat_ids = array(), $include_children = 0, $post_type = null, $taxonomy = 'category', $random = 0){
+function generate_widget_entries_tag($entry_count = 5, $entry_type = ET_DEFAULT, $cat_ids = array(), $include_children = 0, $post_type = null, $taxonomy = 'category', $random = 0, $action = null){
 
   //ランダムが有効な時は関連記事
   if ($random) {
@@ -956,6 +955,7 @@ function generate_widget_entries_tag($entry_count = 5, $entry_type = ET_DEFAULT,
   $args = array(
     'posts_per_page' => $entry_count,
     'no_found_rows' => true,
+    'action' => $action,
   );
   if ($post_type) {
     $args += array(
