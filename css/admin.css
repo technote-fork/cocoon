@@ -343,7 +343,8 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .ff-kokoro { font-family: "Kokoro" ,sans-serif; }
 .admin-settings .demo .ff-sawarabi-gothic { font-family: "Sawarabi Gothic" ,sans-serif; }
 .admin-settings .demo .ff-sawarabi-mincho { font-family: "Sawarabi Mincho" ,sans-serif; }
-.admin-settings .demo div.sub-caption { font-family: Tunga, "Trebuchet MS", Tahoma, Verdana, "Segoe UI", "游ゴシック体", "Yu Gothic", "Hiragino Kaku Gothic Pro", "Meiryo", sans-serif; font-weight: 400; font-size: 0.75em; opacity: 0.4; }
+.admin-settings .demo .sub-caption { font-family: Tunga, "Trebuchet MS", Tahoma, Verdana, "Segoe UI", "游ゴシック体", "Yu Gothic", "Hiragino Kaku Gothic Pro", "Meiryo", sans-serif; font-weight: 400; font-size: 0.75em; opacity: 0.4; }
+.admin-settings .demo span.sub-caption { opacity: 0.8; }
 .admin-settings .demo * { padding: 0; margin: 0; box-sizing: border-box; word-wrap: break-word; overflow-wrap: break-word; }
 .admin-settings .demo body { /* フォントの種類 */ font-family: "游ゴシック体", "Yu Gothic", "Hiragino Kaku Gothic Pro", "Meiryo", sans-serif; /* フォントのサイズ */ font-size: 18px; /* フォントの色 */ color: #333; /* カーニングの設定 */ /* 行間の設定 */ line-height: 1.8; margin: 0; overflow-wrap: break-word; /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */ background-attachment: fixed; }
 .admin-settings .demo a { color: #1967d2; }
@@ -929,9 +930,9 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .toggle-wrap > p { display: none; }
 .admin-settings .demo .toggle-button { display: block; cursor: pointer; padding: 3px 10px; background-color: #f3f4f5; border: 1px solid #ccc; text-align: center; border-radius: 4px; position: relative; margin: 0; }
 .admin-settings .demo .toggle-button::before { content: '\f067'; font-family: FontAwesome; margin-right: 0.4em; font-size: 0.8em; color: #999; }
+.admin-settings .demo .toggle-button .toggle-content { visibility: hidden; opacity: 0; padding: 0 1em; height: 0; transition: all 0.5s ease; }
 .admin-settings .demo .toggle-button:hover { opacity: 0.7; }
 .admin-settings .demo .toggle-checkbox { display: none; }
-.admin-settings .demo .toggle-content { visibility: hidden; opacity: 0; padding: 0 1em; height: 0; transition: all 0.5s ease; }
 .admin-settings .demo .toggle-checkbox:checked ~ .toggle-button { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
 .admin-settings .demo .toggle-checkbox:checked ~ .toggle-button::before { content: '\f068'; }
 .admin-settings .demo .toggle-checkbox:checked ~ .toggle-content { visibility: visible; opacity: 1; height: 100%; transition: all 0.5s ease; padding: 1em; border: 1px solid #ccc; border-top-width: 0; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; }
@@ -1395,7 +1396,8 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .ff-kokoro { font-family: "Kokoro" ,sans-serif; }
 .admin-settings .demo .ff-sawarabi-gothic { font-family: "Sawarabi Gothic" ,sans-serif; }
 .admin-settings .demo .ff-sawarabi-mincho { font-family: "Sawarabi Mincho" ,sans-serif; }
-.admin-settings .demo div.sub-caption { font-family: Tunga, "Trebuchet MS", Tahoma, Verdana, "Segoe UI", "游ゴシック体", "Yu Gothic", "Hiragino Kaku Gothic Pro", "Meiryo", sans-serif; font-weight: 400; font-size: 0.75em; opacity: 0.4; }
+.admin-settings .demo .sub-caption { font-family: Tunga, "Trebuchet MS", Tahoma, Verdana, "Segoe UI", "游ゴシック体", "Yu Gothic", "Hiragino Kaku Gothic Pro", "Meiryo", sans-serif; font-weight: 400; font-size: 0.75em; opacity: 0.4; }
+.admin-settings .demo span.sub-caption { opacity: 0.8; }
 .admin-settings .demo * { padding: 0; margin: 0; box-sizing: border-box; word-wrap: break-word; overflow-wrap: break-word; }
 .admin-settings .demo body { /* フォントの種類 */ font-family: "游ゴシック体", "Yu Gothic", "Hiragino Kaku Gothic Pro", "Meiryo", sans-serif; /* フォントのサイズ */ font-size: 18px; /* フォントの色 */ color: #333; /* カーニングの設定 */ /* 行間の設定 */ line-height: 1.8; margin: 0; overflow-wrap: break-word; /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */ background-attachment: fixed; }
 .admin-settings .demo a { color: #1967d2; }
@@ -1981,9 +1983,9 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .toggle-wrap > p { display: none; }
 .admin-settings .demo .toggle-button { display: block; cursor: pointer; padding: 3px 10px; background-color: #f3f4f5; border: 1px solid #ccc; text-align: center; border-radius: 4px; position: relative; margin: 0; }
 .admin-settings .demo .toggle-button::before { content: '\f067'; font-family: FontAwesome; margin-right: 0.4em; font-size: 0.8em; color: #999; }
+.admin-settings .demo .toggle-button .toggle-content { visibility: hidden; opacity: 0; padding: 0 1em; height: 0; transition: all 0.5s ease; }
 .admin-settings .demo .toggle-button:hover { opacity: 0.7; }
 .admin-settings .demo .toggle-checkbox { display: none; }
-.admin-settings .demo .toggle-content { visibility: hidden; opacity: 0; padding: 0 1em; height: 0; transition: all 0.5s ease; }
 .admin-settings .demo .toggle-checkbox:checked ~ .toggle-button { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
 .admin-settings .demo .toggle-checkbox:checked ~ .toggle-button::before { content: '\f068'; }
 .admin-settings .demo .toggle-checkbox:checked ~ .toggle-content { visibility: visible; opacity: 1; height: 100%; transition: all 0.5s ease; padding: 1em; border: 1px solid #ccc; border-top-width: 0; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; }
