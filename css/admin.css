@@ -373,6 +373,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo img.alignleft { display: inline-block; margin: 0 1.5em 1em 0; }
 .admin-settings .demo .comment-btn { margin: 24px 0; cursor: pointer; }
 .admin-settings .demo label { cursor: pointer; }
+.admin-settings .demo .sitemap li a::before { display: none; }
 .admin-settings .demo figure { margin: 0; }
 .admin-settings .demo img { max-width: 100%; height: auto; border: 0; -webkit-backface-visibility: hidden; }
 .admin-settings .demo .circle-image img { border-radius: 50%; }
@@ -885,11 +886,14 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .btn-hand-o-right:before, .admin-settings .demo .btn-wrap.btn-wrap-hand-o-right > a:before { content: "\f0a4"; }
 .admin-settings .demo .btn-arrow-circle-o-right:before, .admin-settings .demo .btn-wrap.btn-wrap-arrow-circle-o-right > a:before { content: "\f18e"; }
 .admin-settings .demo .btn-caret-square-o-right:before, .admin-settings .demo .btn-wrap.btn-wrap-caret-square-o-right > a:before { content: "\f152"; }
+.admin-settings .demo .micro-copy.alignleft { float: none; margin-right: 0; text-align: left; }
+.admin-settings .demo .micro-copy.alignright { float: none; margin-left: 0; text-align: right; }
+.admin-settings .demo .micro-copy.aligncenter { text-align: center; }
 .admin-settings .demo .micro-top { font-size: 0.8em; margin-bottom: -1em; margin-top: 1em; }
 .admin-settings .demo .micro-bottom { font-size: 0.8em; margin-top: -0.8em; margin-bottom: 1em; }
 .admin-settings .demo .micro-center { text-align: center; }
 .admin-settings .demo .micro-right { text-align: right; }
-.admin-settings .demo .micro-balloon { position: relative; background: #fff; border: 1px solid #999; border-radius: 4px; padding: 3px 8px; display: table; margin-bottom: -.7em; }
+.admin-settings .demo .micro-balloon { position: relative; background: #fff; border: 1px solid #999; border-radius: 4px; padding: 3px 8px; display: table; margin-bottom: -.7em; font-size: 0.8em; }
 .admin-settings .demo .micro-balloon:after, .admin-settings .demo .micro-balloon:before { top: 97%; left: 50%; border: solid transparent; content: " "; height: 0; width: 0; position: absolute; pointer-events: none; }
 .admin-settings .demo .micro-balloon:after { border-top-color: #fff; border-width: 7px; margin-left: -7px; }
 .admin-settings .demo .micro-balloon:before { border-top-color: #999; border-width: 8px; margin-left: -8px; }
@@ -899,6 +903,8 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .micro-bottom.micro-balloon:after, .admin-settings .demo .micro-bottom.micro-balloon:before { bottom: 97%; top: auto; }
 .admin-settings .demo .micro-bottom.micro-balloon:after { border-bottom-color: #fff; border-top-color: transparent; }
 .admin-settings .demo .micro-bottom.micro-balloon:before { border-bottom-color: #999; border-top-color: transparent; }
+.admin-settings .demo .micro-copy.alignleft, .admin-settings .demo .micro-copy.alignright { float: none; }
+.admin-settings .demo .micro-copy.alignright { margin-left: auto; }
 .admin-settings .demo .blogcard-type .blogcard::before { font-family: FontAwesome; position: absolute; top: -1.1em; left: 2%; font-size: 0.7em; padding: 2px 0.6em 3px; background-color: #333; color: #fff; border-radius: 2px; white-space: pre; letter-spacing: 0.06em; }
 .admin-settings .demo .bct-related .blogcard::before { content: " 関連記事"; }
 .admin-settings .demo .bct-reference .blogcard::before { content: " 参考記事"; }
@@ -928,9 +934,9 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .column-2-4-3-1 .column-right { width: 25%; }
 .admin-settings .demo .toggle-wrap { margin: 1.2em 0; position: relative; }
 .admin-settings .demo .toggle-wrap > p { display: none; }
+.admin-settings .demo .toggle-wrap .toggle-content { visibility: hidden; opacity: 0; padding: 0 1em; height: 0; transition: all 0.5s ease; }
 .admin-settings .demo .toggle-button { display: block; cursor: pointer; padding: 3px 10px; background-color: #f3f4f5; border: 1px solid #ccc; text-align: center; border-radius: 4px; position: relative; margin: 0; }
 .admin-settings .demo .toggle-button::before { content: '\f067'; font-family: FontAwesome; margin-right: 0.4em; font-size: 0.8em; color: #999; }
-.admin-settings .demo .toggle-button .toggle-content { visibility: hidden; opacity: 0; padding: 0 1em; height: 0; transition: all 0.5s ease; }
 .admin-settings .demo .toggle-button:hover { opacity: 0.7; }
 .admin-settings .demo .toggle-checkbox { display: none; }
 .admin-settings .demo .toggle-checkbox:checked ~ .toggle-button { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
@@ -1426,6 +1432,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo img.alignleft { display: inline-block; margin: 0 1.5em 1em 0; }
 .admin-settings .demo .comment-btn { margin: 24px 0; cursor: pointer; }
 .admin-settings .demo label { cursor: pointer; }
+.admin-settings .demo .sitemap li a::before { display: none; }
 .admin-settings .demo figure { margin: 0; }
 .admin-settings .demo img { max-width: 100%; height: auto; border: 0; -webkit-backface-visibility: hidden; }
 .admin-settings .demo .circle-image img { border-radius: 50%; }
@@ -1938,11 +1945,14 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .btn-hand-o-right:before, .admin-settings .demo .btn-wrap.btn-wrap-hand-o-right > a:before { content: "\f0a4"; }
 .admin-settings .demo .btn-arrow-circle-o-right:before, .admin-settings .demo .btn-wrap.btn-wrap-arrow-circle-o-right > a:before { content: "\f18e"; }
 .admin-settings .demo .btn-caret-square-o-right:before, .admin-settings .demo .btn-wrap.btn-wrap-caret-square-o-right > a:before { content: "\f152"; }
+.admin-settings .demo .micro-copy.alignleft { float: none; margin-right: 0; text-align: left; }
+.admin-settings .demo .micro-copy.alignright { float: none; margin-left: 0; text-align: right; }
+.admin-settings .demo .micro-copy.aligncenter { text-align: center; }
 .admin-settings .demo .micro-top { font-size: 0.8em; margin-bottom: -1em; margin-top: 1em; }
 .admin-settings .demo .micro-bottom { font-size: 0.8em; margin-top: -0.8em; margin-bottom: 1em; }
 .admin-settings .demo .micro-center { text-align: center; }
 .admin-settings .demo .micro-right { text-align: right; }
-.admin-settings .demo .micro-balloon { position: relative; background: #fff; border: 1px solid #999; border-radius: 4px; padding: 3px 8px; display: table; margin-bottom: -.7em; }
+.admin-settings .demo .micro-balloon { position: relative; background: #fff; border: 1px solid #999; border-radius: 4px; padding: 3px 8px; display: table; margin-bottom: -.7em; font-size: 0.8em; }
 .admin-settings .demo .micro-balloon:after, .admin-settings .demo .micro-balloon:before { top: 97%; left: 50%; border: solid transparent; content: " "; height: 0; width: 0; position: absolute; pointer-events: none; }
 .admin-settings .demo .micro-balloon:after { border-top-color: #fff; border-width: 7px; margin-left: -7px; }
 .admin-settings .demo .micro-balloon:before { border-top-color: #999; border-width: 8px; margin-left: -8px; }
@@ -1952,6 +1962,8 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .micro-bottom.micro-balloon:after, .admin-settings .demo .micro-bottom.micro-balloon:before { bottom: 97%; top: auto; }
 .admin-settings .demo .micro-bottom.micro-balloon:after { border-bottom-color: #fff; border-top-color: transparent; }
 .admin-settings .demo .micro-bottom.micro-balloon:before { border-bottom-color: #999; border-top-color: transparent; }
+.admin-settings .demo .micro-copy.alignleft, .admin-settings .demo .micro-copy.alignright { float: none; }
+.admin-settings .demo .micro-copy.alignright { margin-left: auto; }
 .admin-settings .demo .blogcard-type .blogcard::before { font-family: FontAwesome; position: absolute; top: -1.1em; left: 2%; font-size: 0.7em; padding: 2px 0.6em 3px; background-color: #333; color: #fff; border-radius: 2px; white-space: pre; letter-spacing: 0.06em; }
 .admin-settings .demo .bct-related .blogcard::before { content: " 関連記事"; }
 .admin-settings .demo .bct-reference .blogcard::before { content: " 参考記事"; }
@@ -1981,9 +1993,9 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .column-2-4-3-1 .column-right { width: 25%; }
 .admin-settings .demo .toggle-wrap { margin: 1.2em 0; position: relative; }
 .admin-settings .demo .toggle-wrap > p { display: none; }
+.admin-settings .demo .toggle-wrap .toggle-content { visibility: hidden; opacity: 0; padding: 0 1em; height: 0; transition: all 0.5s ease; }
 .admin-settings .demo .toggle-button { display: block; cursor: pointer; padding: 3px 10px; background-color: #f3f4f5; border: 1px solid #ccc; text-align: center; border-radius: 4px; position: relative; margin: 0; }
 .admin-settings .demo .toggle-button::before { content: '\f067'; font-family: FontAwesome; margin-right: 0.4em; font-size: 0.8em; color: #999; }
-.admin-settings .demo .toggle-button .toggle-content { visibility: hidden; opacity: 0; padding: 0 1em; height: 0; transition: all 0.5s ease; }
 .admin-settings .demo .toggle-button:hover { opacity: 0.7; }
 .admin-settings .demo .toggle-checkbox { display: none; }
 .admin-settings .demo .toggle-checkbox:checked ~ .toggle-button { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
