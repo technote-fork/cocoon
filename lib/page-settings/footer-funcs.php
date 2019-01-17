@@ -5,6 +5,8 @@
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
  */
+if ( !defined( 'ABSPATH' ) ) exit;
+
 //フッターカラー
 define('OP_FOOTER_BACKGROUND_COLOR', 'footer_background_color');
 if ( !function_exists( 'get_footer_background_color' ) ):
@@ -41,7 +43,7 @@ endif;
 define('OP_SITE_INITIATION_YEAR', 'site_initiation_year');
 if ( !function_exists( 'get_site_initiation_year' ) ):
 function get_site_initiation_year(){
-  return get_theme_option(OP_SITE_INITIATION_YEAR, get_first_post_year() ? get_first_post_year() : date('Y'));
+  return get_theme_option(OP_SITE_INITIATION_YEAR, get_first_post_year() ? get_first_post_year() : date_i18n('Y'));
 }
 endif;
 
@@ -49,7 +51,7 @@ endif;
 define('OP_COPYRIGHT_NAME', 'copyright_name');
 if ( !function_exists( 'get_copyright_name' ) ):
 function get_copyright_name(){
-  return get_theme_option(OP_COPYRIGHT_NAME);
+  return stripslashes_deep(get_theme_option(OP_COPYRIGHT_NAME));
 }
 endif;
 
@@ -92,13 +94,13 @@ function get_the_site_credit(){
     //   $credit = '© '.get_site_initiation_year().' '.get_copyright_display_name().'.';
     //   break;
     case 'simple_year_begin_to_now':
-      $credit = '© '.get_site_initiation_year().'-'.date('Y').' '.get_copyright_display_name().'.';
+      $credit = '© '.get_site_initiation_year().'-'.date_i18n('Y').' '.get_copyright_display_name().'.';
       break;
     case 'full':
       $credit = 'Copyright © '.get_site_initiation_year().' '.get_copyright_display_name().' All Rights Reserved.';
       break;
     case 'full_year_begin_to_now':
-      $credit = 'Copyright © '.get_site_initiation_year().'-'.date('Y').' '.get_copyright_display_name().' All Rights Reserved.';
+      $credit = 'Copyright © '.get_site_initiation_year().'-'.date_i18n('Y').' '.get_copyright_display_name().' All Rights Reserved.';
       break;
     default:
       $credit = get_user_credit_notation();

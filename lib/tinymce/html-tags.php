@@ -5,6 +5,7 @@
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
  */
+if ( !defined( 'ABSPATH' ) ) exit;
 
 add_action('admin_init', 'add_html_tags_dropdown');
 add_action('admin_head', 'generate_html_tags_is');
@@ -119,7 +120,6 @@ function generate_html_tags_is($value){
   htmlTags[6].after = '<?php echo $after; ?>';
 
   <?php //トグルボックス
-  //$date_id = date("YmdHis");
   $before = '<div class="toggle-wrap"><input id="toggle-checkbox-COCOON_DATE_ID" class="toggle-checkbox" type="checkbox"> <label class="toggle-button" for="toggle-checkbox-COCOON_DATE_ID">'.__( 'トグルボックス見出し', THEME_NAME ).'</label><div class="toggle-content">';
   $after = '</div></div>';
   ?>

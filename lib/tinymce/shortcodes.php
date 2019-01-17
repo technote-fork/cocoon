@@ -5,6 +5,7 @@
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
  */
+if ( !defined( 'ABSPATH' ) ) exit;
 
 add_action('admin_init', 'add_shortcodes_dropdown');
 add_action('admin_head', 'generate_shortcodes_is');
@@ -184,20 +185,40 @@ function generate_shortcodes_is($value){
   $after = '"]';
   ?>
   shortcodes[13] = new Array();
-  shortcodes[13].title  = '<?php echo __( '過去日時', THEME_NAME ); ?><?php echo date(__( '（1年前なら f\r\o\m="Y/m/d" と記入）', THEME_NAME ), strtotime("-1 year")); ?>';
+  shortcodes[13].title  = '<?php echo __( '過去日時', THEME_NAME ); ?><?php echo date_i18n(__( '（1年前なら f\r\o\m="Y/m/d" と記入）', THEME_NAME ), strtotime("-1 year")); ?>';
   shortcodes[13].tag = '<?php echo $before.$after; ?>';
   shortcodes[13].before = '<?php echo $before; ?>';
   shortcodes[13].after = '<?php echo $after; ?>';
 
-<?php //評価スター
-$before = '[star rate="';
-$after = '" number="1"]';
-?>
-shortcodes[14] = new Array();
-shortcodes[14].title  = '<?php echo __( '評価スター', THEME_NAME ); ?>';
-shortcodes[14].tag = '<?php echo $before.$after; ?>';
-shortcodes[14].before = '<?php echo $before; ?>';
-shortcodes[14].after = '<?php echo $after; ?>';
+  <?php //過去日時（年）ショートコード
+  $before = '[yago from="';
+  $after = '"]';
+  ?>
+  shortcodes[14] = new Array();
+  shortcodes[14].title  = '<?php echo __( '過去年', THEME_NAME ); ?><?php echo date_i18n(__( '（2年前なら f\r\o\m="Y/m/d" と記入）', THEME_NAME ), strtotime("-2 year")); ?>';
+  shortcodes[14].tag = '<?php echo $before.$after; ?>';
+  shortcodes[14].before = '<?php echo $before; ?>';
+  shortcodes[14].after = '<?php echo $after; ?>';
+
+  <?php //年齢ショートコード
+  $before = '[age birth="';
+  $after = '"]';
+  ?>
+  shortcodes[15] = new Array();
+  shortcodes[15].title  = '<?php echo __( '年齢（オプションに誕生日を記入）', THEME_NAME ); ?>';
+  shortcodes[15].tag = '<?php echo $before.$after; ?>';
+  shortcodes[15].before = '<?php echo $before; ?>';
+  shortcodes[15].after = '<?php echo $after; ?>';
+
+  <?php //評価スター
+  $before = '[star rate="';
+  $after = '" number="1"]';
+  ?>
+  shortcodes[16] = new Array();
+  shortcodes[16].title  = '<?php echo __( '評価スター', THEME_NAME ); ?>';
+  shortcodes[16].tag = '<?php echo $before.$after; ?>';
+  shortcodes[16].before = '<?php echo $before; ?>';
+  shortcodes[16].after = '<?php echo $after; ?>';
 
   <?php
   echo '</script>';

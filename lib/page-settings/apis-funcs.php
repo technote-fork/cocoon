@@ -5,6 +5,7 @@
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
  */
+if ( !defined( 'ABSPATH' ) ) exit;
 
 //AmazonアクセスキーID
 define('OP_AMAZON_API_ACCESS_KEY_ID', 'amazon_api_access_key_id');
@@ -66,7 +67,7 @@ endif;
 define('OP_AMAZON_SEARCH_BUTTON_TEXT', 'amazon_search_button_text');
 if ( !function_exists( 'get_amazon_search_button_text' ) ):
 function get_amazon_search_button_text(){
-  return get_theme_option(OP_AMAZON_SEARCH_BUTTON_TEXT, __( 'Amazon', THEME_NAME ));
+  return stripslashes_deep(get_theme_option(OP_AMAZON_SEARCH_BUTTON_TEXT, __( 'Amazon', THEME_NAME )));
 }
 endif;
 
@@ -130,7 +131,7 @@ endif;
 define('OP_RAKUTEN_SEARCH_BUTTON_TEXT', 'rakuten_search_button_text');
 if ( !function_exists( 'get_rakuten_search_button_text' ) ):
 function get_rakuten_search_button_text(){
-  return get_theme_option(OP_RAKUTEN_SEARCH_BUTTON_TEXT, __( '楽天', THEME_NAME ));
+  return stripslashes_deep(get_theme_option(OP_RAKUTEN_SEARCH_BUTTON_TEXT, __( '楽天', THEME_NAME )));
 }
 endif;
 
@@ -170,7 +171,7 @@ endif;
 define('OP_YAHOO_SEARCH_BUTTON_TEXT', 'yahoo_search_button_text');
 if ( !function_exists( 'get_yahoo_search_button_text' ) ):
 function get_yahoo_search_button_text(){
-  return get_theme_option(OP_YAHOO_SEARCH_BUTTON_TEXT, __( 'Yahoo!ショッピング', THEME_NAME ));
+  return stripslashes_deep(get_theme_option(OP_YAHOO_SEARCH_BUTTON_TEXT, __( 'Yahoo!ショッピング', THEME_NAME )));
 }
 endif;
 

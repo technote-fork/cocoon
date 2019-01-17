@@ -5,6 +5,7 @@
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
  */
+if ( !defined( 'ABSPATH' ) ) exit;
 
 //通知エリアを表示するか
 define('OP_NOTICE_AREA_VISIBLE', 'notice_area_visible');
@@ -18,7 +19,7 @@ endif;
 define('OP_NOTICE_AREA_MESSAGE', 'notice_area_message');
 if ( !function_exists( 'get_notice_area_message' ) ):
 function get_notice_area_message(){
-  return get_theme_option(OP_NOTICE_AREA_MESSAGE);
+  return stripslashes_deep(get_theme_option(OP_NOTICE_AREA_MESSAGE));
 }
 endif;
 

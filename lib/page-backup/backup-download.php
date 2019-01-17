@@ -12,12 +12,6 @@ require_once('../_defins.php');
 //管理者権限を持っているログインユーザーかどうか
 if (is_user_administrator()) {
   global $wpdb;
-  // $option_name = 'theme_mods_';
-  // if (is_child_theme()) {
-  //   $option_name .= THEME_CHILD_DIR;
-  // } else {
-  //   $option_name .= THEME_PARENT_DIR;
-  // }
 
   $option_name = get_theme_mods_option_name();
   $res = $wpdb->get_row("

@@ -3,7 +3,9 @@
  * @author: yhira
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
- */ ?>
+ */
+if ( !defined( 'ABSPATH' ) ) exit; ?>
+
 <div class="metabox-holder">
 
 <!-- カルーセル -->
@@ -34,6 +36,9 @@
               'all_page' => __( '全ページで表示', THEME_NAME ),
               'front_page_only' => __( 'フロントページのみで表示', THEME_NAME ),
               'not_singular' => __( '投稿・固定ページ以外で表示', THEME_NAME ),
+              'singular_only' => __( '投稿・固定ページのみで表示', THEME_NAME ),
+              'single_only' => __( '投稿ページのみで表示', THEME_NAME ),
+              'page_only' => __( '固定ページのみで表示', THEME_NAME ),
             );
             generate_selectbox_tag(OP_CAROUSEL_DISPLAY_TYPE, $options, get_carousel_display_type());
             generate_tips_tag(__( 'カルーセルを表示するページを設定します。', THEME_NAME ));
@@ -50,6 +55,24 @@
             <?php
             generate_hierarchical_category_check_list( 0, OP_CAROUSEL_CATEGORY_IDS, get_carousel_category_ids(), 300 );
             generate_tips_tag(__( 'カルーセルと関連付けるカテゴリを選択してください。ランダムで表示されます。', THEME_NAME ));
+            ?>
+          </td>
+        </tr>
+
+        <!-- カルーセルの並び替え -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag(OP_CAROUSEL_ORDERBY, __('カルーセルの並び替え', THEME_NAME) ); ?>
+          </th>
+          <td>
+            <?php
+            $options = array(
+              'rand' => __( 'ランダム', THEME_NAME ),
+              'post_date' => __( '投稿日（降順）', THEME_NAME ),
+              'post_modified' => __( '更新日（降順）', THEME_NAME ),
+            );
+            generate_selectbox_tag(OP_CAROUSEL_ORDERBY, $options, get_carousel_orderby());
+            generate_tips_tag(__( 'カルーセルを表示する順番を変更します。', THEME_NAME ));
             ?>
           </td>
         </tr>

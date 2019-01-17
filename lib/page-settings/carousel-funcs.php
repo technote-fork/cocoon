@@ -5,6 +5,7 @@
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
  */
+if ( !defined( 'ABSPATH' ) ) exit;
 
 //カルーセルの表示
 define('OP_CAROUSEL_DISPLAY_TYPE', 'carousel_display_type');
@@ -19,7 +20,10 @@ function is_carousel_visible(){
     (
       is_carousel_display_type_all_page() ||
       (is_front_top_page() && is_carousel_display_type_front_page_only()) ||
-      (!is_singular() && is_carousel_display_type_not_singular())
+      (!is_singular() && is_carousel_display_type_not_singular()) ||
+      (is_singular() && is_carousel_display_type_singular_only()) ||
+      (is_single() && is_carousel_display_type_single_only()) ||
+      (is_page() && is_carousel_display_type_page_only())
     );
 }
 endif;
@@ -38,12 +42,35 @@ function is_carousel_display_type_not_singular(){
   return get_carousel_display_type() == 'not_singular';
 }
 endif;
+if ( !function_exists( 'is_carousel_display_type_singular_only' ) ):
+function is_carousel_display_type_singular_only(){
+  return get_carousel_display_type() == 'singular_only';
+}
+endif;
+if ( !function_exists( 'is_carousel_display_type_single_only' ) ):
+function is_carousel_display_type_single_only(){
+  return get_carousel_display_type() == 'single_only';
+}
+endif;
+if ( !function_exists( 'is_carousel_display_type_page_only' ) ):
+function is_carousel_display_type_page_only(){
+  return get_carousel_display_type() == 'page_only';
+}
+endif;
 
 //カルーセルに表示するカテゴリID
 define('OP_CAROUSEL_CATEGORY_IDS', 'carousel_category_ids');
 if ( !function_exists( 'get_carousel_category_ids' ) ):
 function get_carousel_category_ids(){
   return get_theme_option(OP_CAROUSEL_CATEGORY_IDS, array());
+}
+endif;
+
+//カルーセルの表示順
+define('OP_CAROUSEL_ORDERBY', 'carousel_orderby');
+if ( !function_exists( 'get_carousel_orderby' ) ):
+function get_carousel_orderby(){
+  return get_theme_option(OP_CAROUSEL_ORDERBY, 'rand');
 }
 endif;
 

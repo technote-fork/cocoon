@@ -1,7 +1,16 @@
 <?php //楽天商品リンク
+/**
+ * Cocoon WordPress Theme
+ * @author: yhira
+ * @link: https://wp-cocoon.com/
+ * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
+ */
+if ( !defined( 'ABSPATH' ) ) exit;
 
 //楽天商品リンク作成
-add_shortcode('rakuten', 'rakuten_product_link_shortcode');
+if (!shortcode_exists('rakuten')) {
+  add_shortcode('rakuten', 'rakuten_product_link_shortcode');
+}
 if ( !function_exists( 'rakuten_product_link_shortcode' ) ):
 function rakuten_product_link_shortcode($atts){
   extract( shortcode_atts( array(
@@ -432,87 +441,5 @@ function rakuten_product_link_shortcode($atts){
     return get_rakuten_error_message_tag($default_rakuten_link_tag, $error_message);
   }
 
-}
-endif;
-
-//タイムラインの作成（timelineショートコード）
-add_shortcode('timeline', 'timeline_shortcode');
-if ( !function_exists( 'timeline_shortcode' ) ):
-function timeline_shortcode( $atts, $content = null ){
-  extract( shortcode_atts( array(
-    'title' => null,
-  ), $atts ) );
-  $content = remove_wrap_shortcode_wpautop('ti', $content);
-  $content = do_shortcode( shortcode_unautop( $content ) );
-  $title = sanitize_shortcode_value($title);
-  $title_tag = null;
-  if ($title) {
-    $title_tag = '<div class="timeline-title">'.$title.'</div>';
-  }
-  $tag = '<div class="timeline-box">'.
-            $title_tag.
-            '<ul class="timeline">'.
-              $content.
-            '</ul>'.
-          '</div>';
-  return apply_filters('timeline_tag', $tag);
-}
-endif;
-
-//timelineショートコードコンテンツ内に余計な改行や文字列が入らないように除外
-if ( !function_exists( 'remove_wrap_shortcode_wpautop' ) ):
-function remove_wrap_shortcode_wpautop($shortcode, $content){
-  //tiショートコードのみを抽出
-  $pattern = '/\['.$shortcode.'.*?\].*?\[\/'.$shortcode.'\]/is';
-  if (preg_match_all($pattern, $content, $m)) {
-    $all = null;
-    foreach ($m[0] as $code) {
-      $all .= $code;
-    }
-    return $all;
-  }
-}
-endif;
-
-//タイムラインアイテム作成（タイムラインの中の項目）
-add_shortcode('ti', 'timeline_item_shortcode');
-if ( !function_exists( 'timeline_item_shortcode' ) ):
-function timeline_item_shortcode( $atts, $content = null ){
-  extract( shortcode_atts( array(
-    'title' => null,
-    'label' => null,
-  ), $atts ) );
-  $title = sanitize_shortcode_value($title);
-  $label = sanitize_shortcode_value($label);
-  $title_tag = null;
-  if ($title) {
-    $title_tag = '<div class="timeline-item-title">'.$title.'</div>';
-  }
-
-  $content = do_shortcode( shortcode_unautop( $content ) );
-  $tag = '<li class="timeline-item">'.
-            '<div class="timeline-item-label">'.$label.'</div>'.
-            '<div class="timeline-item-content">'.
-              '<div class="timeline-item-title">'.$title.'</div>'.
-              '<div class="timeline-item-snippet">'.$content.'</div>'.
-            '</div>'.
-          '</li>';
-  return apply_filters('timeline_item_tag', $tag);
-}
-endif;
-
-//相対的な時間経過を取得するショートコード
-add_shortcode('ago', 'ago_shortcode');
-if ( !function_exists( 'ago_shortcode' ) ):
-function ago_shortcode( $atts ){
-  extract( shortcode_atts( array(
-    'from' => null,
-  ), $atts ) );
-  if (!$from) {
-    return '<span class="ago-error">'.__( '日付未入力', THEME_NAME ).'</span>';
-  }
-  $from = sanitize_shortcode_value($from);
-  $from = strtotime($from);
-  return get_human_time_diff_advance($from);
 }
 endif;

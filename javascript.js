@@ -69,6 +69,12 @@
 
   //カレーセルの表示
   $('.carousel').fadeIn(1000);
+
+  //Google検索ボタン
+  $('.sbtn').click(function(){
+		var w = $(this).prev('.sform').text();
+		if(w) window.open('https://www.google.co.jp/search?q='+encodeURIComponent(w),'_blank');
+	});
 })(jQuery);
 
 /*
@@ -78,9 +84,9 @@
 (function(){
     var f = document.querySelectorAll(".video-click");
     for (var i = 0; i < f.length; ++i) {
-    f[i].onclick = function () {
-      var iframe = this.getAttribute("data-iframe");
-      this.parentElement.innerHTML = '<div class="video">' + iframe + '</div>';
-    }
+      f[i].onclick = function () {
+        var iframe = this.getAttribute("data-iframe");
+        this.parentElement.innerHTML = '<div class="video">' + iframe + '</div>';
+      }
     }
 })();

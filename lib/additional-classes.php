@@ -5,6 +5,7 @@
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
  */
+if ( !defined( 'ABSPATH' ) ) exit;
 
 //フォントファミリークラスの取得
 if ( !function_exists( 'get_site_font_family_class' ) ):
@@ -204,6 +205,24 @@ function body_class_additional($classes) {
         $add_no_appeal_area = true;
       }
       break;
+    //投稿・固定ページのみで表示
+    case 'singular_only':
+      if (!is_singular()) {
+        $add_no_appeal_area = true;
+      }
+      break;
+    //投稿ページで表示
+    case 'single_only':
+      if (!is_single()) {
+        $add_no_appeal_area = true;
+      }
+      break;
+    //固定ページで表示
+    case 'page_only':
+      if (!is_page()) {
+        $add_no_appeal_area = true;
+      }
+      break;
   }
 
   //アピールエリア表示のフラグが立っている場合はクラスを追加
@@ -227,6 +246,29 @@ function body_class_additional($classes) {
         $add_no_carousel = true;
       }
       break;
+    //投稿・固定ページのみで表示
+    case 'singular_only':
+      if (!is_singular()) {
+        $add_no_carousel = true;
+      }
+      break;
+    //投稿ページで表示
+    case 'single_only':
+      if (!is_single()) {
+        $add_no_carousel = true;
+      }
+      break;
+    //固定ページで表示
+    case 'page_only':
+      if (!is_page()) {
+        $add_no_carousel = true;
+      }
+      break;
+  }
+  //_v($add_no_carousel);
+  //カルーセル表示のフラグが立っている場合はクラスを追加
+  if ($add_no_carousel) {
+    $classes[] = 'no-carousel';
   }
 
   //Live Writer用クラス
@@ -249,11 +291,6 @@ function body_class_additional($classes) {
   //   $auther_class = 'author-guest';
   // }
   $classes[] = $auther_class;
-
-  //カルーセル表示のフラグが立っている場合はクラスを追加
-  if ($add_no_carousel) {
-    $classes[] = 'no-carousel';
-  }
 
   //モバイルボタンはスライドインタイプか
   if (is_mobile_button_layout_type_slide_in()) {

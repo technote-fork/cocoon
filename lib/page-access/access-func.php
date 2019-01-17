@@ -5,6 +5,7 @@
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
  */
+if ( !defined( 'ABSPATH' ) ) exit;
 
 //関数テキストテーブルのバージョン
 define('ACCESSES_TABLE_VERSION', DEBUG_MODE ? rand(0, 99) : '0.0.3');//rand(0, 99)
@@ -165,9 +166,6 @@ function update_accesses_table() {
 
 }
 endif;
-//update_accesses_table();
-//_v( date('Y-m-d', strtotime(date('Y-m-d').' -99 day')) );
-//_v(date('Y-m-d'));
 
 //DBにアクセスをカウントする
 if ( !function_exists( 'logging_page_access' ) ):
@@ -404,10 +402,6 @@ function get_access_ranking_records($days = 'all', $limit = 5, $type = 'post', $
 
   global $wpdb;
   $access_table = ACCESSES_TABLE_NAME;
-  // $post_type = get_accesses_post_type();
-  // if (!is_page()) {
-  //   $post_type = 'post';
-  // }
   $post_type = 'post';
   $date = get_current_db_date();
 

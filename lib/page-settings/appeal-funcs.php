@@ -5,14 +5,7 @@
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
  */
-
-// //アピールエリアの表示
-// define('OP_APPEAL_AREA_VISIBLE', 'appeal_area_visible');
-// if ( !function_exists( 'is_appeal_area_visible' ) ):
-// function is_appeal_area_visible(){
-//   return get_theme_option(OP_APPEAL_AREA_VISIBLE, 1);
-// }
-// endif;
+if ( !defined( 'ABSPATH' ) ) exit;
 
 //アピールエリアの表示
 define('OP_APPEAL_AREA_DISPLAY_TYPE', 'appeal_area_display_type');
@@ -63,7 +56,7 @@ endif;
 define('OP_APPEAL_AREA_TITLE', 'appeal_area_title');
 if ( !function_exists( 'get_appeal_area_title' ) ):
 function get_appeal_area_title(){
-  return get_theme_option(OP_APPEAL_AREA_TITLE);
+  return stripslashes_deep(get_theme_option(OP_APPEAL_AREA_TITLE));
 }
 endif;
 
@@ -80,7 +73,7 @@ endif;
 define('OP_APPEAL_AREA_BUTTON_MESSAGE', 'appeal_area_button_message');
 if ( !function_exists( 'get_appeal_area_button_message' ) ):
 function get_appeal_area_button_message(){
-  return get_theme_option(OP_APPEAL_AREA_BUTTON_MESSAGE);
+  return stripslashes_deep(get_theme_option(OP_APPEAL_AREA_BUTTON_MESSAGE));
 }
 endif;
 

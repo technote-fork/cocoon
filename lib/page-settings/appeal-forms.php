@@ -3,7 +3,9 @@
  * @author: yhira
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
- */ ?>
+ */
+if ( !defined( 'ABSPATH' ) ) exit; ?>
+
 <div class="metabox-holder">
 
 <!-- アピールエリア -->
@@ -35,6 +37,9 @@
               'all_page' => __( '全ページで表示', THEME_NAME ),
               'front_page_only' => __( 'フロントページのみで表示', THEME_NAME ),
               'not_singular' => __( '投稿・固定ページ以外で表示', THEME_NAME ),
+              'singular_only' => __( '投稿・固定ページのみで表示', THEME_NAME ),
+              'single_only' => __( '投稿ページのみで表示', THEME_NAME ),
+              'page_only' => __( '固定ページのみで表示', THEME_NAME ),
             );
             generate_selectbox_tag(OP_APPEAL_AREA_DISPLAY_TYPE, $options, get_appeal_area_display_type());
             generate_tips_tag(__( 'アピールエリアを表示するページを設定します。', THEME_NAME ));

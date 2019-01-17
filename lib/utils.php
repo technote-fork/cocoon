@@ -5,6 +5,7 @@
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
  */
+if ( !defined( 'ABSPATH' ) ) exit;
 
 //カテゴリーラベルのスタイルタグ属性を取得
 if ( !function_exists( 'get_category_label_style_attr' ) ):
@@ -1489,14 +1490,14 @@ endif;
 //アクセステーブル用の現在の日時文字列
 if ( !function_exists( 'get_current_db_date' ) ):
 function get_current_db_date(){
-  return date('Y-m-d');
+  return date_i18n('Y-m-d');
 }
 endif;
 
 //アクセステーブル用の現在の日時文字列（$days日前）
 if ( !function_exists( 'get_current_db_date_before' ) ):
 function get_current_db_date_before($days){
-  return date('Y-m-d', strtotime(current_time('Y-m-d').' -'.$days.' day'));
+  return date_i18n('Y-m-d', strtotime(current_time('Y-m-d').' -'.$days.' day'));
 }
 endif;
 
@@ -2101,6 +2102,17 @@ function get_human_time_diff_advance( $from, $to = '' ) {
 }
 endif;
 
+//人間感覚の年の取得
+if ( !function_exists( 'get_human_years_ago' ) ):
+function get_human_years_ago( $from, $unit = '' ) {
+  $to = time();
+  $diff = (int) abs($to - $from);
+  $years = floor($diff / 31536000);
+  $since = sprintf('%s'.$unit, $years);
+  return $since;
+}
+endif;
+
 //文字列をBoolean型に変換
 if ( !function_exists( 'str_to_bool' ) ):
 function str_to_bool($string){
@@ -2109,7 +2121,6 @@ function str_to_bool($string){
   } else {
     return true;
   }
-
 }
 endif;
 

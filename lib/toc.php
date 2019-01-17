@@ -5,6 +5,7 @@
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
  */
+if ( !defined( 'ABSPATH' ) ) exit;
 
 if ( !function_exists( 'get_toc_filter_priority' ) ):
 function get_toc_filter_priority(){
@@ -33,20 +34,9 @@ function get_toc_tag($the_content, &$harray, $is_widget = false){
     return;
   }
 
-  //投稿ページだと表示しない
-  if (!is_single_toc_visible() && is_single()) {
-    return;
-  }
-  //固定ページだと表示しない
-  if (!is_page_toc_visible() && is_page()) {
-    return;
-  }
-
-  //投稿ページで非表示になっていると表示しない
-  if (!is_the_page_toc_visible()) {
-    return;
-  }
-
+  //_v($the_content);
+  //目次ショートコードを取り除く
+  $the_content = preg_replace('/\[toc.*\]/', '', $the_content);
   $content     = do_shortcode($the_content);
   $headers     = array();
   $html        = '';
@@ -162,8 +152,12 @@ function get_toc_tag($the_content, &$harray, $is_widget = false){
       $toc_check = null;
       $label_for = null;
     } else {
-      $toc_check = '<input type="checkbox" id="toc-checkbox"'.$checked.'>';
-      $label_for = ' for="toc-checkbox"';
+      global $_TOC_INDEX;
+      //_v($_TOC_INDEX);
+      $toc_id = 'toc-checkbox-'.$_TOC_INDEX;
+      $toc_check = '<input type="checkbox" class="toc-checkbox" id="'.$toc_id.'"'.$checked.'>';
+      $label_for = ' for="'.$toc_id.'"';
+      $_TOC_INDEX++;
     }
   } else {
     $title_elm = 'div';
@@ -189,13 +183,62 @@ function get_toc_tag($the_content, &$harray, $is_widget = false){
 }
 endif;
 
+if ( !function_exists( 'is_total_the_page_toc_visible' ) ):
+function is_total_the_page_toc_visible(){
+  //投稿・固定ページでない場合
+  if (!is_singular()) {
+    return false;
+  }
+
+  //目次が非表示の場合
+  if (!is_toc_visible()) {
+    return false;
+  }
+
+  //投稿ページだと表示しない
+  if (!is_single_toc_visible() && is_single()) {
+    return false;
+  }
+
+  //固定ページだと表示しない
+  if (!is_page_toc_visible() && is_page()) {
+    return false;
+  }
+
+  //投稿ページで非表示になっていると表示しない
+  if (!is_the_page_toc_visible()) {
+    return false;
+  }
+
+  return true;
+}
+endif;
+
 //最初のH2タグの前に目次を挿入する
 //ref:https://qiita.com/wkwkrnht/items/c2ee485ff1bbd81325f9
-if (is_toc_visible()) {
-  add_filter('the_content', 'add_toc_before_1st_h2', get_toc_filter_priority());
-}
+add_filter('the_content', 'add_toc_before_1st_h2', get_toc_filter_priority());
 if ( !function_exists( 'add_toc_before_1st_h2' ) ):
 function add_toc_before_1st_h2($the_content){
+  global $_TOC_SHORTCODE_USE;
+  //ページ上で目次が非表示設定（ショートコードも未使用）になっている場合
+  if (!is_total_the_page_toc_visible() && !$_TOC_SHORTCODE_USE) {
+    return $the_content;
+  }
+  // //投稿ページだと表示しない
+  // if (!is_single_toc_visible() && is_single()) {
+  //   return $the_content;
+  // }
+
+  // //固定ページだと表示しない
+  // if (!is_page_toc_visible() && is_page()) {
+  //   return $the_content;
+  // }
+
+  // //投稿ページで非表示になっていると表示しない
+  // if (!is_the_page_toc_visible()) {
+  //   return $the_content;
+  // }
+
   $content     = $the_content;
   $harray      = array();
 
@@ -250,8 +293,12 @@ function add_toc_before_1st_h2($the_content){
     }
 
   }
-  $h2result = get_h2_included_in_body( $the_content );//本文にH2タグが含まれていれば取得
-  $the_content = preg_replace(H2_REG, $html.PHP_EOL.PHP_EOL.$h2result, $the_content, 1);
+  //機能が有効な時のみ（ショートコードでは実行しない）
+  if (is_total_the_page_toc_visible()) {
+    $h2result = get_h2_included_in_body( $the_content );//本文にH2タグが含まれていれば取得
+    $the_content = preg_replace(H2_REG, $html.PHP_EOL.PHP_EOL.$h2result, $the_content, 1);
+  }
+
   //var_dump($the_content);
   return $the_content;
 }

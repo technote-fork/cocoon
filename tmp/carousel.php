@@ -5,15 +5,17 @@
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
  */
+if ( !defined( 'ABSPATH' ) ) exit;
 
 if (is_carousel_visible() && get_carousel_category_ids() && !is_amp()): ?>
 <?php //カルーセルに関連付けられた投稿の取得
 $args = array(
   'cat' => get_carousel_category_ids(),
-  'orderby' => 'rand', //ランダム表示
+  'orderby' => get_carousel_orderby(), //ランダム表示
   'no_found_rows' => true,
   'posts_per_page' => get_carousel_max_count(),
 );
+$args = apply_filters('cocoon_carousel_args', $args);
 $query = new WP_Query( $args );
 // var_dump($query -> have_posts());
 // var_dump($query);

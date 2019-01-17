@@ -68,6 +68,14 @@
   >p{
     display: none;
   }
+  .toggle-content {
+    //display: none;
+    visibility: hidden;
+    opacity: 0;
+    padding: 0 1em;
+    height: 0;
+    transition: $bgc_hover_anime;
+  }
 }
 
 .toggle-button {
@@ -88,6 +96,8 @@
     font-size: 0.8em;
     color: $x_pallid_text_color;
   }
+
+
 }
 
 .toggle-button:hover {
@@ -96,15 +106,6 @@
 
 .toggle-checkbox{
   display: none;
-}
-
-.toggle-content {
-  //display: none;
-  visibility: hidden;
-  opacity: 0;
-  padding: 0 1em;
-  height: 0;
-  transition: $bgc_hover_anime;
 }
 
 .toggle-checkbox:checked ~ .toggle-button{

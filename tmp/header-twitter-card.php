@@ -4,7 +4,9 @@
  * @author: yhira
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
- */ ?>
+ */
+if ( !defined( 'ABSPATH' ) ) exit; ?>
+
 <!-- Twitter Card -->
 <meta name="twitter:card" content="<?php echo get_twitter_card_type();//Twitterのカードタイプを取得 ?>">
 <?php
@@ -63,7 +65,7 @@ if (is_singular()){//単一記事ページの場合
 ?>
 <meta name="twitter:domain" content="<?php echo get_the_site_domain() ?>">
 <?php if ( get_the_author_twitter_url() )://TwitterIDが設定されている場合 ?>
-<meta name="twitter:creator" content="@<?php echo esc_html( get_the_author_twitter_url() ) ?>">
-<meta name="twitter:site" content="@<?php echo esc_html( get_the_author_twitter_url() ) ?>">
+<meta name="twitter:creator" content="@<?php echo esc_html( get_the_author_twitter_id() ) ?>">
+<meta name="twitter:site" content="@<?php echo esc_html( get_the_author_twitter_id() ) ?>">
 <?php endif; ?>
 <!-- /Twitter Card -->

@@ -5,6 +5,7 @@
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
  */
+if ( !defined( 'ABSPATH' ) ) exit;
 
 ///////////////////////////////////////
 // SNSフォローボタンの設定
@@ -23,7 +24,7 @@ define('REP_AUTHOR', '#{author}');
 define('OP_SNS_FOLLOW_MESSAGE', 'sns_follow_message');
 if ( !function_exists( 'get_sns_follow_message' ) ):
 function get_sns_follow_message(){
-  return get_theme_option(OP_SNS_FOLLOW_MESSAGE, REP_AUTHOR.__( 'をフォローする', THEME_NAME ));
+  return stripslashes_deep(get_theme_option(OP_SNS_FOLLOW_MESSAGE, REP_AUTHOR.__( 'をフォローする', THEME_NAME )));
 }
 endif;
 if ( !function_exists( 'get_sns_follow_display_message' ) ):
