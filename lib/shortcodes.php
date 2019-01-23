@@ -14,11 +14,12 @@ if (!shortcode_exists('author_box')) {
 if ( !function_exists( 'author_box_shortcode' ) ):
 function author_box_shortcode($atts) {
   extract(shortcode_atts(array(
-    'label' => '',
+    'id' => null,
+    'label' => null,
   ), $atts));
   $label = sanitize_shortcode_value($label);
   ob_start();
-  generate_author_box_tag($label);
+  generate_author_box_tag($id, $label);
   $res = ob_get_clean();
   return $res;
 }
@@ -262,7 +263,7 @@ function timeline_item_shortcode( $atts, $content = null ){
 }
 endif;
 
-define('AGO_ERROR_MESSAGE', '<span class="ago-error">'.__( '日付未入力', THEME_NAME ).'</span>');
+define('TIME_ERROR_MESSAGE', '<span class="time-error">'.__( '日付未入力', THEME_NAME ).'</span>');
 //相対的な時間経過を取得するショートコード
 if (!shortcode_exists('ago')) {
   add_shortcode('ago', 'ago_shortcode');
@@ -273,7 +274,7 @@ function ago_shortcode( $atts ){
     'from' => null,
   ), $atts ) );
   if (!$from) {
-    return AGO_ERROR_MESSAGE;
+    return TIME_ERROR_MESSAGE;
   }
   $from = sanitize_shortcode_value($from);
   $from = strtotime($from);
@@ -295,7 +296,7 @@ function age_shortcode( $atts ){
   }
   //入力エラー出力
   if (!$from) {
-    return AGO_ERROR_MESSAGE;
+    return TIME_ERROR_MESSAGE;
   }
   $from = strtotime($from);
   return get_human_years_ago($from, $unit);
@@ -312,7 +313,7 @@ function yago_shortcode( $atts ){
   ), $atts ) );
   //入力エラー出力
   if (!$from) {
-    return AGO_ERROR_MESSAGE;
+    return TIME_ERROR_MESSAGE;
   }
   $from = strtotime($from);
   return get_human_years_ago($from, $unit);
@@ -410,5 +411,40 @@ function blogcard_shortcode( $atts, $content = null ) {
     }
     return $tag;
   }
+}
+endif;
+
+//カウントダウンタイマーの取得
+if ( !function_exists( 'get_countdown_days' ) ):
+function get_countdown_days( $to ) {
+  $now = date_i18n('U');
+  //$now = strtotime('2019/01/22 23:59:59');
+  $diff = (int) ($to - $now);
+  // _v(date_i18n("Y-m-d H:i:s", $to).'='.$to);
+  // _v(date_i18n("Y-m-d H:i:s", $now).'='.$now);
+  // _v($diff / 86400);
+  $days = ceil($diff / 86400);
+  if ($days <= 0) {
+    $days = 0;
+  }
+  $till = sprintf('%s', $days);
+  return $till;
+}
+endif;
+
+//相対的な時間経過を取得するショートコード
+add_shortcode('countdown', 'countdown_shortcode');
+if ( !function_exists( 'countdown_shortcode' ) ):
+function countdown_shortcode( $atts ){
+  extract( shortcode_atts( array(
+    'to' => null,
+    'unit' => null,
+  ), $atts ) );
+  //入力エラー出力
+  if (!$to) {
+    return TIME_ERROR_MESSAGE;
+  }
+  $to = strtotime($to);
+  return get_countdown_days($to).$unit;
 }
 endif;

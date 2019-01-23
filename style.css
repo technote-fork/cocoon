@@ -6,7 +6,7 @@ Theme URI: https://wp-cocoon.com/
 Author: わいひら
 Author URI: https://nelog.jp/
 Text Domain: cocoon
-Version: 1.5.5.1
+Version: 1.5.6.5
 Tags: two-columns, left-sidebar, right-sidebar
 License: GNU General Public License
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -296,6 +296,10 @@ a:hover {
 ol, ul {
   margin: 1em 0;
   padding-left: 40px;
+}
+
+hr {
+  color: #eee;
 }
 
 /* クリアフィックス */
@@ -3317,6 +3321,71 @@ label.screen-reader-text {
   margin-left: auto;
 }
 
+.mc-circle {
+  border-radius: 2em;
+}
+
+.micro-balloon.mc-yellow {
+  background-color: #fc9f4d;
+  color: #fff;
+  border: none;
+}
+.micro-balloon.mc-yellow.micro-bottom::after {
+  border-bottom-color: #fc9f4d;
+  border-top-color: transparent;
+}
+.micro-balloon.mc-yellow::before {
+  border-bottom-color: transparent;
+}
+.micro-balloon.mc-yellow::after {
+  border-top-color: #fc9f4d;
+}
+.micro-balloon.mc-red {
+  background-color: #d05a6e;
+  color: #fff;
+  border: none;
+}
+.micro-balloon.mc-red.micro-bottom::after {
+  border-bottom-color: #d05a6e;
+  border-top-color: transparent;
+}
+.micro-balloon.mc-red::before {
+  border-bottom-color: transparent;
+}
+.micro-balloon.mc-red::after {
+  border-top-color: #d05a6e;
+}
+.micro-balloon.mc-blue {
+  background-color: #2ea9df;
+  color: #fff;
+  border: none;
+}
+.micro-balloon.mc-blue.micro-bottom::after {
+  border-bottom-color: #2ea9df;
+  border-top-color: transparent;
+}
+.micro-balloon.mc-blue::before {
+  border-bottom-color: transparent;
+}
+.micro-balloon.mc-blue::after {
+  border-top-color: #2ea9df;
+}
+.micro-balloon.mc-green {
+  background-color: #3eb370;
+  color: #fff;
+  border: none;
+}
+.micro-balloon.mc-green.micro-bottom::after {
+  border-bottom-color: #3eb370;
+  border-top-color: transparent;
+}
+.micro-balloon.mc-green::before {
+  border-bottom-color: transparent;
+}
+.micro-balloon.mc-green::after {
+  border-top-color: #3eb370;
+}
+
 .blogcard-type .blogcard::before {
   font-family: FontAwesome;
   position: absolute;
@@ -5730,11 +5799,11 @@ div.fb-like-mobile {
 
 .search-submit {
   position: absolute;
-  right: 1px;
-  top: 2px;
+  right: 0;
+  top: 50%;
+  margin-top: -0.65em;
   font-size: 20px;
   cursor: pointer;
-  line-height: 49px;
   border: none;
   color: #ccc;
   padding: 0 8px;

@@ -350,6 +350,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo a { color: #1967d2; }
 .admin-settings .demo a:hover { color: #e53900; }
 .admin-settings .demo ol, .admin-settings .demo ul { margin: 1em 0; padding-left: 40px; }
+.admin-settings .demo hr { color: #eee; }
 .admin-settings .demo .cf::after { clear: both; content: ""; display: block; }
 .admin-settings .demo .header-container, .admin-settings .demo .main, .admin-settings .demo .sidebar, .admin-settings .demo .footer { background-color: #fff; }
 .admin-settings .demo .wrap { width: 1236px; margin: 0 auto; }
@@ -905,6 +906,23 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .micro-bottom.micro-balloon:before { border-bottom-color: #999; border-top-color: transparent; }
 .admin-settings .demo .micro-copy.alignleft, .admin-settings .demo .micro-copy.alignright { float: none; }
 .admin-settings .demo .micro-copy.alignright { margin-left: auto; }
+.admin-settings .demo .mc-circle { border-radius: 2em; }
+.admin-settings .demo .micro-balloon.mc-yellow { background-color: #fc9f4d; color: #fff; border: none; }
+.admin-settings .demo .micro-balloon.mc-yellow.micro-bottom::after { border-bottom-color: #fc9f4d; border-top-color: transparent; }
+.admin-settings .demo .micro-balloon.mc-yellow::before { border-bottom-color: transparent; }
+.admin-settings .demo .micro-balloon.mc-yellow::after { border-top-color: #fc9f4d; }
+.admin-settings .demo .micro-balloon.mc-red { background-color: #d05a6e; color: #fff; border: none; }
+.admin-settings .demo .micro-balloon.mc-red.micro-bottom::after { border-bottom-color: #d05a6e; border-top-color: transparent; }
+.admin-settings .demo .micro-balloon.mc-red::before { border-bottom-color: transparent; }
+.admin-settings .demo .micro-balloon.mc-red::after { border-top-color: #d05a6e; }
+.admin-settings .demo .micro-balloon.mc-blue { background-color: #2ea9df; color: #fff; border: none; }
+.admin-settings .demo .micro-balloon.mc-blue.micro-bottom::after { border-bottom-color: #2ea9df; border-top-color: transparent; }
+.admin-settings .demo .micro-balloon.mc-blue::before { border-bottom-color: transparent; }
+.admin-settings .demo .micro-balloon.mc-blue::after { border-top-color: #2ea9df; }
+.admin-settings .demo .micro-balloon.mc-green { background-color: #3eb370; color: #fff; border: none; }
+.admin-settings .demo .micro-balloon.mc-green.micro-bottom::after { border-bottom-color: #3eb370; border-top-color: transparent; }
+.admin-settings .demo .micro-balloon.mc-green::before { border-bottom-color: transparent; }
+.admin-settings .demo .micro-balloon.mc-green::after { border-top-color: #3eb370; }
 .admin-settings .demo .blogcard-type .blogcard::before { font-family: FontAwesome; position: absolute; top: -1.1em; left: 2%; font-size: 0.7em; padding: 2px 0.6em 3px; background-color: #333; color: #fff; border-radius: 2px; white-space: pre; letter-spacing: 0.06em; }
 .admin-settings .demo .bct-related .blogcard::before { content: " 関連記事"; }
 .admin-settings .demo .bct-reference .blogcard::before { content: " 参考記事"; }
@@ -1348,7 +1366,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .gallery .gallery-item dd { margin: 0; }
 .admin-settings .demo .search-box { margin: 1em 0 2em; position: relative; }
 .admin-settings .demo .search-edit { font-family: "Meiryo", sans-serif; }
-.admin-settings .demo .search-submit { position: absolute; right: 1px; top: 2px; font-size: 20px; cursor: pointer; line-height: 49px; border: none; color: #ccc; padding: 0 8px; background-color: rgba(255, 255, 255, 0); }
+.admin-settings .demo .search-submit { position: absolute; right: 0; top: 50%; margin-top: -0.65em; font-size: 20px; cursor: pointer; border: none; color: #ccc; padding: 0 8px; background-color: rgba(255, 255, 255, 0); }
 .admin-settings .demo .search-submit::before { font-family: FontAwesome; content: ""; padding-right: 3px; }
 .admin-settings .demo .timeline-box { padding: 16px 5px; }
 .admin-settings .demo .timeline-box .timeline { list-style: none; padding: 0; margin: 0; }
@@ -1409,6 +1427,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo a { color: #1967d2; }
 .admin-settings .demo a:hover { color: #e53900; }
 .admin-settings .demo ol, .admin-settings .demo ul { margin: 1em 0; padding-left: 40px; }
+.admin-settings .demo hr { color: #eee; }
 .admin-settings .demo .cf::after { clear: both; content: ""; display: block; }
 .admin-settings .demo .header-container, .admin-settings .demo .main, .admin-settings .demo .sidebar, .admin-settings .demo .footer { background-color: #fff; }
 .admin-settings .demo .wrap { width: 1236px; margin: 0 auto; }
@@ -1964,6 +1983,23 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .micro-bottom.micro-balloon:before { border-bottom-color: #999; border-top-color: transparent; }
 .admin-settings .demo .micro-copy.alignleft, .admin-settings .demo .micro-copy.alignright { float: none; }
 .admin-settings .demo .micro-copy.alignright { margin-left: auto; }
+.admin-settings .demo .mc-circle { border-radius: 2em; }
+.admin-settings .demo .micro-balloon.mc-yellow { background-color: #fc9f4d; color: #fff; border: none; }
+.admin-settings .demo .micro-balloon.mc-yellow.micro-bottom::after { border-bottom-color: #fc9f4d; border-top-color: transparent; }
+.admin-settings .demo .micro-balloon.mc-yellow::before { border-bottom-color: transparent; }
+.admin-settings .demo .micro-balloon.mc-yellow::after { border-top-color: #fc9f4d; }
+.admin-settings .demo .micro-balloon.mc-red { background-color: #d05a6e; color: #fff; border: none; }
+.admin-settings .demo .micro-balloon.mc-red.micro-bottom::after { border-bottom-color: #d05a6e; border-top-color: transparent; }
+.admin-settings .demo .micro-balloon.mc-red::before { border-bottom-color: transparent; }
+.admin-settings .demo .micro-balloon.mc-red::after { border-top-color: #d05a6e; }
+.admin-settings .demo .micro-balloon.mc-blue { background-color: #2ea9df; color: #fff; border: none; }
+.admin-settings .demo .micro-balloon.mc-blue.micro-bottom::after { border-bottom-color: #2ea9df; border-top-color: transparent; }
+.admin-settings .demo .micro-balloon.mc-blue::before { border-bottom-color: transparent; }
+.admin-settings .demo .micro-balloon.mc-blue::after { border-top-color: #2ea9df; }
+.admin-settings .demo .micro-balloon.mc-green { background-color: #3eb370; color: #fff; border: none; }
+.admin-settings .demo .micro-balloon.mc-green.micro-bottom::after { border-bottom-color: #3eb370; border-top-color: transparent; }
+.admin-settings .demo .micro-balloon.mc-green::before { border-bottom-color: transparent; }
+.admin-settings .demo .micro-balloon.mc-green::after { border-top-color: #3eb370; }
 .admin-settings .demo .blogcard-type .blogcard::before { font-family: FontAwesome; position: absolute; top: -1.1em; left: 2%; font-size: 0.7em; padding: 2px 0.6em 3px; background-color: #333; color: #fff; border-radius: 2px; white-space: pre; letter-spacing: 0.06em; }
 .admin-settings .demo .bct-related .blogcard::before { content: " 関連記事"; }
 .admin-settings .demo .bct-reference .blogcard::before { content: " 参考記事"; }
@@ -2407,7 +2443,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .gallery .gallery-item dd { margin: 0; }
 .admin-settings .demo .search-box { margin: 1em 0 2em; position: relative; }
 .admin-settings .demo .search-edit { font-family: "Meiryo", sans-serif; }
-.admin-settings .demo .search-submit { position: absolute; right: 1px; top: 2px; font-size: 20px; cursor: pointer; line-height: 49px; border: none; color: #ccc; padding: 0 8px; background-color: rgba(255, 255, 255, 0); }
+.admin-settings .demo .search-submit { position: absolute; right: 0; top: 50%; margin-top: -0.65em; font-size: 20px; cursor: pointer; border: none; color: #ccc; padding: 0 8px; background-color: rgba(255, 255, 255, 0); }
 .admin-settings .demo .search-submit::before { font-family: FontAwesome; content: ""; padding-right: 3px; }
 .admin-settings .demo .timeline-box { padding: 16px 5px; }
 .admin-settings .demo .timeline-box .timeline { list-style: none; padding: 0; margin: 0; }
@@ -2990,3 +3026,5 @@ textarea[name="the_page_memo"] { width: 100%; }
 .backwpup_page_backwpupeditjob #wpfooter { display: none; }
 
 .editor-inserter__search { max-width: 370px; }
+
+#carousel { display: block; }
