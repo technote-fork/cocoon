@@ -62,8 +62,13 @@ endif;
 
 //リンクのないカテゴリーの取得
 if ( !function_exists( 'get_the_nolink_category' ) ):
-function get_the_nolink_category(){
-  $categories = get_the_category();
+function get_the_nolink_category($id = null){
+  if ($id) {
+    $categories = get_the_category($id);
+  } else {
+    $categories = get_the_category();
+  }
+
   //var_dump($categories);
   if ( isset($categories[0]) ) {
     $category = $categories[0];
@@ -75,10 +80,9 @@ endif;
 
 //リンクのないカテゴリーの出力
 if ( !function_exists( 'the_nolink_category' ) ):
-function the_nolink_category(){
-  echo get_the_nolink_category();
+function the_nolink_category($id = null){
+  echo get_the_nolink_category($id);
 }
-
 endif;
 
 
@@ -313,10 +317,10 @@ function wp_enqueue_script_jquery_js(){
   wp_register_script('jquery', false, array('jquery-core', 'jquery-migrate'), '1.12.4', true);
   wp_enqueue_script('jquery');
 
-  wp_enqueue_script('jquery-core', '//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js', array(), '1.12.4', true);
-  wp_enqueue_script('jquery-migrate', '//cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.4.1/jquery-migrate.min.js', array(), '1.4.1', true);
-  // wp_enqueue_script('jquery-core', '//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js', array(), '3.3.1', true);
-  // wp_enqueue_script('jquery-migrate', '//cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.0.1/jquery-migrate.min.js', array(), '3.0.1', true);
+  // wp_enqueue_script('jquery-core', '//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js', array(), '1.12.4', true);
+  // wp_enqueue_script('jquery-migrate', '//cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.4.1/jquery-migrate.min.js', array(), '1.4.1', true);
+  wp_enqueue_script('jquery-core', '//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js', array(), '3.3.1', true);
+  wp_enqueue_script('jquery-migrate', '//cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.0.1/jquery-migrate.min.js', array(), '3.0.1', true);
 }
 endif;
 
