@@ -945,8 +945,20 @@ endif;
 
 //汎用エントリーウィジェットのタグ生成
 if ( !function_exists( 'generate_widget_entries_tag' ) ):
-function generate_widget_entries_tag($entry_count = 5, $entry_type = ET_DEFAULT, $cat_ids = array(), $include_children = 0, $post_type = null, $taxonomy = 'category', $random = 0, $action = null){
-
+// function generate_widget_entries_tag($entry_count = 5, $entry_type = ET_DEFAULT, $cat_ids = array(), $include_children = 0, $post_type = null, $taxonomy = 'category', $random = 0, $action = null){
+function generate_widget_entries_tag($atts){
+  extract(shortcode_atts(array(
+    'entry_count' => 5,
+    'cat_ids' => array(),
+    'tag_ids' => array(),
+    'entry_type' => ET_DEFAULT,
+    'include_children' => 0,
+    'post_type' => null,
+    'taxonomy' => 'category',
+    'sticky' => 1,
+    'random' => 0,
+    'action' => null,
+  ), $atts));
   //ランダムが有効な時は関連記事
   if ($random) {
     $prefix = 'widget-related';
@@ -954,12 +966,16 @@ function generate_widget_entries_tag($entry_count = 5, $entry_type = ET_DEFAULT,
     $prefix = 'new';
   }
 
-
   $args = array(
     'posts_per_page' => $entry_count,
     'no_found_rows' => true,
     'action' => $action,
   );
+  if (!$sticky) {
+    $args += array(
+      'post__not_in' => get_sticky_post_ids(),
+    );
+  }
   if ($post_type) {
     $args += array(
       'post_type' => explode(',', $post_type)
@@ -970,21 +986,36 @@ function generate_widget_entries_tag($entry_count = 5, $entry_type = ET_DEFAULT,
       'orderby' => 'rand'
     );
   }
-  if ( $cat_ids ) {
+  if ( $cat_ids || $tag_ids ) {
     //_v($cat_ids);
+    $tax_querys = array();
+    if ($cat_ids) {
+      $tax_querys[] = array(
+        'taxonomy' => 'category',
+        'terms' => $cat_ids,
+        'include_children' => $include_children,
+        'field' => 'term_id',
+        'operator' => 'IN'
+      );
+    }
+    if ($tag_ids) {
+      $tax_querys[] = array(
+        'taxonomy' => 'post_tag',
+        'terms' => $tag_ids,
+        'field' => 'term_id',
+        'operator' => 'IN'
+      );
+    }
+    //_v($tax_querys);
     $args += array(
       'tax_query' => array(
-        array(
-          'taxonomy' => $taxonomy,
-          'terms' => $cat_ids,
-          'include_children' => $include_children,
-          'field' => 'term_id',
-          'operator' => 'IN'
-          ),
+        $tax_querys,
         'relation' => 'AND'
       )
     );
+
   }
+  // _v($args);
   if ($random) {
     $args = apply_filters('widget_related_entries_args', $args);
   } else {
