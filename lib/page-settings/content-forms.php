@@ -8,6 +8,48 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 
 <div class="metabox-holder">
 
+<!-- 本文行間 -->
+<div id="entry-content-page" class="postbox">
+  <h2 class="hndle"><?php _e( '本文行間設定', THEME_NAME ) ?></h2>
+  <div class="inside">
+
+    <p><?php _e( '本文の行の高さや余白の設定です。', THEME_NAME ) ?></p>
+
+    <table class="form-table">
+      <tbody>
+        <!-- 本文余白  -->
+        <tr>
+          <th scope="row" style="width: 100px;">
+            <?php generate_label_tag('', __('本文余白', THEME_NAME) ); ?>
+          </th>
+          <td>
+            <div class="col-2">
+              <div style="min-width: 270px;">
+              <?php
+              generate_label_tag(OP_ENTRY_CONTENT_LINE_HIGHT, '行の高さ');
+              generate_range_tag(OP_ENTRY_CONTENT_LINE_HIGHT, get_entry_content_line_hight(), 1, 3, 0.1);
+              generate_tips_tag(__( 'line-hightで、行の高さを指定します。1にすると文字列と同等の高さになります。', THEME_NAME ));
+              echo '<br>';
+              echo '<br>';
+
+              generate_label_tag(OP_ENTRY_CONTENT_MARGIN_HIGHT, '行の余白（単位：em）');
+              generate_range_tag(OP_ENTRY_CONTENT_MARGIN_HIGHT, get_entry_content_margin_hight(), 1, 4, 0.1);
+              generate_tips_tag(__( '行間の余白の高さを設定します。1emは、フォントサイズ（font-size）と同等の高さになります。フォントサイズが18pxの場合は余白も18pxになります。', THEME_NAME ));
+             ?>
+              </div>
+              <div style="width: auto">
+                <?php get_template_part('tmp/font-preview'); ?>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
 <!-- 外部リンク -->
 <div id="external-link" class="postbox">
   <h2 class="hndle"><?php _e( '外部リンク設定', THEME_NAME ) ?></h2>
