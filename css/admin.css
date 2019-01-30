@@ -136,6 +136,8 @@ body.wp-admin { color: #444; }
 ********************************/ /*******************************
 * 続きはWEBで的な検索ボックス
 ********************************/ /************************************
+** 汎用ボックス共通
+************************************/ /************************************
 ** キャプションボックス
 ************************************/ /************************************
 ** キャプションタブボックス
@@ -262,6 +264,8 @@ body.wp-admin { color: #444; }
 ********************************/ /*******************************
 * 続きはWEBで的な検索ボックス
 ********************************/ /************************************
+** 汎用ボックス共通
+************************************/ /************************************
 ** キャプションボックス
 ************************************/ /************************************
 ** キャプションタブボックス
@@ -359,7 +363,6 @@ body.wp-admin { color: #444; }
 .admin-settings .demo span.sub-caption { opacity: 0.8; }
 .admin-settings .demo * { padding: 0; margin: 0; box-sizing: border-box; word-wrap: break-word; overflow-wrap: break-word; }
 .admin-settings .demo body { /* フォントの種類 */ font-family: "游ゴシック体", "Yu Gothic", "Hiragino Kaku Gothic Pro", "Meiryo", sans-serif; /* フォントのサイズ */ font-size: 18px; /* フォントの色 */ color: #333; /* カーニングの設定 */ /* 行間の設定 */ line-height: 1.8; margin: 0; overflow-wrap: break-word; /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */ background-attachment: fixed; }
-.admin-settings .demo .container { overflow: hidden; }
 .admin-settings .demo a { color: #1967d2; }
 .admin-settings .demo a:hover { color: #e53900; }
 .admin-settings .demo ol, .admin-settings .demo ul { margin: 1em 0; padding-left: 40px; }
@@ -628,7 +631,7 @@ body.wp-admin { color: #444; }
 @media all and (-ms-high-contrast: none) { .admin-settings .demo { /* IE10～ */ }
   .admin-settings .demo .eye-catch-wrap { display: block; } }
 .admin-settings .demo .show-pinterest-button .eye-catch:hover .cat-label { display: none; }
-.admin-settings .demo .ad-area { text-align: center; margin-bottom: 1.8em; }
+.admin-settings .demo .ad-area { text-align: center; margin-bottom: 1.8em; overflow: hidden; }
 .admin-settings .demo .entry-content .ad-area { margin: 1em 0; }
 .admin-settings .demo .ad-label-invisible .ad-label { display: none; }
 .admin-settings .demo .ad-content-top { margin-top: 1em; }
@@ -722,7 +725,6 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .widget-entry-cards figure { width: 120px; }
 .admin-settings .demo .widget-entry-cards .widget-entry-card-content { margin-left: 124px; }
 .admin-settings .demo .widget-entry-cards .widget-entry-card-pv { margin-left: 5px; font-style: italic; font-size: 0.8em; }
-.admin-settings .demo .widget-entry-cards .cat-label { display: none; }
 .admin-settings .demo .widget-entry-cards.not-default .a-wrap { max-width: 400px; }
 .admin-settings .demo .widget-entry-cards.not-default .e-card { font-size: 18px; }
 .admin-settings .demo .widget-entry-cards.not-default figure { float: none; width: 100%; }
@@ -949,6 +951,8 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .button-block.alignleft { text-align: left; }
 .admin-settings .demo .button-block.aligncenter { text-align: center; }
 .admin-settings .demo .button-block.alignright { text-align: right; }
+.admin-settings .demo .block-box-label { display: flex; }
+.admin-settings .demo .block-box-label::before { margin-right: 0.3em; }
 .admin-settings .demo .caption-box { margin: 1.2em 0; border: 2px solid #eee; border-radius: 4px; }
 .admin-settings .demo .caption-box-label { padding: 0.2em 0.8em; background-color: #eee; }
 .admin-settings .demo .caption-box-content { padding: 0.4em 0.8em; }
@@ -962,7 +966,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .cb-green .caption-box-label { background-color: #3eb370; color: #fff; }
 .admin-settings .demo .caption-tab-box { margin: 1.2em 0; }
 .admin-settings .demo .caption-tab-box-label { padding: 0 0.8em; font-size: 0.9em; background-color: #eee; display: inline-block; border-top-left-radius: 8px; border-top-right-radius: 8px; }
-.admin-settings .demo .caption-tab-box-content { margin-top: -1px; border: 2px solid #eee; padding: 0.4em 0.8em; border-radius: 8px; border-top-left-radius: 0; }
+.admin-settings .demo .caption-tab-box-content { margin-top: -3px; border: 3px solid #eee; padding: 0.4em 0.8em; border-radius: 8px; border-top-left-radius: 0; }
 .admin-settings .demo .ctb-yellow .caption-tab-box-label { background-color: #fc9f4d; color: #fff; }
 .admin-settings .demo .ctb-yellow .caption-tab-box-content { border-color: #fc9f4d; }
 .admin-settings .demo .ctb-red .caption-tab-box-label { background-color: #d05a6e; color: #fff; }
@@ -1519,7 +1523,6 @@ body.wp-admin { color: #444; }
 .admin-settings .demo span.sub-caption { opacity: 0.8; }
 .admin-settings .demo * { padding: 0; margin: 0; box-sizing: border-box; word-wrap: break-word; overflow-wrap: break-word; }
 .admin-settings .demo body { /* フォントの種類 */ font-family: "游ゴシック体", "Yu Gothic", "Hiragino Kaku Gothic Pro", "Meiryo", sans-serif; /* フォントのサイズ */ font-size: 18px; /* フォントの色 */ color: #333; /* カーニングの設定 */ /* 行間の設定 */ line-height: 1.8; margin: 0; overflow-wrap: break-word; /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */ background-attachment: fixed; }
-.admin-settings .demo .container { overflow: hidden; }
 .admin-settings .demo a { color: #1967d2; }
 .admin-settings .demo a:hover { color: #e53900; }
 .admin-settings .demo ol, .admin-settings .demo ul { margin: 1em 0; padding-left: 40px; }
@@ -1788,7 +1791,7 @@ body.wp-admin { color: #444; }
 @media all and (-ms-high-contrast: none) { .admin-settings .demo { /* IE10～ */ }
   .admin-settings .demo .eye-catch-wrap { display: block; } }
 .admin-settings .demo .show-pinterest-button .eye-catch:hover .cat-label { display: none; }
-.admin-settings .demo .ad-area { text-align: center; margin-bottom: 1.8em; }
+.admin-settings .demo .ad-area { text-align: center; margin-bottom: 1.8em; overflow: hidden; }
 .admin-settings .demo .entry-content .ad-area { margin: 1em 0; }
 .admin-settings .demo .ad-label-invisible .ad-label { display: none; }
 .admin-settings .demo .ad-content-top { margin-top: 1em; }
@@ -1882,7 +1885,6 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .widget-entry-cards figure { width: 120px; }
 .admin-settings .demo .widget-entry-cards .widget-entry-card-content { margin-left: 124px; }
 .admin-settings .demo .widget-entry-cards .widget-entry-card-pv { margin-left: 5px; font-style: italic; font-size: 0.8em; }
-.admin-settings .demo .widget-entry-cards .cat-label { display: none; }
 .admin-settings .demo .widget-entry-cards.not-default .a-wrap { max-width: 400px; }
 .admin-settings .demo .widget-entry-cards.not-default .e-card { font-size: 18px; }
 .admin-settings .demo .widget-entry-cards.not-default figure { float: none; width: 100%; }
@@ -2109,6 +2111,8 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .button-block.alignleft { text-align: left; }
 .admin-settings .demo .button-block.aligncenter { text-align: center; }
 .admin-settings .demo .button-block.alignright { text-align: right; }
+.admin-settings .demo .block-box-label { display: flex; }
+.admin-settings .demo .block-box-label::before { margin-right: 0.3em; }
 .admin-settings .demo .caption-box { margin: 1.2em 0; border: 2px solid #eee; border-radius: 4px; }
 .admin-settings .demo .caption-box-label { padding: 0.2em 0.8em; background-color: #eee; }
 .admin-settings .demo .caption-box-content { padding: 0.4em 0.8em; }
@@ -2122,7 +2126,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .cb-green .caption-box-label { background-color: #3eb370; color: #fff; }
 .admin-settings .demo .caption-tab-box { margin: 1.2em 0; }
 .admin-settings .demo .caption-tab-box-label { padding: 0 0.8em; font-size: 0.9em; background-color: #eee; display: inline-block; border-top-left-radius: 8px; border-top-right-radius: 8px; }
-.admin-settings .demo .caption-tab-box-content { margin-top: -1px; border: 2px solid #eee; padding: 0.4em 0.8em; border-radius: 8px; border-top-left-radius: 0; }
+.admin-settings .demo .caption-tab-box-content { margin-top: -3px; border: 3px solid #eee; padding: 0.4em 0.8em; border-radius: 8px; border-top-left-radius: 0; }
 .admin-settings .demo .ctb-yellow .caption-tab-box-label { background-color: #fc9f4d; color: #fff; }
 .admin-settings .demo .ctb-yellow .caption-tab-box-content { border-color: #fc9f4d; }
 .admin-settings .demo .ctb-red .caption-tab-box-label { background-color: #d05a6e; color: #fff; }
