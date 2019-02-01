@@ -41,6 +41,7 @@ function new_entries_shortcode($atts) {
     'taxonomy' => 'category',
     'sticky' => 1,
     'random' => 0,
+    'order' => 'desc',
     'action' => null,
   ), $atts));
 
@@ -65,6 +66,7 @@ function new_entries_shortcode($atts) {
     'taxonomy' => $taxonomy,
     'sticky' => $sticky,
     'random' => $random,
+    'order' => $order,
     'action' => $action,
   );
   ob_start();
@@ -366,8 +368,8 @@ if (!shortcode_exists('toc')) {
 if ( !function_exists( 'toc_shortcode' ) ):
 function toc_shortcode( $atts, $content = null ) {
   if (is_singular()) {
-    global $_TOC_SHORTCODE_USE;
-    $_TOC_SHORTCODE_USE = true;
+    // global $_TOC_WIDGET_OR_SHORTCODE_USE;
+    // $_TOC_WIDGET_OR_SHORTCODE_USE = true;
     $harray = array();
     //_v(get_the_content());
     return get_toc_tag(get_the_content(), $harray);
