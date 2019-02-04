@@ -1076,10 +1076,10 @@ $bb_green: #3eb370;
   margin: 1.2em 0;
   position: relative;
   >p{
-    display: none;
+    margin: 0;
   }
   .toggle-content {
-    //display: none;
+    display: block;
     visibility: hidden;
     opacity: 0;
     padding: 0 1em;
