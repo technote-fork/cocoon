@@ -1560,17 +1560,18 @@ blockquote {
 }
 blockquote::before, blockquote::after {
   color: #C8C8C8;
-  content: "“";
   font-family: serif;
   position: absolute;
   font-size: 300%;
 }
 blockquote::before {
+  content: "“";
   line-height: 1.1;
   left: 10px;
   top: 0;
 }
 blockquote::after {
+  content: "”";
   line-height: 0;
   right: 10px;
   bottom: 0px;
@@ -2009,6 +2010,10 @@ span.internal-icon {
 
 .nwa .ranking-item-description p {
   font-size: 0.9em;
+}
+
+.nwa .blogcard-wrap {
+  width: auto;
 }
 
 /************************************
@@ -3233,10 +3238,14 @@ label.screen-reader-text {
 
 .micro-top {
   font-size: 0.8em;
+  margin-bottom: -1.2em;
+  margin-top: 1em;
 }
 
 .micro-bottom {
   font-size: 0.8em;
+  margin-top: -1.2em;
+  margin-bottom: 1em;
 }
 
 .micro-center {
@@ -7540,6 +7549,10 @@ div#wpforo-wrap .wpforo-post .wpf-right .wpforo-post-content p {
 
   .carousel-entry-card-title {
     font-size: 0.7em;
+  }
+
+  .header-container-in.hlt-top-menu.hlt-tm-small .logo-header {
+    height: auto;
   }
 }
 @media screen and (max-width: 480px) {

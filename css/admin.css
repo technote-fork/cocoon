@@ -613,9 +613,9 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .article h6 { border-bottom: 1px solid #ccc; }
 .admin-settings .demo .article .column-wrap h1, .admin-settings .demo .article .column-wrap h2, .admin-settings .demo .article .column-wrap h3, .admin-settings .demo .article .column-wrap h4, .admin-settings .demo .article .column-wrap h5, .admin-settings .demo .article .column-wrap h6 { margin-top: 0; }
 .admin-settings .demo blockquote { background-color: #fafbfc; border: 1px solid #ccc; margin: 1em 0; padding: 10px 1.2em; position: relative; }
-.admin-settings .demo blockquote::before, .admin-settings .demo blockquote::after { color: #C8C8C8; content: "“"; font-family: serif; position: absolute; font-size: 300%; }
-.admin-settings .demo blockquote::before { line-height: 1.1; left: 10px; top: 0; }
-.admin-settings .demo blockquote::after { line-height: 0; right: 10px; bottom: 0px; }
+.admin-settings .demo blockquote::before, .admin-settings .demo blockquote::after { color: #C8C8C8; font-family: serif; position: absolute; font-size: 300%; }
+.admin-settings .demo blockquote::before { content: "“"; line-height: 1.1; left: 10px; top: 0; }
+.admin-settings .demo blockquote::after { content: "”"; line-height: 0; right: 10px; bottom: 0px; }
 .admin-settings .demo .footer-meta { font-size: 0.8em; text-align: right; }
 .admin-settings .demo .author-info .post-author { font-size: 14px; }
 .admin-settings .demo .author-info::before { font-family: FontAwesome; content: ""; padding-right: 3px; padding-right: 0; }
@@ -694,6 +694,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .nwa .ranking-item-image-tag { max-width: 100%; text-align: center; display: flex; justify-content: center; }
 .admin-settings .demo .nwa .ranking-item-name-text, .admin-settings .demo .nwa .widget_item_ranking .main-widget-label { font-size: 20px; }
 .admin-settings .demo .nwa .ranking-item-description p { font-size: 0.9em; }
+.admin-settings .demo .nwa .blogcard-wrap { width: auto; }
 .admin-settings .demo label.screen-reader-text { display: none; }
 .admin-settings .demo .widget { margin-bottom: 38px; }
 .admin-settings .demo .widget ul { padding: 0; margin: 0; list-style: none; }
@@ -905,8 +906,8 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .micro-copy.alignleft { float: none; margin-right: 0; text-align: left; }
 .admin-settings .demo .micro-copy.alignright { float: none; margin-left: 0; text-align: right; }
 .admin-settings .demo .micro-copy.aligncenter { text-align: center; }
-.admin-settings .demo .micro-top { font-size: 0.8em; }
-.admin-settings .demo .micro-bottom { font-size: 0.8em; }
+.admin-settings .demo .micro-top { font-size: 0.8em; margin-bottom: -1.2em; margin-top: 1em; }
+.admin-settings .demo .micro-bottom { font-size: 0.8em; margin-top: -1.2em; margin-bottom: 1em; }
 .admin-settings .demo .micro-center { text-align: center; }
 .admin-settings .demo .micro-right { text-align: right; }
 .admin-settings .demo .micro-balloon { position: relative; background: #fff; border: 1px solid #999; border-radius: 4px; padding: 3px 8px; display: table; font-size: 0.8em; }
@@ -1773,9 +1774,9 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .article h6 { border-bottom: 1px solid #ccc; }
 .admin-settings .demo .article .column-wrap h1, .admin-settings .demo .article .column-wrap h2, .admin-settings .demo .article .column-wrap h3, .admin-settings .demo .article .column-wrap h4, .admin-settings .demo .article .column-wrap h5, .admin-settings .demo .article .column-wrap h6 { margin-top: 0; }
 .admin-settings .demo blockquote { background-color: #fafbfc; border: 1px solid #ccc; margin: 1em 0; padding: 10px 1.2em; position: relative; }
-.admin-settings .demo blockquote::before, .admin-settings .demo blockquote::after { color: #C8C8C8; content: "“"; font-family: serif; position: absolute; font-size: 300%; }
-.admin-settings .demo blockquote::before { line-height: 1.1; left: 10px; top: 0; }
-.admin-settings .demo blockquote::after { line-height: 0; right: 10px; bottom: 0px; }
+.admin-settings .demo blockquote::before, .admin-settings .demo blockquote::after { color: #C8C8C8; font-family: serif; position: absolute; font-size: 300%; }
+.admin-settings .demo blockquote::before { content: "“"; line-height: 1.1; left: 10px; top: 0; }
+.admin-settings .demo blockquote::after { content: "”"; line-height: 0; right: 10px; bottom: 0px; }
 .admin-settings .demo .footer-meta { font-size: 0.8em; text-align: right; }
 .admin-settings .demo .author-info .post-author { font-size: 14px; }
 .admin-settings .demo .author-info::before { font-family: FontAwesome; content: ""; padding-right: 3px; padding-right: 0; }
@@ -1854,6 +1855,7 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .nwa .ranking-item-image-tag { max-width: 100%; text-align: center; display: flex; justify-content: center; }
 .admin-settings .demo .nwa .ranking-item-name-text, .admin-settings .demo .nwa .widget_item_ranking .main-widget-label { font-size: 20px; }
 .admin-settings .demo .nwa .ranking-item-description p { font-size: 0.9em; }
+.admin-settings .demo .nwa .blogcard-wrap { width: auto; }
 .admin-settings .demo label.screen-reader-text { display: none; }
 .admin-settings .demo .widget { margin-bottom: 38px; }
 .admin-settings .demo .widget ul { padding: 0; margin: 0; list-style: none; }
@@ -2065,8 +2067,8 @@ body.wp-admin { color: #444; }
 .admin-settings .demo .micro-copy.alignleft { float: none; margin-right: 0; text-align: left; }
 .admin-settings .demo .micro-copy.alignright { float: none; margin-left: 0; text-align: right; }
 .admin-settings .demo .micro-copy.aligncenter { text-align: center; }
-.admin-settings .demo .micro-top { font-size: 0.8em; }
-.admin-settings .demo .micro-bottom { font-size: 0.8em; }
+.admin-settings .demo .micro-top { font-size: 0.8em; margin-bottom: -1.2em; margin-top: 1em; }
+.admin-settings .demo .micro-bottom { font-size: 0.8em; margin-top: -1.2em; margin-bottom: 1em; }
 .admin-settings .demo .micro-center { text-align: center; }
 .admin-settings .demo .micro-right { text-align: right; }
 .admin-settings .demo .micro-balloon { position: relative; background: #fff; border: 1px solid #999; border-radius: 4px; padding: 3px 8px; display: table; font-size: 0.8em; }
@@ -2892,7 +2894,8 @@ body.wp-admin { color: #444; }
   .admin-settings .demo .btn-l, .admin-settings .demo .ranking-item-link-buttons a, .admin-settings .demo .btn-wrap.btn-wrap-l > a { padding: 14px 18px; font-size: 14px; }
   .admin-settings .demo .btn-l::after, .admin-settings .demo .ranking-item-link-buttons a::after, .admin-settings .demo .btn-wrap.btn-wrap-l > a::after { font-size: 18px; right: -4px; margin-top: 0; }
   .admin-settings .demo .slick-dots { display: none !important; }
-  .admin-settings .demo .carousel-entry-card-title { font-size: 0.7em; } }
+  .admin-settings .demo .carousel-entry-card-title { font-size: 0.7em; }
+  .admin-settings .demo .header-container-in.hlt-top-menu.hlt-tm-small .logo-header { height: auto; } }
 @media screen and (max-width: 480px) { .admin-settings .demo { /*本文の見出し*/ }
   .admin-settings .demo h2, .admin-settings .demo h3 { font-size: 20px; }
   .admin-settings .demo .related-entry-heading, .admin-settings .demo .comment-title { margin: 1.2em 0 1em; }
