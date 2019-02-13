@@ -20,6 +20,18 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
   <?php //カルーセル
   get_template_part('tmp/carousel'); ?>
 
+  <?php
+  ////////////////////////////
+  //コンテンツ上部ウィジェット
+  ////////////////////////////
+  if ( is_active_sidebar( 'content-top' ) ) : ?>
+  <div id="content-top" class="content-top">
+    <div id="content-top-in" class="content-top-in wrap">
+      <?php dynamic_sidebar( 'content-top' ); ?>
+    </div>
+  </div>
+  <?php endif; ?>
+
   <?php //投稿パンくずリストがメイン手前の場合
   if (is_single() && is_single_breadcrumbs_position_main_before()){
     get_template_part('tmp/breadcrumbs');
@@ -35,6 +47,6 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 
   <div id="content" class="content cf">
 
-    <div id="content-in" class="content-in wrap cf">
+    <div id="content-in" class="content-in wrap">
 
         <main id="main" class="main<?php echo get_additional_main_classes(); ?>" itemscope itemtype="https://schema.org/Blog">
