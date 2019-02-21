@@ -223,7 +223,7 @@ function gutenberg_editor_settings( $editor_settings, $post ) {
 endif;
 
 // RSS2 の feed リンクを出力
-add_theme_support( 'automatic-feed-links' );
+//add_theme_support( 'automatic-feed-links' );
 
 // カスタムメニューを有効化
 add_theme_support( 'menus' );
