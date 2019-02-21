@@ -141,7 +141,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
         <?php endif; ?>
 
         <?php //投稿者等表示用のテンプレート
-        get_template_part('tmp/footer-meta'); ?>
+//        get_template_part('tmp/footer-meta'); ?>
 
         <!-- publisher設定 -->
         <?php
