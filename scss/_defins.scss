@@ -89,7 +89,7 @@ $bct-official: '\f024  公式サイト';
 
 //背景ホバー
 $bgc_hover_color: #f5f8fa;
-$bgc_hover_anime: all 0.5s ease;
+$bgc_hover_anime: all .7s ease;
 @mixin bgc_hover($color: $bgc_hover_color) {
   background-color: $color;
   transition: $bgc_hover_anime;
@@ -351,7 +351,7 @@ $bgc_hover_anime: all 0.5s ease;
     margin-left: 31.6%;
     margin-right: 0;
     max-height: 120px;
-    min-height: 80px;
+    min-height: 70px;
     font-size: 0.9em;
     line-height: 1.2;
   }
@@ -368,12 +368,11 @@ $bgc_hover_anime: all 0.5s ease;
 ///////////////////////////////////////
 // フォーム共通
 ///////////////////////////////////////
-$form_padding: 12px;
+$form_padding: 11px;
 %form_common {
   padding: $form_padding;
-  border: 2px solid $basic_border_color;
-  //border-radius: $basic_border_radius;
+  border: 1px solid $basic_border_color;
+  border-radius: $basic_border_radius;
   font-size: $text_size_default;
   width: 100%;
-  border-radius: $badge_border_radius;
 }

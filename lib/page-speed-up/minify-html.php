@@ -10,7 +10,8 @@ if ( !defined( 'ABSPATH' ) ) exit;
 //HTMLソースコードの縮小化
 if ( !function_exists( 'code_minify_call_back' ) ):
 function code_minify_call_back($buffer) {
-  if (is_admin()) {
+  global $post;
+  if (is_admin() || is_feed() || !$post) {
     return $buffer;
   }
   //何故かa開始タグがpタグでラップされるのを修正
@@ -83,6 +84,7 @@ function is_minify_page(){
   if (is_server_request_uri_backup_download_php()) return false;
   if (is_robots_txt_page()) return false;
   if (is_analytics_access_php_page()) return false;
+  if (is_feed()) return false;
   return true;
 }
 endif;
@@ -219,16 +221,9 @@ endif;
 if ( !function_exists( 'convert_lazy_load_tag' ) ):
 function convert_lazy_load_tag($the_content, $media){
   //AMP・アクセス解析ページでは実行しない
-  if (is_amp() || is_analytics_access_php_page()) {
+  if (is_amp() || is_analytics_access_php_page() || is_feed()) {
     return $the_content;
   }
-  // //挿入するクラス
-  // $classes = 'lozad lozad-'.$media;
-  // //既に置換後なら処理しない
-  // if (includes_string($the_content, $classes)) {
-  //   return $the_content;
-  // }
-  //_v($_SERVER['REQUEST_URI']);
 
   $is_img = ($media == 'img');
   if (!$is_img) {

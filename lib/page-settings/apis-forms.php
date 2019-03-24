@@ -35,14 +35,14 @@ $help_text = __( '取得方法', THEME_NAME );
             generate_amazon_badge_tag(__( 'Amazon必須', THEME_NAME ));
             generate_moshimo_badge_tag(__( 'もしも必須', THEME_NAME ));
             echo '<br>';
-            generate_textbox_tag(OP_AMAZON_API_ACCESS_KEY_ID, get_amazon_api_access_key_id(), __( '', THEME_NAME ));
+            generate_textbox_tag(OP_AMAZON_API_ACCESS_KEY_ID, get_amazon_api_access_key_id(), '');
             generate_tips_tag(__( 'Amazon APIを使用するためのアクセスキーIDを入力してください。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/product-advertising-api/', $help_text));
 
             generate_label_tag(OP_AMAZON_API_SECRET_KEY, __( 'シークレットキー', THEME_NAME ));
             generate_amazon_badge_tag(__( 'Amazon必須', THEME_NAME ));
             generate_moshimo_badge_tag(__( 'もしも必須', THEME_NAME ));
             echo '<br>';
-            generate_textbox_tag(OP_AMAZON_API_SECRET_KEY, get_amazon_api_secret_key(), __( '', THEME_NAME ));
+            generate_textbox_tag(OP_AMAZON_API_SECRET_KEY, get_amazon_api_secret_key(), '');
             generate_tips_tag(__( 'Amazon APIを使用するためのシークレットキーを入力してください。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/product-advertising-api/', $help_text));
 
             generate_label_tag(OP_AMAZON_ASSOCIATE_TRACKING_ID, __( 'トラッキングID', THEME_NAME ));
@@ -93,14 +93,14 @@ $help_text = __( '取得方法', THEME_NAME );
             generate_rakuten_badge_tag(__( '楽天必須', THEME_NAME ));
             generate_moshimo_badge_tag(__( 'もしも必須', THEME_NAME ));
             echo '<br>';
-            generate_textbox_tag(OP_RAKUTEN_APPLICATION_ID, get_rakuten_application_id(), __( '', THEME_NAME ));
+            generate_textbox_tag(OP_RAKUTEN_APPLICATION_ID, get_rakuten_application_id(), '');
             generate_tips_tag(__( '楽天APIを利用するためのアプリケーションIDを入力してください。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/rakuten-application-id/', $help_text));
 
             generate_label_tag(OP_RAKUTEN_AFFILIATE_ID, __( '楽天アフィリエイトID', THEME_NAME ));
             generate_rakuten_badge_tag(__( '楽天必須', THEME_NAME ));
             generate_moshimo_badge_tag(__( 'もしも必須', THEME_NAME ));
             echo '<br>';
-            generate_textbox_tag(OP_RAKUTEN_AFFILIATE_ID, get_rakuten_affiliate_id(), __( '', THEME_NAME ));
+            generate_textbox_tag(OP_RAKUTEN_AFFILIATE_ID, get_rakuten_affiliate_id(), '');
             generate_tips_tag(__( '楽天アフィリエイト用のIDを入力してください。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/rakuten-affiliate-id/', $help_text));
 
 
@@ -147,12 +147,12 @@ $help_text = __( '取得方法', THEME_NAME );
             <?php
             generate_label_tag(OP_YAHOO_VALUECOMMERCE_SID, __( 'バリューコマースsid', THEME_NAME ));
             echo '<br>';
-            generate_textbox_tag(OP_YAHOO_VALUECOMMERCE_SID, get_yahoo_valuecommerce_sid(), __( '', THEME_NAME ));
+            generate_textbox_tag(OP_YAHOO_VALUECOMMERCE_SID, get_yahoo_valuecommerce_sid(), '');
             echo '<br>';
 
             generate_label_tag(OP_YAHOO_VALUECOMMERCE_PID, __( 'バリューコマースpid', THEME_NAME ));
             echo '<br>';
-            generate_textbox_tag(OP_YAHOO_VALUECOMMERCE_PID, get_yahoo_valuecommerce_pid(), __( '', THEME_NAME ));
+            generate_textbox_tag(OP_YAHOO_VALUECOMMERCE_PID, get_yahoo_valuecommerce_pid(), '');
 
             generate_tips_tag(__( 'バリューコマースからYahoo!ショッピングに登録しsidとpidを取得してください。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/valuecommerce-yahoo-sid-pid/', $help_text));
 
@@ -180,7 +180,7 @@ $help_text = __( '取得方法', THEME_NAME );
             <?php
             generate_checkbox_tag(OP_MOSHIMO_AFFILIATE_LINK_ENABLE , is_moshimo_affiliate_link_enable(), __( 'リンクをもしもアフィリエイトを経由にする', THEME_NAME ));
             generate_moshimo_badge_tag(__( 'もしも必須', THEME_NAME ));
-            generate_tips_tag(__( 'Amazonアソシエイトの審査に通らなかった場合など、もしもアフィリエイト経由でAmazonリンクを掲載します。2019年1月23日の<a href="https://affiliate.amazon.co.jp/help/topic/t52/ref=amb_link_zYXX0aRKMACI_Qkj9rR6Nw_1?pf_rd_p=c08a6c9b-94fe-481e-ad8b-b2c640121b1f" target="_blank">PA-APIの仕様変更</a>により、APIが生成するリンクから売上が発生しないとAPIが利用できなくなります。ですので、<span class="red">もしもアフィリエイト経由の場合は、30日でAPIが利用できなくなる可能性があります</span>（※他サイトの同一認証キーを用いたAmazonリンクから発生していない限りは）。PA-APIの制限がクリアできない場合は、楽天商品リンクをご利用ください。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/moshimo-amazon-link/'));
+            generate_tips_tag(__( 'もしもアフィリエイト経由でAmazonリンクを掲載し報酬を得ます。【重要】2019年1月23日の<a href="https://affiliate.amazon.co.jp/help/topic/t52/ref=amb_link_zYXX0aRKMACI_Qkj9rR6Nw_1?pf_rd_p=c08a6c9b-94fe-481e-ad8b-b2c640121b1f" target="_blank">PA-APIの仕様変更</a>により、APIが生成するリンクから売上が発生しないとAPIが利用できなくなりました。ですので、<span class="red">もしもアフィリエイト経由の場合は、30日でAPIが利用できなくなる可能性があります</span>。AmazonのAPIを利用したい場合は、この機能は有効にしないことをおすすめします。PA-APIの制限がクリアできない場合は、楽天商品リンクをご利用ください。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/moshimo-amazon-link/'));
 
             generate_label_tag(OP_MOSHIMO_AMAZON_ID, __( 'Amazon a_id', THEME_NAME ));
             echo '<br>';
@@ -224,6 +224,36 @@ $help_text = __( '取得方法', THEME_NAME );
     <a href="<?php _e( 'https://affiliate.amazon.co.jp/help/topic/t32/', THEME_NAME ) ?>" target="_blank"><?php _e( 'Product Advertising API (PA-API) の利用ガイドライン', THEME_NAME ) ?></a><br>
     <a href="<?php _e( 'https://webservice.rakuten.co.jp/guide/rule', THEME_NAME ) ?>" target="_blank"><?php _e( '楽天ウェブサービス規約', THEME_NAME ) ?></a>
   </p>
+
+  </div>
+</div>
+
+
+<!-- エラー -->
+<div id="api-error" class="postbox">
+  <h2 class="hndle"><?php _e( 'エラー設定', THEME_NAME ) ?></h2>
+  <div class="inside">
+
+    <p><?php _e( 'APIに関するエラー通知の設定です。', THEME_NAME ) ?></p>
+
+    <table class="form-table">
+      <tbody>
+        <!-- メール通知 -->
+        <tr>
+          <th scope="row">
+            <?php
+            generate_label_tag(OP_API_ERROR_MAIL_ENABLE, __('メール通知', THEME_NAME) );
+            ?>
+          </th>
+          <td>
+          <?php
+            generate_checkbox_tag(OP_API_ERROR_MAIL_ENABLE , is_api_error_mail_enable(), __( '商品リンク切れ情報をメールで送信する', THEME_NAME ));
+            generate_tips_tag(__( 'APIで商品情報を取得できなかった際に、WordPressに登録されているメール宛にエラーメッセージを送信します。※メール送信は数分遅れる可能性もあります。', THEME_NAME ));
+            ?>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
   </div>
 </div>

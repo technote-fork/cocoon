@@ -18,7 +18,7 @@ add_theme_support('post-thumbnails');
 ///////////////////////////////////////////
 // サムネイルサイズ
 ///////////////////////////////////////////
-//100px
+//100px 管理画面記事リスト一覧のサムネイル
 define('THUMB100', 'thumb100');
 define('THUMB100WIDTH', get_square_thumbnail_width(100));
 define('THUMB100HEIGHT', get_square_thumbnail_height(THUMB100WIDTH));
@@ -42,7 +42,6 @@ add_image_size(THUMB120, THUMB120WIDTH, THUMB120HEIGHT, true);
 define('THUMB120WIDTH_DEF', W120);
 define('THUMB120HEIGHT_DEF', get_thumbnail_height(THUMB120WIDTH_DEF));
 
-
 //160px 関連記事デフォルト・関連記事4列
 define('W160', 160);
 define('THUMB160', 'thumb160');
@@ -60,21 +59,6 @@ define('THUMB320HEIGHT', get_thumbnail_height(THUMB320WIDTH));
 add_image_size(THUMB320, THUMB320WIDTH, THUMB320HEIGHT, true);
 define('THUMB320WIDTH_DEF', W320);
 define('THUMB320HEIGHT_DEF', get_thumbnail_height(THUMB320WIDTH_DEF));
-
-// //本文レスポンシブ表示用
-// add_image_size('thumb320_raw', 320, 0, false);
-// add_image_size('thumb360_raw', 360, 0, false);
-// add_image_size('thumb375_raw', 375, 0, false);
-// add_image_size('thumb414_raw', 414, 0, false);
-// add_image_size('thumb600_raw', 600, 0, false);
-// add_image_size('thumb768_raw', 768, 0, false);
-//Retinaディスプレイ用
-//add_image_size('thumb640', 640, 360, true);
-
-// remove_filter( 'the_content', 'wpautop' );
-// remove_filter( 'the_content', 'wptexturize' );
-// add_filter( 'the_content', 'wpautop' , 7);
-// add_filter( 'the_content', 'wptexturize' , 7);
 
 //縦型カード2列用の可変サムネイル
 if (is_entry_card_type_vertical_card_2()) {
@@ -113,7 +97,7 @@ function visual_editor_stylesheets_custom($stylesheets) {
     $cache_file_url = get_theme_css_cache_file_url();
     $editor_style_url = get_template_directory_uri().'/editor-style.css';
     array_push($stylesheets,
-      FONT_AWESOME4_CDN_URL,
+      FONT_AWESOME4_URL,
       add_file_ver_to_css_js($style_url),
       add_file_ver_to_css_js($cache_file_url), //テーマ設定で変更したスタイル
       add_file_ver_to_css_js($editor_style_url)

@@ -140,8 +140,8 @@ body{
 // 吹き出し
 ///////////////////////////////////////
 .speech-person{
-  width: 40px;
-  min-width: 40px;
+  width: 16%;
+  min-width: 16%;
 }
 
 .speech-name{
@@ -360,9 +360,9 @@ a.facebook-follow-button{
   }
 }
 
-.entry-card-wrap.a-wrap{
-  padding: 0.5%;
-}
+// .entry-card-wrap.a-wrap{
+//   padding: 0.5%;
+// }
 
 .e-card-meta{
   margin-top: 2px;
@@ -404,8 +404,11 @@ a.facebook-follow-button{
   display: none;
 }
 
-
 .image-content amp-img{
   min-width: 200px;
   max-width: 200px;
+}
+
+.blogcard{
+  padding-top: 3%;
 }

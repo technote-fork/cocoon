@@ -329,6 +329,7 @@ function age_shortcode( $atts ){
 endif;
 
 //相対的な時間経過（年）を取得するショートコード
+//参考：https://fullnoteblog.com/age-short-code/
 add_shortcode('yago', 'yago_shortcode');
 if ( !function_exists( 'yago_shortcode' ) ):
 function yago_shortcode( $atts ){
@@ -457,7 +458,8 @@ function get_countdown_days( $to ) {
 }
 endif;
 
-//相対的な時間経過を取得するショートコード
+//カウントダウンショートコード
+//参考：https://fullnoteblog.com/count-down-timer/
 add_shortcode('countdown', 'countdown_shortcode');
 if ( !function_exists( 'countdown_shortcode' ) ):
 function countdown_shortcode( $atts ){
@@ -471,5 +473,90 @@ function countdown_shortcode( $atts ){
   }
   $to = strtotime($to);
   return get_countdown_days($to).$unit;
+}
+endif;
+
+//ナビメニューショートコード
+//参考：https://www.orank.net/1972
+add_shortcode('navi', 'navi_menu_shortcode');
+if ( !function_exists( 'navi_menu_shortcode' ) ):
+function navi_menu_shortcode($atts){
+  extract(shortcode_atts(array(
+    'name' => '', // メニュー名
+    'type' => '',
+  ), $atts));
+
+  $tag = null;
+  $menu_items = wp_get_nav_menu_items($name); // name: カスタムメニューの名前
+
+  foreach ($menu_items as $menu):
+    //_v($menu);
+    $object_id = $menu->object_id;
+    $url = $menu->url;
+    $object = $menu->object;
+    //サムネイル画像URL
+    //thumbnail - 120*120 | thumb120 - 120*68 | thumb320 - 320x180
+
+
+    if ($object == 'post' || $object == 'page') {
+      $thumbnail_id = get_post_thumbnail_id($object_id);
+      $image_attributes = wp_get_attachment_image_src($thumbnail_id,'thumb120');
+    } elseif ($object == 'category'){//カテゴリーアイキャッチの取得
+      $image_url = get_category_eye_catch($object_id);
+      $image_url_120 = get_image_sized_url($image_url, THUMB120WIDTH, THUMB120HEIGHT);
+      $image_attributes[1] = 120;
+      $image_attributes[2] = 68;
+      if (file_exists(url_to_local($image_url_120))) {
+        $image_attributes[0] = $image_url_120;
+      } else {
+        $image_attributes[0] = $image_url;
+      }
+    }
+    if (!$image_attributes) {//アイキャッチがない場合
+      $image_attributes[0] = get_no_image_120x68_url();
+      $image_attributes[1] = 120;
+      $image_attributes[2] = 68;
+    }
+    //$content = get_page($page_id);
+    $title = $menu->title;
+    $text = $menu->description;
+    $osusume = $menu->classes[0];
+
+    // おすすめ・新着記事　名称を変えれば何にでも使える（注目・必見・お得etc）
+    if ($osusume == "1"){
+      $osusume = '<div class="ribbon ribbon-top-left ribbon-color-1"><span>'.__( 'おすすめ', THEME_NAME ).'</span></div>';
+    }
+    if ($osusume == "2"){
+      $osusume = '<div class="ribbon ribbon-top-left ribbon-color-2"><span>'.__( '新着', THEME_NAME ).'</span></div>';
+    }
+
+    $navi_card_class = '';
+    if ($type) {
+      $navi_card_class = ' navi-card-type-'.$type;
+    }
+    //_v($image_attributes);
+    $tag .=  <<<EOT
+<a href="$url" title="$title" class="navi-card-wrap a-wrap$navi_card_class">
+  <div class="navi-card-box cf">
+    $osusume
+    <figure class="navi-card-thumb">
+      <img src="$image_attributes[0]" alt="$title" width="$image_attributes[1]" height="$image_attributes[2]">
+    </figure>
+    <div class="navi-card-content">
+      <div class="navi-card-title">$title</div>
+      <div class="navi-card-snippet">$text</div>
+    </div>
+  </div>
+</a>
+EOT;
+
+  endforeach;
+
+  //ラッパーの取り付け
+  if ($menu_items) {
+    $tag = '<div class="navi-cards">'.$tag.'</div>';
+  }
+
+  return apply_filters('cocoon_navi_card_tag', $tag);
 }
 endif;

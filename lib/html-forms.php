@@ -228,7 +228,7 @@ endif;
 if ( !function_exists( 'get_help_page_tag' ) ):
 function get_help_page_tag($url, $text = null){
   $link_text = $text ? $text : __( '解説ページ', THEME_NAME );
-  $tag = ' <a href="'.$url.'" target="_blank" class="help-page">'.$link_text.'</a>';
+  $tag = ' <a href="'.$url.'" target="_blank" rel="noopener" class="help-page">'.$link_text.'</a>';
   return $tag;
 }
 endif;
@@ -1190,8 +1190,18 @@ function generate_author_box_tag($id = null, $label = null, $is_image_circle = 0
 }
 endif;
 
+//メッセージボックスを作成する
 if ( !function_exists( 'get_message_box_tag' ) ):
 function get_message_box_tag($message, $classes){
   return '<div class="'.$classes.'">'.$message.'</div>';
+}
+endif;
+
+//管理者エラーメッセージボックスを作成する
+if ( !function_exists( 'get_admin_errormessage_box_tag' ) ):
+function get_admin_errormessage_box_tag($message){
+  $admin_message = '<b>'.__( '管理者用エラーメッセージ', THEME_NAME ).'</b><br>';
+  $admin_message .= $message;
+  return get_message_box_tag($admin_message, 'warning-box fz-14px');
 }
 endif;

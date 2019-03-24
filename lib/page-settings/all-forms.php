@@ -15,7 +15,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 
     <p><?php _e( 'ページ全体の表示に関する設定です。', THEME_NAME ) ?></p>
 
-    <?php if(DEBUG_ADMIN_DEMO_ENABLE): ?>
+    <?php if (DEBUG_ADMIN_DEMO_ENABLE && apply_filters('cocoon_setting_preview_all', true)): ?>
       <p class="preview-label"><?php _e( 'プレビュー', THEME_NAME ) ?></p>
       <div class="demo iframe-standard-demo all-demo">
         <iframe id="all-demo" class="iframe-demo" src="<?php echo home_url(); ?>" width="1000" height="400"></iframe>
@@ -255,7 +255,8 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             <?php generate_label_tag('', __('ファビコン', THEME_NAME) ); ?>
           </th>
           <td>
-            <p><?php _e( 'ファビコン（サイトアイコン）設定は、管理画面から「外観 → カスタマイズ → サイト基本情報」にある「サイトアイコン」設定から行ってください。', THEME_NAME ) ?></p>
+            <p><?php _e( 'ファビコン（サイトアイコン）設定は、管理画面から「外観 → カスタマイズ → サイト基本情報」にある「サイトアイコン」設定から行ってください。設定する画像は512×512 pxのPNG画像を推奨します。', THEME_NAME );
+            echo get_help_page_tag('https://wp-cocoon.com/site-icon/') ?></p>
           </td>
         </tr>
 

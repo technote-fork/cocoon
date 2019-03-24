@@ -22,7 +22,11 @@ endif;
 //見出し内容取得関数
 if ( !function_exists( 'get_h_inner_content' ) ):
 function get_h_inner_content($h_content){
-  return strip_tags($h_content);
+  if (is_toc_heading_inner_html_tag_enable()) {
+    return $h_content;
+  } else {
+    return strip_tags($h_content);
+  }
 }
 endif;
 
@@ -69,7 +73,7 @@ function get_toc_tag($the_content, &$harray, $is_widget = false){
   if($targetclass===''){$targetclass = get_post_type();}
   for($h = $top_level; $h <= 6; $h++){$harray[] = 'h' . $h . '';}
 
-  preg_match_all('/<([hH][1-6]).*?>(.*?)<\/[hH][1-6].*?>/u', $content, $headers);
+  preg_match_all('/<([hH][1-6]).*?>(.*?)<\/[hH][1-6].*?>/us', $content, $headers);
   $header_count = count($headers[0]);
   if($header_count > 0){
     $level = strtolower($headers[1][0]);
@@ -265,7 +269,7 @@ function add_toc_before_1st_h2($the_content){
   ///////////////////////////////////////
   // PHPの見出し処理（条件によっては失敗するかも）
   ///////////////////////////////////////
-  $res = preg_match_all('/(<('.implode('|', $harray).')[^>]*?>)(.*?)(<\/h[2-6]>)/i', $the_content, $m);
+  $res = preg_match_all('/(<('.implode('|', $harray).')[^>]*?>)(.*?)(<\/h[2-6]>)/is', $the_content, $m);
 
   $tag_all_index = 0;
   $tag_index = 1;

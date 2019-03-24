@@ -17,6 +17,8 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 
     <table class="form-table">
       <tbody>
+
+        <?php if (DEBUG_ADMIN_DEMO_ENABLE && apply_filters('cocoon_setting_preview_toc', true)): ?>
         <!-- プレビュー画面 -->
         <tr>
           <th scope="row">
@@ -33,6 +35,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             <?php generate_tips_tag(__( 'デモの記事はランダムです。H2見出しがない本文には目次は表示されません。', THEME_NAME )); ?>
           </td>
         </tr>
+        <?php endif; ?>
 
         <!-- 目次の表示 -->
         <tr>
@@ -181,6 +184,19 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             <?php
             generate_checkbox_tag(OP_TOC_BEFORE_ADS , is_toc_before_ads(), __( '広告の手前に目次を表示する', THEME_NAME ));
             generate_tips_tag(__( '広告やウィジェットの手前に目次を表示します。※最初のH2見出し手前に表示されているとき', THEME_NAME ));
+            ?>
+          </td>
+        </tr>
+
+        <!-- 目次の表示順 -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag(OP_TOC_HEADING_INNER_HTML_TAG_ENABLE, __('見出し内タグ', THEME_NAME) ); ?>
+          </th>
+          <td>
+            <?php
+            generate_checkbox_tag(OP_TOC_HEADING_INNER_HTML_TAG_ENABLE , is_toc_heading_inner_html_tag_enable(), __( 'H見出し内のタグを有効にする', THEME_NAME ));
+            generate_tips_tag(__( 'h2-h6見出し内のHTMLタグをそのまま出力します。', THEME_NAME ));
             ?>
           </td>
         </tr>

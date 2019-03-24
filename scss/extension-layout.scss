@@ -58,3 +58,10 @@
     width: 25%;
   }
 }
+
+//ブロックエディターカラムの不具合修正
+@media (min-width: 600px) {
+  .wp-block-columns {
+   flex-wrap: nowrap;
+  }
+ }

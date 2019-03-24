@@ -35,9 +35,9 @@ div.sidebar{
   padding-left: 26px;
 }
 
-.a-wrap{
-  padding: 7px;
-}
+// .a-wrap{
+//   padding: 7px;
+// }
 
 .entry-card-title,
 .related-entry-card-title{
@@ -64,20 +64,6 @@ table{
 
 @include blog_card_768;
 
-// .blogcard-wrap{
-//   width: 100%;
-// }
-
-// .blogcard-thumbnail{
-//   width: 23%;
-// }
-
-// .blogcard-content{
-//   width: 76%;
-//   margin-left: 24%;
-//   max-height: 110px;
-//   font-size: 0.9em;
-// }
 ///////////////////////////////////////
 // シェアボタン・フォローボタン
 ///////////////////////////////////////
@@ -219,18 +205,6 @@ table{
 }
 .speech-wrap.sbs-think.sbp-r{
     margin-left: 0;
-}
-
-///////////////////////////////////////
-// カラム
-///////////////////////////////////////
-.column-wrap{
-  flex-direction: column;
-  .column-left,
-  .column-right{
-    width: 100%;
-    padding: 1em 0;
-  }
 }
 
 //モバイル用管理パネル
