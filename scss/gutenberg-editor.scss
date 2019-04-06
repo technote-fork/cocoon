@@ -19,6 +19,15 @@
   max-width: 800px;
 }
 
+
+//ブロックボックス内のインナーブロックのマージン変更
+.block-box{
+  .editor-block-list__layout .editor-block-list__block-edit{
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+}
+
 @media screen and (max-width: 600px) {
   div {
     &.editor-block-list__block::before, &.editor-block-list__layout .editor-block-list__block .editor-block-list__block-edit::before {
@@ -80,6 +89,115 @@ div.mce-content-body {
   }
   &[data-type^="cocoon-blocks/micro-balloon"][data-align="right"] .micro-copy {
     margin-left: auto;
+  }
+
+
+  .column-2,
+  .column-3{
+    word-break: break-all;
+    .editor-inner-blocks{
+      .column-left,
+      .column-center,
+      .column-right{
+        width: auto;
+      }
+    }
+  }
+
+  .column-wrap{
+    >.editor-inner-blocks{
+      width: 100% !important;
+    }
+     > .editor-inner-blocks > .editor-block-list__layout{
+      display: flex;
+      position: relative;
+      margin: 1em 0;
+
+
+      >div{
+        width: 100% !important;
+        //padding: 0 0.45em;
+        margin: 0;
+        p{
+          margin-top: 0;
+        }
+      }
+
+      [data-type^="cocoon-blocks/column-left"]{
+        background-color: #c7e1ef;
+      }
+      [data-type^="cocoon-blocks/column-center"]{
+        background-color: #c9e8d8;
+      }
+      [data-type^="cocoon-blocks/column-right"]{
+        background-color: #ffecd3;
+      }
+    }
+
+    //1:2
+    &.column-2-3-1-2{
+      > .editor-inner-blocks > .editor-block-list__layout{
+        [data-type^="cocoon-blocks/column-left"]{
+          width: 34%;
+        }
+        [data-type^="cocoon-blocks/column-right"]{
+          width: 66%;
+        }
+      }
+    }
+
+    //2:1
+    &.column-2-3-2-1{
+      > .editor-inner-blocks > .editor-block-list__layout{
+        [data-type^="cocoon-blocks/column-left"]{
+          width: 66%;
+        }
+        [data-type^="cocoon-blocks/column-right"]{
+          width: 34%;
+        }
+      }
+    }
+
+    //1:3
+    &.column-2-4-1-3{
+      > .editor-inner-blocks > .editor-block-list__layout{
+        [data-type^="cocoon-blocks/column-left"]{
+          width: 25%;
+        }
+        [data-type^="cocoon-blocks/column-right"]{
+          width: 75%;
+        }
+      }
+    }
+
+    //3:1
+    &.column-2-4-3-1{
+      > .editor-inner-blocks > .editor-block-list__layout{
+        [data-type^="cocoon-blocks/column-left"]{
+          width: 75%;
+        }
+        [data-type^="cocoon-blocks/column-right"]{
+          width: 25%;
+        }
+      }
+    }
+
+  }
+}
+
+//タイムライン
+.timeline-box{
+  .editor-block-list__layout .editor-block-list__block-edit{
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .editor-inner-blocks{
+    margin-top: 1em;
+  }
+
+  .editor-block-list__block-edit li.timeline-item{
+    margin: 0;
   }
 }
 
@@ -445,7 +563,7 @@ ol, ul {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 834px) {
   .editor-styles-wrapper .editor-block-list__layout .editor-block-list__block .editor-block-drop-zone {
     margin: 0;
   }
@@ -504,15 +622,6 @@ ol, ul {
   .wp-block-image img {
     flex-shrink: 0;
   }
-}
-
-//ブロックボックス内のインナーブロックのマージン変更
-.block-box{
-  .editor-block-list__block-edit{
-    margin-top: 8px !important;
-    margin-bottom: 8px !important;
-  }
-
 }
 
 //見出しが二重になれ不具合修正

@@ -234,7 +234,7 @@ function timeline_shortcode( $atts, $content = null ){
   if ($title) {
     $title_tag = '<div class="timeline-title">'.$title.'</div>';
   }
-  $tag = '<div class="timeline-box">'.
+  $tag = '<div class="timeline-box cf">'.
             $title_tag.
             '<ul class="timeline">'.
               $content.
@@ -277,7 +277,7 @@ function timeline_item_shortcode( $atts, $content = null ){
   }
 
   $content = do_shortcode( shortcode_unautop( $content ) );
-  $tag = '<li class="timeline-item">'.
+  $tag = '<li class="timeline-item cf">'.
             '<div class="timeline-item-label">'.$label.'</div>'.
             '<div class="timeline-item-content">'.
               '<div class="timeline-item-title">'.$title.'</div>'.

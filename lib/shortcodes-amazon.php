@@ -136,6 +136,7 @@ function amazon_product_link_shortcode($atts){
     'title' => null,
     'desc' => null,
     'price' => null,
+    'review' => null,
     'size' => 'm',
     'amazon' => 1,
     'rakuten' => 1,
@@ -262,6 +263,7 @@ function amazon_product_link_shortcode($atts){
       $item = $xml->Items->Item;
 
       //_v($xml);
+      // _v($item->ItemLinks->ItemLink[2]);
 
       //var_dump($xml->Items->Errors);
       //_v($item);
@@ -455,6 +457,24 @@ function amazon_product_link_shortcode($atts){
           $item_price_tag = get_item_price_tag($FormattedPrice, $acquired_date);
         }
       }
+      ///////////////////////////////////////////
+      // レビュー
+      ///////////////////////////////////////////
+      $review_tag = null;
+      //_v($review);
+      if ((is_amazon_item_customer_reviews_visible() || $review === '1')
+          && isset($item->ItemLinks->ItemLink[2])
+          && $review !== '0') {
+        $review_url = $item->ItemLinks->ItemLink[2]->URL;
+        //_v($review_url);
+        $review_tag =
+          '<div class="amazon-item-review product-item-review item-review">'.
+            '<a class="amazon-item-review-link  product-item-review-link item-review-link" href="'.$review_url.'" target="_blank">'.
+              get_amazon_item_customer_reviews_text().
+            '</a>'.
+          '</div>';
+          //_v($review_tag);
+      }
 
 
       ///////////////////////////////////////////
@@ -619,6 +639,7 @@ function amazon_product_link_shortcode($atts){
               '</div>'.
               $item_price_tag.
               $description_tag.
+              $review_tag.
             '</div>'.
             $buttons_tag.
           '</div>'.
@@ -656,7 +677,7 @@ function error_log_to_amazon_product($asin, $message = ''){
       'ASIN:'.$asin.PHP_EOL.
       'URL:'.get_the_permalink().PHP_EOL.
       'Message:'.$message.PHP_EOL.
-      THEME_MAIL_CREDIT;
+      THEME_MAIL_AMAZON_PR.THEME_MAIL_CREDIT;
     wp_mail( get_wordpress_admin_email(), $subject, $mail_msg );
   }
 }

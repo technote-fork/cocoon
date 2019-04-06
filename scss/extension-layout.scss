@@ -3,9 +3,9 @@
   display: flex;
   position: relative;
   margin: 1em 0;
-  .column-wrap{
-    margin: 0;
-  }
+  margin: 0;
+  word-break: break-all;
+
   .column-left{
     padding-left: 0;
   }
@@ -14,11 +14,16 @@
   }
 
   >div{
-    width: 100%;
+    width: 50%;
     padding: 0 0.45em;
     margin: 0;
-    p{
+    >*:first-child{
       margin-top: 0;
+    }
+  }
+  &.column-3{
+    >div{
+      width: 33%;
     }
   }
 }

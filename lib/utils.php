@@ -238,6 +238,10 @@ function update_theme_option($option_name){
   // } else {
   // }
   $opt_val = isset($_POST[$option_name]) ? $_POST[$option_name] : '';
+  //広告コードからscriptを除外する（サーバーのファイアウォール・403エラー対策）
+  if (($option_name == OP_AD_CODE) || ($option_name == OP_AD_LINK_UNIT_CODE)) {
+    $opt_val = preg_replace('{<script.+?</script>}is', '', $opt_val);
+  }
   set_theme_mod($option_name, $opt_val);
 }
 endif;
@@ -681,7 +685,7 @@ function wp_enqueue_slick(){
                       }
                     },
                     {
-                      breakpoint: 768,
+                      breakpoint: 834,
                       settings: {
                         slidesToShow: 3,
                         slidesToScroll: 3
@@ -2491,5 +2495,18 @@ endif;
 if ( !function_exists( 'xmlspecialchars' ) ):
 function xmlspecialchars($string){
   return preg_replace ('/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u', ' ', $string);
+}
+endif;
+
+//カンマテキストを配列にする
+if ( !function_exists( 'comma_text_to_array' ) ):
+function comma_text_to_array($comma_text){
+  $comma_text = str_replace(' ', '', $comma_text);
+  if (empty($comma_text)) {
+    $array = array();
+  } else {
+    $array = explode(',', $comma_text);
+  }
+  return $array;
 }
 endif;

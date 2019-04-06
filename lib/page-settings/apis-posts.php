@@ -25,6 +25,12 @@ update_theme_option(OP_AMAZON_ITEM_CATALOG_IMAGE_VISIBLE);
 //Amazon商品リンク価格表示
 update_theme_option(OP_AMAZON_ITEM_PRICE_VISIBLE);
 
+//Amazon商品レビュー表示
+update_theme_option(OP_AMAZON_ITEM_CUSTOMER_REVIEWS_VISIBLE);
+
+//Amazon商品レビュー文字
+update_theme_option(OP_AMAZON_ITEM_CUSTOMER_REVIEWS_TEXT);
+
 //Amazonロゴ表示
 update_theme_option(OP_AMAZON_ITEM_LOGO_VISIBLE);
 

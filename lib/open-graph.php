@@ -61,7 +61,7 @@ class OpenGraphGetter implements Iterator
         global $wp_version;
 
         $args = array(
-          'sslverify' => false,
+          //'sslverify' => false,
           //'redirection' => 10,
           'cocoon' => true,
           'user-agent' => $_SERVER['HTTP_USER_AGENT'],
@@ -190,6 +190,19 @@ class OpenGraphGetter implements Iterator
     }
     if (empty($page_description)) {
       $page->_values['description'] = $description;
+    }
+
+    //Amazonページかどうか
+    if (includes_string($HTML, '//images-fe.ssl-images-amazon.com')
+     && includes_string($HTML, '//m.media-amazon.com')
+    ) {
+      //Amazonページなら画像取得
+      if (preg_match('|https://images-na.ssl-images-amazon.com/images/I/\d[^&"]+?_S[A-Z]\d{3}_\.jpg|i', $HTML, $m)) {
+        if (isset($m[0])) {
+          //_v($m[0]);
+          $page->_values['image'] = $m[0];
+        }
+      }
     }
 
 		return $page;
