@@ -33,7 +33,7 @@ function get_content_excerpt($content, $length = 70){
   $content = str_replace('&nbsp;', '', $content);//特殊文字の削除（今回はスペースのみ）
   $content = preg_replace('/\[.+?\]/i', '', $content); //ショートコードを取り除く
   $content = preg_replace(URL_REG, '', $content); //URLを取り除く
-  // $content = preg_replace('/\s/iu',"",$content); //余分な空白を削除
+
   //$lengthが整数じゃなかった場合の処理
   if (is_int(intval($length))) {
     $length = intval($length);
@@ -50,50 +50,6 @@ function get_content_excerpt($content, $length = 70){
   $content = apply_filters( 'content_excerpt_after', $content);
 
   return $content;
-}
-endif;
-
-//WP_Queryの引数を取得
-if ( !function_exists( 'get_related_wp_query_args' ) ):
-function get_related_wp_query_args(){
-  global $post;
-  if (!$post) {
-    $post = get_random_posts(1);
-  }
-  //var_dump($post);
-  //if ( 1 ) {
-  if ( is_related_association_type_category() ) {
-    //カテゴリ情報から関連記事をランダムに呼び出す
-    $categories = get_the_category($post->ID);
-    $category_IDs = array();
-    foreach($categories as $category):
-      array_push( $category_IDs, $category->cat_ID);
-    endforeach ;
-    if ( empty($category_IDs) ) return;
-    $args = array(
-      'post__not_in' => array($post->ID),
-      'posts_per_page'=> intval(get_related_entry_count()),
-      'category__in' => $category_IDs,
-      'orderby' => 'rand',
-      'no_found_rows' => true,
-    );
-  } else {
-    //タグ情報から関連記事をランダムに呼び出す
-    $tags = wp_get_post_tags($post->ID);
-    $tag_IDs = array();
-    foreach($tags as $tag):
-      array_push( $tag_IDs, $tag->term_id);
-    endforeach ;
-    if ( empty($tag_IDs) ) return;
-    $args = array(
-      'post__not_in' => array($post -> ID),
-      'posts_per_page'=> intval(get_related_entry_count()),
-      'tag__in' => $tag_IDs,
-      'orderby' => 'rand',
-      'no_found_rows' => true,
-    );
-  }
-  return apply_filters('get_related_wp_query_args', $args);
 }
 endif;
 
@@ -188,7 +144,13 @@ function get_archive_chapter_title(){
       $chapter_title .= single_cat_title( $icon_font, false );
     }
   } elseif( is_tag() ) {//タグページの場合
-    $chapter_title .= single_tag_title( '<span class="fa fa-tags"></span>', false );
+    $tag_id = get_query_var('tag_id');
+    $icon_font = '<span class="fa fa-tags"></span>';
+    if ($tag_id && get_tag_title($tag_id)) {
+      $chapter_title .= $icon_font.get_tag_title($tag_id);
+    } else {
+      $chapter_title .= single_tag_title( $icon_font, false );
+    }
   } elseif( is_tax() ) {//タクソノミページの場合
     $chapter_title .= single_term_title( '', false );
   } elseif( is_search() ) {//検索結果
@@ -300,28 +262,6 @@ function wp_targeted_link_rel_custom( $rel_value, $link_html ){
   return $rel_value;
 }
 endif;
-
-// add_action( 'do_feed_smartnews', 'do_feed_smartnews' );
-// if ( !function_exists( 'do_feed_smartnews' ) ):
-// function do_feed_smartnews() {
-//   $feed_template = get_template_directory() . '/tmp/smartnews.php';
-//   load_template( $feed_template );
-// }
-// endif;
-
-// add_action( 'init', function() {
-//   add_feed( 'smartnews', function() {
-//     $feed_template = get_template_directory() . '/tmp/smartnews.php';
-//     load_template( $feed_template );
-//   } );
-// } );
-// add_action( 'wp_feed_options', function( &$feed ) {
-//   $feed->enable_cache( false );
-// } );
-// //フィード追加
-// add_action('init', function() {
-//   add_feed('smartnews', function() { get_template_part('/tmp/smartnews'); });
-// });
 
 //SmartNewsフィード追加
 add_action('init', 'smartnews_feed_init');

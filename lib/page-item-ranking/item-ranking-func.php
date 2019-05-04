@@ -213,19 +213,14 @@ function get_rating_star_tag($rate, $max = 5, $number = false){
 
   $tag = '<div class="ranking-item-rating rating-star">';
 
-  // //とりあえず小数点1桁形式にする
-  // if (!includes_string('.', $rate)) {
-  //   $rate .= '.0';
-  // }
-  // _v($rate);
   //小数点で分割
   $rates = explode('.', $rate);
   if (!isset($rates[0])) {
     return $rate;
   }
-  //小数点以下が5かどうか
+  //小数点以下が5以上かどうか
   if (isset($rates[1])) {
-    $has_herf = intval($rates[1]) == 5;
+    $has_herf = intval($rates[1]) >= 5;
   } else {
     $has_herf = false;
   }
@@ -238,19 +233,19 @@ function get_rating_star_tag($rate, $max = 5, $number = false){
     $middle = 0;
     $after = $max - $before;
     //3.2とかの場合は小数点以下を切り捨てる
-    $rate = floor(floatval($rate));
+    //$rate = floor(floatval($rate));
   }
   //スターの出力
   for ($j=1; $j <= $before; $j++) {
-    $tag .= '<span class="fa fa-star"></span>';
+    $tag .= '<span class="star"></span>';
   }
   //半分スターの出力
   for ($j=1; $j <= $middle; $j++) {
-    $tag .= '<span class="fa fa-star-half-o"></span>';
+    $tag .= '<span class="star-half-o"></span>';
   }
   //空スターの出力
   for ($j=1; $j <= $after; $j++) {
-    $tag .= '<span class="fa fa-star-o"></span>';
+    $tag .= '<span class="star-o"></span>';
   }
 
   if ($number) {

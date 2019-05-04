@@ -238,10 +238,10 @@ function update_theme_option($option_name){
   // } else {
   // }
   $opt_val = isset($_POST[$option_name]) ? $_POST[$option_name] : '';
-  //広告コードからscriptを除外する（サーバーのファイアウォール・403エラー対策）
-  if (($option_name == OP_AD_CODE) || ($option_name == OP_AD_LINK_UNIT_CODE)) {
-    $opt_val = preg_replace('{<script.+?</script>}is', '', $opt_val);
-  }
+  // //広告コードからscriptを除外する（サーバーのファイアウォール・403エラー対策）
+  // if (($option_name == OP_AD_CODE) || ($option_name == OP_AD_LINK_UNIT_CODE)) {
+  //   $opt_val = preg_replace('{<script.+?</script>}is', '', $opt_val);
+  // }
   set_theme_mod($option_name, $opt_val);
 }
 endif;
@@ -1157,6 +1157,26 @@ function get_theme_css_cache_file_url(){
 }
 endif;
 
+// //テーマのカスタム管理者用CSSファイル
+// if ( !function_exists( 'get_theme_admin_css_cache_file' ) ):
+// function get_theme_admin_css_cache_file(){
+//   $file = get_theme_css_cache_path().'css-custom-admin.css';
+//   //キャッシュファイルが存在しない場合はからのファイルを生成
+//   if (!file_exists($file)) {
+//     wp_filesystem_put_contents($file,  '');
+//   }
+//   return $file;
+// }
+// endif;
+
+// //テーマのカスタム管理者用CSSファイルURL
+// if ( !function_exists( 'get_theme_admin_css_cache_file_url' ) ):
+// function get_theme_admin_css_cache_file_url(){
+//   $url = local_to_url(get_theme_admin_css_cache_file());
+//   return $url;
+// }
+// endif;
+
 //画像URLから幅と高さを取得する（同サーバー内ファイルURLのみ）
 if ( !function_exists( 'get_image_width_and_height' ) ):
 function get_image_width_and_height($image_url){
@@ -1650,7 +1670,19 @@ function wp_filesystem_get_contents($file, $is_exfile = false, $credentials_enab
     return false;
   }
 
-  return file_get_contents($file);
+  $options = array(
+    'http' => array(
+        'method'  => 'GET',
+        'timeout' => 1.5, // タイムアウト時間
+        //'protocol_version'  => '1.1',
+    )
+  );
+
+  if (!$is_exfile) {//ローカル
+    return file_get_contents($file);
+  } else {//外部URL
+    return file_get_contents($file, false, stream_context_create($options));
+  }
 
   // if ($credentials_enable && is_request_filesystem_credentials_enable()){
   //   $creds = request_filesystem_credentials('', '', false, false, null);
@@ -1763,11 +1795,19 @@ function get_requested_url(){
 }
 endif;
 
+//クエリを取り除いたURLを取得
+if ( !function_exists( 'get_query_removed_url' ) ):
+function get_query_removed_url($url){
+  $url = preg_replace('{\?.+$}', '', $url);
+  return $url;
+}
+endif;
+
 //現在表示しているページのURL（クエリを取り除く）
 if ( !function_exists( 'get_query_removed_requested_url' ) ):
 function get_query_removed_requested_url(){
   $url = get_requested_url();
-  $url = preg_replace('{\?.+$}', '', $url);
+  $url = get_query_removed_url($url);
   $url = user_trailingslashit($url);
   return $url;
 }
@@ -2072,7 +2112,6 @@ endif;
 //アクセス解析を行うか
 if ( !function_exists( 'is_analytics' ) ):
 function is_analytics(){
-  //var_dump(!is_user_administrator() || is_analytics_admin_include());
   return !is_user_administrator() || is_analytics_admin_include();
 }
 endif;
@@ -2508,5 +2547,62 @@ function comma_text_to_array($comma_text){
     $array = explode(',', $comma_text);
   }
   return $array;
+}
+endif;
+
+//エディターカラーパレット用の木から
+if ( !function_exists( 'get_editor_key_color' ) ):
+function get_editor_key_color(){
+  return !empty(get_site_key_color()) ? get_site_key_color() : DEFAULT_EDITOR_KEY_COLOR;
+}
+endif;
+
+//httpコンテンツの取得
+if ( !function_exists( 'get_http_content' ) ):
+function get_http_content($url){
+  try {
+    $ch = curl_init();
+    curl_setopt_array($ch, array(
+      CURLOPT_URL => $url,
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_TIMEOUT => 1.5,
+    ));
+    $body = curl_exec($ch);
+    $errno = curl_errno($ch);
+    $error = curl_error($ch);
+    curl_close($ch);
+    if (CURLE_OK !== $errno) {
+      throw new RuntimeException($error, $errno);
+    }
+    return $body;
+  } catch (Exception $e) {
+    return false;
+    //echo $e->getMessage();
+  }
+}
+endif;
+
+//本文を読むのにかかる時間
+if ( !function_exists( 'get_time_to_content_read' ) ):
+function get_time_to_content_read($content){
+  $count = mb_strlen(strip_tags($content));
+  if ($count == 0) {
+    return 0;
+  }
+  $minutes = floor($count / 600) + 1;
+  return $minutes;
+}
+endif;
+
+//内部URLからタグオブジェクトを取得する
+if ( !function_exists( 'url_to_tag_object' ) ):
+function url_to_tag_object($url){
+  $tag_slug = str_replace(TAG_BASE_URL, '', get_query_removed_url($url));
+  $tag_slug = str_replace('/', '', $tag_slug);
+  $tags = get_tags(array('slug' => $tag_slug));
+  if (isset($tags[0])) {
+    $tag = $tags[0];
+    return $tag;
+  }
 }
 endif;

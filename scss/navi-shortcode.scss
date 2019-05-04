@@ -5,7 +5,7 @@
     padding: 5px 3px;
     line-height: 1.3;
     margin-top: 0px;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
   }
 }
 
@@ -28,8 +28,8 @@
   }
 }
 
-.navi-card-type-2 .navi-card-box {
-  border-radius: 5px;
+.navi-card-type-2 {
+  border-radius: $basic_border_radius;
   border: 1px solid $thin;
 }
 

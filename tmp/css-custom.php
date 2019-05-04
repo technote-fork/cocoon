@@ -632,3 +632,84 @@ if ($entry_content_margin_hight = get_entry_content_margin_hight()): ?>
   }
   <?php endif; ?>
 <?php endif ?>
+.blank-box.bb-key-color{
+  border-color: <?php echo get_editor_key_color(); ?>;
+}
+.iic-key-color li::before{
+  color: <?php echo get_editor_key_color(); ?>;
+}
+.blank-box.bb-tab.bb-key-color::before {
+  background-color: <?php echo get_editor_key_color(); ?>;
+}
+.tb-key-color .toggle-button {
+  border: 1px solid <?php echo get_editor_key_color(); ?>;
+  background: <?php echo get_editor_key_color(); ?>;
+  color: #fff;
+}
+.tb-key-color .toggle-button::before {
+  color: #ccc;
+}
+.tb-key-color .toggle-checkbox:checked ~ .toggle-content {
+  border-color: <?php echo get_editor_key_color(); ?>;
+}
+.cb-key-color.caption-box {
+  border-color: <?php echo get_editor_key_color(); ?>;
+}
+.cb-key-color .caption-box-label {
+  background-color: <?php echo get_editor_key_color(); ?>;
+  color: #fff;
+}
+.tcb-key-color .tab-caption-box-label {
+  background-color: <?php echo get_editor_key_color(); ?>;
+  color: #fff;
+}
+.tcb-key-color .tab-caption-box-content {
+  border-color: <?php echo get_editor_key_color(); ?>;
+}
+.lb-key-color .label-box-content {
+  border-color: <?php echo get_editor_key_color(); ?>;
+}
+.mc-key-color {
+  background-color: <?php echo get_editor_key_color(); ?>;
+  color: #fff;
+  border: none;
+}
+.mc-key-color.micro-bottom::after {
+  border-bottom-color: <?php echo get_editor_key_color(); ?>;
+  border-top-color: transparent;
+}
+.mc-key-color::before {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+}
+.mc-key-color::after {
+  border-top-color: <?php echo get_editor_key_color(); ?>;
+}
+.btn-key-color, .btn-wrap.btn-wrap-key-color > a {
+  background-color: <?php echo get_editor_key_color(); ?>;
+}
+.has-text-color.has-key-color-color {
+  color: <?php echo get_editor_key_color(); ?>;
+}
+.has-background.has-key-color-background-color {
+  background-color: <?php echo get_editor_key_color(); ?>;
+}
+<?php //エディター背景色
+$editor_background_color = get_editor_background_color();
+if (!$editor_background_color) {
+  $editor_background_color = '#fff';
+} ?>
+.article.page-body,
+body#tinymce.wp-editor{
+  background-color: <?php echo $editor_background_color; ?>
+}
+<?php //エディター文字色
+$editor_text_color = get_editor_text_color();
+if (!$editor_text_color) {
+  $editor_text_color = '#333';
+} ?>
+.article.page-body,
+.editor-post-title__block .editor-post-title__input,
+body#tinymce.wp-editor{
+  color: <?php echo $editor_text_color; ?>
+}

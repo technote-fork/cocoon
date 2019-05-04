@@ -115,7 +115,7 @@ div.mce-content-body {
 
 
       >div{
-        width: 100% !important;
+        width: 100%;
         //padding: 0 0.45em;
         margin: 0;
         p{
@@ -691,6 +691,17 @@ ol, ul {
 .tab-caption-box-label{
   *{
     display: inline;
+  }
+}
+
+//アイコンリスト内のCSS不具合修正
+.editor-styles-wrapper .article{
+  .iconlist-box{
+    ul, ol{
+      li{
+        margin: 0;
+      }
+    }
   }
 }
 

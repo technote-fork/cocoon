@@ -85,6 +85,14 @@ function is_external_link_noreferrer_enable(){
 }
 endif;
 
+//target="_blank"のnoreferrer
+define('OP_EXTERNAL_TARGET_BLANK_LINK_NOREFERRER_ENABLE', 'external_target_blank_link_noreferrer_enable');
+if ( !function_exists( 'is_external_target_blank_link_noreferrer_enable' ) ):
+function is_external_target_blank_link_noreferrer_enable(){
+  return get_theme_option(OP_EXTERNAL_TARGET_BLANK_LINK_NOREFERRER_ENABLE);
+}
+endif;
+
 //external
 define('OP_EXTERNAL_LINK_EXTERNAL_ENABLE', 'external_link_external_enable');
 if ( !function_exists( 'is_external_link_external_enable' ) ):
@@ -157,7 +165,7 @@ endif;
 define('OP_INTERNAL_TARGET_BLANK_LINK_NOOPENER_ENABLE', 'internal_target_blank_link_noopener_enable');
 if ( !function_exists( 'is_internal_target_blank_link_noopener_enable' ) ):
 function is_internal_target_blank_link_noopener_enable(){
-  return get_theme_option(OP_INTERNAL_TARGET_BLANK_LINK_NOOPENER_ENABLE, 1);
+  return get_theme_option(OP_INTERNAL_TARGET_BLANK_LINK_NOOPENER_ENABLE);
 }
 endif;
 
@@ -166,6 +174,14 @@ define('OP_INTERNAL_LINK_NOREFERRER_ENABLE', 'internal_link_noreferrer_enable');
 if ( !function_exists( 'is_internal_link_noreferrer_enable' ) ):
 function is_internal_link_noreferrer_enable(){
   return get_theme_option(OP_INTERNAL_LINK_NOREFERRER_ENABLE);
+}
+endif;
+
+//target="_blank"のnoreferrer
+define('OP_INTERNAL_TARGET_BLANK_LINK_NOREFERRER_ENABLE', 'internal_target_blank_link_noreferrer_enable');
+if ( !function_exists( 'is_internal_target_blank_link_noreferrer_enable' ) ):
+function is_internal_target_blank_link_noreferrer_enable(){
+  return get_theme_option(OP_INTERNAL_TARGET_BLANK_LINK_NOREFERRER_ENABLE);
 }
 endif;
 
@@ -227,5 +243,13 @@ define('OP_POST_AUTHOR_VISIBLE', 'post_author_visible');
 if ( !function_exists( 'is_post_author_visible' ) ):
 function is_post_author_visible(){
   return get_theme_option(OP_POST_AUTHOR_VISIBLE, 1);
+}
+endif;
+
+//記事を読む時間表示
+define('OP_CONTENT_READ_TIME_VISIBLE', 'content_read_time_visible');
+if ( !function_exists( 'is_content_read_time_visible' ) ):
+function is_content_read_time_visible(){
+  return get_theme_option(OP_CONTENT_READ_TIME_VISIBLE);
 }
 endif;

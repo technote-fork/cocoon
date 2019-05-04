@@ -273,3 +273,10 @@ span.internal-icon{
   display: none;
 }
 
+.read-time{
+  text-align: center;
+  font-size: 0.7em;
+  border-top: 4px double $x_thin;
+  border-bottom: 4px double $x_thin;
+  margin: 0 3%;
+}

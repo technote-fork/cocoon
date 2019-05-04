@@ -133,6 +133,9 @@ function gutenberg_stylesheets_custom() {
     // Gutenberg用のCSSとJSのみ読み込み
     wp_enqueue_script( THEME_NAME . '-gutenberg-js', get_template_directory_uri() . '/js/gutenberg.js', array( 'jquery' ), false, true );
     wp_enqueue_style( THEME_NAME . '-gutenberg-css', get_template_directory_uri() . '/css/gutenberg-editor.css' );
+    // if (file_exists(get_theme_css_cache_file())) {
+    //   wp_enqueue_style( THEME_NAME . '-gutenberg-custom-css', get_theme_css_cache_file_url() );
+    // }
 
     /**
      * Filters the script parameter name.
@@ -269,6 +272,8 @@ add_filter('ranking_item_link_tag', 'do_shortcode');
 add_filter('the_category_content', 'do_shortcode');
 //アピールリア
 add_filter('appeal_area_message', 'do_shortcode');
+//旧エディタでカテゴリー編集時にショートコードの前後にpタグが入るのを防ぐ
+add_filter('the_category_content', 'shortcode_unautop');
 
 //generator を削除
 remove_action('wp_head', 'wp_generator');

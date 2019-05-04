@@ -27,11 +27,14 @@ require_once abspath(__FILE__).'open-graph.php'; //OGP取得ライブラリ
 require_once abspath(__FILE__).'punycode.php';   //ピュニコードライブラリ
 require_once abspath(__FILE__).'medias.php';     //メディアライブラリ
 require_once abspath(__FILE__).'links.php';      //本文リンクライブラリ
-require_once abspath(__FILE__).'category.php';   //カテゴリー関係の関数
+require_once abspath(__FILE__).'content-category.php';   //カテゴリー関係の関数
+require_once abspath(__FILE__).'content-tag.php';   //タグ関係の関数
 require_once abspath(__FILE__).'entry-card.php'; //エントリーカード関数
 require_once abspath(__FILE__).'amp.php';        //AMP関係の関数
 require_once abspath(__FILE__).'content.php';    //本文関係の関数
 require_once abspath(__FILE__).'comments.php';   //コメント関係の関数
+require_once abspath(__FILE__).'related-entries.php';   //関連記事関係の関数
+require_once abspath(__FILE__).'plugins.php';   //プラグイン関係の関数
 require_once abspath(__FILE__).'php-html-css-js-minifier.php'; //HTML・CSS・JavaScript縮小化ライブラリ
 require_once abspath(__FILE__).'page-settings/all-funcs.php';        //全体設定関数
 require_once abspath(__FILE__).'page-settings/header-funcs.php';     //ヘッダー設定関数

@@ -35,6 +35,9 @@ update_theme_option(OP_EXTERNAL_TARGET_BLANK_LINK_NOOPENER_ENABLE);
 //noreferrer
 update_theme_option(OP_EXTERNAL_LINK_NOREFERRER_ENABLE);
 
+//target="_blank"のnoreferrer
+update_theme_option(OP_EXTERNAL_TARGET_BLANK_LINK_NOREFERRER_ENABLE);
+
 //external
 update_theme_option(OP_EXTERNAL_LINK_EXTERNAL_ENABLE);
 
@@ -63,6 +66,9 @@ update_theme_option(OP_INTERNAL_TARGET_BLANK_LINK_NOOPENER_ENABLE);
 //noreferrer
 update_theme_option(OP_INTERNAL_LINK_NOREFERRER_ENABLE);
 
+//target="_blank"のnoreferrer
+update_theme_option(OP_INTERNAL_TARGET_BLANK_LINK_NOREFERRER_ENABLE);
+
 //内部リンクアイコン表示
 update_theme_option(OP_INTERNAL_LINK_ICON_VISIBLE);
 
@@ -88,3 +94,6 @@ update_theme_option(OP_POST_UPDATE_VISIBLE);
 
 //投稿者を表示
 update_theme_option(OP_POST_AUTHOR_VISIBLE);
+
+//記事を読む時間表示
+update_theme_option(OP_CONTENT_READ_TIME_VISIBLE);

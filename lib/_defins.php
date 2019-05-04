@@ -54,6 +54,9 @@ $_TOC_INDEX = 1;
 global $_TOC_WIDGET_OR_SHORTCODE_USE;
 $_TOC_WIDGET_OR_SHORTCODE_USE = false;
 
+//エディターキーカラー
+define('DEFAULT_EDITOR_KEY_COLOR', '#19448e');
+
 //アドセンスID名
 define('DATA_AD_CLIENT', 'data-ad-client');
 define('DATA_AD_SLOT',   'data-ad-slot');
@@ -196,6 +199,9 @@ define('BEFORE_1ST_H2_TOC_PRIORITY_HIGH', 10000);
 define('URL_REG_STR', '(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)');
 define('URL_REG', '/'.URL_REG_STR.'/');
 
+//タグのベースURL
+define('TAG_BASE_URL', home_url('/').'tag/');
+
 //Font Awesome4.7のCDN
 define('FONT_AWESOME4_CDN_URL', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 //Font Awesome5のCDN
@@ -247,7 +253,7 @@ define('THEME_MAIL_AMAZON_PR', "
 
 //楽天メール広告
 define('THEME_MAIL_RAKUTEN_PR', "
-楽天の代替え商品をチェック。
+楽天で代替え商品を調べる。
 https://a.r10.to/hllTWS");
 
 //メール関連

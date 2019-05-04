@@ -116,7 +116,14 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             </div>
             <?php
             generate_checkbox_tag(OP_EXTERNAL_LINK_NOREFERRER_ENABLE, is_external_link_noreferrer_enable(), __( 'noreferrerを追加', THEME_NAME ));
-            generate_tips_tag(__( 'rel属性にnoreferrerを追加します。', THEME_NAME ));
+            generate_tips_tag(__( 'rel属性にnoreferrerを追加します。', THEME_NAME ));?>
+            <div class="indent<?php echo get_not_allowed_form_class(!is_external_link_noreferrer_enable(), true); ?>">
+              <?php
+              generate_checkbox_tag(OP_EXTERNAL_TARGET_BLANK_LINK_NOREFERRER_ENABLE, is_external_target_blank_link_noreferrer_enable(), __( 'target="_blank"の際はnoreferrerを追加', THEME_NAME ));
+              generate_tips_tag(__( '新しいタブで開くリンクのrel属性にnoreferrerを追加します。', THEME_NAME ));
+              ?>
+            </div>
+            <?php
             generate_checkbox_tag(OP_EXTERNAL_LINK_EXTERNAL_ENABLE, is_external_link_external_enable(), __( 'externalを追加', THEME_NAME ));
             generate_tips_tag(__( 'rel属性にexternalを追加します。', THEME_NAME ));
             ?>
@@ -234,6 +241,12 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             generate_checkbox_tag(OP_INTERNAL_LINK_NOREFERRER_ENABLE, is_internal_link_noreferrer_enable(), __( 'noreferrerを追加', THEME_NAME ));
             generate_tips_tag(__( 'rel属性にnoreferrerを追加します。', THEME_NAME ));
             ?>
+            <div class="indent<?php echo get_not_allowed_form_class(!is_internal_link_noreferrer_enable(), true); ?>">
+              <?php
+              generate_checkbox_tag(OP_INTERNAL_TARGET_BLANK_LINK_NOREFERRER_ENABLE, is_internal_target_blank_link_noreferrer_enable(), __( 'target="_blank"の際はnoreferrerを追加', THEME_NAME ));
+              generate_tips_tag(__( '新しいタブで開くリンクのrel属性にnoreferrerを追加します。', THEME_NAME ));
+              ?>
+            </div>
           </td>
         </tr>
 
@@ -325,10 +338,10 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
     <table class="form-table">
       <tbody>
 
-        <!-- 投稿関連情報の表示 -->
+        <!-- 投稿関連情報 -->
         <tr>
           <th scope="row">
-            <?php generate_label_tag('', __('投稿関連情報の表示', THEME_NAME) ); ?>
+            <?php generate_label_tag('', __('投稿関連情報', THEME_NAME) ); ?>
           </th>
           <td>
             <?php
@@ -338,6 +351,19 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             echo '<br>';
             generate_checkbox_tag(OP_POST_AUTHOR_VISIBLE , is_post_author_visible(), __( '投稿者名の表示', THEME_NAME ));
             generate_tips_tag(__( '投稿・固定ページの関連情報を表示するかどうか。構造化データエラーになるのを防ぐためCSSで非表示化されます。', THEME_NAME ));
+            ?>
+          </td>
+        </tr>
+
+        <!-- 記事を読む時間 -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag('', __('記事を読む時間', THEME_NAME) ); ?>
+          </th>
+          <td>
+            <?php
+            generate_checkbox_tag(OP_CONTENT_READ_TIME_VISIBLE , is_content_read_time_visible(), __( '記事を読む時間の目安を表示する', THEME_NAME ));
+            generate_tips_tag(__( '本文を読むのに必要な所要時間を表示します。時間はあくまで目安です。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/read-time/'));
             ?>
           </td>
         </tr>

@@ -23,6 +23,14 @@ function is_prev_next_enable(){
 }
 endif;
 
+//カテゴリページをnoindexとする
+define('OP_CATEGORY_PAGE_NOINDEX', 'category_page_noindex');
+if ( !function_exists( 'is_category_page_noindex' ) ):
+function is_category_page_noindex(){
+  return get_theme_option(OP_CATEGORY_PAGE_NOINDEX);
+}
+endif;
+
 //カテゴリページの2ページ目以降をnoindexとする
 define('OP_PAGED_CATEGORY_PAGE_NOINDEX', 'paged_category_page_noindex');
 if ( !function_exists( 'is_paged_category_page_noindex' ) ):
@@ -36,6 +44,14 @@ define('OP_TAG_PAGE_NOINDEX', 'tag_page_noindex');
 if ( !function_exists( 'is_tag_page_noindex' ) ):
 function is_tag_page_noindex(){
   return get_theme_option(OP_TAG_PAGE_NOINDEX, 1);
+}
+endif;
+
+//タグページの2ページ目以降をnoindexとする
+define('OP_PAGED_TAG_PAGE_NOINDEX', 'paged_tag_page_noindex');
+if ( !function_exists( 'is_paged_tag_page_noindex' ) ):
+function is_paged_tag_page_noindex(){
+  return get_theme_option(OP_PAGED_TAG_PAGE_NOINDEX, 1);
 }
 endif;
 
@@ -118,11 +134,13 @@ function get_the_date_tags(){
     default:
       // _v(get_the_time('U'));
       // _v(get_update_time('U'));
-      $date_tags = $time_post_date_tag;
+      $date_tags = null;
       //更新日があるとき
       if ($update_time && (get_the_time('U') < get_update_time('U'))) {
         $date_tags .= $time_update_date_tag;
       }
+      //投稿日
+      $date_tags .= $time_post_date_tag;
       break;
   }
   return $date_tags;
