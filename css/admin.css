@@ -376,7 +376,7 @@ https://codepen.io/nxworld/pen/oLdoWb
 .admin-settings .demo hr { color: #eee; }
 .admin-settings .demo .cf::after { clear: both; content: ""; display: block; }
 .admin-settings .demo .header-container, .admin-settings .demo .main, .admin-settings .demo .sidebar, .admin-settings .demo .footer { background-color: #fff; }
-.admin-settings .demo .wrap { width: 1236px; margin: 0 auto; }
+.admin-settings .demo .wrap { width: 1256px; margin: 0 auto; }
 .admin-settings .demo .content-in { display: flex; justify-content: space-between; flex-wrap: wrap; }
 .admin-settings .demo .main { width: 860px; margin-right: 20px; padding: 20px 29px; border: 1px solid transparent; border-radius: 4px; position: relative; }
 .admin-settings .demo .no-sidebar .content .main { margin: 0; width: 100%; }
@@ -404,10 +404,10 @@ https://codepen.io/nxworld/pen/oLdoWb
 .admin-settings .demo figure { margin: 0; }
 .admin-settings .demo img { max-width: 100%; height: auto; border: 0; -webkit-backface-visibility: hidden; }
 .admin-settings .demo .circle-image img { border-radius: 50%; }
-.admin-settings .demo .iwe-border p img, .admin-settings .demo .iwe-border p amp-img { border: 1px solid #ccc; }
-.admin-settings .demo .iwe-border-bold p img, .admin-settings .demo .iwe-border-bold p amp-img { border: 4px solid #eee; }
-.admin-settings .demo .iwe-shadow p img, .admin-settings .demo .iwe-shadow p amp-img { box-shadow: 5px 5px 15px #ddd; }
-.admin-settings .demo .iwe-shadow-paper p img, .admin-settings .demo .iwe-shadow-paper p amp-img { box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08); }
+.admin-settings .demo .iwe-border img, .admin-settings .demo .iwe-border amp-img { border: 1px solid #ccc; }
+.admin-settings .demo .iwe-border-bold img, .admin-settings .demo .iwe-border-bold amp-img { border: 4px solid #eee; }
+.admin-settings .demo .iwe-shadow img, .admin-settings .demo .iwe-shadow amp-img { box-shadow: 5px 5px 15px #ddd; }
+.admin-settings .demo .iwe-shadow-paper img, .admin-settings .demo .iwe-shadow-paper amp-img { box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08); }
 .admin-settings .demo .entry-card-thumb, .admin-settings .demo .author-thumb, .admin-settings .demo .blogcard-thumbnail, .admin-settings .demo .related-entry-card-thumb, .admin-settings .demo .popular-entry-card-thumb, .admin-settings .demo .new-entry-card-thumb { margin-right: 1.6%; }
 .admin-settings .demo .ect-vertical-card .entry-card-thumb, .admin-settings .demo .rect-vartical-card .related-entry-card-thumb { margin: 0; }
 .admin-settings .demo .ib-right .blogcard-thumbnail, .admin-settings .demo .eb-right .blogcard-thumbnail { margin-right: 0; margin-left: 1.4%; }
@@ -583,7 +583,7 @@ https://codepen.io/nxworld/pen/oLdoWb
 .admin-settings .demo .sns-share-buttons a .button-caption { font-size: 16px; margin-left: 10px; }
 .admin-settings .demo .sns-share-buttons a .share-count { font-family: Arial, sans-serif; position: absolute; right: 3px; bottom: 3px; font-size: 12px; line-height: 1; }
 .admin-settings .demo .sbc-hide .share-count { display: none; }
-.admin-settings .demo .copy-info { display: none; /*初期状態は非表示*/ padding: 1em 2em; color: #fff; border-radius: 8px; /*画面上部に表示*/ position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #333; opacity: 0.8; box-shadow: 0 4px 8px #777; }
+.admin-settings .demo .copy-info { display: none; /*初期状態は非表示*/ padding: 1em 2em; color: #fff; border-radius: 8px; /*画面上部に表示*/ position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #333; opacity: 0.8; box-shadow: 0 4px 8px #777; z-index: 2; }
 .admin-settings .demo .content { margin-top: 24px; }
 .admin-settings .demo .entry-title, .admin-settings .demo .archive-title { font-size: 26px; margin: 16px 0; line-height: 1.3; }
 .admin-settings .demo .archive-title span { margin-right: 10px; }
@@ -696,7 +696,7 @@ https://codepen.io/nxworld/pen/oLdoWb
 .admin-settings .demo .toc.tnt-number-detail ol > li > ol > li > ol > li > ol > li:before { content: counter(c-h2) "." counter(c-h3) "." counter(c-h4) "." counter(c-h5) "."; }
 .admin-settings .demo .toc.tnt-number-detail ol > li > ol > li > ol > li > ol > li > ol > li { counter-increment: c-h6; }
 .admin-settings .demo .toc.tnt-number-detail ol > li > ol > li > ol > li > ol > li > ol > li:before { content: counter(c-h2) "." counter(c-h3) "." counter(c-h4) "." counter(c-h5) "." counter(c-h6) "."; }
-.admin-settings .demo .sidebar { width: 356px; border: 1px solid transparent; padding: 9px; border-radius: 4px; background-color: #fff; }
+.admin-settings .demo .sidebar { width: 376px; border: 1px solid transparent; padding: 19px; border-radius: 4px; background-color: #fff; }
 .admin-settings .demo .sidebar h3 { background-color: #f3f4f5; padding: 14px 10px; margin: 16px 0; border-radius: 2px; }
 .admin-settings .demo .no-scrollable-sidebar .sidebar { height: 100%; }
 .admin-settings .demo .sidebar-scroll { position: -webkit-sticky; /* Safari */ position: sticky; top: 0; }
@@ -855,8 +855,8 @@ https://codepen.io/nxworld/pen/oLdoWb
 .admin-settings .demo .blank-box.bb-amber { border-color: #ffc107; }
 .admin-settings .demo .blank-box.bb-deep-orange { border-color: #ea5506; }
 .admin-settings .demo .blank-box.bb-white { border-color: #fff; }
-.admin-settings .demo .blank-box.bb-tab { position: relative; margin-top: 2em; }
-.admin-settings .demo .blank-box.bb-tab::before { background-color: #949495; font-family: FontAwesome, Aharoni, "Arial Black", Impact, Arial, sans-serif; position: absolute; font-size: .8em; top: -1.8em; left: -2px; line-height: 1.6; padding: 0 1em 0 .8em; color: #fff; border-radius: 6px 6px 0 0; }
+.admin-settings .demo .blank-box.bb-tab { position: relative; margin-top: 2em; border-top-left-radius: 0; }
+.admin-settings .demo .blank-box.bb-tab::before { background-color: #949495; font-family: FontAwesome, Aharoni, "Arial Black", Impact, Arial, sans-serif; position: absolute; font-size: .8em; top: -1.8em; left: -3px; line-height: 1.6; padding: 0 1em 0 .8em; color: #fff; border-radius: 6px 6px 0 0; }
 .admin-settings .demo .blank-box.bb-tab.bb-red::before { background-color: #e60033; }
 .admin-settings .demo .blank-box.bb-tab.bb-pink::before { background-color: #e95295; }
 .admin-settings .demo .blank-box.bb-tab.bb-purple::before { background-color: #884898; }
@@ -1265,46 +1265,46 @@ https://codepen.io/nxworld/pen/oLdoWb
 .admin-settings .demo .iic-amber li::before { color: #ffc107; }
 .admin-settings .demo .iic-deep-orange li::before { color: #ea5506; }
 .admin-settings .demo .iic-white li::before { color: #fff; }
-.admin-settings .demo .has-red-color { color: #e60033; }
-.admin-settings .demo .has-pink-color { color: #e95295; }
-.admin-settings .demo .has-purple-color { color: #884898; }
-.admin-settings .demo .has-blue-color { color: #0095d9; }
-.admin-settings .demo .has-green-color { color: #3eb370; }
-.admin-settings .demo .has-orange-color { color: #f39800; }
-.admin-settings .demo .has-yellow-color { color: #ffd900; }
-.admin-settings .demo .has-brown-color { color: #954e2a; }
-.admin-settings .demo .has-grey-color { color: #949495; }
-.admin-settings .demo .has-black-color { color: #333; }
-.admin-settings .demo .has-deep-color { color: #55295b; }
-.admin-settings .demo .has-indigo-color { color: #1e50a2; }
-.admin-settings .demo .has-light-blue-color { color: #2ca9e1; }
-.admin-settings .demo .has-cyan-color { color: #00a3af; }
-.admin-settings .demo .has-teal-color { color: #007b43; }
-.admin-settings .demo .has-light-green-color { color: #8bc34a; }
-.admin-settings .demo .has-lime-color { color: #c3d825; }
-.admin-settings .demo .has-amber-color { color: #ffc107; }
-.admin-settings .demo .has-deep-orange-color { color: #ea5506; }
-.admin-settings .demo .has-white-color { color: #fff; }
-.admin-settings .demo .has-red-background-color { background-color: #e60033; }
-.admin-settings .demo .has-pink-background-color { background-color: #e95295; }
-.admin-settings .demo .has-purple-background-color { background-color: #884898; }
-.admin-settings .demo .has-blue-background-color { background-color: #0095d9; }
-.admin-settings .demo .has-green-background-color { background-color: #3eb370; }
-.admin-settings .demo .has-orange-background-color { background-color: #f39800; }
-.admin-settings .demo .has-yellow-background-color { background-color: #ffd900; }
-.admin-settings .demo .has-brown-background-color { background-color: #954e2a; }
-.admin-settings .demo .has-grey-background-color { background-color: #949495; }
-.admin-settings .demo .has-black-background-color { background-color: #333; }
-.admin-settings .demo .has-deep-background-color { background-color: #55295b; }
-.admin-settings .demo .has-indigo-background-color { background-color: #1e50a2; }
-.admin-settings .demo .has-light-blue-background-color { background-color: #2ca9e1; }
-.admin-settings .demo .has-cyan-background-color { background-color: #00a3af; }
-.admin-settings .demo .has-teal-background-color { background-color: #007b43; }
-.admin-settings .demo .has-light-green-background-color { background-color: #8bc34a; }
-.admin-settings .demo .has-lime-background-color { background-color: #c3d825; }
-.admin-settings .demo .has-amber-background-color { background-color: #ffc107; }
-.admin-settings .demo .has-deep-orange-background-color { background-color: #ea5506; }
-.admin-settings .demo .has-white-background-color { background-color: #fff; }
+.admin-settings .demo div .has-red-color { color: #e60033; }
+.admin-settings .demo div .has-pink-color { color: #e95295; }
+.admin-settings .demo div .has-purple-color { color: #884898; }
+.admin-settings .demo div .has-blue-color { color: #0095d9; }
+.admin-settings .demo div .has-green-color { color: #3eb370; }
+.admin-settings .demo div .has-orange-color { color: #f39800; }
+.admin-settings .demo div .has-yellow-color { color: #ffd900; }
+.admin-settings .demo div .has-brown-color { color: #954e2a; }
+.admin-settings .demo div .has-grey-color { color: #949495; }
+.admin-settings .demo div .has-black-color { color: #333; }
+.admin-settings .demo div .has-deep-color { color: #55295b; }
+.admin-settings .demo div .has-indigo-color { color: #1e50a2; }
+.admin-settings .demo div .has-light-blue-color { color: #2ca9e1; }
+.admin-settings .demo div .has-cyan-color { color: #00a3af; }
+.admin-settings .demo div .has-teal-color { color: #007b43; }
+.admin-settings .demo div .has-light-green-color { color: #8bc34a; }
+.admin-settings .demo div .has-lime-color { color: #c3d825; }
+.admin-settings .demo div .has-amber-color { color: #ffc107; }
+.admin-settings .demo div .has-deep-orange-color { color: #ea5506; }
+.admin-settings .demo div .has-white-color { color: #fff; }
+.admin-settings .demo div .has-red-background-color { background-color: #e60033; }
+.admin-settings .demo div .has-pink-background-color { background-color: #e95295; }
+.admin-settings .demo div .has-purple-background-color { background-color: #884898; }
+.admin-settings .demo div .has-blue-background-color { background-color: #0095d9; }
+.admin-settings .demo div .has-green-background-color { background-color: #3eb370; }
+.admin-settings .demo div .has-orange-background-color { background-color: #f39800; }
+.admin-settings .demo div .has-yellow-background-color { background-color: #ffd900; }
+.admin-settings .demo div .has-brown-background-color { background-color: #954e2a; }
+.admin-settings .demo div .has-grey-background-color { background-color: #949495; }
+.admin-settings .demo div .has-black-background-color { background-color: #333; }
+.admin-settings .demo div .has-deep-background-color { background-color: #55295b; }
+.admin-settings .demo div .has-indigo-background-color { background-color: #1e50a2; }
+.admin-settings .demo div .has-light-blue-background-color { background-color: #2ca9e1; }
+.admin-settings .demo div .has-cyan-background-color { background-color: #00a3af; }
+.admin-settings .demo div .has-teal-background-color { background-color: #007b43; }
+.admin-settings .demo div .has-light-green-background-color { background-color: #8bc34a; }
+.admin-settings .demo div .has-lime-background-color { background-color: #c3d825; }
+.admin-settings .demo div .has-amber-background-color { background-color: #ffc107; }
+.admin-settings .demo div .has-deep-orange-background-color { background-color: #ea5506; }
+.admin-settings .demo div .has-white-background-color { background-color: #fff; }
 .admin-settings .demo .column-wrap { display: flex; position: relative; margin: 1em 0; margin: 0; word-break: break-all; }
 .admin-settings .demo .column-wrap .column-left { padding-left: 0; }
 .admin-settings .demo .column-wrap .column-right { padding-right: 0; }
@@ -1440,8 +1440,8 @@ https://codepen.io/nxworld/pen/oLdoWb
 .admin-settings .demo .speech-person { width: 12%; min-width: 12%; }
 .admin-settings .demo .speech-icon img, .admin-settings .demo .speech-icon amp-img { border-radius: 50%; border: 2px solid #ccc; width: 100%; }
 .admin-settings .demo .speech-name { text-align: center; font-size: 13px; }
-.admin-settings .demo .speech-balloon { height: 100%; position: relative; padding: 10px; background-color: #fff; border: 2px solid #ccc; border-radius: 6px; word-break: break-all; }
-.admin-settings .demo .speech-balloon p { margin: 0; }
+.admin-settings .demo div.speech-balloon { height: 100%; position: relative; padding: 10px; background-color: #fff; border: 2px solid #ccc; border-radius: 6px; word-break: break-all; }
+.admin-settings .demo div.speech-balloon p { margin: 0; }
 .admin-settings .demo .speech-balloon::before { content: ''; position: absolute; display: block; width: 0; height: 0; left: -12px; top: 10px; border-right: 12px solid #ccc; border-top: 12px solid transparent; border-bottom: 12px solid transparent; }
 .admin-settings .demo .speech-balloon::after { content: ''; position: absolute; display: block; width: 0; height: 0; left: -9px; top: 10px; border-right: 12px solid #fff; border-top: 12px solid transparent; border-bottom: 12px solid transparent; }
 .admin-settings .demo .sbp-l { margin-right: 100px; }
@@ -1599,29 +1599,35 @@ https://codepen.io/nxworld/pen/oLdoWb
   .admin-settings .demo .fb-like-balloon-button { float: none; width: 100%; height: 30px; display: block; padding-top: 0; line-height: 24px; }
   .admin-settings .demo div.fb-like-mobile { display: block; }
   .admin-settings .demo div.fb-like-pc { display: none; } }
-.admin-settings .demo .mobile-menu-buttons { background: #eee; position: fixed; bottom: 0; left: 0; right: 0; z-index: 2; display: none; line-height: 1.4; min-height: 50px; padding-bottom: constant(safe-area-inset-bottom); padding-bottom: env(safe-area-inset-bottom); }
-.admin-settings .demo .mobile-menu-buttons .menu-icon { margin-top: 3px; text-align: center; display: block; }
+.admin-settings .demo .mobile-menu-buttons { background: #eee; position: fixed; bottom: 0; left: 0; right: 0; z-index: 2; padding: 0; margin: 0; list-style: none; display: none; align-items: center; line-height: 1.4; min-height: 50px; padding-bottom: constant(safe-area-inset-bottom); padding-bottom: env(safe-area-inset-bottom); }
+.admin-settings .demo .mobile-menu-buttons .menu-icon { text-align: center; width: 100%; }
 .admin-settings .demo .mobile-menu-buttons .menu-icon::before { font-family: FontAwesome; font-size: 1em; }
-.admin-settings .demo .mobile-menu-buttons .menu-caption { font-size: 12px; text-align: center; display: block; }
-.admin-settings .demo .mobile-menu-buttons .menu-button { position: relative; width: 100%; }
-.admin-settings .demo .mobile-menu-buttons .menu-button > a { color: #333; text-decoration: none; cursor: default; }
+.admin-settings .demo .mobile-menu-buttons .menu-caption { font-size: 12px; text-align: center; }
+.admin-settings .demo .mobile-menu-buttons .menu-button { position: relative; width: 100%; cursor: pointer; }
+.admin-settings .demo .mobile-menu-buttons .menu-button > a { display: block; color: #333; text-decoration: none; }
 .admin-settings .demo .mobile-menu-buttons .menu-button:hover { background-color: #f5f8fa; transition: all 0.7s ease; color: #333; }
 .admin-settings .demo .mobile-menu-buttons .ad-area { display: none; }
+.admin-settings .demo .mobile-menu-buttons .menu-content { cursor: default; }
 .admin-settings .demo .navi-menu-icon::before { content: '\f0c9'; }
 .admin-settings .demo .home-menu-icon::before { content: '\f015'; }
 .admin-settings .demo .search-menu-icon::before { content: '\f002'; }
 .admin-settings .demo .top-menu-icon::before { content: '\f062'; }
+.admin-settings .demo .toc-menu-icon::before { content: '\f0ca'; }
 .admin-settings .demo .sidebar-menu-icon::before { content: '\f03b'; }
-.admin-settings .demo #navi-menu-close, .admin-settings .demo #sidebar-menu-close, .admin-settings .demo #search-menu-close { display: none; /*はじめは隠しておく*/ position: fixed; z-index: 99; top: 0; /*全体に広がるように*/ left: 0; width: 100%; height: 100%; background: black; transition: .3s ease-in-out; }
+.admin-settings .demo .share-menu-icon::before { content: '\f1e0'; }
+.admin-settings .demo .follow-menu-icon::before { content: '\f004'; }
+.admin-settings .demo .prev-menu-icon::before { content: '\f060'; }
+.admin-settings .demo .next-menu-icon::before { content: '\f061'; }
+.admin-settings .demo #navi-menu-close, .admin-settings .demo #sidebar-menu-close, .admin-settings .demo #search-menu-close, .admin-settings .demo #share-menu-close, .admin-settings .demo #follow-menu-close { display: none; /*はじめは隠しておく*/ position: fixed; z-index: 99; top: 0; /*全体に広がるように*/ left: 0; width: 100%; height: 100%; background: black; transition: .3s ease-in-out; }
 .admin-settings .demo .menu-content { overflow: auto; position: fixed; top: 0; z-index: 9999; /*最前面に*/ width: 100%; /*右側に隙間を作る（閉じるカバーを表示）*/ max-width: 400px; /*最大幅（調整してください）*/ height: 100%; background: #fff; /*背景色*/ transition: .3s ease-in-out; /*滑らかに表示*/ opacity: 1; overflow: scroll; -webkit-overflow-scrolling: touch; }
 .admin-settings .demo .menu-content .menu-drawer { padding: 0 0 30px; }
 .admin-settings .demo .menu-content .sidebar { width: 100%; display: block; margin: 0; }
 .admin-settings .demo .navi-menu-content { left: 0; -webkit-transform: translateX(-105%); transform: translateX(-105%); }
 .admin-settings .demo .sidebar-menu-content { right: 0; -webkit-transform: translateX(105%); transform: translateX(105%); }
-.admin-settings .demo .search-menu-content { transition: .3s ease-in-out; position: fixed; top: 40%; z-index: 99; width: 90%; left: 5%; right: 5%; -webkit-transform: translateY(900%); transform: translateY(900%); }
-.admin-settings .demo .search-menu-content .search-edit { width: 100%; }
-.admin-settings .demo #navi-menu-input:checked ~ #navi-menu-close, .admin-settings .demo #sidebar-menu-input:checked ~ #sidebar-menu-close, .admin-settings .demo #search-menu-input:checked ~ #search-menu-close { display: block; /*カバーを表示*/ opacity: .5; }
-.admin-settings .demo #navi-menu-input:checked ~ #navi-menu-content, .admin-settings .demo #sidebar-menu-input:checked ~ #sidebar-menu-content, .admin-settings .demo #search-menu-input:checked ~ #search-menu-content { -webkit-transform: translateX(0%); transform: translateX(0%); }
+.admin-settings .demo .search-menu-content, .admin-settings .demo .share-menu-content, .admin-settings .demo .follow-menu-content { transition: .3s ease-in-out; position: fixed; top: 40%; z-index: 99; width: 90%; left: 5%; right: 5%; -webkit-transform: translateY(900%); transform: translateY(900%); }
+.admin-settings .demo .search-menu-content .search-edit, .admin-settings .demo .share-menu-content .search-edit, .admin-settings .demo .follow-menu-content .search-edit { width: 100%; }
+.admin-settings .demo #navi-menu-input:checked ~ #navi-menu-close, .admin-settings .demo #sidebar-menu-input:checked ~ #sidebar-menu-close, .admin-settings .demo #search-menu-input:checked ~ #search-menu-close, .admin-settings .demo #share-menu-input:checked ~ #share-menu-close, .admin-settings .demo #follow-menu-input:checked ~ #follow-menu-close { display: block; /*カバーを表示*/ opacity: .5; }
+.admin-settings .demo #navi-menu-input:checked ~ #navi-menu-content, .admin-settings .demo #sidebar-menu-input:checked ~ #sidebar-menu-content, .admin-settings .demo #search-menu-input:checked ~ #search-menu-content, .admin-settings .demo #share-menu-input:checked ~ #share-menu-content, .admin-settings .demo #follow-menu-input:checked ~ #follow-menu-content { -webkit-transform: translateX(0%); transform: translateX(0%); }
 .admin-settings .demo .menu-drawer ul { list-style: none; }
 .admin-settings .demo .menu-drawer li { display: block; }
 .admin-settings .demo .menu-drawer a { color: #333; text-decoration: none; padding: 6px; display: block; }
@@ -1629,6 +1635,12 @@ https://codepen.io/nxworld/pen/oLdoWb
 .admin-settings .demo .menu-drawer .sub-menu { padding-left: 20px; }
 .admin-settings .demo .menu-close-button { display: block; cursor: pointer; text-align: center; }
 .admin-settings .demo .menu-close-button::before { font-family: FontAwesome; content: ""; padding-right: 4px; padding: 0; font-size: 2em; }
+.admin-settings .demo .share-menu-content .sns-buttons { justify-content: space-around; }
+.admin-settings .demo .share-menu-content .sns-buttons .share-count { color: #fff; }
+.admin-settings .demo .share-menu-content .button-caption { display: none; }
+.admin-settings .demo .follow-menu-content .sns-buttons { justify-content: space-around; }
+.admin-settings .demo .follow-menu-content .sns-buttons a { width: 24%; }
+.admin-settings .demo .follow-menu-content .sns-follow-message { display: none; }
 .admin-settings .demo .ranking-items { line-height: 1.4; }
 .admin-settings .demo .ranking-items p { font-size: 18px; margin-top: 0; }
 .admin-settings .demo .ranking-item, .admin-settings .demo .timeline-box { padding: 3%; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 4px; }
@@ -1713,7 +1725,7 @@ https://codepen.io/nxworld/pen/oLdoWb
 .admin-settings .demo .gallery br { clear: both; }
 .admin-settings .demo .gallery .gallery-item dd { margin: 0; }
 .admin-settings .demo .search-box { margin: 1em 0 2em; position: relative; }
-.admin-settings .demo .search-edit { font-family: "Meiryo", sans-serif; }
+.admin-settings .demo .search-edit { font-family: inherit; }
 .admin-settings .demo .search-submit { position: absolute; right: 0; top: 0; font-size: 20px; cursor: pointer; line-height: 49px; border: none; color: #ccc; padding: 0 8px; background-color: rgba(255, 255, 255, 0); }
 .admin-settings .demo .search-submit::before { font-family: FontAwesome; content: ""; padding-right: 4px; }
 .admin-settings .demo .timeline-box { padding: 16px 5px; }
@@ -1730,8 +1742,9 @@ https://codepen.io/nxworld/pen/oLdoWb
   .admin-settings .demo .timeline-item-label { width: auto; float: none; text-align: left; padding-left: 16px; }
   .admin-settings .demo .timeline-item-content { width: auto; padding: 8px; float: none; border: none; }
   .admin-settings .demo .timeline-item::before { left: -12px; top: 19px; width: 21px; height: 21px; } }
+.admin-settings .demo .navi-card-wrap { background-color: #fff; }
 .admin-settings .demo .navi-card-wrap.a-wrap { position: relative; padding: 5px 3px; line-height: 1.3; margin-top: 0px; margin-bottom: 10px; }
-.admin-settings .demo .navi-card-box { background-color: #fff; padding: 0; }
+.admin-settings .demo .navi-card-box { padding: 0; }
 .admin-settings .demo .navi-card-type-1 { padding-bottom: 2px; border-bottom: 2px dotted #f3f4f5; }
 .admin-settings .demo .navi-card-type-1:first-of-type { border-top: 2px solid #f3f4f5; }
 .admin-settings .demo .navi-card-type-1:last-of-type { border-bottom: 2px solid #f3f4f5; }
@@ -1896,7 +1909,7 @@ https://codepen.io/nxworld/pen/oLdoWb
 .admin-settings .demo hr { color: #eee; }
 .admin-settings .demo .cf::after { clear: both; content: ""; display: block; }
 .admin-settings .demo .header-container, .admin-settings .demo .main, .admin-settings .demo .sidebar, .admin-settings .demo .footer { background-color: #fff; }
-.admin-settings .demo .wrap { width: 1236px; margin: 0 auto; }
+.admin-settings .demo .wrap { width: 1256px; margin: 0 auto; }
 .admin-settings .demo .content-in { display: flex; justify-content: space-between; flex-wrap: wrap; }
 .admin-settings .demo .main { width: 860px; margin-right: 20px; padding: 20px 29px; border: 1px solid transparent; border-radius: 4px; position: relative; }
 .admin-settings .demo .no-sidebar .content .main { margin: 0; width: 100%; }
@@ -1924,10 +1937,10 @@ https://codepen.io/nxworld/pen/oLdoWb
 .admin-settings .demo figure { margin: 0; }
 .admin-settings .demo img { max-width: 100%; height: auto; border: 0; -webkit-backface-visibility: hidden; }
 .admin-settings .demo .circle-image img { border-radius: 50%; }
-.admin-settings .demo .iwe-border p img, .admin-settings .demo .iwe-border p amp-img { border: 1px solid #ccc; }
-.admin-settings .demo .iwe-border-bold p img, .admin-settings .demo .iwe-border-bold p amp-img { border: 4px solid #eee; }
-.admin-settings .demo .iwe-shadow p img, .admin-settings .demo .iwe-shadow p amp-img { box-shadow: 5px 5px 15px #ddd; }
-.admin-settings .demo .iwe-shadow-paper p img, .admin-settings .demo .iwe-shadow-paper p amp-img { box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08); }
+.admin-settings .demo .iwe-border img, .admin-settings .demo .iwe-border amp-img { border: 1px solid #ccc; }
+.admin-settings .demo .iwe-border-bold img, .admin-settings .demo .iwe-border-bold amp-img { border: 4px solid #eee; }
+.admin-settings .demo .iwe-shadow img, .admin-settings .demo .iwe-shadow amp-img { box-shadow: 5px 5px 15px #ddd; }
+.admin-settings .demo .iwe-shadow-paper img, .admin-settings .demo .iwe-shadow-paper amp-img { box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08); }
 .admin-settings .demo .entry-card-thumb, .admin-settings .demo .author-thumb, .admin-settings .demo .blogcard-thumbnail, .admin-settings .demo .related-entry-card-thumb, .admin-settings .demo .popular-entry-card-thumb, .admin-settings .demo .new-entry-card-thumb { margin-right: 1.6%; }
 .admin-settings .demo .ect-vertical-card .entry-card-thumb, .admin-settings .demo .rect-vartical-card .related-entry-card-thumb { margin: 0; }
 .admin-settings .demo .ib-right .blogcard-thumbnail, .admin-settings .demo .eb-right .blogcard-thumbnail { margin-right: 0; margin-left: 1.4%; }
@@ -2103,7 +2116,7 @@ https://codepen.io/nxworld/pen/oLdoWb
 .admin-settings .demo .sns-share-buttons a .button-caption { font-size: 16px; margin-left: 10px; }
 .admin-settings .demo .sns-share-buttons a .share-count { font-family: Arial, sans-serif; position: absolute; right: 3px; bottom: 3px; font-size: 12px; line-height: 1; }
 .admin-settings .demo .sbc-hide .share-count { display: none; }
-.admin-settings .demo .copy-info { display: none; /*初期状態は非表示*/ padding: 1em 2em; color: #fff; border-radius: 8px; /*画面上部に表示*/ position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #333; opacity: 0.8; box-shadow: 0 4px 8px #777; }
+.admin-settings .demo .copy-info { display: none; /*初期状態は非表示*/ padding: 1em 2em; color: #fff; border-radius: 8px; /*画面上部に表示*/ position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #333; opacity: 0.8; box-shadow: 0 4px 8px #777; z-index: 2; }
 .admin-settings .demo .content { margin-top: 24px; }
 .admin-settings .demo .entry-title, .admin-settings .demo .archive-title { font-size: 26px; margin: 16px 0; line-height: 1.3; }
 .admin-settings .demo .archive-title span { margin-right: 10px; }
@@ -2216,7 +2229,7 @@ https://codepen.io/nxworld/pen/oLdoWb
 .admin-settings .demo .toc.tnt-number-detail ol > li > ol > li > ol > li > ol > li:before { content: counter(c-h2) "." counter(c-h3) "." counter(c-h4) "." counter(c-h5) "."; }
 .admin-settings .demo .toc.tnt-number-detail ol > li > ol > li > ol > li > ol > li > ol > li { counter-increment: c-h6; }
 .admin-settings .demo .toc.tnt-number-detail ol > li > ol > li > ol > li > ol > li > ol > li:before { content: counter(c-h2) "." counter(c-h3) "." counter(c-h4) "." counter(c-h5) "." counter(c-h6) "."; }
-.admin-settings .demo .sidebar { width: 356px; border: 1px solid transparent; padding: 9px; border-radius: 4px; background-color: #fff; }
+.admin-settings .demo .sidebar { width: 376px; border: 1px solid transparent; padding: 19px; border-radius: 4px; background-color: #fff; }
 .admin-settings .demo .sidebar h3 { background-color: #f3f4f5; padding: 14px 10px; margin: 16px 0; border-radius: 2px; }
 .admin-settings .demo .no-scrollable-sidebar .sidebar { height: 100%; }
 .admin-settings .demo .sidebar-scroll { position: -webkit-sticky; /* Safari */ position: sticky; top: 0; }
@@ -2375,8 +2388,8 @@ https://codepen.io/nxworld/pen/oLdoWb
 .admin-settings .demo .blank-box.bb-amber { border-color: #ffc107; }
 .admin-settings .demo .blank-box.bb-deep-orange { border-color: #ea5506; }
 .admin-settings .demo .blank-box.bb-white { border-color: #fff; }
-.admin-settings .demo .blank-box.bb-tab { position: relative; margin-top: 2em; }
-.admin-settings .demo .blank-box.bb-tab::before { background-color: #949495; font-family: FontAwesome, Aharoni, "Arial Black", Impact, Arial, sans-serif; position: absolute; font-size: .8em; top: -1.8em; left: -2px; line-height: 1.6; padding: 0 1em 0 .8em; color: #fff; border-radius: 6px 6px 0 0; }
+.admin-settings .demo .blank-box.bb-tab { position: relative; margin-top: 2em; border-top-left-radius: 0; }
+.admin-settings .demo .blank-box.bb-tab::before { background-color: #949495; font-family: FontAwesome, Aharoni, "Arial Black", Impact, Arial, sans-serif; position: absolute; font-size: .8em; top: -1.8em; left: -3px; line-height: 1.6; padding: 0 1em 0 .8em; color: #fff; border-radius: 6px 6px 0 0; }
 .admin-settings .demo .blank-box.bb-tab.bb-red::before { background-color: #e60033; }
 .admin-settings .demo .blank-box.bb-tab.bb-pink::before { background-color: #e95295; }
 .admin-settings .demo .blank-box.bb-tab.bb-purple::before { background-color: #884898; }
@@ -2785,46 +2798,46 @@ https://codepen.io/nxworld/pen/oLdoWb
 .admin-settings .demo .iic-amber li::before { color: #ffc107; }
 .admin-settings .demo .iic-deep-orange li::before { color: #ea5506; }
 .admin-settings .demo .iic-white li::before { color: #fff; }
-.admin-settings .demo .has-red-color { color: #e60033; }
-.admin-settings .demo .has-pink-color { color: #e95295; }
-.admin-settings .demo .has-purple-color { color: #884898; }
-.admin-settings .demo .has-blue-color { color: #0095d9; }
-.admin-settings .demo .has-green-color { color: #3eb370; }
-.admin-settings .demo .has-orange-color { color: #f39800; }
-.admin-settings .demo .has-yellow-color { color: #ffd900; }
-.admin-settings .demo .has-brown-color { color: #954e2a; }
-.admin-settings .demo .has-grey-color { color: #949495; }
-.admin-settings .demo .has-black-color { color: #333; }
-.admin-settings .demo .has-deep-color { color: #55295b; }
-.admin-settings .demo .has-indigo-color { color: #1e50a2; }
-.admin-settings .demo .has-light-blue-color { color: #2ca9e1; }
-.admin-settings .demo .has-cyan-color { color: #00a3af; }
-.admin-settings .demo .has-teal-color { color: #007b43; }
-.admin-settings .demo .has-light-green-color { color: #8bc34a; }
-.admin-settings .demo .has-lime-color { color: #c3d825; }
-.admin-settings .demo .has-amber-color { color: #ffc107; }
-.admin-settings .demo .has-deep-orange-color { color: #ea5506; }
-.admin-settings .demo .has-white-color { color: #fff; }
-.admin-settings .demo .has-red-background-color { background-color: #e60033; }
-.admin-settings .demo .has-pink-background-color { background-color: #e95295; }
-.admin-settings .demo .has-purple-background-color { background-color: #884898; }
-.admin-settings .demo .has-blue-background-color { background-color: #0095d9; }
-.admin-settings .demo .has-green-background-color { background-color: #3eb370; }
-.admin-settings .demo .has-orange-background-color { background-color: #f39800; }
-.admin-settings .demo .has-yellow-background-color { background-color: #ffd900; }
-.admin-settings .demo .has-brown-background-color { background-color: #954e2a; }
-.admin-settings .demo .has-grey-background-color { background-color: #949495; }
-.admin-settings .demo .has-black-background-color { background-color: #333; }
-.admin-settings .demo .has-deep-background-color { background-color: #55295b; }
-.admin-settings .demo .has-indigo-background-color { background-color: #1e50a2; }
-.admin-settings .demo .has-light-blue-background-color { background-color: #2ca9e1; }
-.admin-settings .demo .has-cyan-background-color { background-color: #00a3af; }
-.admin-settings .demo .has-teal-background-color { background-color: #007b43; }
-.admin-settings .demo .has-light-green-background-color { background-color: #8bc34a; }
-.admin-settings .demo .has-lime-background-color { background-color: #c3d825; }
-.admin-settings .demo .has-amber-background-color { background-color: #ffc107; }
-.admin-settings .demo .has-deep-orange-background-color { background-color: #ea5506; }
-.admin-settings .demo .has-white-background-color { background-color: #fff; }
+.admin-settings .demo div .has-red-color { color: #e60033; }
+.admin-settings .demo div .has-pink-color { color: #e95295; }
+.admin-settings .demo div .has-purple-color { color: #884898; }
+.admin-settings .demo div .has-blue-color { color: #0095d9; }
+.admin-settings .demo div .has-green-color { color: #3eb370; }
+.admin-settings .demo div .has-orange-color { color: #f39800; }
+.admin-settings .demo div .has-yellow-color { color: #ffd900; }
+.admin-settings .demo div .has-brown-color { color: #954e2a; }
+.admin-settings .demo div .has-grey-color { color: #949495; }
+.admin-settings .demo div .has-black-color { color: #333; }
+.admin-settings .demo div .has-deep-color { color: #55295b; }
+.admin-settings .demo div .has-indigo-color { color: #1e50a2; }
+.admin-settings .demo div .has-light-blue-color { color: #2ca9e1; }
+.admin-settings .demo div .has-cyan-color { color: #00a3af; }
+.admin-settings .demo div .has-teal-color { color: #007b43; }
+.admin-settings .demo div .has-light-green-color { color: #8bc34a; }
+.admin-settings .demo div .has-lime-color { color: #c3d825; }
+.admin-settings .demo div .has-amber-color { color: #ffc107; }
+.admin-settings .demo div .has-deep-orange-color { color: #ea5506; }
+.admin-settings .demo div .has-white-color { color: #fff; }
+.admin-settings .demo div .has-red-background-color { background-color: #e60033; }
+.admin-settings .demo div .has-pink-background-color { background-color: #e95295; }
+.admin-settings .demo div .has-purple-background-color { background-color: #884898; }
+.admin-settings .demo div .has-blue-background-color { background-color: #0095d9; }
+.admin-settings .demo div .has-green-background-color { background-color: #3eb370; }
+.admin-settings .demo div .has-orange-background-color { background-color: #f39800; }
+.admin-settings .demo div .has-yellow-background-color { background-color: #ffd900; }
+.admin-settings .demo div .has-brown-background-color { background-color: #954e2a; }
+.admin-settings .demo div .has-grey-background-color { background-color: #949495; }
+.admin-settings .demo div .has-black-background-color { background-color: #333; }
+.admin-settings .demo div .has-deep-background-color { background-color: #55295b; }
+.admin-settings .demo div .has-indigo-background-color { background-color: #1e50a2; }
+.admin-settings .demo div .has-light-blue-background-color { background-color: #2ca9e1; }
+.admin-settings .demo div .has-cyan-background-color { background-color: #00a3af; }
+.admin-settings .demo div .has-teal-background-color { background-color: #007b43; }
+.admin-settings .demo div .has-light-green-background-color { background-color: #8bc34a; }
+.admin-settings .demo div .has-lime-background-color { background-color: #c3d825; }
+.admin-settings .demo div .has-amber-background-color { background-color: #ffc107; }
+.admin-settings .demo div .has-deep-orange-background-color { background-color: #ea5506; }
+.admin-settings .demo div .has-white-background-color { background-color: #fff; }
 .admin-settings .demo .column-wrap { display: flex; position: relative; margin: 1em 0; margin: 0; word-break: break-all; }
 .admin-settings .demo .column-wrap .column-left { padding-left: 0; }
 .admin-settings .demo .column-wrap .column-right { padding-right: 0; }
@@ -2960,8 +2973,8 @@ https://codepen.io/nxworld/pen/oLdoWb
 .admin-settings .demo .speech-person { width: 12%; min-width: 12%; }
 .admin-settings .demo .speech-icon img, .admin-settings .demo .speech-icon amp-img { border-radius: 50%; border: 2px solid #ccc; width: 100%; }
 .admin-settings .demo .speech-name { text-align: center; font-size: 13px; }
-.admin-settings .demo .speech-balloon { height: 100%; position: relative; padding: 10px; background-color: #fff; border: 2px solid #ccc; border-radius: 6px; word-break: break-all; }
-.admin-settings .demo .speech-balloon p { margin: 0; }
+.admin-settings .demo div.speech-balloon { height: 100%; position: relative; padding: 10px; background-color: #fff; border: 2px solid #ccc; border-radius: 6px; word-break: break-all; }
+.admin-settings .demo div.speech-balloon p { margin: 0; }
 .admin-settings .demo .speech-balloon::before { content: ''; position: absolute; display: block; width: 0; height: 0; left: -12px; top: 10px; border-right: 12px solid #ccc; border-top: 12px solid transparent; border-bottom: 12px solid transparent; }
 .admin-settings .demo .speech-balloon::after { content: ''; position: absolute; display: block; width: 0; height: 0; left: -9px; top: 10px; border-right: 12px solid #fff; border-top: 12px solid transparent; border-bottom: 12px solid transparent; }
 .admin-settings .demo .sbp-l { margin-right: 100px; }
@@ -3119,29 +3132,35 @@ https://codepen.io/nxworld/pen/oLdoWb
   .admin-settings .demo .fb-like-balloon-button { float: none; width: 100%; height: 30px; display: block; padding-top: 0; line-height: 24px; }
   .admin-settings .demo div.fb-like-mobile { display: block; }
   .admin-settings .demo div.fb-like-pc { display: none; } }
-.admin-settings .demo .mobile-menu-buttons { background: #eee; position: fixed; bottom: 0; left: 0; right: 0; z-index: 2; display: none; line-height: 1.4; min-height: 50px; padding-bottom: constant(safe-area-inset-bottom); padding-bottom: env(safe-area-inset-bottom); }
-.admin-settings .demo .mobile-menu-buttons .menu-icon { margin-top: 3px; text-align: center; display: block; }
+.admin-settings .demo .mobile-menu-buttons { background: #eee; position: fixed; bottom: 0; left: 0; right: 0; z-index: 2; padding: 0; margin: 0; list-style: none; display: none; align-items: center; line-height: 1.4; min-height: 50px; padding-bottom: constant(safe-area-inset-bottom); padding-bottom: env(safe-area-inset-bottom); }
+.admin-settings .demo .mobile-menu-buttons .menu-icon { text-align: center; width: 100%; }
 .admin-settings .demo .mobile-menu-buttons .menu-icon::before { font-family: FontAwesome; font-size: 1em; }
-.admin-settings .demo .mobile-menu-buttons .menu-caption { font-size: 12px; text-align: center; display: block; }
-.admin-settings .demo .mobile-menu-buttons .menu-button { position: relative; width: 100%; }
-.admin-settings .demo .mobile-menu-buttons .menu-button > a { color: #333; text-decoration: none; cursor: default; }
+.admin-settings .demo .mobile-menu-buttons .menu-caption { font-size: 12px; text-align: center; }
+.admin-settings .demo .mobile-menu-buttons .menu-button { position: relative; width: 100%; cursor: pointer; }
+.admin-settings .demo .mobile-menu-buttons .menu-button > a { display: block; color: #333; text-decoration: none; }
 .admin-settings .demo .mobile-menu-buttons .menu-button:hover { background-color: #f5f8fa; transition: all 0.7s ease; color: #333; }
 .admin-settings .demo .mobile-menu-buttons .ad-area { display: none; }
+.admin-settings .demo .mobile-menu-buttons .menu-content { cursor: default; }
 .admin-settings .demo .navi-menu-icon::before { content: '\f0c9'; }
 .admin-settings .demo .home-menu-icon::before { content: '\f015'; }
 .admin-settings .demo .search-menu-icon::before { content: '\f002'; }
 .admin-settings .demo .top-menu-icon::before { content: '\f062'; }
+.admin-settings .demo .toc-menu-icon::before { content: '\f0ca'; }
 .admin-settings .demo .sidebar-menu-icon::before { content: '\f03b'; }
-.admin-settings .demo #navi-menu-close, .admin-settings .demo #sidebar-menu-close, .admin-settings .demo #search-menu-close { display: none; /*はじめは隠しておく*/ position: fixed; z-index: 99; top: 0; /*全体に広がるように*/ left: 0; width: 100%; height: 100%; background: black; transition: .3s ease-in-out; }
+.admin-settings .demo .share-menu-icon::before { content: '\f1e0'; }
+.admin-settings .demo .follow-menu-icon::before { content: '\f004'; }
+.admin-settings .demo .prev-menu-icon::before { content: '\f060'; }
+.admin-settings .demo .next-menu-icon::before { content: '\f061'; }
+.admin-settings .demo #navi-menu-close, .admin-settings .demo #sidebar-menu-close, .admin-settings .demo #search-menu-close, .admin-settings .demo #share-menu-close, .admin-settings .demo #follow-menu-close { display: none; /*はじめは隠しておく*/ position: fixed; z-index: 99; top: 0; /*全体に広がるように*/ left: 0; width: 100%; height: 100%; background: black; transition: .3s ease-in-out; }
 .admin-settings .demo .menu-content { overflow: auto; position: fixed; top: 0; z-index: 9999; /*最前面に*/ width: 100%; /*右側に隙間を作る（閉じるカバーを表示）*/ max-width: 400px; /*最大幅（調整してください）*/ height: 100%; background: #fff; /*背景色*/ transition: .3s ease-in-out; /*滑らかに表示*/ opacity: 1; overflow: scroll; -webkit-overflow-scrolling: touch; }
 .admin-settings .demo .menu-content .menu-drawer { padding: 0 0 30px; }
 .admin-settings .demo .menu-content .sidebar { width: 100%; display: block; margin: 0; }
 .admin-settings .demo .navi-menu-content { left: 0; -webkit-transform: translateX(-105%); transform: translateX(-105%); }
 .admin-settings .demo .sidebar-menu-content { right: 0; -webkit-transform: translateX(105%); transform: translateX(105%); }
-.admin-settings .demo .search-menu-content { transition: .3s ease-in-out; position: fixed; top: 40%; z-index: 99; width: 90%; left: 5%; right: 5%; -webkit-transform: translateY(900%); transform: translateY(900%); }
-.admin-settings .demo .search-menu-content .search-edit { width: 100%; }
-.admin-settings .demo #navi-menu-input:checked ~ #navi-menu-close, .admin-settings .demo #sidebar-menu-input:checked ~ #sidebar-menu-close, .admin-settings .demo #search-menu-input:checked ~ #search-menu-close { display: block; /*カバーを表示*/ opacity: .5; }
-.admin-settings .demo #navi-menu-input:checked ~ #navi-menu-content, .admin-settings .demo #sidebar-menu-input:checked ~ #sidebar-menu-content, .admin-settings .demo #search-menu-input:checked ~ #search-menu-content { -webkit-transform: translateX(0%); transform: translateX(0%); }
+.admin-settings .demo .search-menu-content, .admin-settings .demo .share-menu-content, .admin-settings .demo .follow-menu-content { transition: .3s ease-in-out; position: fixed; top: 40%; z-index: 99; width: 90%; left: 5%; right: 5%; -webkit-transform: translateY(900%); transform: translateY(900%); }
+.admin-settings .demo .search-menu-content .search-edit, .admin-settings .demo .share-menu-content .search-edit, .admin-settings .demo .follow-menu-content .search-edit { width: 100%; }
+.admin-settings .demo #navi-menu-input:checked ~ #navi-menu-close, .admin-settings .demo #sidebar-menu-input:checked ~ #sidebar-menu-close, .admin-settings .demo #search-menu-input:checked ~ #search-menu-close, .admin-settings .demo #share-menu-input:checked ~ #share-menu-close, .admin-settings .demo #follow-menu-input:checked ~ #follow-menu-close { display: block; /*カバーを表示*/ opacity: .5; }
+.admin-settings .demo #navi-menu-input:checked ~ #navi-menu-content, .admin-settings .demo #sidebar-menu-input:checked ~ #sidebar-menu-content, .admin-settings .demo #search-menu-input:checked ~ #search-menu-content, .admin-settings .demo #share-menu-input:checked ~ #share-menu-content, .admin-settings .demo #follow-menu-input:checked ~ #follow-menu-content { -webkit-transform: translateX(0%); transform: translateX(0%); }
 .admin-settings .demo .menu-drawer ul { list-style: none; }
 .admin-settings .demo .menu-drawer li { display: block; }
 .admin-settings .demo .menu-drawer a { color: #333; text-decoration: none; padding: 6px; display: block; }
@@ -3149,6 +3168,12 @@ https://codepen.io/nxworld/pen/oLdoWb
 .admin-settings .demo .menu-drawer .sub-menu { padding-left: 20px; }
 .admin-settings .demo .menu-close-button { display: block; cursor: pointer; text-align: center; }
 .admin-settings .demo .menu-close-button::before { font-family: FontAwesome; content: ""; padding-right: 4px; padding: 0; font-size: 2em; }
+.admin-settings .demo .share-menu-content .sns-buttons { justify-content: space-around; }
+.admin-settings .demo .share-menu-content .sns-buttons .share-count { color: #fff; }
+.admin-settings .demo .share-menu-content .button-caption { display: none; }
+.admin-settings .demo .follow-menu-content .sns-buttons { justify-content: space-around; }
+.admin-settings .demo .follow-menu-content .sns-buttons a { width: 24%; }
+.admin-settings .demo .follow-menu-content .sns-follow-message { display: none; }
 .admin-settings .demo .ranking-items { line-height: 1.4; }
 .admin-settings .demo .ranking-items p { font-size: 18px; margin-top: 0; }
 .admin-settings .demo .ranking-item, .admin-settings .demo .timeline-box { padding: 3%; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 4px; }
@@ -3233,7 +3258,7 @@ https://codepen.io/nxworld/pen/oLdoWb
 .admin-settings .demo .gallery br { clear: both; }
 .admin-settings .demo .gallery .gallery-item dd { margin: 0; }
 .admin-settings .demo .search-box { margin: 1em 0 2em; position: relative; }
-.admin-settings .demo .search-edit { font-family: "Meiryo", sans-serif; }
+.admin-settings .demo .search-edit { font-family: inherit; }
 .admin-settings .demo .search-submit { position: absolute; right: 0; top: 0; font-size: 20px; cursor: pointer; line-height: 49px; border: none; color: #ccc; padding: 0 8px; background-color: rgba(255, 255, 255, 0); }
 .admin-settings .demo .search-submit::before { font-family: FontAwesome; content: ""; padding-right: 4px; }
 .admin-settings .demo .timeline-box { padding: 16px 5px; }
@@ -3250,8 +3275,9 @@ https://codepen.io/nxworld/pen/oLdoWb
   .admin-settings .demo .timeline-item-label { width: auto; float: none; text-align: left; padding-left: 16px; }
   .admin-settings .demo .timeline-item-content { width: auto; padding: 8px; float: none; border: none; }
   .admin-settings .demo .timeline-item::before { left: -12px; top: 19px; width: 21px; height: 21px; } }
+.admin-settings .demo .navi-card-wrap { background-color: #fff; }
 .admin-settings .demo .navi-card-wrap.a-wrap { position: relative; padding: 5px 3px; line-height: 1.3; margin-top: 0px; margin-bottom: 10px; }
-.admin-settings .demo .navi-card-box { background-color: #fff; padding: 0; }
+.admin-settings .demo .navi-card-box { padding: 0; }
 .admin-settings .demo .navi-card-type-1 { padding-bottom: 2px; border-bottom: 2px dotted #f3f4f5; }
 .admin-settings .demo .navi-card-type-1:first-of-type { border-top: 2px solid #f3f4f5; }
 .admin-settings .demo .navi-card-type-1:last-of-type { border-bottom: 2px solid #f3f4f5; }
@@ -3538,7 +3564,8 @@ https://codepen.io/nxworld/pen/oLdoWb
   .admin-settings .demo .header, .admin-settings .demo .appeal { background-size: cover; }
   .admin-settings .demo .footer-bottom-logo { position: relative; bottom: auto; }
   .admin-settings .demo .logo-footer { margin: 8px auto; }
-  .admin-settings .demo .mobile-menu-buttons { display: flex; }
+  .admin-settings .demo .mobile-menu-buttons { display: flex; align-items: stretch; }
+  .admin-settings .demo .mobile-menu-buttons > li { padding-top: 3px; }
   .admin-settings .demo .mobile-button-slide-in .go-to-top-button { display: none; }
   .admin-settings .demo .mblt-slide-in .footer { margin-bottom: 50px; }
   .admin-settings .demo .navi-footer-in > .menu-footer { justify-content: center; }
@@ -3605,7 +3632,7 @@ https://codepen.io/nxworld/pen/oLdoWb
   .admin-settings .demo .header-container-in.hlt-top-menu .logo-header { max-height: none; }
   .admin-settings .demo .eye-catch .cat-label { font-size: 10px; padding: 2px 4px; }
   .admin-settings .demo textarea { min-height: 160px; }
-  .admin-settings .demo .navi-footer-in > .menu-footer li.menu-item { width: 32%; border: 1px solid #ddd; margin: 2px; display: flex; flex: 1 1 auto; text-align: center; }
+  .admin-settings .demo .navi-footer-in > .menu-footer li.menu-item { width: 32%; border: 0; margin: 2px; display: flex; flex: 1 1 auto; text-align: center; }
   .admin-settings .demo .navi-footer-in > .menu-footer li.menu-item a { padding: 0; width: 100%; }
   .admin-settings .demo .footer-bottom.fdt-left-and-right .footer-bottom-content { flex-direction: column; }
   .admin-settings .demo #wpf-form-wrapper .mce-edit-area iframe { min-height: 200px; }
@@ -3685,7 +3712,7 @@ https://codepen.io/nxworld/pen/oLdoWb
   .admin-settings .demo .ect-entry-card .card-snippet, .admin-settings .demo .rect-entry-card .card-snippet, .admin-settings .demo .ect-big-card-first .card-snippet { margin-bottom: 0; clear: both; }
   .admin-settings .demo .ect-entry-card .card-meta, .admin-settings .demo .rect-entry-card .card-meta, .admin-settings .demo .ect-big-card-first .card-meta { clear: both; }
   .admin-settings .demo .list .ect-vertical-card > * { width: 48%; padding: 0.5% !important; margin: 0.5% 0.5% 1.5% !important; }
-  .admin-settings .demo .sp-display-none { display: none; }
+  .admin-settings .demo .sp-display-none { display: none !important; }
   .admin-settings .demo .image-content amp-img { min-width: 200px; max-width: 200px; }
   .admin-settings .demo .blogcard { padding-top: 3%; } }
 @media screen and (max-width: 356px) { .admin-settings .demo .ect-vertical-card .entry-card-wrap, .admin-settings .demo .rect-vartical-card .related-entry-card-wrap, .admin-settings .demo .ect-2-columns > *, .admin-settings .demo .ect-3-columns > * { width: 100% !important; } }
@@ -3801,12 +3828,14 @@ p.submit { margin: 2px 0; padding: 3px 0; }
 select option.fa { display: block; }
 select option.fa:before { width: 18px; display: inline-block; text-align: center; margin-right: 5px; }
 
-.list-content, .tabs .tab-content, .widget-content .tab-content { height: 200px; overflow: auto; border: 1px solid #ccc; padding: 5px; margin: 0 0 5px; background-color: #fff; }
-.list-content ul, .tabs .tab-content ul, .widget-content .tab-content ul { margin: 0; padding-left: 20px; }
-.list-content ul li, .tabs .tab-content ul li, .widget-content .tab-content ul li { margin-bottom: 3px; }
-.list-content > ul, .tabs .tab-content > ul, .widget-content .tab-content > ul { padding-left: 0; }
+.list-content, .tabs .tab-content, .tabs .tagcloud-list, .widget-content .tab-content { height: 200px; overflow: auto; border: 1px solid #ccc; padding: 5px; margin: 0 0 5px; background-color: #fff; }
+.list-content ul, .tabs .tab-content ul, .tabs .tagcloud-list ul, .widget-content .tab-content ul { margin: 0; padding-left: 20px; }
+.list-content ul li, .tabs .tab-content ul li, .tabs .tagcloud-list ul li, .widget-content .tab-content ul li { margin-bottom: 3px; }
+.list-content > ul, .tabs .tab-content > ul, .tabs .tagcloud-list > ul, .widget-content .tab-content > ul { padding-left: 0; }
 
 .widget-content .tab-content { height: 120px; margin-bottom: 1em; }
+
+.tabs .tagcloud-list { height: auto; max-height: 200px; }
 
 #edittag { max-width: 1200px; }
 
@@ -4034,8 +4063,8 @@ textarea[name="the_page_memo"] { width: 100%; }
 .components-popover__content .blank-box.bb-amber { border-color: #ffc107; }
 .components-popover__content .blank-box.bb-deep-orange { border-color: #ea5506; }
 .components-popover__content .blank-box.bb-white { border-color: #fff; }
-.components-popover__content .blank-box.bb-tab { position: relative; margin-top: 2em; }
-.components-popover__content .blank-box.bb-tab::before { background-color: #949495; font-family: FontAwesome, Aharoni, "Arial Black", Impact, Arial, sans-serif; position: absolute; font-size: .8em; top: -1.8em; left: -2px; line-height: 1.6; padding: 0 1em 0 .8em; color: #fff; border-radius: 6px 6px 0 0; }
+.components-popover__content .blank-box.bb-tab { position: relative; margin-top: 2em; border-top-left-radius: 0; }
+.components-popover__content .blank-box.bb-tab::before { background-color: #949495; font-family: FontAwesome, Aharoni, "Arial Black", Impact, Arial, sans-serif; position: absolute; font-size: .8em; top: -1.8em; left: -3px; line-height: 1.6; padding: 0 1em 0 .8em; color: #fff; border-radius: 6px 6px 0 0; }
 .components-popover__content .blank-box.bb-tab.bb-red::before { background-color: #e60033; }
 .components-popover__content .blank-box.bb-tab.bb-pink::before { background-color: #e95295; }
 .components-popover__content .blank-box.bb-tab.bb-purple::before { background-color: #884898; }
@@ -4444,46 +4473,46 @@ textarea[name="the_page_memo"] { width: 100%; }
 .components-popover__content .iic-amber li::before { color: #ffc107; }
 .components-popover__content .iic-deep-orange li::before { color: #ea5506; }
 .components-popover__content .iic-white li::before { color: #fff; }
-.components-popover__content .has-red-color { color: #e60033; }
-.components-popover__content .has-pink-color { color: #e95295; }
-.components-popover__content .has-purple-color { color: #884898; }
-.components-popover__content .has-blue-color { color: #0095d9; }
-.components-popover__content .has-green-color { color: #3eb370; }
-.components-popover__content .has-orange-color { color: #f39800; }
-.components-popover__content .has-yellow-color { color: #ffd900; }
-.components-popover__content .has-brown-color { color: #954e2a; }
-.components-popover__content .has-grey-color { color: #949495; }
-.components-popover__content .has-black-color { color: #333; }
-.components-popover__content .has-deep-color { color: #55295b; }
-.components-popover__content .has-indigo-color { color: #1e50a2; }
-.components-popover__content .has-light-blue-color { color: #2ca9e1; }
-.components-popover__content .has-cyan-color { color: #00a3af; }
-.components-popover__content .has-teal-color { color: #007b43; }
-.components-popover__content .has-light-green-color { color: #8bc34a; }
-.components-popover__content .has-lime-color { color: #c3d825; }
-.components-popover__content .has-amber-color { color: #ffc107; }
-.components-popover__content .has-deep-orange-color { color: #ea5506; }
-.components-popover__content .has-white-color { color: #fff; }
-.components-popover__content .has-red-background-color { background-color: #e60033; }
-.components-popover__content .has-pink-background-color { background-color: #e95295; }
-.components-popover__content .has-purple-background-color { background-color: #884898; }
-.components-popover__content .has-blue-background-color { background-color: #0095d9; }
-.components-popover__content .has-green-background-color { background-color: #3eb370; }
-.components-popover__content .has-orange-background-color { background-color: #f39800; }
-.components-popover__content .has-yellow-background-color { background-color: #ffd900; }
-.components-popover__content .has-brown-background-color { background-color: #954e2a; }
-.components-popover__content .has-grey-background-color { background-color: #949495; }
-.components-popover__content .has-black-background-color { background-color: #333; }
-.components-popover__content .has-deep-background-color { background-color: #55295b; }
-.components-popover__content .has-indigo-background-color { background-color: #1e50a2; }
-.components-popover__content .has-light-blue-background-color { background-color: #2ca9e1; }
-.components-popover__content .has-cyan-background-color { background-color: #00a3af; }
-.components-popover__content .has-teal-background-color { background-color: #007b43; }
-.components-popover__content .has-light-green-background-color { background-color: #8bc34a; }
-.components-popover__content .has-lime-background-color { background-color: #c3d825; }
-.components-popover__content .has-amber-background-color { background-color: #ffc107; }
-.components-popover__content .has-deep-orange-background-color { background-color: #ea5506; }
-.components-popover__content .has-white-background-color { background-color: #fff; }
+.components-popover__content div .has-red-color { color: #e60033; }
+.components-popover__content div .has-pink-color { color: #e95295; }
+.components-popover__content div .has-purple-color { color: #884898; }
+.components-popover__content div .has-blue-color { color: #0095d9; }
+.components-popover__content div .has-green-color { color: #3eb370; }
+.components-popover__content div .has-orange-color { color: #f39800; }
+.components-popover__content div .has-yellow-color { color: #ffd900; }
+.components-popover__content div .has-brown-color { color: #954e2a; }
+.components-popover__content div .has-grey-color { color: #949495; }
+.components-popover__content div .has-black-color { color: #333; }
+.components-popover__content div .has-deep-color { color: #55295b; }
+.components-popover__content div .has-indigo-color { color: #1e50a2; }
+.components-popover__content div .has-light-blue-color { color: #2ca9e1; }
+.components-popover__content div .has-cyan-color { color: #00a3af; }
+.components-popover__content div .has-teal-color { color: #007b43; }
+.components-popover__content div .has-light-green-color { color: #8bc34a; }
+.components-popover__content div .has-lime-color { color: #c3d825; }
+.components-popover__content div .has-amber-color { color: #ffc107; }
+.components-popover__content div .has-deep-orange-color { color: #ea5506; }
+.components-popover__content div .has-white-color { color: #fff; }
+.components-popover__content div .has-red-background-color { background-color: #e60033; }
+.components-popover__content div .has-pink-background-color { background-color: #e95295; }
+.components-popover__content div .has-purple-background-color { background-color: #884898; }
+.components-popover__content div .has-blue-background-color { background-color: #0095d9; }
+.components-popover__content div .has-green-background-color { background-color: #3eb370; }
+.components-popover__content div .has-orange-background-color { background-color: #f39800; }
+.components-popover__content div .has-yellow-background-color { background-color: #ffd900; }
+.components-popover__content div .has-brown-background-color { background-color: #954e2a; }
+.components-popover__content div .has-grey-background-color { background-color: #949495; }
+.components-popover__content div .has-black-background-color { background-color: #333; }
+.components-popover__content div .has-deep-background-color { background-color: #55295b; }
+.components-popover__content div .has-indigo-background-color { background-color: #1e50a2; }
+.components-popover__content div .has-light-blue-background-color { background-color: #2ca9e1; }
+.components-popover__content div .has-cyan-background-color { background-color: #00a3af; }
+.components-popover__content div .has-teal-background-color { background-color: #007b43; }
+.components-popover__content div .has-light-green-background-color { background-color: #8bc34a; }
+.components-popover__content div .has-lime-background-color { background-color: #c3d825; }
+.components-popover__content div .has-amber-background-color { background-color: #ffc107; }
+.components-popover__content div .has-deep-orange-background-color { background-color: #ea5506; }
+.components-popover__content div .has-white-background-color { background-color: #fff; }
 .components-popover__content .red { margin: 0; }
 .components-popover__content .fz-12px { font-size: 12px; }
 .components-popover__content .fz-13px { font-size: 13px; }
@@ -4523,3 +4552,11 @@ textarea[name="the_page_memo"] { width: 100%; }
 .components-popover__content .ff-sawarabi-mincho { font-family: "Sawarabi Mincho" ,sans-serif; }
 .components-popover__content .sub-caption { font-family: Tunga, "Trebuchet MS", Tahoma, Verdana, "Segoe UI", "游ゴシック体", "Yu Gothic", "Hiragino Kaku Gothic Pro", "Meiryo", sans-serif; font-weight: 400; font-size: 0.75em; opacity: 0.5; }
 .components-popover__content span.sub-caption { opacity: 0.8; }
+
+.tagcloud { display: flex; flex-wrap: wrap; align-items: flex-start; }
+.tagcloud .admin-tag { background-color: #fff; border: 1px solid #ddd; border-radius: 2px; color: #555; display: inline-block; padding: 3px 8px; text-decoration: none; font-size: 12px; margin: 2px; flex: 1 1 auto; display: flex; justify-content: space-between; flex: 0 1 auto; }
+.tagcloud .admin-tag:hover { background-color: #f5f8fa; transition: all 0.7s ease; color: #333; }
+.tagcloud .admin-tag .tag-caption { word-break: break-all; }
+.tagcloud .admin-tag .tag-caption::before { font-family: FontAwesome; content: ""; padding-right: 4px; }
+.tagcloud .admin-tag .tag-link-count { margin-left: 8px; }
+.tagcloud input { margin-right: 5px; }

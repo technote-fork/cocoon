@@ -334,7 +334,7 @@ endif;
 if ( !function_exists( 'generate_the_site_logo_tag' ) ):
 function generate_the_site_logo_tag($is_header = true){
   $tag = 'div';
-  if (!is_singular()&& !is_archive() && $is_header) {
+  if (!is_singular() && !is_archive() && !is_search() && $is_header) {
     $tag = 'h1';
   }
   if ($is_header) {
@@ -617,47 +617,6 @@ function generate_category_checklist( $post_id = 0, $descendants_and_self = 0, $
 }
 endif;
 
-// if ( !function_exists( 'get_hierarchical_category_check_list_box' ) ):
-// function get_hierarchical_category_check_list_box( $cat, $name, $checks, $width = 0 ) {
-//   if ($width == 0) {
-//     $width = 'auto';
-//   } else {
-//     $width = $width.'px';
-//   }
-//   $res = '';
-//   $res .= '<div class="category-check-list '.$name.'-list" style="width: '.$width.';">';
-//   $res .= get_hierarchical_category_check_list( $cat, $name, $checks );
-//   $res .= '</div>';
-//   return $res;
-// }
-// endif;
-
-// if ( !function_exists( 'get_hierarchical_category_check_list' ) ):
-// function get_hierarchical_category_check_list( $cat, $name, $checks ) {
-//     // wpse-41548 // alchymyth // a hierarchical list of all categories //
-
-//   $next = get_categories('hide_empty=false&orderby=name&order=ASC&parent=' . $cat);
-//   $res = '';
-//   if( $next ) :
-//     foreach( $next as $cat ) :
-//       $checked = '';
-//       if (is_string($checks)) {
-//         $checks = array();
-//       }
-//       if (in_array($cat->term_id, $checks)) {
-//         $checked = ' checked="checked"';
-//       }
-//      $res .= '<ul><li><input type="checkbox" name="'.$name.'[]" value="'.$cat->term_id.'"'.$checked.'>' . $cat->name . '';
-//       $res .= get_hierarchical_category_check_list( $cat->term_id, $name, $checks );
-//     endforeach;
-//   endif;
-
-//   $res .= '</li></ul>'; echo "\n";
-//   return $res;
-// }
-// endif;
-
-
 //階層化カテゴリチェックリストの出力
 if ( !function_exists( 'generate_hierarchical_category_check_list' ) ):
 function generate_hierarchical_category_check_list( $cat, $name, $checks, $width = 0 ) {
@@ -679,6 +638,9 @@ endif;
 //階層化カテゴリチェックリストの出力の再帰関数
 if ( !function_exists( 'hierarchical_category_check_list' ) ):
 function hierarchical_category_check_list( $cat, $name, $checks ) {
+  if (is_string($checks)) {
+    $checks = array();
+  }
     // wpse-41548 // alchymyth // a hierarchical list of all categories //
 
   $next = get_categories('hide_empty=false&orderby=name&order=ASC&parent=' . $cat);
@@ -686,9 +648,9 @@ function hierarchical_category_check_list( $cat, $name, $checks ) {
   if( $next ) :
     foreach( $next as $cat ) :
       $checked = '';
-      if (is_string($checks)) {
-        $checks = array();
-      }
+      // if (is_string($checks)) {
+      //   $checks = array();
+      // }
       // //デフォルトのカテゴリは誤動作を起こすので除外
       // if ($cat->term_id == 1) {
       //   continue;
@@ -702,6 +664,31 @@ function hierarchical_category_check_list( $cat, $name, $checks ) {
   endif;
 
   echo '</li></ul>'; echo "\n";
+}
+endif;
+
+//タグチェックリスト
+if ( !function_exists( 'generate_tagcloud_check_list' ) ):
+function generate_tagcloud_check_list($name, $checks = array()){
+  if (is_string($checks)) {
+    $checks = array();
+  }
+  $html = '<div class="tagcloud tagcloud-list '.$name.'-list" style="width: 100%;">';
+  $tags = get_tags();
+  //_v($tags);
+	if ($tags) {
+		foreach($tags as $tag) {
+      $checked = null;
+      if (in_array($tag->term_id, $checks)) {
+        $checked = ' checked="checked"';
+      }
+      $id = $tag->term_id;
+      $input_id = $name.'-'.$id;
+			$html .= '<span class="tag-cloud-link admin-tag tag-link-"'.$id.'"><label for="'.$input_id.'"><input type="checkbox" id="'.$input_id.'" name="'.$name.'[]" value="'.$id.'"'.$checked.'>' . $tag->name . '<span class="tag-link-count">('.$tag->count.')</span></label></span>';
+		}
+	}
+  $html .= '</div>';
+  echo apply_filters('admin_input_form_tag', $name, $html);
 }
 endif;
 
@@ -904,7 +891,7 @@ function generate_popular_entries_tag($days = 'all', $entry_count = 5, $entry_ty
       if ($post_thumbnail) {
         $post_thumbnail_img = $post_thumbnail;
       } else {
-        $post_thumbnail_img = '<img src="'.$no_thumbnail_url.'" alt="" class="no-image popular-entry-card-thumb-no-image widget-entry-card-thumb-no-image" width="'.$w.'" height="'.$h.'" />';
+        $post_thumbnail_img = '<img src="'.esc_url($no_thumbnail_url).'" alt="" class="no-image popular-entry-card-thumb-no-image widget-entry-card-thumb-no-image" width="'.$w.'" height="'.$h.'" />';
       }
 
       ?>
@@ -912,7 +899,10 @@ function generate_popular_entries_tag($days = 'all', $entry_count = 5, $entry_ty
     <div class="popular-entry-card widget-entry-card e-card cf">
       <figure class="popular-entry-card-thumb widget-entry-card-thumb card-thumb">
         <?php echo $post_thumbnail_img; ?>
-        <?php the_nolink_category($post->ID, false); //カテゴリラベルの取得 ?>
+        <?php
+        $is_visible = apply_filters('is_popular_entry_card_category_label_visible', false);
+        $is_visible = apply_filters('is_widget_entry_card_category_label_visible', $is_visible);
+        the_nolink_category($post->ID, $is_visible); //カテゴリラベルの取得 ?>
       </figure><!-- /.popular-entry-card-thumb -->
 
       <div class="popular-entry-card-content widget-entry-card-content card-content">
@@ -957,10 +947,13 @@ function generate_widget_entries_tag($atts){
     'taxonomy' => 'category',
     'sticky' => 0,
     'random' => 0,
+    'modified' => 0,
     'order' => 'desc',
     'action' => null,
     'exclude_cat_ids' => array(),
   ), $atts));
+  global $post;
+
   //ランダムが有効な時は関連記事
   if ($random) {
     $prefix = 'widget-related';
@@ -988,11 +981,32 @@ function generate_widget_entries_tag($atts){
       'post_type' => explode(',', $post_type)
     );
   }
-  if ($random) {
+  if ($random && $modified) {
     $args += array(
-      'orderby' => 'rand'
+      'orderby' => array('rand', 'modified'),
     );
+  } else {
+    if ($random) {
+      $args += array(
+        'orderby' => 'rand',
+      );
+    }
+    if ($modified) {
+      $args += array(
+        'orderby' => 'modified',
+      );
+    }
   }
+  //関連記事の場合は表示ページを除外
+  if ($random) {
+    $post_id = get_the_ID();
+    if (isset($args['post__not_in'])) {
+      $args['post__not_in'][] = $post_id;
+    } else {
+      $args['post__not_in'] = array($post_id);
+    }
+  }
+
   //除外カテゴリーの設定
   if (!empty($exclude_cat_ids)) {
     // _v($cat_ids);
@@ -1045,7 +1059,7 @@ function generate_widget_entries_tag($atts){
   <div class="<?php echo $prefix; ?>-entry-cards widget-entry-cards no-icon cf<?php echo get_additional_widget_entriy_cards_classes($entry_type); ?>">
   <?php //if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
   <?php if ( $query -> have_posts() ) : while ( $query -> have_posts() ) : $query -> the_post(); ?>
-  <a href="<?php the_permalink(); ?>" class="<?php echo $prefix; ?>-entry-card-link widget-entry-card-link a-wrap" title="<?php the_title(); ?>">
+  <a href="<?php echo esc_url(get_the_permalink()); ?>" class="<?php echo $prefix; ?>-entry-card-link widget-entry-card-link a-wrap" title="<?php echo esc_attr(get_the_title()); ?>">
     <div class="<?php echo $prefix; ?>-entry-card widget-entry-card e-card cf">
       <figure class="<?php echo $prefix; ?>-entry-card-thumb widget-entry-card-thumb card-thumb">
       <?php if ( has_post_thumbnail() ): // サムネイルを持っているときの処理 ?>
@@ -1057,9 +1071,17 @@ function generate_widget_entries_tag($atts){
         $h   = ($entry_type == ET_DEFAULT) ? THUMB120HEIGHT : THUMB320HEIGHT;
 
         ?>
-        <img src="<?php echo $url; ?>" alt="" class="no-image <?php echo $prefix; ?>-entry-card-thumb-no-image widget-entry-card-thumb-no-image" width="<?php echo $w; ?>" height="<?php echo $h; ?>" />
+        <img src="<?php echo esc_url($url); ?>" alt="" class="no-image <?php echo $prefix; ?>-entry-card-thumb-no-image widget-entry-card-thumb-no-image" width="<?php echo $w; ?>" height="<?php echo $h; ?>" />
       <?php endif; ?>
-      <?php the_nolink_category(null, false); //カテゴリラベルの取得 ?>
+      <?php
+        if ($random) {
+          $is_visible = apply_filters('is_widget_related_entry_card_category_label_visible', false);
+        } else {
+          $is_visible = apply_filters('is_new_entry_card_category_label_visible', false);
+        }
+        $is_visible = apply_filters('is_widget_entry_card_category_label_visible', $is_visible);
+        $post_id = isset($post->ID) ? $post->ID : null;
+        the_nolink_category($post_id, $is_visible); //カテゴリラベルの取得 ?>
       </figure><!-- /.new-entry-card-thumb -->
 
       <div class="<?php echo $prefix; ?>-entry-card-content widget-entry-card-content card-content">
@@ -1152,7 +1174,7 @@ function generate_author_box_tag($id = null, $label = null, $is_image_circle = 0
             $description = strip_tags($description);
             $name = $author_display_name;
             if ($author_website_url) {
-              $name = '<a href="'.$author_website_url.'" target="_blank" rel="nofollow">'.$author_display_name.'</a>';
+              $name = '<a href="'.esc_url($author_website_url).'" target="_blank" rel="nofollow">'.esc_html($author_display_name).'</a>';
             }
             //echo $name;
           }
@@ -1188,7 +1210,7 @@ function generate_author_box_tag($id = null, $label = null, $is_image_circle = 0
       <div class="author-follows">
         <?php
         set_query_var( '_USER_ID', $user_id );
-        get_template_part('tmp/sns-follow-buttons');
+        get_template_part_with_option('tmp/sns-follow-buttons', SF_PROFILE);
         set_query_var( '_USER_ID', null ); ?>
       </div>
       <?php endif ?>

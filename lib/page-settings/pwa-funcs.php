@@ -143,7 +143,7 @@ function manage_cocoon_pwa_files(){
     $name = get_double_quotation_escape(get_pwa_name());
     $short_name = get_double_quotation_escape(mb_substr(get_pwa_short_name(), 0, 12));
     $description = get_double_quotation_escape(get_pwa_description());
-    $start_url = '/';
+    $start_url = home_url('/');
     $offline_page = $start_url;
     $display = get_pwa_display();
     $orientation = get_pwa_orientation();
@@ -151,7 +151,7 @@ function manage_cocoon_pwa_files(){
     $background_color = get_pwa_background_color();
 
     $icon_url_s  = get_site_icon_url_s();
-    $icon_size_s = get_site_icon_size_text($icon_url_s);
+    $icon_size_s = '192x192';//get_site_icon_size_text($icon_url_s);
 
     $icon_url_l  = get_site_icon_url_l();
     $icon_size_l = '512x512';//get_site_icon_size_text($icon_url_l);
@@ -195,32 +195,27 @@ function manage_cocoon_pwa_files(){
     }
 
     //service-worker.js
-    $service_worker_ver = THEME_NAME.'_20190228'.$modified_date; //PWAに変更を加えたらバージョン変更
+    $service_worker_ver = THEME_NAME.'_'.PWA_SERVICE_WORKER_VERSION.$modified_date; //PWAに変更を加えたらバージョン変更
     $site_logo = get_the_site_logo_url();
     $jquery_core_url = get_jquery_core_url(get_jquery_version());
     $jquery_migrate_url = get_jquery_migrate_url(get_jquery_migrate_version());
     $theme_js_url = THEME_JS_URL;
     $theme_child_js_url = THEME_CHILD_JS_URL;
     $font_awesome4_url = FONT_AWESOME4_URL;
-    $font_aicomoon_url = FONT_AICOMOON_URL;
+    $font_icomoon_url = FONT_ICOMOON_URL;
 
     //Service Worker
     //参考：https://github.com/SuperPWA/Super-Progressive-Web-Apps/blob/master/public/sw.php @Super PWA GitHub repository
     $service_worker =
 "const CACHE_NAME = '{$service_worker_ver}';
 const urlsToCache = [
-  '/',
+  '{$start_url}',
   '{$icon_url_s}',
   '{$icon_url_l}',
   '{$theme_js_url}',
   '{$theme_child_js_url}',
   '{$font_awesome4_url}',
-  '{$font_aicomoon_url}',
-  '/wp-includes/js/jquery/jquery.js',
-  '/wp-includes/js/jquery/jquery-migrate.min.js',
-  '/wp-content/themes/cocoon-master/webfonts/fontawesome/fonts/fontawesome-webfont.woff2',
-  '/wp-content/themes/cocoon-master/webfonts/icomoon/fonts/icomoon.ttf',
-  '/wp-content/themes/cocoon-master/plugins/highlight-js/highlight.min.js'
+  '{$font_icomoon_url}'
 ];
 
 self.addEventListener('install', function(event) {
@@ -313,8 +308,8 @@ self.addEventListener('fetch', function(e) {
     //_v($service_worker);
 
     //HTTPSリダイレクトの書き込み
-    if (file_exists(HTACCESS_FILE)){
-      if ($current_htaccess = @wp_filesystem_get_contents(HTACCESS_FILE)){
+    if (file_exists(get_abs_htaccess_file())){
+      if ($current_htaccess = @wp_filesystem_get_contents(get_abs_htaccess_file())){
         //HTTPSリダイレクトの書き込みが.htaccessに存在するか
         $res = preg_match(THEME_HTTPS_REWRITERULE_REG, $current_htaccess, $m);
         //リダイレクト書き込むが存在しない場合

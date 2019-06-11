@@ -213,7 +213,7 @@ function get_search_buttons_tag($args){
       }
       $amazon_btn_tag =
         '<div class="shoplinkamazon">'.
-          '<a href="'.$amazon_url.'" target="_blank" rel="nofollow">'.get_amazon_search_button_text().$amazon_impression_tag.'</a>'.
+          '<a href="'.esc_url($amazon_url).'" target="_blank" rel="nofollow">'.get_amazon_search_button_text().$amazon_impression_tag.'</a>'.
         '</div>';
     }
 
@@ -236,8 +236,7 @@ function get_search_buttons_tag($args){
           ++$i;
         }
       }
-      //$rakuten_keyword = preg_replace('/ +-\S+/', '', $rakuten_keyword);
-      //$rakuten_url = 'https://hb.afl.rakuten.co.jp/hgc/'.$rakuten_affiliate_id.'/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F'.urlencode($keyword).'%2F-%2Ff.1-p.1-s.1-sf.0-st.A-v.2%3Fx%3D0%26scid%3Daf_ich_link_urltxt%26m%3Dhttp%3A%2F%2Fm.rakuten.co.jp%2F';
+
       $rakuten_url = get_rakuten_affiliate_search_url($rakuten_keyword, $rakuten_affiliate_id, $ng_keywords);
       //もしもアフィリエイトIDがある場合
       if ($is_moshimo_rakuten) {
@@ -254,7 +253,7 @@ function get_search_buttons_tag($args){
       }
       $rakuten_btn_tag =
         '<div class="shoplinkrakuten">'.
-          '<a href="'.$rakuten_url.'" target="_blank" rel="nofollow">'.get_rakuten_search_button_text().$rakuten_impression_tag.'</a>'.
+          '<a href="'.esc_url($rakuten_url).'" target="_blank" rel="nofollow">'.get_rakuten_search_button_text().$rakuten_impression_tag.'</a>'.
         '</div>';
     }
     //Yahoo!ボタンの取得
@@ -276,7 +275,7 @@ function get_search_buttons_tag($args){
 
       $yahoo_tag =
         '<div class="shoplinkyahoo">'.
-          '<a href="'.$yahoo_url.'" target="_blank" rel="nofollow">'.get_yahoo_search_button_text().$yahoo_impression_tag.'</a>'.
+          '<a href="'.esc_url($yahoo_url).'" target="_blank" rel="nofollow">'.get_yahoo_search_button_text().$yahoo_impression_tag.'</a>'.
         '</div>';
     }
 

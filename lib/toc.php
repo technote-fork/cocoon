@@ -38,10 +38,16 @@ function get_toc_tag($the_content, &$harray, $is_widget = false){
     return;
   }
 
+  //実行したくないショートコードを除外した本文
+  $removed_content = get_shortcode_removed_content($the_content);
+  // $removed_content = preg_replace('/\[toc.*\]/', '', $removed_content);
+  // $removed_content = preg_replace('/\[amazon.*\]/', '', $removed_content);
+  // $removed_content = preg_replace('/\[rakuten.*\]/', '', $removed_content);
+
   //_v($the_content);
   //目次ショートコードを取り除く
-  $the_content = preg_replace('/\[toc.*\]/', '', $the_content);
-  $content     = do_shortcode($the_content);
+  //$the_content = preg_replace('/\[toc.*\]/', '', $the_content);
+  $content     = do_shortcode($removed_content);
   $headers     = array();
   $html        = '';
   $toc_list    = '';
@@ -307,10 +313,33 @@ function add_toc_before_1st_h2($the_content){
   //機能が有効な時のみ（ショートコードでは実行しない）
   if (is_total_the_page_toc_visible()) {
     $h2result = get_h2_included_in_body( $the_content );//本文にH2タグが含まれていれば取得
+    $html = str_replace('<div class="toc ', '<div id="toc" class="toc ', $html);
     $the_content = preg_replace(H2_REG, $html.PHP_EOL.PHP_EOL.$h2result, $the_content, 1);
   }
 
   //var_dump($the_content);
   return $the_content;
+}
+endif;
+
+
+//ページ上で目次を利用しているか
+if ( !function_exists( 'is_the_page_toc_use' ) ):
+function is_the_page_toc_use(){
+  $content = get_the_content();
+  return is_singular() && !is_plugin_fourm_page() &&
+    //最初のH2手前に表示する場合
+    (
+      is_toc_visible() &&
+      is_the_page_toc_visible() &&
+      (
+        (is_single() && is_single_toc_visible()) ||
+        (is_page() && is_page_toc_visible())
+      ) &&
+      //H2見出しがあるか
+      includes_string($content, '<h2')
+    )
+    //ショートコードで表示する場合
+    || includes_string($content, '[toc]');
 }
 endif;

@@ -16,7 +16,7 @@ function get_carousel_display_type(){
 endif;
 if ( !function_exists( 'is_carousel_visible' ) ):
 function is_carousel_visible(){
-  return get_carousel_category_ids() &&
+  return (get_carousel_category_ids() || get_carousel_tag_ids()) &&
     (
       is_carousel_display_type_all_page() ||
       (is_front_top_page() && is_carousel_display_type_front_page_only()) ||
@@ -59,11 +59,27 @@ function is_carousel_display_type_page_only(){
 }
 endif;
 
+//カルーセルをスマホで表示する
+define('OP_CAROUSEL_SMARTPHONE_VISIBLE', 'carousel_smartphone_visible');
+if ( !function_exists( 'is_carousel_smartphone_visible' ) ):
+function is_carousel_smartphone_visible(){
+  return get_theme_option(OP_CAROUSEL_SMARTPHONE_VISIBLE, 1);
+}
+endif;
+
 //カルーセルに表示するカテゴリID
 define('OP_CAROUSEL_CATEGORY_IDS', 'carousel_category_ids');
 if ( !function_exists( 'get_carousel_category_ids' ) ):
 function get_carousel_category_ids(){
   return get_theme_option(OP_CAROUSEL_CATEGORY_IDS, array());
+}
+endif;
+
+//カルーセルに表示するタグID
+define('OP_CAROUSEL_TAG_IDS', 'carousel_tag_ids');
+if ( !function_exists( 'get_carousel_tag_ids' ) ):
+function get_carousel_tag_ids(){
+  return get_theme_option(OP_CAROUSEL_TAG_IDS, array());
 }
 endif;
 

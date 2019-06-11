@@ -62,15 +62,16 @@ endif;
 
 //リンクのないカテゴリーの取得
 if ( !function_exists( 'get_the_nolink_category' ) ):
-function get_the_nolink_category($id = null, $is_display = true){
+function get_the_nolink_category($id = null, $is_visible = true){
   if ($id) {
     $categories = get_the_category($id);
   } else {
     $categories = get_the_category();
   }
   $display_class = null;
-  if (!$is_display) {
-    $display_class = ' display-none';
+  if (!$is_visible) {
+    return;
+    //$display_class = ' display-none';
   }
 
   //var_dump($categories);
@@ -84,8 +85,9 @@ endif;
 
 //リンクのないカテゴリーの出力
 if ( !function_exists( 'the_nolink_category' ) ):
-function the_nolink_category($id = null, $is_display = true){
-  echo get_the_nolink_category($id, $is_display);
+function the_nolink_category($id = null, $is_visible = true){
+  $is_visible = apply_filters( 'is_category_label_visible', $is_visible );
+  echo get_the_nolink_category($id, $is_visible);
 }
 endif;
 
@@ -310,7 +312,7 @@ endif;
 if ( !function_exists( 'wp_enqueue_style_icomoon' ) ):
 function wp_enqueue_style_icomoon(){
   if (!is_web_font_lazy_load_enable() || is_admin()) {
-    wp_enqueue_style( 'icomoon-style', FONT_AICOMOON_URL );
+    wp_enqueue_style( 'icomoon-style', FONT_ICOMOON_URL );
   }
 }
 endif;
@@ -492,7 +494,7 @@ function wp_enqueue_web_font_lazy_load_js(){
     wp_enqueue_script( 'web-font-lazy-load-js', get_template_directory_uri().'/js/web-font-lazy-load.js', array(), false, true );
     $data = ('
       loadWebFont("'.FONT_AWESOME4_URL.'");
-      loadWebFont("'.FONT_AICOMOON_URL.'");
+      loadWebFont("'.FONT_ICOMOON_URL.'");
     ');
     wp_add_inline_script( 'web-font-lazy-load-js', $data, 'after' ) ;
   }
@@ -971,18 +973,31 @@ endif;
 if ( !function_exists( 'includes_home_url' ) ):
 function includes_home_url($url){
   //URLにホームアドレスが含まれていない場合
-  if (strpos($url, home_url()) === false) {
+  if (!includes_string($url, home_url())) {
     return false;
   } else {
     return true;
   }
 }
 endif;
+
 //Wordpressインストールフォルダが含まれているか
 if ( !function_exists( 'includes_abspath' ) ):
 function includes_abspath($local){
   //URLにサイトアドレスが含まれていない場合
-  if (strpos($local, ABSPATH) === false) {
+  if (includes_string($local, ABSPATH)) {
+    return false;
+  } else {
+    return true;
+  }
+}
+endif;
+
+//ホームパスが含まれているか
+if ( !function_exists( 'includes_home_path' ) ):
+function includes_home_path($local){
+  //URLにサイトアドレスが含まれていない場合
+  if (!includes_string($local, get_abs_home_path())) {
     return false;
   } else {
     return true;
@@ -994,11 +1009,11 @@ endif;
 if ( !function_exists( 'url_to_local' ) ):
 function url_to_local($url){
   //URLにサイトアドレスが含まれていない場合
-  if (!includes_site_url($url)) {
+  if (!includes_home_url($url)) {
     return false;
   }
 
-  $path = str_replace(site_url(), ABSPATH, $url);
+  $path = str_replace(home_url('/'), get_abs_home_path(), $url);
   $path = str_replace('//', '/', $path);
   $path = str_replace('\\', '/', $path);
 
@@ -1011,12 +1026,15 @@ endif;
 //ローカルパスを内部URLに変更
 if ( !function_exists( 'local_to_url' ) ):
 function local_to_url($local){
+  // _v($local);
+  // _v(get_abs_home_path());
+  // _v(includes_home_path($local));
+  // _v('----------');
   //URLにサイトアドレスが含まれていない場合
-  if (!includes_abspath($local)) {
+  if (!includes_home_path($local)) {
     return false;
   }
-  $url = str_replace(ABSPATH, site_url().'/', $local);
-  //$url = str_replace('//', '/', $url);
+  $url = str_replace(get_abs_home_path(), home_url('/'), $local);
   $url = str_replace('\\', '/', $url);
   // _v($local);
   // _v(ABSPATH);
@@ -1108,7 +1126,8 @@ endif;
 //PWAのマニフェストファイルへのパス
 if ( !function_exists( 'get_theme_pwa_manifest_json_file' ) ):
 function get_theme_pwa_manifest_json_file(){
-  return ABSPATH.THEME_NAME.'-manifest.json';
+  //_v(get_abs_home_path().THEME_NAME.'-manifest.json');
+  return get_abs_home_path().THEME_NAME.'-manifest.json';
 }
 endif;
 
@@ -1124,7 +1143,8 @@ endif;
 //PWAのサービスワーカーへのパス
 if ( !function_exists( 'get_theme_pwa_service_worker_js_file' ) ):
 function get_theme_pwa_service_worker_js_file(){
-  return ABSPATH.THEME_NAME.'-service-worker.js';
+  //_v(get_abs_home_path().THEME_NAME.'-service-worker.js');
+  return get_abs_home_path().THEME_NAME.'-service-worker.js';
 }
 endif;
 
@@ -1656,7 +1676,9 @@ endif;
 //ユーザーが管理者か
 if ( !function_exists( 'is_user_administrator' ) ):
 function is_user_administrator(){
-  return current_user_can( 'administrator' );
+  $cocoon_admin_capability = apply_filters('cocoon_admin_capability', 'administrator');
+  $res = current_user_can( $cocoon_admin_capability );
+  return apply_filters('is_user_administrator', $res);
 }
 endif;
 
@@ -2147,6 +2169,7 @@ function ampersand_urldecode($url){
   //$url = urldecode($url);//urlエンコードされている場合に元に戻す（?が&amp;になっている時など）
   $url = str_replace('&amp;', '&', $url);
   $url = str_replace('#038;', '&', $url);
+  $url = str_replace('&&', '&', $url);
   return $url;
 }
 endif;
@@ -2460,11 +2483,11 @@ function add_code_to_htaccess($resoce_file, $begin, $end, $reg){
               $end;
 
   //.htaccessファイルが存在する場合
-  if (file_exists(HTACCESS_FILE)) {
+  if (file_exists(get_abs_htaccess_file())) {
     //書き込む前にバックアップファイルを用意する
-    $htaccess_backup_file = HTACCESS_FILE.'.'.THEME_NAME;
-    if (copy(HTACCESS_FILE, $htaccess_backup_file)) {
-      if ($current_htaccess = @wp_filesystem_get_contents(HTACCESS_FILE)) {
+    $htaccess_backup_file = get_abs_htaccess_file().'.'.THEME_NAME;
+    if (copy(get_abs_htaccess_file(), $htaccess_backup_file)) {
+      if ($current_htaccess = @wp_filesystem_get_contents(get_abs_htaccess_file())) {
 
         $res = preg_match($reg, $current_htaccess, $m);
 
@@ -2477,7 +2500,7 @@ function add_code_to_htaccess($resoce_file, $begin, $end, $reg){
                                 $new_code;
           //ブラウザキャッシュを.htaccessファイルに書き込む
           wp_filesystem_put_contents(
-            HTACCESS_FILE,
+            get_abs_htaccess_file(),
             $last_htaccess,
             0644
           );
@@ -2489,11 +2512,11 @@ function add_code_to_htaccess($resoce_file, $begin, $end, $reg){
     $last_htaccess = $new_code;
     //ブラウザキャッシュを.htaccessファイルに書き込む
     wp_filesystem_put_contents(
-      HTACCESS_FILE,
+      get_abs_htaccess_file(),
       $last_htaccess,
       0644
     );
-  }//file_exists(HTACCESS_FILE)
+  }//file_exists(get_abs_htaccess_file())
 }
 endif;
 
@@ -2501,8 +2524,8 @@ endif;
 if ( !function_exists( 'remove_code_from_htacccess' ) ):
 function remove_code_from_htacccess($reg){
   //.htaccessファイルが存在しているとき
-  if (file_exists(HTACCESS_FILE)) {
-    if ($current_htaccess = @wp_filesystem_get_contents(HTACCESS_FILE)) {
+  if (file_exists(get_abs_htaccess_file())) {
+    if ($current_htaccess = @wp_filesystem_get_contents(get_abs_htaccess_file())) {
       $res = preg_match($reg, $current_htaccess, $m);
       //書き込まれたブラウザキャッシュが見つかった場合
       if ($res && $m[0]) {
@@ -2513,13 +2536,13 @@ function remove_code_from_htacccess($reg){
         //_v($last_htaccess);
         //ブラウザキャッシュを削除したコードを.htaccessファイルに書き込む
         wp_filesystem_put_contents(
-          HTACCESS_FILE,
+          get_abs_htaccess_file(),
           $last_htaccess,
           0644
         );
       }//$res && $[0]
     }
-  }//file_exists(HTACCESS_FILE)
+  }//file_exists(get_abs_htaccess_file())
 }
 endif;
 
@@ -2550,10 +2573,15 @@ function comma_text_to_array($comma_text){
 }
 endif;
 
-//エディターカラーパレット用の木から
+//エディターカラーパレット用のキーカラー
 if ( !function_exists( 'get_editor_key_color' ) ):
 function get_editor_key_color(){
-  return !empty(get_site_key_color()) ? get_site_key_color() : DEFAULT_EDITOR_KEY_COLOR;
+  $site_key_color = get_site_key_color();
+  if (!empty($site_key_color)) {
+    return $site_key_color;
+  } else {
+    return DEFAULT_EDITOR_KEY_COLOR;
+  }
 }
 endif;
 
@@ -2604,5 +2632,133 @@ function url_to_tag_object($url){
     $tag = $tags[0];
     return $tag;
   }
+}
+endif;
+
+//有効なショートコードアイテムを保持しているか
+if ( !function_exists( 'has_valid_shortcode_item' ) ):
+function has_valid_shortcode_item($shortcodes){
+  $items = array_filter($shortcodes, function($v, $k) { return $v->visible === "1"; }, ARRAY_FILTER_USE_BOTH);
+  return !empty($items);
+}
+endif;
+
+//不要なショートコードを除外した文字列を返す
+if ( !function_exists( 'get_shortcode_removed_content' ) ):
+function get_shortcode_removed_content($content){
+  $removed_content = $content;
+  $removed_content = preg_replace('/\[toc.*\]/', '', $removed_content);
+  $removed_content = preg_replace('/\[amazon.*\]/', '', $removed_content);
+  $removed_content = preg_replace('/\[rakuten.*\]/', '', $removed_content);
+  return $removed_content;
+}
+endif;
+
+//テンプレートのタグ取得
+if ( !function_exists( 'get_template_part_tag( $slug )' ) ):
+function get_template_part_tag($slug){
+  ob_start();
+  get_template_part($slug);
+  return ob_get_clean();
+}
+endif;
+
+//モバイルメニューボタンタグの取得
+if ( !function_exists( 'get_mobile_navi_button_tag' ) ):
+function get_mobile_navi_button_tag(){
+  return get_template_part_tag('tmp/mobile-navi-button');
+}
+endif;
+
+//モバイルホームボタンタグの取得
+if ( !function_exists( 'get_mobile_home_button_tag' ) ):
+function get_mobile_home_button_tag(){
+  return get_template_part_tag('tmp/mobile-home-button');
+}
+endif;
+
+//モバイル検索ボタンタグの取得
+if ( !function_exists( 'get_mobile_search_button_tag' ) ):
+function get_mobile_search_button_tag(){
+  return get_template_part_tag('tmp/mobile-search-button');
+}
+endif;
+
+//モバイルトップボタンタグの取得
+if ( !function_exists( 'get_mobile_top_button_tag' ) ):
+function get_mobile_top_button_tag(){
+  return get_template_part_tag('tmp/mobile-top-button');
+}
+endif;
+
+//モバイルサイドバーボタンタグの取得
+if ( !function_exists( 'get_mobile_sidebar_button_tag' ) ):
+function get_mobile_sidebar_button_tag(){
+  return get_template_part_tag('tmp/mobile-sidebar-button');
+}
+endif;
+
+//モバイル目次ボタンタグの取得
+if ( !function_exists( 'get_mobile_toc_button_tag' ) ):
+function get_mobile_toc_button_tag(){
+  return get_template_part_tag('tmp/mobile-toc-button');
+}
+endif;
+
+//モバイルシェアボタンタグの取得
+if ( !function_exists( 'get_mobile_share_button_tag' ) ):
+function get_mobile_share_button_tag(){
+  return get_template_part_tag('tmp/mobile-share-button');
+}
+endif;
+
+//モバイルフォローボタンタグの取得
+if ( !function_exists( 'get_mobile_follow_button_tag' ) ):
+function get_mobile_follow_button_tag(){
+  return get_template_part_tag('tmp/mobile-follow-button');
+}
+endif;
+
+//モバイル前へボタンタグの取得
+if ( !function_exists( 'get_mobile_prev_button_tag' ) ):
+function get_mobile_prev_button_tag(){
+  return get_template_part_tag('tmp/mobile-prev-button');
+}
+endif;
+
+//モバイル次へボタンタグの取得
+if ( !function_exists( 'get_mobile_next_button_tag' ) ):
+function get_mobile_next_button_tag(){
+  return get_template_part_tag('tmp/mobile-next-button');
+}
+endif;
+
+//確実にホームパスを取得するget_home_path関数
+if ( !function_exists( 'get_abs_home_path' ) ):
+function get_abs_home_path(){
+  $site_url = get_site_url(null, '/');
+  $home_url = get_home_url(null, '/');
+  // _v($site_url);
+  // _v($home_url);
+  if ($site_url == $home_url) {
+    return ABSPATH;
+  } else {
+    if (includes_string($site_url, $home_url)) {
+      $dir = str_replace($home_url, '', $site_url);
+      // _v($dir);
+      // _v(preg_quote($dir, '/'));
+      $home_path = preg_replace('/'.preg_quote($dir, '/').'$/', '', ABSPATH);
+      return $home_path;
+    } else {
+      return ABSPATH;
+    }
+  }
+}
+endif;
+
+//.htaccessファイルの取得
+if ( !function_exists( 'get_abs_htaccess_file' ) ):
+function get_abs_htaccess_file(){
+  return get_abs_home_path().'.htaccess';
 }
 endif;

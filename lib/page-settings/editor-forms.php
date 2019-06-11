@@ -8,9 +8,9 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 
 <div class="metabox-holder">
 
-<!-- その他 -->
+<!-- エディター共通 -->
 <div id="editor" class="postbox">
-  <h2 class="hndle"><?php _e( 'エディター設定', THEME_NAME ) ?></h2>
+  <h2 class="hndle"><?php _e( 'エディター共通設定', THEME_NAME ) ?></h2>
   <div class="inside">
 
     <p><?php _e( '投稿・固定ページ管理画面の設定です。', THEME_NAME ) ?></p>
@@ -61,6 +61,84 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           </td>
         </tr>
 
+        </tbody>
+    </table>
+
+  </div>
+</div>
+
+
+<!-- ブロックエディター -->
+<div id="block-editor" class="postbox">
+  <h2 class="hndle"><?php _e( 'ブロックエディター設定', THEME_NAME ) ?></h2>
+  <div class="inside">
+
+  <table class="form-table">
+    <tbody>
+    <p><?php _e( 'ブロックエディターのみに適用される設定です。', THEME_NAME ) ?></p>
+
+        <!-- スタイルドロップダウン -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag('', __('スタイルドロップダウン', THEME_NAME) ); ?>
+          </th>
+          <td>
+            <?php
+            generate_checkbox_tag(OP_BLOCK_EDITOR_LETTER_STYLE_DROPDOWN_VISIBLE , is_block_editor_letter_style_dropdown_visible(), __( '文字スタイル表示', THEME_NAME ));
+            generate_tips_tag(__( 'ツールバーの文字スタイルドロップダウンを表示するか。', THEME_NAME ));
+
+            generate_checkbox_tag(OP_BLOCK_EDITOR_MARKER_STYLE_DROPDOWN_VISIBLE , is_block_editor_marker_style_dropdown_visible(), __( 'マーカー表示', THEME_NAME ));
+            generate_tips_tag(__( 'ツールバーのマーカースタイルドロップダウンを表示するか。', THEME_NAME ));
+
+            generate_checkbox_tag(OP_BLOCK_EDITOR_BADGE_STYLE_DROPDOWN_VISIBLE , is_block_editor_badge_style_dropdown_visible(), __( 'バッジ表示', THEME_NAME ));
+            generate_tips_tag(__( 'ツールバーのバッジスタイルドロップダウンを表示するか。', THEME_NAME ));
+
+            generate_checkbox_tag(OP_BLOCK_EDITOR_FONT_SIZE_STYLE_DROPDOWN_VISIBLE , is_block_editor_font_size_style_dropdown_visible(), __( '文字サイズ表示', THEME_NAME ));
+            generate_tips_tag(__( 'ツールバーの文字サイズスタイルドロップダウンを表示するか。', THEME_NAME ));
+            ?>
+          </td>
+        </tr>
+
+        <!-- ショートコードドロップダウン -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag('', __('ショートコードドロップダウン', THEME_NAME) ); ?>
+          </th>
+          <td>
+            <?php
+            generate_checkbox_tag(OP_BLOCK_EDITOR_GENERAL_SHORTCODE_DROPDOWN_VISIBLE , is_block_editor_general_shortcode_dropdown_visible(), __( '汎用ショートコード表示', THEME_NAME ));
+            generate_tips_tag(__( 'ツールバーの汎用ショートコードドロップダウンを表示するか。', THEME_NAME ));
+
+            generate_checkbox_tag(OP_BLOCK_EDITOR_TEMPLATE_SHORTCODE_DROPDOWN_VISIBLE , is_block_editor_template_shortcode_dropdown_visible(), __( 'テンプレート表示', THEME_NAME ));
+            generate_tips_tag(__( 'ツールバーのテンプレートショートコードドロップダウンを表示するか。', THEME_NAME ));
+
+            generate_checkbox_tag(OP_BLOCK_EDITOR_AFFILIATE_SHORTCODE_DROPDOWN_VISIBLE , is_block_editor_affiliate_shortcode_dropdown_visible(), __( 'アフィリエイト表示', THEME_NAME ));
+            generate_tips_tag(__( 'ツールバーのアフィリエイトショートコードドロップダウンを表示するか。', THEME_NAME ));
+
+            generate_checkbox_tag(OP_BLOCK_EDITOR_RANKING_SHORTCODE_DROPDOWN_VISIBLE , is_block_editor_ranking_shortcode_dropdown_visible(), __( 'ランキング表示', THEME_NAME ));
+            generate_tips_tag(__( 'ツールバーのランキングショートコードドロップダウンを表示するか。', THEME_NAME ));
+            ?>
+          </td>
+        </tr>
+
+
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+
+
+
+<!-- 旧エディター -->
+<div id="old-editor" class="postbox">
+  <h2 class="hndle"><?php _e( '旧エディター設定', THEME_NAME ) ?></h2>
+  <div class="inside">
+
+  <table class="form-table">
+    <tbody>
+    <p><?php _e( 'ビジュアルエディター用の設定です。', THEME_NAME ) ?></p>
         <!-- 文字カウンター -->
         <tr>
           <th scope="row">

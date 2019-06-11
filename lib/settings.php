@@ -219,9 +219,11 @@ add_theme_support( 'menus' );
 //register_nav_menu( 'header-navi', 'ヘッダーナビゲーション' );
 register_nav_menus(
   array(
-    'navi-header' => __( 'ヘッダーナビ', THEME_NAME ),
-    'navi-mobile' => __( 'モバイルヘッダーナビ（サブ不可）', THEME_NAME ),
-    'navi-footer' => __( 'フッターナビ（サブ不可）', THEME_NAME ),
+    NAV_MENU_HEADER => __( 'ヘッダーメニュー', THEME_NAME ),
+    NAV_MENU_HEADER_MOBILE => __( 'モバイルヘッダーメニュー（サブ不可）', THEME_NAME ),
+    NAV_MENU_FOOTER => __( 'フッターメニュー（サブ不可）', THEME_NAME ),
+    NAV_MENU_FOOTER_MOBILE => __( 'フッターモバイルボタン（サブ不可）', THEME_NAME ),
+    NAV_MENU_MOBILE_SLIDE_IN => __( 'モバイルスライドインメニュー', THEME_NAME ),
   )
 );
 
@@ -268,12 +270,14 @@ add_filter('ranking_item_name', 'do_shortcode');
 add_filter('ranking_item_image_tag', 'do_shortcode');
 add_filter('ranking_item_description', 'do_shortcode');
 add_filter('ranking_item_link_tag', 'do_shortcode');
-//カテゴリ
-add_filter('the_category_content', 'do_shortcode');
 //アピールリア
 add_filter('appeal_area_message', 'do_shortcode');
-//旧エディタでカテゴリー編集時にショートコードの前後にpタグが入るのを防ぐ
+//カテゴリページ
+add_filter('the_category_content', 'do_shortcode');
 add_filter('the_category_content', 'shortcode_unautop');
+//タグページ
+add_filter('the_tag_content', 'do_shortcode');
+add_filter('the_tag_content', 'shortcode_unautop');
 
 //generator を削除
 remove_action('wp_head', 'wp_generator');

@@ -6,7 +6,7 @@
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
  */
 if ( !defined( 'ABSPATH' ) ) exit; ?>
- <a href="<?php the_permalink(); ?>" class="related-entry-card-wrap a-wrap border-element cf" title="<?php echo esc_attr(get_the_title()); ?>">
+ <a href="<?php echo esc_url(get_the_permalink()); ?>" class="related-entry-card-wrap a-wrap border-element cf" title="<?php echo esc_attr(get_the_title()); ?>">
 <article class="related-entry-card e-card cf">
 
   <figure class="related-entry-card-thumb card-thumb e-card-thumb">
@@ -28,7 +28,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
     <?php else: // サムネイルを持っていないとき ?>
     <img src="<?php echo get_no_image_160x90_url(); ?>" alt="" class="no-image related-entry-card-no-image" width="<?php echo THUMB160WIDTH; ?>" height="<?php echo THUMB160HEIGHT; ?>" />
     <?php endif; ?>
-    <?php the_nolink_category(); //カテゴリラベルの取得 ?>
+    <?php the_nolink_category(null, apply_filters('is_related_entry_card_category_label_visible', true)); //カテゴリラベルの取得 ?>
   </figure><!-- /.related-entry-thumb -->
 
   <div class="related-entry-card-content card-content e-card-content">
@@ -60,7 +60,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
         if (is_related_entry_card_post_author_visible()): ?>
           <span class="post-author">
             <span class="post-author-image"><?php echo get_avatar( get_the_author_meta( 'ID' ), '16', null ); ?></span>
-            <span class="post-author-name"><?php echo get_the_author(); ?></span>
+            <span class="post-author-name"><?php echo esc_html(get_the_author()); ?></span>
           </span>
         <?php endif ?>
       </div>

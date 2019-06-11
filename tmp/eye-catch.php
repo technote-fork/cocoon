@@ -14,8 +14,8 @@ $display_none = (is_eyecatch_visible() && has_post_thumbnail()) ? null : ' displ
   if (has_post_thumbnail()) {
     // アイキャッチ画像のIDを取得
     $thumbnail_id = get_post_thumbnail_id();
-    // mediumサイズの画像内容を取得（引数にmediumをセット）
-    $eye_img = wp_get_attachment_image_src( $thumbnail_id , 'post-thumbnail' );
+    // fullサイズの画像内容を取得（引数にfullをセット）
+    $eye_img = wp_get_attachment_image_src( $thumbnail_id , 'full' );
     $url = $eye_img[0];
     $width = $eye_img[1];
     $height = $eye_img[2];
@@ -27,7 +27,7 @@ $display_none = (is_eyecatch_visible() && has_post_thumbnail()) ? null : ' displ
     if ($width && $height) {
       the_post_thumbnail(array($width, $height), $attr);
     } else {
-      the_post_thumbnail('post-thumbnail', $attr);
+      the_post_thumbnail('full', $attr);
     }
 
   } else {
@@ -43,7 +43,7 @@ $display_none = (is_eyecatch_visible() && has_post_thumbnail()) ? null : ' displ
   <meta itemprop="height" content="<?php echo $height; ?>">
   <?php //アイキャッチラベルの表示
   if (is_eyecatch_label_visible()) {
-    the_nolink_category(); //カテゴリラベルの取得
+    the_nolink_category(null, apply_filters('is_eyecatch_category_label_visible', true)); //カテゴリラベルの取得
   }
 
   //アイキャッチにキャプションが設定されているとき

@@ -6,7 +6,7 @@ Theme URI: https://wp-cocoon.com/
 Author: わいひら
 Author URI: https://nelog.jp/
 Text Domain: cocoon
-Version: 1.7.6.4
+Version: 1.8.0.1
 Tags: two-columns, left-sidebar, right-sidebar
 License: GNU General Public License
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -327,7 +327,7 @@ hr {
 
 /* インナーを囲む */
 .wrap {
-  width: 1236px;
+  width: 1256px;
   margin: 0 auto;
 }
 
@@ -490,26 +490,26 @@ img {
 ** 画像の囲み効果
 ************************************/
 /*ボーダー*/
-.iwe-border p img,
-.iwe-border p amp-img {
+.iwe-border img,
+.iwe-border amp-img {
   border: 1px solid #ccc;
 }
 
 /*ボーダー（太線）*/
-.iwe-border-bold p img,
-.iwe-border-bold p amp-img {
+.iwe-border-bold img,
+.iwe-border-bold amp-img {
   border: 4px solid #eee;
 }
 
 /*シャドー*/
-.iwe-shadow p img,
-.iwe-shadow p amp-img {
+.iwe-shadow img,
+.iwe-shadow amp-img {
   box-shadow: 5px 5px 15px #ddd;
 }
 
 /*シャドーペーパー*/
-.iwe-shadow-paper p img,
-.iwe-shadow-paper p amp-img {
+.iwe-shadow-paper img,
+.iwe-shadow-paper amp-img {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
 
@@ -1370,6 +1370,7 @@ img.emoji {
   background-color: #333;
   opacity: 0.8;
   box-shadow: 0 4px 8px #777;
+  z-index: 2;
 }
 
 /************************************
@@ -1998,9 +1999,9 @@ span.internal-icon {
 ** サイドバーのスタイル
 ************************************/
 .sidebar {
-  width: 356px;
+  width: 376px;
   border: 1px solid transparent;
-  padding: 9px;
+  padding: 19px;
   border-radius: 4px;
   background-color: #fff;
 }
@@ -2953,6 +2954,7 @@ label.screen-reader-text {
 .blank-box.bb-tab {
   position: relative;
   margin-top: 2em;
+  border-top-left-radius: 0;
 }
 .blank-box.bb-tab::before {
   background-color: #949495;
@@ -2960,7 +2962,7 @@ label.screen-reader-text {
   position: absolute;
   font-size: .8em;
   top: -1.8em;
-  left: -2px;
+  left: -3px;
   line-height: 1.6;
   padding: 0 1em 0 .8em;
   color: #fff;
@@ -4753,163 +4755,124 @@ label.screen-reader-text {
   color: #fff;
 }
 
-.has-red-color {
+div .has-red-color {
   color: #e60033;
 }
-
-.has-pink-color {
+div .has-pink-color {
   color: #e95295;
 }
-
-.has-purple-color {
+div .has-purple-color {
   color: #884898;
 }
-
-.has-blue-color {
+div .has-blue-color {
   color: #0095d9;
 }
-
-.has-green-color {
+div .has-green-color {
   color: #3eb370;
 }
-
-.has-orange-color {
+div .has-orange-color {
   color: #f39800;
 }
-
-.has-yellow-color {
+div .has-yellow-color {
   color: #ffd900;
 }
-
-.has-brown-color {
+div .has-brown-color {
   color: #954e2a;
 }
-
-.has-grey-color {
+div .has-grey-color {
   color: #949495;
 }
-
-.has-black-color {
+div .has-black-color {
   color: #333;
 }
-
-.has-deep-color {
+div .has-deep-color {
   color: #55295b;
 }
-
-.has-indigo-color {
+div .has-indigo-color {
   color: #1e50a2;
 }
-
-.has-light-blue-color {
+div .has-light-blue-color {
   color: #2ca9e1;
 }
-
-.has-cyan-color {
+div .has-cyan-color {
   color: #00a3af;
 }
-
-.has-teal-color {
+div .has-teal-color {
   color: #007b43;
 }
-
-.has-light-green-color {
+div .has-light-green-color {
   color: #8bc34a;
 }
-
-.has-lime-color {
+div .has-lime-color {
   color: #c3d825;
 }
-
-.has-amber-color {
+div .has-amber-color {
   color: #ffc107;
 }
-
-.has-deep-orange-color {
+div .has-deep-orange-color {
   color: #ea5506;
 }
-
-.has-white-color {
+div .has-white-color {
   color: #fff;
 }
-
-.has-red-background-color {
+div .has-red-background-color {
   background-color: #e60033;
 }
-
-.has-pink-background-color {
+div .has-pink-background-color {
   background-color: #e95295;
 }
-
-.has-purple-background-color {
+div .has-purple-background-color {
   background-color: #884898;
 }
-
-.has-blue-background-color {
+div .has-blue-background-color {
   background-color: #0095d9;
 }
-
-.has-green-background-color {
+div .has-green-background-color {
   background-color: #3eb370;
 }
-
-.has-orange-background-color {
+div .has-orange-background-color {
   background-color: #f39800;
 }
-
-.has-yellow-background-color {
+div .has-yellow-background-color {
   background-color: #ffd900;
 }
-
-.has-brown-background-color {
+div .has-brown-background-color {
   background-color: #954e2a;
 }
-
-.has-grey-background-color {
+div .has-grey-background-color {
   background-color: #949495;
 }
-
-.has-black-background-color {
+div .has-black-background-color {
   background-color: #333;
 }
-
-.has-deep-background-color {
+div .has-deep-background-color {
   background-color: #55295b;
 }
-
-.has-indigo-background-color {
+div .has-indigo-background-color {
   background-color: #1e50a2;
 }
-
-.has-light-blue-background-color {
+div .has-light-blue-background-color {
   background-color: #2ca9e1;
 }
-
-.has-cyan-background-color {
+div .has-cyan-background-color {
   background-color: #00a3af;
 }
-
-.has-teal-background-color {
+div .has-teal-background-color {
   background-color: #007b43;
 }
-
-.has-light-green-background-color {
+div .has-light-green-background-color {
   background-color: #8bc34a;
 }
-
-.has-lime-background-color {
+div .has-lime-background-color {
   background-color: #c3d825;
 }
-
-.has-amber-background-color {
+div .has-amber-background-color {
   background-color: #ffc107;
 }
-
-.has-deep-orange-background-color {
+div .has-deep-orange-background-color {
   background-color: #ea5506;
 }
-
-.has-white-background-color {
+div .has-white-background-color {
   background-color: #fff;
 }
 
@@ -6535,16 +6498,19 @@ div.fb-like-mobile {
   left: 0;
   right: 0;
   z-index: 2;
+  padding: 0;
+  margin: 0;
+  list-style: none;
   display: none;
+  align-items: center;
   line-height: 1.4;
   min-height: 50px;
   padding-bottom: constant(safe-area-inset-bottom);
   padding-bottom: env(safe-area-inset-bottom);
 }
 .mobile-menu-buttons .menu-icon {
-  margin-top: 3px;
   text-align: center;
-  display: block;
+  width: 100%;
 }
 .mobile-menu-buttons .menu-icon::before {
   font-family: FontAwesome;
@@ -6553,16 +6519,16 @@ div.fb-like-mobile {
 .mobile-menu-buttons .menu-caption {
   font-size: 12px;
   text-align: center;
-  display: block;
 }
 .mobile-menu-buttons .menu-button {
   position: relative;
   width: 100%;
+  cursor: pointer;
 }
 .mobile-menu-buttons .menu-button > a {
+  display: block;
   color: #333;
   text-decoration: none;
-  cursor: default;
 }
 .mobile-menu-buttons .menu-button:hover {
   background-color: #f5f8fa;
@@ -6571,6 +6537,9 @@ div.fb-like-mobile {
 }
 .mobile-menu-buttons .ad-area {
   display: none;
+}
+.mobile-menu-buttons .menu-content {
+  cursor: default;
 }
 
 .navi-menu-icon::before {
@@ -6589,14 +6558,36 @@ div.fb-like-mobile {
   content: '\f062';
 }
 
+.toc-menu-icon::before {
+  content: '\f0ca';
+}
+
 .sidebar-menu-icon::before {
   content: '\f03b';
+}
+
+.share-menu-icon::before {
+  content: '\f1e0';
+}
+
+.follow-menu-icon::before {
+  content: '\f004';
+}
+
+.prev-menu-icon::before {
+  content: '\f060';
+}
+
+.next-menu-icon::before {
+  content: '\f061';
 }
 
 /*閉じる用の薄黒カバー*/
 #navi-menu-close,
 #sidebar-menu-close,
-#search-menu-close {
+#search-menu-close,
+#share-menu-close,
+#follow-menu-close {
   display: none;
   /*はじめは隠しておく*/
   position: fixed;
@@ -6651,7 +6642,9 @@ div.fb-like-mobile {
   transform: translateX(105%);
 }
 
-.search-menu-content {
+.search-menu-content,
+.share-menu-content,
+.follow-menu-content {
   transition: .3s ease-in-out;
   position: fixed;
   top: 40%;
@@ -6662,14 +6655,18 @@ div.fb-like-mobile {
   -webkit-transform: translateY(900%);
   transform: translateY(900%);
 }
-.search-menu-content .search-edit {
+.search-menu-content .search-edit,
+.share-menu-content .search-edit,
+.follow-menu-content .search-edit {
   width: 100%;
 }
 
 /*チェックが入ったらもろもろ表示*/
 #navi-menu-input:checked ~ #navi-menu-close,
 #sidebar-menu-input:checked ~ #sidebar-menu-close,
-#search-menu-input:checked ~ #search-menu-close {
+#search-menu-input:checked ~ #search-menu-close,
+#share-menu-input:checked ~ #share-menu-close,
+#follow-menu-input:checked ~ #follow-menu-close {
   display: block;
   /*カバーを表示*/
   opacity: .5;
@@ -6677,7 +6674,9 @@ div.fb-like-mobile {
 
 #navi-menu-input:checked ~ #navi-menu-content,
 #sidebar-menu-input:checked ~ #sidebar-menu-content,
-#search-menu-input:checked ~ #search-menu-content {
+#search-menu-input:checked ~ #search-menu-content,
+#share-menu-input:checked ~ #share-menu-content,
+#follow-menu-input:checked ~ #follow-menu-content {
   -webkit-transform: translateX(0%);
   transform: translateX(0%);
 }
@@ -6714,6 +6713,26 @@ div.fb-like-mobile {
   padding-right: 4px;
   padding: 0;
   font-size: 2em;
+}
+
+.share-menu-content .sns-buttons {
+  justify-content: space-around;
+}
+.share-menu-content .sns-buttons .share-count {
+  color: #fff;
+}
+.share-menu-content .button-caption {
+  display: none;
+}
+
+.follow-menu-content .sns-buttons {
+  justify-content: space-around;
+}
+.follow-menu-content .sns-buttons a {
+  width: 24%;
+}
+.follow-menu-content .sns-follow-message {
+  display: none;
 }
 
 .ranking-items {
@@ -7156,7 +7175,7 @@ div.fb-like-mobile {
 }
 
 .search-edit {
-  font-family: "Meiryo", sans-serif;
+  font-family: inherit;
 }
 
 .search-submit {
@@ -7268,6 +7287,9 @@ div.fb-like-mobile {
   }
 }
 /*Cocoon用記事ボックス*/
+.navi-card-wrap {
+  background-color: #fff;
+}
 .navi-card-wrap.a-wrap {
   position: relative;
   padding: 5px 3px;
@@ -7277,7 +7299,6 @@ div.fb-like-mobile {
 }
 
 .navi-card-box {
-  background-color: #fff;
   padding: 0;
 }
 
@@ -8739,6 +8760,10 @@ div#wpforo-wrap .wpforo-post .wpf-right .wpforo-post-content p {
 
   .mobile-menu-buttons {
     display: flex;
+    align-items: stretch;
+  }
+  .mobile-menu-buttons > li {
+    padding-top: 3px;
   }
 
   .mobile-button-slide-in .go-to-top-button {
@@ -9025,7 +9050,7 @@ div#wpforo-wrap .wpforo-post .wpf-right .wpforo-post-content p {
 
   .navi-footer-in > .menu-footer li.menu-item {
     width: 32%;
-    border: 1px solid #ddd;
+    border: 0;
     margin: 2px;
     display: flex;
     flex: 1 1 auto;
@@ -9391,7 +9416,7 @@ div#wpforo-wrap .wpforo-post .wpf-right .wpforo-post-content p {
   }
 
   .sp-display-none {
-    display: none;
+    display: none !important;
   }
 
   .image-content amp-img {

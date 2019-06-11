@@ -45,6 +45,8 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             );
             generate_selectbox_tag(OP_CAROUSEL_DISPLAY_TYPE, $options, get_carousel_display_type());
             generate_tips_tag(__( 'カルーセルを表示するページを設定します。', THEME_NAME ));
+
+            generate_checkbox_tag(OP_CAROUSEL_SMARTPHONE_VISIBLE , is_carousel_smartphone_visible(), __( 'スマートフォンで表示（480px以下）', THEME_NAME ));
             ?>
           </td>
         </tr>
@@ -52,12 +54,15 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
         <!-- カルーセルカテゴリーID -->
         <tr>
           <th scope="row">
-            <?php generate_label_tag(OP_CAROUSEL_CATEGORY_IDS, __( '表示カテゴリー', THEME_NAME )); ?>
+            <?php generate_label_tag('', __( '表示内容', THEME_NAME )); ?>
           </th>
           <td>
             <?php
+            echo __( 'カテゴリー', THEME_NAME ).'<br>';
             generate_hierarchical_category_check_list( 0, OP_CAROUSEL_CATEGORY_IDS, get_carousel_category_ids(), 300 );
-            generate_tips_tag(__( 'カルーセルと関連付けるカテゴリを選択してください。ランダムで表示されます。', THEME_NAME ));
+            echo __( 'タグ', THEME_NAME ).'<br>';
+            generate_tagcloud_check_list(OP_CAROUSEL_TAG_IDS, get_carousel_tag_ids());
+            generate_tips_tag(__( 'カルーセルと関連付けるカテゴリもしくはタグを選択してください。選択されたカテゴリー・タグに属する投稿がランダムで表示されます。', THEME_NAME ));
             ?>
           </td>
         </tr>

@@ -40,6 +40,13 @@
             scrollTop: 1
         }, 800);
   });
+  //ボタン(.go-to-toc-common)のクリックイベント
+  $('.go-to-toc-common').click(function(){
+  //目次へ移動する
+    $('body,html').animate({
+            scrollTop: $('.entry-content .toc').offset().top
+        }, 800);
+  });
 
 
   //下にスクロールで管理パネルを隠す
@@ -74,7 +81,20 @@
   $('.sbtn').click(function(){
 		var w = $(this).prev('.sform').text();
 		if(w) window.open('https://www.google.co.jp/search?q='+encodeURIComponent(w),'_blank');
-	});
+  });
+
+  //スライドインサイドバーのアーカイブセレクトボックス選択処理
+  $('.sidebar-menu-content .widget_archive select').change(function(){
+		document.location.href = this.options[this.selectedIndex].value;
+  });
+
+  //スライドインサイドバーのカテゴリーセレクトボックス選択処理
+  $('.sidebar-menu-content .widget_categories select').change(function(){
+    if ( this.options[ this.selectedIndex ].value > 0 ) {
+      this.parentNode.parentNode.submit();
+    }
+  });
+
 })(jQuery);
 
 /*

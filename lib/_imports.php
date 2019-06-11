@@ -9,7 +9,6 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 require_once ABSPATH.'wp-admin/includes/file.php';//WP_Filesystemの使用
 //abspath(__FILE__)
-require_once abspath(__FILE__).'language.php';   //マルチ言語設定
 require_once abspath(__FILE__).'utils.php';      //ユーティリティー関数
 require_once abspath(__FILE__).'page-settings/skin-funcs.php';       //スキン設定関数
 if (get_skin_url() && !isset($_POST[HIDDEN_FIELD_NAME])) {
@@ -34,6 +33,7 @@ require_once abspath(__FILE__).'amp.php';        //AMP関係の関数
 require_once abspath(__FILE__).'content.php';    //本文関係の関数
 require_once abspath(__FILE__).'comments.php';   //コメント関係の関数
 require_once abspath(__FILE__).'related-entries.php';   //関連記事関係の関数
+require_once abspath(__FILE__).'walkers.php';  //Walker_Nav_Menuまとめ
 require_once abspath(__FILE__).'plugins.php';   //プラグイン関係の関数
 require_once abspath(__FILE__).'php-html-css-js-minifier.php'; //HTML・CSS・JavaScript縮小化ライブラリ
 require_once abspath(__FILE__).'page-settings/all-funcs.php';        //全体設定関数

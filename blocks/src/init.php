@@ -77,28 +77,94 @@ function cocoon_blocks_cgb_editor_assets() { // phpcs:ignore
 		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor' ), // Dependencies, defined above.
 		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.build.js' ), // Version: File modification time.
 		true // Enqueue the script in the footer.
-	);
+  );
+  //ショートコードオブジェクトの取得
   $baloons = get_speech_balloons();
+  $templates = get_function_texts();
+  $affiliates = get_affiliate_tags();
+  $rankings = get_item_rankings();
+  $is_templates_visible = (has_valid_shortcode_item($templates) && is_block_editor_template_shortcode_dropdown_visible()) ? 1 : 0;
+  $is_affiliates_visible = (has_valid_shortcode_item($affiliates) && is_block_editor_affiliate_shortcode_dropdown_visible()) ? 1 : 0;
+  $is_rankings_visible = (has_valid_shortcode_item($rankings) && is_block_editor_ranking_shortcode_dropdown_visible()) ? 1 : 0;
+  $dropdowns = array(
+    'isLetterVisible' => is_block_editor_letter_style_dropdown_visible() ? 1 : 0,
+    'isMarkerVisible' => is_block_editor_marker_style_dropdown_visible() ? 1 : 0,
+    'isBadgeVisible'  => is_block_editor_badge_style_dropdown_visible() ? 1 : 0,
+    'isFontSizeVisible' => is_block_editor_font_size_style_dropdown_visible() ? 1 : 0,
+    'isGeneralVisible' => is_block_editor_general_shortcode_dropdown_visible() ? 1 : 0,
+    'isTemplateVisible' => $is_templates_visible,
+    'isAffiliateVisible' => $is_affiliates_visible,
+    'isRankingVisible' => $is_rankings_visible,
+  );
+
+
+  // _v(is_block_editor_template_shortcode_dropdown_visible());
+  // _v( $is_templates_visible);
+  ///////////////////////////////////////////
+  // 表示
+  ///////////////////////////////////////////
+  wp_localize_script(
+    'cocoon-blocks-js', //値を渡すjsファイルのハンドル名
+    'dropdowns', //任意のオブジェクト名
+    $dropdowns //プロバティ
+  );
+
+  ///////////////////////////////////////////
+  // オブジェクト渡し
+  ///////////////////////////////////////////
+  //吹き出し情報を渡す
   //_v($baloons);
   wp_localize_script(
     'cocoon-blocks-js', //値を渡すjsファイルのハンドル名
     'speechBaloons', //任意のオブジェクト名
     $baloons //プロバティ
-	);
+  );
+  //テーマのキーカラーを渡す
   wp_localize_script(
     'cocoon-blocks-js', //値を渡すjsファイルのハンドル名
     'keyColor', //任意のオブジェクト名
      get_editor_key_color()//プロバティ
   );
+  //テンプレート情報を渡す
+  //_v($templates);
+  if ($is_templates_visible) {
+    wp_localize_script(
+      'cocoon-blocks-js', //値を渡すjsファイルのハンドル名
+      'templates', //任意のオブジェクト名
+      $templates //プロバティ
+    );
+  }
 
-	// Styles.
-	wp_enqueue_style(
-		'cocoon_blocks-cgb-block-editor-css', // Handle.
-		get_template_directory_uri().'/blocks/dist/blocks.editor.build.css',
-		//plugins_url( 'dist/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
-		array( 'wp-edit-blocks' ) // Dependency to include the CSS after it.
-		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.editor.build.css' ) // Version: File modification time.
-	);
+  //アフィリエイト情報を渡す
+  //_v($affiliates);
+  if ($is_affiliates_visible) {
+    wp_localize_script(
+      'cocoon-blocks-js', //値を渡すjsファイルのハンドル名
+      'affiliateTags', //任意のオブジェクト名
+      $affiliates //プロバティ
+    );
+  }
+
+  //ランキング情報を渡す
+  //_v($rankings);
+  if ($is_rankings_visible) {
+    wp_localize_script(
+      'cocoon-blocks-js', //値を渡すjsファイルのハンドル名
+      'itemRankings', //任意のオブジェクト名
+      $rankings //プロバティ
+    );
+  }
+
+
+
+  // Styles.
+  wp_enqueue_style(
+      'cocoon_blocks-cgb-block-editor-css', // Handle.
+      get_template_directory_uri().'/blocks/dist/blocks.editor.build.css',
+      //plugins_url( 'dist/blocks.editor.build.css', dirname( __FILE__ ) ), // Block editor CSS.
+      array( 'wp-edit-blocks' ) // Dependency to include the CSS after it.
+      // filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.editor.build.css' ) // Version: File modification time.
+  );
 }
 
 //Cocoonカテゴリーを追加

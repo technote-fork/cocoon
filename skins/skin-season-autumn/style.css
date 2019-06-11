@@ -7,7 +7,6 @@
   Screenshot URI: https://im-cocoon.net/wp-content/uploads/skin-season-autumn.png
   Version: 1.0.0
   Priority: 92
-  Visibility: false
 */
 /*以下にスタイルシートを記入してください*/
 
@@ -97,46 +96,55 @@ a {
 	font-weight: bold;
 }
 #header .logo .site-name-text {
-	font-size: 1.5em;
+	font-size: 1em;
 }
 .logo-text {
 	padding: 2em 0;
 }
 .logo-image {
-	padding: 0.4em 0 0;
+	padding: 0.4em 0;
 	margin: 0 auto -0.4em;
 }
 /************************************
 ** グローバルナビ navi
 ************************************/
 .navi-in > ul li {
-	height: auto;
-	font-weight: bold;
-	line-height: normal;
+		font-weight: bold;
+		height: 64px;
+		line-height: 64px;
 }
-#header-container #navi {
-	background: #9b7b6c;
+.navi-in > ul .menu-item-has-description > a > .caption-wrap{
+	line-height: 28px;
+	height: 64px;
 }
-#header-container #navi a {
-	color: #fff;
-	padding: 0.5em 0;
+#navi .menu-item-has-description>a>.caption-wrap{
+	line-height: 1.6;
 }
-#header-container #navi a:hover {
-	color: #9b7b6c;
+.navi-in > ul .sub-menu ul{
+	top: -64px;
 }
-.navi-in > ul .sub-menu {
-	background: #9b7b6c;
+#header-container #navi{
+  background: #9b7b6c;
+}
+#header-container #navi a{
+  color: #fff;
+}
+#header-container #navi a:hover{
+  color: #9b7b6c;
+}
+.navi-in > ul .sub-menu{
+  background: #9b7b6c;
 }
 .navi-in > ul > .menu-item-has-children > a::after {
-    right: 1em;
-    top: 0.6em;
-    font-size: 1.2em;
-    font-weight: 600;
+  right: .6em;
+  font-size: 1em;
+  font-weight: 600;
 }
 .sub-menu .caption-wrap{
-	padding-left:1em;
-	font-weight:500;
+  padding-left: 1em;
+  font-weight: 500;
 }
+
 /************************************
 ** 通知エリア
 ************************************/
@@ -379,11 +387,11 @@ article .tag-link:hover {
 	padding: 0.3em 0.8em;
 	font-size: 1.1em;
 }
-.sidebar .widget_recent_entries ul li, .sidebar .widget_categories ul li, .sidebar .widget_archive ul li, .sidebar .widget_pages ul li, .sidebar .widget_meta ul li, .sidebar .widget_rss ul li, .sidebar .widget_nav_menu ul li {
+.sidebar .widget_recent_entries ul li,.sidebar .widget_categories ul li a,.sidebar .widget_archive ul li,.sidebar .widget_pages ul li,.sidebar .widget_meta ul li,.sidebar .widget_rss ul li,.sidebar .widget_nav_menu ul li{
 	border-bottom: 2px dotted #ccc;
 }
-.sidebar .widget_recent_entries ul li:last-child, .sidebar .widget_categories ul li:last-child, .sidebar .widget_archive ul li:last-child, .sidebar .widget_pages ul li:last-child, .sidebar .widget_meta ul li:last-child, .sidebar .widget_rss ul li:last-child, .sidebar .widget_nav_menu ul li:last-child {
-	border: none;
+.sidebar .widget_recent_entries ul li:last-child, /*.sidebar .widget_categories > ul > li:last-child a,*/ .sidebar .widget_archive ul li:last-child, .sidebar .widget_pages ul li:last-child, .sidebar .widget_meta ul li:last-child, .sidebar .widget_rss ul li:last-child, .sidebar .widget_nav_menu ul li:last-child{
+	border:none;
 }
 .sidebar .widget_recent_entries ul li a, .sidebar .widget_categories ul li a, .sidebar .widget_archive ul li a, .sidebar .widget_pages ul li a, .sidebar .widget_meta ul li a, .sidebar .widget_rss ul li a, .sidebar .widget_nav_menu ul li a {
 	position: relative;
@@ -412,6 +420,20 @@ article .tag-link:hover {
 }
 .widget .popular-entry-cards .popular-entry-card {
 	font-size: 1em;
+}
+/************************************
+** CTA
+************************************/
+.cta-box {
+   background-color: #fff;
+   color: #745c51;
+   border: 1px solid #ccc;
+   padding: 2em;
+	margin-top:0.5em;
+}
+.cta-heading{
+	padding:0;
+	margin-bottom:0.5em;
 }
 /************************************
 ** プロフィール profile
@@ -564,6 +586,12 @@ article .tag-link:hover {
 }
 .sns-share, .sns-follow {
 	margin: 0;
+}
+.sns-share-buttons a .share-count,
+.sns-follow-buttons a .follow-count {
+    right: -10px;
+    bottom: -10px;
+    color: #aaa;
 }
 /************************************
 ** 目次
@@ -932,39 +960,50 @@ input[type='submit']:hover {
 
 /*1030px以下*/
 @media screen and (max-width: 1030px) {
-.navi-in > .menu-header {
-	display: -webkit-box;
-	display: -ms-flexbox;
-	display: flex;
-	overflow-x: scroll;
-	white-space: nowrap;
-	-webkit-box-pack: start;
-	-ms-flex-pack: start;
-	justify-content: flex-start;
-	flex-wrap: nowrap;
-	-ms-flex-wrap: nowrap;
-	flex-wrap: nowrap;
-}
-.navi-in > ul li {
-	min-width: auto;
-}
-#header-container #navi a {
-	font-size: 0.8em;
-	padding: 1em 1.2em;
-}
-.navi-footer-in > .menu-footer li.menu-item {
-	border: none;
-	border-left: 1px solid #fff;
-}
-.navi-footer-in > .menu-footer li.menu-item:first-child {
-	border: none;
-}
-#sidebar {
-	padding: 0 2em;
-}
-.entry-card-content {
-	flex: 2;
-}
+	#header-container .menu-mobile{
+		display:none;
+	}
+	.navi-in > .menu-mobile{
+		display:-webkit-box;
+  		display:-ms-flexbox;
+  		display:flex;
+		overflow-x: scroll;
+		white-space: nowrap;
+		-webkit-box-pack: start;
+		-ms-flex-pack: start;
+		justify-content: flex-start;
+      flex-wrap: nowrap;
+		-ms-flex-wrap: nowrap;
+		flex-wrap: nowrap;
+	}
+	#navi .navi-in > .menu-mobile li {
+		height: auto;
+		line-height: 1.8;
+	}
+  .navi-in > ul li {
+	  min-width: auto;
+  }
+  #header-container #navi a {
+	  font-size: 0.8em;
+	  padding: 1em 1.2em;
+  }
+  .navi-footer-in > .menu-footer li.menu-item {
+	  border: none;
+	  border-left: 1px solid #fff;
+	  margin-bottom:5px;
+  }
+  .navi-footer-in > .menu-footer li.menu-item:nth-child(odd) {
+	  border: none !important;
+  }
+  #sidebar {
+	  padding: 0 2em;
+  }
+  .entry-card-content {
+	  flex: 2;
+  }
+	.mobile-menu-buttons{
+	   height:auto;
+   }
 }
 
 /*768px以下*/
@@ -1273,4 +1312,13 @@ table th {
     height: auto;
     opacity: 1;
 	text-align:left;
+}
+
+.recent-comments .a-wrap{
+	padding: 1.5%;
+	margin-bottom: 3%;
+}
+
+.ranking-items p {
+	margin-top: 0;
 }

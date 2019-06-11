@@ -82,7 +82,6 @@ require_once abspath(__FILE__).'sns-share-forms-bottom.php';
     <table class="form-table">
       <tbody>
 
-        <!-- メンション -->
         <tr>
           <th scope="row">
             <?php generate_label_tag(OP_FACEBOOK_ACCESS_TOKEN, __( 'アクセストークン', THEME_NAME )); ?>

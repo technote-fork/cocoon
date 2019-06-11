@@ -55,7 +55,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
         <?php //投稿日と更新日テンプレート
         get_template_part('tmp/date-tags'); ?>
 
-        <?php if (is_content_read_time_visible() && !is_plugin_fourm_page()): ?>
+        <?php if (is_content_read_time_visible() && is_the_page_read_time_visible() && !is_plugin_fourm_page()): ?>
           <div class="read-time"><?php echo '<span class="fa fa-hourglass-half"></span>
 '.sprintf(__( 'この記事は<span class="bold">約%s分</span>で読めます。', THEME_NAME ), get_time_to_content_read(get_the_content())); ?></div>
         <?php endif; ?>
@@ -127,7 +127,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 
         <?php //SNSフォローボタン
         if (is_sns_follow_buttons_visible())
-          get_template_part('tmp/sns-follow-buttons'); ?>
+        get_template_part_with_option('tmp/sns-follow-buttons', SF_BOTTOM); ?>
 
         <?php //SNSシェアボタン上の広告表示
         if (is_ad_pos_below_sns_buttons_visible() && is_all_adsenses_visible()){

@@ -9,6 +9,8 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 //テーマ名
 define('THEME_NAME', 'cocoon');
+require_once abspath(__FILE__).'language.php';   //マルチ言語設定
+
 //テーマ名（最初の一文字だけ大文字）
 define('THEME_NAME_CAMEL', ucfirst(THEME_NAME));
 //テーマ名（大文字）
@@ -19,6 +21,10 @@ define('THEME_PARENT_DIR', THEME_NAME.'-master');
 define('THEME_CHILD_DIR', THEME_NAME.'-child');
 //テーマ設定ページ用のURLクエリ
 define('THEME_SETTINGS_PAFE', 'theme-settings');
+//ホームバスの取得
+define('ROOT_PATH', trailingslashit($_SERVER['DOCUMENT_ROOT']));
+//PWA Service Workerのバージョン
+define('PWA_SERVICE_WORKER_VERSION', '20190523');
 
 //開発関係の場合デバッグ値を有効にする
 define('DEBAG_VALU', $_SERVER["HTTP_HOST"] == THEME_NAME.'.local' ? 1 : 0);
@@ -35,7 +41,7 @@ define('THEME_SKIN_JS', THEME_NAME.'-skin-js');
 //ウィジェット名プレフィックス
 define('WIDGET_NAME_PREFIX', '['.substr(THEME_NAME_CAMEL, 0, 1).'] '); //ex.[C]
 //トップレベルオリジナル設定名
-define('SETTING_NAME_TOP', THEME_NAME_CAMEL.__( ' 設定', THEME_NAME ));
+define('SETTING_NAME_TOP', THEME_NAME_CAMEL.' '.__( '設定', THEME_NAME ));
 
 //ウィジェットのエントリータイプ
 define('ET_DEFAULT',        'default');
@@ -53,6 +59,15 @@ $_TOC_INDEX = 1;
 //目次利用フラグ
 global $_TOC_WIDGET_OR_SHORTCODE_USE;
 $_TOC_WIDGET_OR_SHORTCODE_USE = false;
+//モバイルフッターメニューのキャプション
+global $_MENU_CAPTION;
+$_MENU_CAPTION = null;
+//モバイルフッターメニューのアイコン
+global $_MENU_ICON;
+$_MENU_ICON = null;
+//モバイルフッターコピーボタン
+global $_MOBILE_COPY_BUTTON;
+$_MOBILE_COPY_BUTTON = null;
 
 //エディターキーカラー
 define('DEFAULT_EDITOR_KEY_COLOR', '#19448e');
@@ -74,6 +89,12 @@ define('DATA_AD_FORMAT_FLUID', 'fluid'); //記事中広告
 define('DATA_AD_FORMAT_AUTORELAXED', 'autorelaxed'); //関連記事
 //リンクユニット
 define('DATA_AD_FORMAT_LINK', 'link');
+//ナビゲーションメニュー
+define('NAV_MENU_HEADER', 'navi-header');
+define('NAV_MENU_HEADER_MOBILE', 'navi-mobile');
+define('NAV_MENU_FOOTER', 'navi-footer');
+define('NAV_MENU_FOOTER_MOBILE', 'navi-footer-mobile');
+define('NAV_MENU_MOBILE_SLIDE_IN', 'navi-mobile-slide-in');
 
 //メインカラム用の広告フォーマット集
 global $_MAIN_DATA_AD_FORMATS;
@@ -157,6 +178,13 @@ define('DEFAULT_INPUT_ROWS', 10);
 //SNSシェアオプション
 define('SS_TOP', 'ss-top');
 define('SS_BOTTOM', 'ss-bottom');
+define('SS_MOBILE', 'ss-mobile');
+
+//SNSフォローをオプション
+define('SF_BOTTOM', 'sf-bottom');
+define('SF_WIDGET', 'sf-widget');
+define('SF_PROFILE', 'sf-profile');
+define('SF_MOBILE', 'sf-mobile');
 
 //NO IMAGE画像URL
 define('NO_IMAGE_320', get_template_directory_uri().'/images/no-image-320.png');
@@ -205,12 +233,14 @@ define('TAG_BASE_URL', home_url('/').'tag/');
 //Font Awesome4.7のCDN
 define('FONT_AWESOME4_CDN_URL', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 //Font Awesome5のCDN
-define('FONT_AWESOME5_CDN_URL', 'https://use.fontawesome.com/releases/v5.6.3/css/all.css');
+define('FONT_AWESOME5_CDN_URL', 'https://use.fontawesome.com/releases/v5.8.2/css/all.css');
 
 //Font Awesome4
 define('FONT_AWESOME4_URL', get_template_directory_uri().'/webfonts/fontawesome/css/font-awesome.min.css');
+//Font Awesome5
+define('FONT_AWESOME5_URL', get_template_directory_uri().'/webfonts/fontawesome5/css/all.min.css');
 //IcoMoonフォント
-define('FONT_AICOMOON_URL', get_template_directory_uri() . '/webfonts/icomoon/style.css');
+define('FONT_ICOMOON_URL', get_template_directory_uri() . '/webfonts/icomoon/style.css');
 
 //親テーマのJavaScript
 define('THEME_JS_URL', get_template_directory_uri() . '/javascript.js');
@@ -221,6 +251,8 @@ define('SET_EVENT_PASSIVE_JS_URL', get_template_directory_uri() . '/js/set-event
 
 //AMPのトップへ戻る用のコード
 define('AMP_GO_TO_TOP_ON_CODE', ' on="tap:header.scrollTo(\'duration\'=375)"');
+//AMPの目次へ戻る用のコード
+define('AMP_GO_TO_TOC_ON_CODE', ' on="tap:toc.scrollTo(\'duration\'=375)"');
 
 //リンククリック時の削除確認JavaScript
 define('ONCLICK_DELETE_CONFIRM', ' onclick="if(!confirm(\''.__( '本当に削除してもいいですか？', THEME_NAME ).'\'))return false"');

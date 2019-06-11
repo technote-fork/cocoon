@@ -184,10 +184,6 @@ function amazon_product_link_shortcode($atts){
   //Yahoo!バリューコマースPID
   $pid = trim(get_yahoo_valuecommerce_pid());
 
-  // $moshimo_amazon_id = null;
-  // $moshimo_rakuten_id = null;
-  // $moshimo_yahoo_id = null;
-
   //もしもID
   $moshimo_amazon_id  = trim(get_moshimo_amazon_id());
   $moshimo_rakuten_id = trim(get_moshimo_rakuten_id());
@@ -211,14 +207,6 @@ function amazon_product_link_shortcode($atts){
 
   $res = get_amazon_itemlookup_xml($asin);
   if ($res === false) {//503エラーの場合
-    // $error_message = get_amazon_error_product_link($associate_url);
-    // if (is_user_administrator()) {
-    //   $admin_message = __( '503エラー。このエラーは、PA-APIのアクセス制限を超えた場合や、メンテナンス中などにより、リクエストに応答できない場合に出力されるエラーコードです。このエラーが頻出する場合は「API」設定項目にある「キャッシュの保存期間」を長めに設定することをおすすめします。', THEME_NAME );
-    //   $error_message .= get_admin_errormessage_box_tag($admin_message);
-    // }
-    // // $xml_file = get_theme_logs_path().'amazon_last_xml_error.xml';
-    // // wp_filesystem_put_contents($xml_file, $res);
-    // return wrap_product_item_box($error_message, 'amazon');
     return get_amazon_admin_error_message_tag($associate_url, __( '503エラー。このエラーは、PA-APIのアクセス制限を超えた場合や、メンテナンス中などにより、リクエストに応答できない場合に出力されるエラーコードです。このエラーが頻出する場合は「API」設定項目にある「キャッシュの保存期間」を長めに設定することをおすすめします。', THEME_NAME ));
   }
 
@@ -228,16 +216,6 @@ function amazon_product_link_shortcode($atts){
     $xml = simplexml_load_string($res);
 
     if (property_exists($xml->Error, 'Code')) {
-      // $error_message = get_amazon_error_product_link($associate_url);
-
-      // if (is_user_administrator()) {
-      //   $admin_message = '<b>'.__( '管理者用エラーメッセージ', THEME_NAME ).'</b><br>';
-      //   $admin_message .= __( 'アイテムを取得できませんでした。', THEME_NAME ).'<br>';
-      //   $admin_message .= '<pre class="nohighlight"><b>'.$xml->Error->Code.'</b><br>'.preg_replace('/AWS Access Key ID: .+?\. /', '', $xml->Error->Message).'</pre>';
-      //   $admin_message .= '<span class="red">'.__( 'このエラーメッセージは"サイト管理者のみ"に表示されています。', THEME_NAME ).'</span>';
-      //   $error_message .= get_message_box_tag($admin_message, 'warning-box fz-14px');
-      // }
-      // return wrap_product_item_box($error_message);
       $admin_message = __( 'アイテムを取得できませんでした。', THEME_NAME ).'<br>';
       $admin_message .= '<pre class="nohighlight"><b>'.$xml->Error->Code.'</b><br>'.preg_replace('/AWS Access Key ID: .+?\. /', '', $xml->Error->Message).'</pre>';
       $admin_message .= '<span class="red">'.__( 'このエラーメッセージは"サイト管理者のみ"に表示されています。', THEME_NAME ).'</span>';
@@ -251,22 +229,12 @@ function amazon_product_link_shortcode($atts){
     $cache_delete_tag = get_cache_delete_tag('amazon', $asin);
 
     if (!property_exists($xml->Items, 'Item')) {
-      // $error_message = get_amazon_error_product_link($associate_url);
-      // if (is_user_administrator()) {
-      //   $error_message .= get_admin_errormessage_box_tag(AMAZON_ASIN_ERROR_MESSAGE);
-      // }
-      // return wrap_product_item_box($error_message, 'amazon', $cache_delete_tag);
       return get_amazon_admin_error_message_tag($associate_url, AMAZON_ASIN_ERROR_MESSAGE, $cache_delete_tag);
     }
 
     if (property_exists($xml->Items, 'Item')) {
       $item = $xml->Items->Item;
 
-      //_v($xml);
-      // _v($item->ItemLinks->ItemLink[2]);
-
-      //var_dump($xml->Items->Errors);
-      //_v($item);
       $ASIN = esc_html($item->ASIN);
 
       ///////////////////////////////////////
@@ -291,34 +259,31 @@ function amazon_product_link_shortcode($atts){
 
       //イメージセットを取得する
       $ImageSets = $item->ImageSets;
-      //_v($ImageSets);
 
       //画像インデックスが設定されている場合
       if ($image_index !== null && $ImageSets) {
         //インデックスを整数型にする
         $image_index = intval($image_index);
-        //_v($image_index);
-        //_v($ImageSets);
+
         //有効なインデックスの場合
         if (!empty($ImageSets->ImageSet[$image_index])) {
           //インデックスが有効な場合は画像アイテムを入れ替える
           $ImageItem = $ImageSets->ImageSet[$image_index];
-          //_v($ImageSets->ImageSet);
         }
       }
 
       $SmallImage = $ImageItem->SmallImage;
-      $SmallImageUrl = esc_url($SmallImage->URL);
-      $SmallImageWidth = esc_html($SmallImage->Width);
-      $SmallImageHeight = esc_html($SmallImage->Height);
+      $SmallImageUrl = $SmallImage->URL;
+      $SmallImageWidth = $SmallImage->Width;
+      $SmallImageHeight = $SmallImage->Height;
       $MediumImage = $ImageItem->MediumImage;
-      $MediumImageUrl = esc_url($MediumImage->URL);
-      $MediumImageWidth = esc_html($MediumImage->Width);
-      $MediumImageHeight = esc_html($MediumImage->Height);
+      $MediumImageUrl = $MediumImage->URL;
+      $MediumImageWidth = $MediumImage->Width;
+      $MediumImageHeight = $MediumImage->Height;
       $LargeImage = $ImageItem->LargeImage;
-      $LargeImageUrl = esc_url($LargeImage->URL);
-      $LargeImageWidth = esc_html($LargeImage->Width);
-      $LargeImageHeight = esc_html($LargeImage->Height);
+      $LargeImageUrl = $LargeImage->URL;
+      $LargeImageWidth = $LargeImage->Width;
+      $LargeImageHeight = $LargeImage->Height;
 
       //サイズ設定
       $size = strtolower($size);
@@ -406,10 +371,10 @@ function amazon_product_link_shortcode($atts){
 
       $ListPrice = $item->ItemAttributes->ListPrice;
       $Price = esc_html($ListPrice->Amount);
-      $FormattedPrice = esc_html($ListPrice->FormattedPrice);
+      $FormattedPrice = $ListPrice->FormattedPrice;
 
       ///////////////////////////////////////////
-      // OfferSummary尚価格取得
+      // OfferSummary価格取得
       ///////////////////////////////////////////
       $OfferSummary = $item->OfferSummary;
       if ($OfferSummary) {
@@ -426,10 +391,18 @@ function amazon_product_link_shortcode($atts){
               $FormattedPrice = $LowestCollectiblePrice;
             }
           }
-
         }
         //_v($OfferSummary);
       }
+
+      ///////////////////////////////////////////
+      // Amazon価格の取得
+      ///////////////////////////////////////////
+      if (is_amazon_item_stock_price_visible() && isset($item->Offers->Offer->OfferListing->Price->FormattedPrice)) {
+        $FormattedPrice = $item->Offers->Offer->OfferListing->Price->FormattedPrice;
+      }
+
+      $FormattedPrice = esc_html($FormattedPrice);
 
       //$associate_url = esc_url($base_url.$ASIN.'/'.$associate_tracking_id.'/');
 
@@ -443,13 +416,6 @@ function amazon_product_link_shortcode($atts){
         $timestamp = strtotime(get_date_from_gmt($unix_date));
         $acquired_date = date_i18n( 'Y/m/d H:i', $timestamp );
 
-        // $t = new DateTime($unix_date);
-        // $t->setTimeZone(new DateTimeZone(get_wordpress_timezone()));
-        // $acquired_date = $t->format(__( 'Y/m/d H:i', THEME_NAME ));
-        // _v($unix_date);
-        // _v($t);
-        // _v($acquired_date);
-        //_v($FormattedPrice);
         if ((is_amazon_item_price_visible() || $price === '1')
              && $FormattedPrice
              && $price !== '0'
@@ -469,7 +435,7 @@ function amazon_product_link_shortcode($atts){
         //_v($review_url);
         $review_tag =
           '<div class="amazon-item-review product-item-review item-review">'.
-            '<a class="amazon-item-review-link  product-item-review-link item-review-link" href="'.$review_url.'" target="_blank" rel="nofollow noopener">'.
+            '<a class="amazon-item-review-link  product-item-review-link item-review-link" href="'.esc_url($review_url).'" target="_blank" rel="nofollow noopener">'.
               get_amazon_item_customer_reviews_text().
             '</a>'.
           '</div>';
@@ -540,28 +506,16 @@ function amazon_product_link_shortcode($atts){
       if ($is_catalog_image_visible && ($size != 'l') && $LargeImageUrl) {
         $image_l_tag =
           '<div class="amazon-item-thumb-l product-item-thumb-l image-content">'.
-            '<img src="'.$LargeImageUrl.'" alt="" width="'.$LargeImageWidth.'" height="'.$LargeImageHeight.'">'.
+            '<img src="'.esc_url($LargeImageUrl).'" alt="" width="'.esc_attr($LargeImageWidth).'" height="'.esc_attr($LargeImageHeight).'">'.
           '</div>';
       }
       $swatchimages_tag = null;
 
       if ($ImageSets && !$image_only && $is_catalog_image_visible) {
         $SwatchImages = $ImageSets->ImageSet;
-        //_v($ImageSets);
-        //_v(count($ImageSets->ImageSet));
+
         $tmp_tag = null;
         for ($i=0; $i < count($ImageSets->ImageSet)-1; $i++) {
-          // if (($size == 's') && ($i >= 3)) {
-          //   break;
-          // }
-          // if (($size == 'm') && ($i >= 5)) {
-          //   break;
-          // }
-
-          // //image_indexで指定した画像を含めない
-          // if (($image_index !== null) && ($i == intval($image_index))) {
-          //   continue;
-          // }
           $display_none_class = null;
           if (($size != 'l') && ($i >= 3)) {
             $display_none_class .= ' sp-display-none';
@@ -576,34 +530,29 @@ function amazon_product_link_shortcode($atts){
           $SwatchImageURL = $SwatchImage->URL;
           $SwatchImageWidth = $SwatchImage->Width;
           $SwatchImageHeight = $SwatchImage->Height;
+
           //LargeImage
-          //_v($LargeImage);
           $LargeImage = $ImageSet->LargeImage;
           $LargeImageURL = $LargeImage->URL;
           $LargeImageWidth = $LargeImage->Width;
           $LargeImageHeight = $LargeImage->Height;
 
-          //$id = ' id="'.$asin.'-'.$i.'"';
           $tmp_tag .=
-            '<div class="image-thumb swatch-image-thumb si-thumb'.$display_none_class.'">'.
-              '<img src="'.$SwatchImageURL.'" alt="" widh="'.$SwatchImageWidth.'" height="'.$SwatchImageHeight.'">'.
+            '<div class="image-thumb swatch-image-thumb si-thumb'.esc_attr($display_none_class).'">'.
+              '<img src="'.esc_url($SwatchImageURL).'" alt="" widh="'.esc_attr($SwatchImageWidth).'" height="'.esc_attr($SwatchImageHeight).'">'.
               '<div class="image-content">'.
-              '<img src="'.$LargeImageURL.'" alt="" widh="'.$LargeImageWidth.'" height="'.$LargeImageHeight.'">'.
+              '<img src="'.esc_url($LargeImageURL).'" alt="" widh="'.esc_attr($LargeImageWidth).'" height="'.esc_attr($LargeImageHeight).'">'.
               '</div>'.
             '</div>';
-          //_v($tmp_tag);
         }
-        $swatchimages_tag = '<a href="'.$associate_url.'" class="swatchimages" target="_blank" rel="nofollow noopener">'.$tmp_tag.'</a>';
-        // foreach ($ImageSets as $ImageSet) {
-        //   _v($ImageSet);
-        // }
+        $swatchimages_tag = '<a href="'.esc_url($associate_url).'" class="swatchimages" target="_blank" rel="nofollow noopener">'.$tmp_tag.'</a>';
       }
       $image_only_class = null;
       if ($image_only) {
         $image_only_class = ' amazon-item-image-only product-item-image-only no-icon';
       }
-      $image_link_tag = '<a href="'.$associate_url.'" class="amazon-item-thumb-link product-item-thumb-link image-thumb'.$image_only_class.'" target="_blank" title="'.$TitleAttr.'" rel="nofollow noopener">'.
-              '<img src="'.$ImageUrl.'" alt="'.$TitleAttr.'" width="'.$ImageWidth.'" height="'.$ImageHeight.'" class="amazon-item-thumb-image product-item-thumb-image">'.
+      $image_link_tag = '<a href="'.esc_url($associate_url).'" class="amazon-item-thumb-link product-item-thumb-link image-thumb'.esc_attr($image_only_class).'" target="_blank" title="'.esc_attr($TitleAttr).'" rel="nofollow noopener">'.
+              '<img src="'.esc_url($ImageUrl).'" alt="'.esc_attr($TitleAttr).'" width="'.esc_attr($ImageWidth).'" height="'.esc_attr($ImageHeight).'" class="amazon-item-thumb-image product-item-thumb-image">'.
               $moshimo_amazon_impression_tag.
               $image_l_tag.
             '</a>'.
@@ -624,11 +573,11 @@ function amazon_product_link_shortcode($atts){
       // 商品リンクタグの生成
       ///////////////////////////////////////////
       $tag =
-        '<div class="amazon-item-box product-item-box no-icon '.$size_class.$border_class.$logo_class.' '.$ProductGroupClass.' '.$asin.' cf">'.
+        '<div class="amazon-item-box product-item-box no-icon '.$size_class.$border_class.$logo_class.' '.esc_attr($ProductGroupClass).' '.esc_attr($asin).' cf">'.
           $image_figure_tag.
           '<div class="amazon-item-content product-item-content cf">'.
             '<div class="amazon-item-title product-item-title">'.
-              '<a href="'.$associate_url.'" class="amazon-item-title-link product-item-title-link" target="_blank" title="'.$TitleAttr.'" rel="nofollow noopener">'.
+              '<a href="'.esc_url($associate_url).'" class="amazon-item-title-link product-item-title-link" target="_blank" title="'.esc_attr($TitleAttr).'" rel="nofollow noopener">'.
                  $TitleHtml.
                  $moshimo_amazon_impression_tag.
               '</a>'.
@@ -646,8 +595,6 @@ function amazon_product_link_shortcode($atts){
           $product_item_admin_tag.
         '</div>';
     } else {//property_exists($xml->Items, 'Item')
-      // $error_message = AMAZON_ASIN_ERROR_MESSAGE;
-      // $tag = wrap_product_item_box($error_message);
       $tag = get_amazon_admin_error_message_tag($associate_url, AMAZON_ASIN_ERROR_MESSAGE, $cache_delete_tag);
     }//property_exists($xml->Items, 'Item')
 
@@ -686,7 +633,7 @@ endif;
 //Amazonエラーの際に出力するリンクを
 if ( !function_exists( 'get_amazon_error_product_link' ) ):
 function get_amazon_error_product_link($url){
-  return '<a href="'.$url.'" target="_blank" rel="nofollow noopener">'.__( 'Amazonで詳細を見る', THEME_NAME ).'</a>';
+  return '<a href="'.esc_url($url).'" target="_blank" rel="nofollow noopener">'.__( 'Amazonで詳細を見る', THEME_NAME ).'</a>';
 }
 endif;
 

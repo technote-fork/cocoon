@@ -83,6 +83,41 @@ function fetch_facebook_count_raw($url){
   $encoded_url = rawurlencode( $url );
   //オプションの設定
   $args = array( 'sslverify' => true );
+  //Facebookアクセストークンがある場合
+  if (get_facebook_access_token()) {
+    //Facebookにリクエストを送る
+    $request_url = 'https://graph.facebook.com/?id='.$encoded_url.'&fields=engagement&access_token='.trim(get_facebook_access_token());
+    $response = wp_remote_get( $request_url, $args );
+    $res = 0;
+
+    //取得に成功した場合
+    if (!is_wp_error( $response ) && $response["response"]["code"] === 200) {
+      $body = $response['body'];
+      $json = json_decode( $body ); //ジェイソンオブジェクトに変換する
+      $reaction_count = isset($json->{'engagement'}->{'reaction_count'}) ? $json->{'engagement'}->{'reaction_count'} : 0;
+      $comment_count = isset($json->{'engagement'}->{'comment_count'}) ? $json->{'engagement'}->{'comment_count'} : 0;
+      $share_count = isset($json->{'engagement'}->{'share_count'}) ? $json->{'engagement'}->{'share_count'} : 0;
+      $comment_plugin_count = isset($json->{'engagement'}->{'comment_plugin_count'}) ? $json->{'engagement'}->{'comment_plugin_count'} : 0;
+      $res = intval($reaction_count) + intval($comment_count) + intval($share_count) + intval($comment_plugin_count);
+    }
+  } else {//Facebookアクセストークンがない場合
+    //Facebookにリクエストを送る
+    $request_url = 'https://graph.facebook.com?id='.$encoded_url.'&fields=og_object{engagement}';
+    $response = wp_remote_get( $request_url );
+    $res = 0;
+    //取得に成功した場合
+    if (!is_wp_error( $response ) && $response["response"]["code"] === 200) {
+      $body = $response['body'];
+      //ジェイソンオブジェクトに変換する
+      $json = json_decode( $body );
+      //エンゲージメントカウントをシェア数として取得する
+      $res = (isset($json->{'og_object'}->{'engagement'}->{'count'}) ? $json->{'og_object'}->{'engagement'}->{'count'} : 0);
+    }
+  }
+
+
+  return intval($res);
+
   //Facebookにリクエストを送る
   $request_url = 'https://graph.facebook.com/?id='.$encoded_url.'&fields=engagement&access_token='.trim(get_facebook_access_token());
   $response = wp_remote_get( $request_url, $args );
@@ -94,7 +129,7 @@ function fetch_facebook_count_raw($url){
     $json = json_decode( $body ); //ジェイソンオブジェクトに変換する
     $res = (isset($json->{'engagement'}->{'reaction_count'}) ? $json->{'engagement'}->{'reaction_count'} : 0);
   }
-  return intval($res);
+  // return intval($res);
 }
 endif;
 
@@ -133,7 +168,7 @@ endif;
 //Facebookカウントの取得
 if ( !function_exists( 'get_facebook_count' ) ):
 function get_facebook_count($url = null) {
-  if (!is_sns_share_buttons_count_visible() || !get_facebook_access_token())
+  if (!is_sns_share_buttons_count_visible())
     return null;
 
   if (is_scc_facebook_exists()) {
@@ -283,7 +318,7 @@ if ( !function_exists( 'fetch_pocket_count_raw' ) ):
 function fetch_pocket_count_raw($url){
   $res = 0;
   $url = urlencode($url);
-  $query = 'https://widgets.getpocket.com/v1/button?label=pocket&count=horizontal&v=1&url='.$url.'&src=' . $url;
+  $query = 'https://widgets.getpocket.com/api/saves?url='.$url;
   //URL（クエリ）先の情報を取得
   $args = array( 'sslverify' => true );
   $result = wp_remote_get($query, $args);
@@ -293,8 +328,8 @@ function fetch_pocket_count_raw($url){
     // 正規表現でカウント数のところだけを抽出
     $body = isset($result["body"]) ? $result["body"] : null;
     if ($body) {
-      preg_match( '/<em id="cnt">([0-9.]+)<\/em>/i', $result["body"], $count );
-      $res = isset($count[1]) ? intval($count[1]) : 0;
+      $json = json_decode($body); //ジェイソンオブジェクトに変換する
+      $res = isset($json->{'saves'}) ? $json->{'saves'} : 0;
     }
   }
 
@@ -497,7 +532,7 @@ function get_pinterest_share_url(){
 }
 endif;
 
-//PinterestのシェアURLを取得
+//コピーURLを取得
 if ( !function_exists( 'get_copy_share_url' ) ):
 function get_copy_share_url(){
   if (is_amp()) {
@@ -511,72 +546,89 @@ endif;
 //シェアボタンを表示するか
 if ( !function_exists( 'is_sns_share_buttons_visible' ) ):
 function is_sns_share_buttons_visible($option){
-  return (is_sns_bottom_share_buttons_visible() && $option == SS_BOTTOM) ||
-         (is_sns_top_share_buttons_visible() && $option == SS_TOP);
+  $res = (is_sns_bottom_share_buttons_visible() && $option == SS_BOTTOM) ||
+         (is_sns_top_share_buttons_visible() && $option == SS_TOP) ||
+         ($option == SS_MOBILE);
+  return apply_filters('is_sns_share_buttons_visible', $res, $option);
 }
 endif;
 
 //Twitterシェアボタンを表示するか
 if ( !function_exists( 'is_twitter_share_button_visible' ) ):
 function is_twitter_share_button_visible($option){
-  return (is_bottom_twitter_share_button_visible() && $option == SS_BOTTOM) ||
-         (is_top_twitter_share_button_visible() && $option == SS_TOP);
+  $res = (is_bottom_twitter_share_button_visible() && $option == SS_BOTTOM) ||
+         (is_top_twitter_share_button_visible() && $option == SS_TOP) ||
+         ($option == SS_MOBILE);
+  return apply_filters('is_twitter_share_button_visible', $res, $option);
 }
 endif;
 
 //Facebookシェアボタンを表示するか
 if ( !function_exists( 'is_facebook_share_button_visible' ) ):
 function is_facebook_share_button_visible($option){
-  return (is_bottom_facebook_share_button_visible() && $option == SS_BOTTOM) ||
-         (is_top_facebook_share_button_visible() && $option == SS_TOP);
+  $res = (is_bottom_facebook_share_button_visible() && $option == SS_BOTTOM) ||
+         (is_top_facebook_share_button_visible() && $option == SS_TOP) ||
+         ($option == SS_MOBILE);
+  return apply_filters('is_facebook_share_button_visible', $res, $option);
 }
 endif;
 
 //はてブシェアボタンを表示するか
 if ( !function_exists( 'is_hatebu_share_button_visible' ) ):
 function is_hatebu_share_button_visible($option){
-  return (is_bottom_hatebu_share_button_visible() && $option == SS_BOTTOM) ||
-         (is_top_hatebu_share_button_visible() && $option == SS_TOP);
+  $res = (is_bottom_hatebu_share_button_visible() && $option == SS_BOTTOM) ||
+         (is_top_hatebu_share_button_visible() && $option == SS_TOP) ||
+         ($option == SS_MOBILE);
+  return apply_filters('is_hatebu_share_button_visible', $res, $option);
 }
 endif;
 
 //Google+シェアボタンを表示するか
 if ( !function_exists( 'is_google_plus_share_button_visible' ) ):
 function is_google_plus_share_button_visible($option){
-  return (is_bottom_google_plus_share_button_visible() && $option == SS_BOTTOM) ||
-         (is_top_google_plus_share_button_visible() && $option == SS_TOP);
+  $res = (is_bottom_google_plus_share_button_visible() && $option == SS_BOTTOM) ||
+         (is_top_google_plus_share_button_visible() && $option == SS_TOP) ||
+         ($option == SS_MOBILE);
+  return apply_filters('is_google_plus_share_button_visible', $res, $option);
 }
 endif;
 
 //Pocketシェアボタンを表示するか
 if ( !function_exists( 'is_pocket_share_button_visible' ) ):
 function is_pocket_share_button_visible($option){
-  return (is_bottom_pocket_share_button_visible() && $option == SS_BOTTOM) ||
-         (is_top_pocket_share_button_visible() && $option == SS_TOP);
+  $res = (is_bottom_pocket_share_button_visible() && $option == SS_BOTTOM) ||
+         (is_top_pocket_share_button_visible() && $option == SS_TOP) ||
+         ($option == SS_MOBILE);
+  return apply_filters('is_pocket_share_button_visible', $res, $option);
 }
 endif;
 
 //LINE@シェアボタンを表示するか
 if ( !function_exists( 'is_line_at_share_button_visible' ) ):
 function is_line_at_share_button_visible($option){
-  return (is_bottom_line_at_share_button_visible() && $option == SS_BOTTOM) ||
-         (is_top_line_at_share_button_visible() && $option == SS_TOP);
+  $res = (is_bottom_line_at_share_button_visible() && $option == SS_BOTTOM) ||
+         (is_top_line_at_share_button_visible() && $option == SS_TOP) ||
+         ($option == SS_MOBILE);
+  return apply_filters('is_line_at_share_button_visible', $res, $option);
 }
 endif;
 
 //Pinterestシェアボタンを表示するか
 if ( !function_exists( 'is_pinterest_share_button_visible' ) ):
 function is_pinterest_share_button_visible($option){
-  return (is_bottom_pinterest_share_button_visible() && $option == SS_BOTTOM) ||
-         (is_top_pinterest_share_button_visible() && $option == SS_TOP);
+  $res = (is_bottom_pinterest_share_button_visible() && $option == SS_BOTTOM) ||
+         (is_top_pinterest_share_button_visible() && $option == SS_TOP) ||
+         ($option == SS_MOBILE);
+  return apply_filters('is_pinterest_share_button_visible', $res, $option);
 }
 endif;
 
 //コピーシェアボタンを表示するか
 if ( !function_exists( 'is_copy_share_button_visible' ) ):
 function is_copy_share_button_visible($option){
-  return (is_bottom_copy_share_button_visible() && $option == SS_BOTTOM) ||
+  $res = (is_bottom_copy_share_button_visible() && $option == SS_BOTTOM) ||
          (is_top_copy_share_button_visible() && $option == SS_TOP);
+  return apply_filters('is_copy_share_button_visible', $res, $option);
 }
 endif;
 
