@@ -319,20 +319,17 @@ function fetch_pocket_count_raw($url){
   $res = 0;
   $url = urlencode($url);
   $query = 'https://widgets.getpocket.com/api/saves?url='.$url;
-  //URL（クエリ）先の情報を取得
   $args = array( 'sslverify' => true );
+  //URL（クエリ）先の情報を取得
   $result = wp_remote_get($query, $args);
-  //var_dump($result["body"]);
-  //_v($result);
+  //エラーチェック
   if (!is_wp_error($result)) {
-    // 正規表現でカウント数のところだけを抽出
     $body = isset($result["body"]) ? $result["body"] : null;
     if ($body) {
       $json = json_decode($body); //ジェイソンオブジェクトに変換する
       $res = isset($json->{'saves'}) ? $json->{'saves'} : 0;
     }
   }
-
   return intval($res);
 }
 endif;
