@@ -20,17 +20,25 @@
 .product-item-box{
   position: relative;
   &::after{
-    @include fontawesome('\f270');
+    content: '\ea87';
+    font-family: icomoon;
     position: absolute;
     bottom: 0;
     right: 6px;
     font-size: 24px;
     color: $thin;
   }
+  .image-thumb{
+    img{
+      border: none;
+      box-shadow: none;
+    }
+  }
 }
 
 .rakuten-item-box::after{
-  content: '\f25d';
+  content: '\e903';
+  font-family: icomoon;
 }
 
 .product-item-error.cf{
@@ -70,6 +78,7 @@
   border-radius: $badge_border_radius;
   transition: all .3s ease;
   opacity: 0;
+  max-width: calc(100% - 160px);
   img{
     display: block;
   }
@@ -88,7 +97,6 @@
 }
 
 .swatchimages{
-  display: block;
   display: flex;
   flex-wrap: wrap;
   margin-top: 3px;
@@ -112,7 +120,6 @@
 
   &:hover{
     .si-thumb{
-      display: block;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -137,21 +144,6 @@
   }
 }
 
-// .pis-m .image-content{
-//   left: 170px;
-// }
-
-// .pis-s .image-content{
-//   left: 110px;
-// }
-// @media screen and (max-width: 480px){
-//   .image-thumb .image-content{
-//     left: 0;
-//   }
-// }
-
-
-//.booklink-image img, .kaerebalink-image img {}
 .booklink-info,
 .kaerebalink-info,
 .tomarebalink-info,
@@ -159,22 +151,6 @@
   line-height: 125%;
   width: 100%;
 }
-// .booklink-name,
-// .kaerebalink-name,
-// .tomarebalink-name,
-// .product-item-title {
-//   margin: 0 0 4px 0;
-//   // a{
-//   //   color: #0066cc;
-//   //   text-decoration: underline;
-//   //   &:hover{
-//   //     color: #FF9900;
-//   //   }
-//   // }
-//   // >a{
-//   //   font-size: 16px;
-//   // }
-// }
 
 .product-item-snippet{
   font-size: 0.8em;
@@ -203,7 +179,7 @@
     width: 90%;
     display: block;
     margin: 0px auto 8px;
-    padding: 10px 0;
+    padding: 6px 12px;
     text-decoration: none;
     font-size: 13px;
     font-weight: bold;
@@ -223,8 +199,13 @@
   margin-top: 1em;
 }
 
+.product-item-image-only img{
+  border: 0;
+  box-shadow: none;
+}
 
-@media screen and (min-width: 768px) {
+
+@media screen and (min-width: 769px) {
 
   .booklink-box,
   .kaerebalink-box,
@@ -257,16 +238,6 @@
     width: 100%;
   }
 
-  // .booklink-name,
-  // .kaerebalink-name,
-  // .tomarebalink-name,
-  // .product-item-title {
-  //   margin: 0 0 24px 0;
-  //   // >a{
-  //   //   font-size: 16px;
-  //   // }
-  // }
-
   .booklink-powered-date, .kaerebalink-powered-date, .tomarebalink-powered-date {
     margin: 6px 0 0;
   }
@@ -294,7 +265,6 @@
       }
     }
     >*{
-      width: 31.5%;
       margin: 0.5%;
       box-sizing: border-box;
     }
@@ -327,6 +297,9 @@
   background: #e60033;
   position: relative;
 }
+.shoplinkdmm a {
+  background: #00bcd4;
+}
 .shoplinkseven a {
   background: #008837;
 }
@@ -358,7 +331,7 @@
   background: #15b0e7;
 }
 .shoplinkjalan a{
-  background: #FF5800;
+  background: #ff5600;
 }
 .shoplinkjtb a{
   background: #C71628;
@@ -397,9 +370,9 @@
     min-width: 90px;
   }
 
-  .product-item-buttons a{
-    padding: 5px 0;
-  }
+  // .product-item-buttons a{
+  //   padding: 5px 8px;
+  // }
 }
 
 .pis-l{
@@ -409,18 +382,19 @@
 
   figure.product-item-thumb{
     width: 100%;
-    min-width: none;
+    min-width: auto;
   }
 }
 
 .item-price{
   color: #c9171e;
 }
+
 .acquired-date{
   font-size: 0.9em;
 }
 
-@mixin product_item_box_768{
+@mixin product_item_box_834{
   .booklink-box, .kaerebalink-box, .tomarebalink-box, .product-item-box{
     padding: 10px 10px 24px;
     display: block;
@@ -443,18 +417,18 @@
   .kaerebalink-link1,
   .tomarebalink-link1,
   .product-item-buttons{
-    clear: both;
+    //clear: both;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    //justify-content: space-between;
     >*{
-      width: 32%;
+      width: auto;
       margin: 0 .5% !important;
-      flex: 1 1 auto;
+      //flex: 1 1 auto;
       >a{
         width: auto;
         font-size: 11px;
-        padding: 6px 0;
+        //padding: 6px 0;
       }
     }
   }
@@ -482,20 +456,20 @@
   .tomarebalink-link1,
   .product-item-buttons{
     >*{
-      width: 49%;
+      width: 100%;
       margin: 0 .5% !important;
     }
   }
 }
 
 .nwa{
-  @include product_item_box_768;
+  @include product_item_box_834;
   @include product_item_box_480;
 }
 
-//768px以下
-@media screen and (max-width: 768px){
-  @include product_item_box_768;
+//834px以下
+@media screen and (max-width: 834px){
+  @include product_item_box_834;
 }
 
 //480px以下

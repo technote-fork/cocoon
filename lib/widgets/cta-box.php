@@ -132,8 +132,6 @@ class CTABoxWidgetItem extends WP_Widget {
        ?>
     </p>
 
-<!--       <script type="text/javascript" src="http://cocoon.dev/wp-includes/js/thickbox/thickbox.js"></script>
-      <script type="text/javascript" src="http://cocoon.dev/wp-admin/js/media-upload.min.js"></script> -->
     <?php //メッセージ?>
     <p>
       <label for="<?php echo $this->get_field_id('message'); ?>">
@@ -178,7 +176,7 @@ class CTABoxWidgetItem extends WP_Widget {
         'btn-yellow' => __( '黄色', THEME_NAME ),
         'btn-amber' => __( '琥珀色（アンバー）', THEME_NAME ),
         'btn-orange' => __( 'オレンジ', THEME_NAME ),
-        'btn-deep-orange' => __( 'ビープオレンジ', THEME_NAME ),
+        'btn-deep-orange' => __( 'ディープオレンジ', THEME_NAME ),
         'btn-brown' => __( '茶色', THEME_NAME ),
         'btn-grey' => __( '藍色', THEME_NAME ),
       );

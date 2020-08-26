@@ -23,9 +23,9 @@ add_filter('the_author_box_name', 'replace_anchor_links', 12);
 add_filter('get_the_author_description', 'replace_anchor_links', 12);
 add_filter('widget_text', 'replace_anchor_links', 12);//テキストウィジェットをフック
 add_filter('widget_text_pc_text', 'replace_anchor_links', 12);
-add_filter('widget_classic_text', 'replace_anchor_links', 12);
+//add_filter('widget_classic_text', 'replace_anchor_links', 12);
 add_filter('widget_text_mobile_text', 'replace_anchor_links', 12);
-add_filter('the_category_content', 'replace_anchor_links', 12);
+add_filter('the_category_tag_content', 'replace_anchor_links', 12);
 if ( !function_exists( 'replace_anchor_links' ) ):
 function replace_anchor_links($the_content) {
   $res = preg_match_all('{<a [^>]+?>.+?</a>}is', $the_content, $m);
@@ -37,6 +37,8 @@ function replace_anchor_links($the_content) {
       //初期値の設定
       $old_a = $value;
       $new_a = $value;
+      //aタグの均一化
+      $value = strtolower(str_replace('&#8221;', '"', $value));
 
       //rel属性値の取得
       $rels = array();
@@ -51,25 +53,16 @@ function replace_anchor_links($the_content) {
         continue;
       }
 
-      // //ボタンを除外
-      // if ((strpos($value, 'class="btn ') > 0)) {
-      //   continue;
-      // }
-
       //イメージリンクを除外
+      /*
       if (preg_match('{<a[^>]+?href="[^"]+?"[^>]*?>\s*?<img .+?>\s*?</a>}is', $value)) {
         continue;
       }
-/*
-      //ブログカード用のリンクを除外
-      if (preg_match('{<a[^>]+?href="'.URL_REG_STR.'"[^>]*?>'.URL_REG_STR.'</a>}i', $value)) {
-        continue;
-      }
-*/
+      */
+      $is_img_ilnk = preg_match('{<a[^>]+?href="[^"]+?"[^>]*?>\s*?<img .+?>\s*?</a>}is', $value);
+
       // _v($value);
-      // _v((includes_string($value, 'href="https://') ||
-      //       includes_string($value, 'href="http://')));
-      //var_dump(preg_replace('/https?:/', '', home_url()));
+      // _v(includes_string($value, 'href="'.home_url()));
       if (
           //ホームURLを含んでいるか
           includes_string($value, 'href="'.home_url()) ||
@@ -86,11 +79,19 @@ function replace_anchor_links($the_content) {
 
         //noopenerの追加と削除
         $rels = get_noopener_rels( is_internal_link_noopener_enable(), $rels );
+        //target="_blank"のnoopener
+        if (!is_internal_link_noopener_enable() && includes_target_blalk($new_a)) {
+          $rels = get_noopener_rels( is_internal_target_blank_link_noopener_enable(), $rels );
+        }
 
         //noreferrerの追加と削除
         $rels = get_noreferrer_rels( is_internal_link_noreferrer_enable(), $rels );
+        //target="_blank"のnoreferrer
+        if (!is_internal_link_noreferrer_enable() && includes_target_blalk($new_a)) {
+          $rels = get_noreferrer_rels( is_internal_target_blank_link_noreferrer_enable(), $rels );
+        }
 
-        if (!is_anchor_link_tag_blogcard($value)) {
+        if (!is_anchor_link_tag_blogcard($value) && !$is_img_ilnk) {
           //アイコンフォントの表示
           $new_a = replace_link_icon_font_tag( is_internal_link_icon_visible(), get_internal_link_icon(), 'internal-icon anchor-icon', $new_a );
         }
@@ -104,14 +105,22 @@ function replace_anchor_links($the_content) {
 
         //noopenerの追加と削除
         $rels = get_noopener_rels( is_external_link_noopener_enable(), $rels );
+        //target="_blank"のnoopener
+        if (!is_external_link_noopener_enable() && includes_target_blalk($new_a)) {
+          $rels = get_noopener_rels( is_external_target_blank_link_noopener_enable(), $rels );
+        }
 
         //noreferrerの追加と削除
         $rels = get_noreferrer_rels( is_external_link_noreferrer_enable(), $rels );
+        //target="_blank"のnoreferrer
+        if (!is_external_link_noreferrer_enable() && includes_target_blalk($new_a)) {
+          $rels = get_noreferrer_rels( is_external_target_blank_link_noreferrer_enable(), $rels );
+        }
 
         //externalの追加と削除
         $rels = get_external_rels( is_external_link_external_enable(), $rels );
 
-        if (!is_anchor_link_tag_blogcard($value)) {
+        if (!is_anchor_link_tag_blogcard($value) && !$is_img_ilnk) {
           //アイコンフォントの表示
           $new_a = replace_link_icon_font_tag( is_external_link_icon_visible(), get_external_link_icon(), 'external-icon anchor-icon', $new_a );
         }
@@ -119,7 +128,7 @@ function replace_anchor_links($the_content) {
 
       //変更する場合はrel属性のクリアを行う
       $new_a = preg_replace('/ *rel="[^"]*?"/i', '', $new_a);
-      $new_a = str_replace('<a', '<a rel="'.implode(' ', $rels).'"', $new_a);
+      $new_a = preg_replace('/<a/i', '<a rel="'.implode(' ', $rels).'"', $new_a);
       //rel属性が空の場合は削除
       $new_a = str_replace(' rel=""', '', $new_a);
 

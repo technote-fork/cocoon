@@ -16,6 +16,8 @@
 @import "forms";
 //カルーセル
 @import "carousel";
+//インデックス
+@import "index";
 //管理パネル
 @import "admin-panel";
 //Slick
@@ -36,18 +38,8 @@
 @import "youtube";
 //Gutenberg
 @import "gutenberg";
-
-/* 検索フォーム風スタイルのボタンを装飾 */
-.search-form div.sbtn {
-	transition: 0.3s; /* 変化をなめらかにする */
-}
-/* ボタンにカーソルを合わせた時のスタイル */
-.search-form div.sbtn:hover {
-	color: #333; /* 文字色 */
-	background: #fff; /* 背景色 */
-	border-color: #333; /* ボーダーの色 */
-	cursor: pointer; /* カーソルをポインターに */
-}
+//AMP除外
+@import "amp-exclusions";
 
 ///////////////////////////////////////
 // メディアクエリ
@@ -57,13 +49,4 @@
 //印刷用
 @media print{
   @import "print";
-}
-
-//優先度を高くしたい
-.no-border{
-  border: none;
-}
-
-.no-after::after{
-  display: none;
 }

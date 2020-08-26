@@ -30,7 +30,6 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             //アドミンバーに独自管理メニューを表示
             generate_checkbox_tag(OP_ADMIN_TOOL_MENU_VISIBLE, is_admin_tool_menu_visible(), __( 'アドミンバーに独自管理メニューを表示', THEME_NAME ));
             generate_tips_tag(__( '管理者バーに手軽に設定画面にアクセスできるメニューを表示します。', THEME_NAME ));
-
             ?>
           </td>
         </tr>
@@ -41,6 +40,37 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
   </div>
 </div>
 
+<?php if (false): ?>
+<!-- ダッシュボードメッセージ -->
+<div id="admin" class="postbox">
+  <h2 class="hndle"><?php _e( 'ダッシュボードメッセージ', THEME_NAME ) ?></h2>
+  <div class="inside">
+
+    <p><?php _e( 'WordPress管理画面上部に表示されるメッセージに関する設定です。', THEME_NAME ) ?></p>
+
+    <table class="form-table">
+      <tbody>
+        <!-- メッセージ表示 -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag('', __( 'メッセージ表示', THEME_NAME ) ); ?>
+          </th>
+          <td>
+            <?php
+
+            //ダッシュボードメッセージの表示
+            generate_checkbox_tag(OP_DASHBOARD_MESSAGE_VISIBLE, is_dashboard_message_visible(), __( 'ダッシュボードメッセージの表示', THEME_NAME ));
+            generate_tips_tag(__( '管理画面上部のメッセージを表示するかどうか。', THEME_NAME ).__( '新型コロナウイルスに関する情報は、WHOの終息宣言が出るか、それに近い状態になるまで表示します（今回のウイルスの性質的に完全に終息できるものかもわからないので）。', THEME_NAME ));
+            ?>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+</div>
+<?php endif; ?>
 
 <!-- 投稿一覧設定 -->
 <div id="admin" class="postbox">
@@ -80,6 +110,15 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             echo '<br>';
 
             generate_checkbox_tag(OP_ADMIN_LIST_DATE_VISIBLE , is_admin_list_date_visible(), __( '日付を表示する', THEME_NAME ));
+            echo '<br>';
+
+            generate_checkbox_tag(OP_ADMIN_LIST_POST_ID_VISIBLE , is_admin_list_post_id_visible(), __( '投稿IDを表示する', THEME_NAME ));
+            echo '<br>';
+
+            generate_checkbox_tag(OP_ADMIN_LIST_WORD_COUNT_VISIBLE , is_admin_list_word_count_visible(), __( '文字数を表示する', THEME_NAME ));
+            echo '<br>';
+
+            generate_checkbox_tag(OP_ADMIN_LIST_PV_VISIBLE , is_admin_list_pv_visible(), __( 'PVを表示する', THEME_NAME ));
             echo '<br>';
 
             generate_checkbox_tag(OP_ADMIN_LIST_EYECATCH_VISIBLE , is_admin_list_eyecatch_visible(), __( 'アイキャッチを表示する', THEME_NAME ));
@@ -128,9 +167,6 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             );
             generate_selectbox_tag(OP_ADMIN_PANEL_DISPLAY_TYPE, $options, get_admin_panel_display_type());
             generate_tips_tag(__( '管理者パネルの表示形式を選択します。', THEME_NAME ));
-
-            // generate_checkbox_tag(OP_ADMIN_PANEL_VISIBLE, is_admin_panel_visible(), __( '管理者パネルを表示する', THEME_NAME ));
-            // generate_tips_tag(__( '投稿・固定ページ下部に管理者向けの情報をエリアを表示します。', THEME_NAME ));
             ?>
           </td>
         </tr>
@@ -143,9 +179,14 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           <td>
             <?php
             generate_checkbox_tag(OP_ADMIN_PANEL_PV_AREA_VISIBLE, is_admin_panel_pv_area_visible(), __( 'PVエリアを表示する', THEME_NAME ));
-            generate_tips_tag(__( '管理者パネル内のPVエリアを表示します。', THEME_NAME ));
+            generate_tips_tag(__( '管理者パネル内のPVエリアを表示します。', THEME_NAME ).get_image_preview_tag('https://im-cocoon.net/wp-content/uploads/admin-panel-pv.png'));
             ?>
             <div class="indent">
+              <?php
+              //インデックスのエントリーカードにPV数を表示
+              generate_checkbox_tag(OP_ADMIN_INDEX_PV_VISIBLE, is_admin_index_pv_visible(), __( 'インデックスにPV数を表示', THEME_NAME ));
+              generate_tips_tag(__( 'インデックスページのエントリーカードごとにPV数を表示します。集計方法がJetpackの場合は、初回アクセス時に情報取得に時間がかかります。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/admin-index-pv/').get_image_preview_tag('https://im-cocoon.net/wp-content/uploads/admin-index-pv.png'));
+               ?>
               <span><?php _e( 'アクセス集計方法', THEME_NAME ) ?></span>
               <?php
               $theme = '';
@@ -183,8 +224,11 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             ?>
             <div class="indent">
               <?php
+              generate_checkbox_tag(OP_ADMIN_PANEL_WP_DASHBOARD_VISIBLE , is_admin_panel_wp_dashboard_visible(), __( 'ダッシュボードリンクの表示', THEME_NAME ));
+              generate_tips_tag(__( 'Wordpressのダッシュボードに移動するためのリンクです。', THEME_NAME ));
+
               generate_checkbox_tag(OP_ADMIN_PANEL_WP_EDIT_VISIBLE , is_admin_panel_wp_edit_visible(), __( '投稿編集リンクの表示', THEME_NAME ));
-              generate_tips_tag(__( 'Wordpress管理画面で投稿内容を編集するためのリンクです。', THEME_NAME ));
+              generate_tips_tag(__( 'WordPress管理画面で投稿内容を編集するためのリンクです。', THEME_NAME ));
 
               generate_checkbox_tag(OP_ADMIN_PANEL_WLW_EDIT_VISIBLE , is_admin_panel_wlw_edit_visible(), __( 'WLW編集リンクの表示', THEME_NAME ));
               generate_tips_tag(__( 'Windows Live Writerで投稿内容を編集するためのリンクです。', THEME_NAME ));
@@ -206,13 +250,13 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             <div class="indent">
               <?php
               generate_checkbox_tag(OP_ADMIN_GOOGLE_AMP_TEST_VISIBLE, is_admin_google_amp_test_visible(), __( 'Google AMPテストを表示', THEME_NAME ));
-              generate_tips_tag(__( '<a href="https://search.google.com/test/amp" target="_blank">AMP テスト - Google Search Console</a>でチェックするためのリンクの表示。', THEME_NAME ));
+              generate_tips_tag(__( '<a href="https://search.google.com/test/amp" target="_blank" rel="noopener">AMP テスト - Google Search Console</a>でチェックするためのリンクの表示。', THEME_NAME ));
 
               generate_checkbox_tag(OP_ADMIN_THE_AMP_VALIDATOR_VISIBLE, is_admin_the_amp_validator_visible(), __( 'The AMP Validatorを表示', THEME_NAME ));
-              generate_tips_tag(__( '<a href="https://validator.ampproject.org/#" target="_blank">The AMP Validator</a>でチェックするためのリンクの表示。', THEME_NAME ));
+              generate_tips_tag(__( '<a href="https://validator.ampproject.org/#" target="_blank" rel="noopener">The AMP Validator</a>でチェックするためのリンクの表示。', THEME_NAME ));
 
-              generate_checkbox_tag(OP_ADMIN_AMPBENCH_VISIBLE, is_admin_ampbench_visible(), __( 'AMPBenchを表示', THEME_NAME ));
-              generate_tips_tag(__( '<a href="https://ampbench.appspot.com/" target="_blank">AMPBench</a>でチェックするためのリンクの表示。', THEME_NAME ));
+              // generate_checkbox_tag(OP_ADMIN_AMPBENCH_VISIBLE, is_admin_ampbench_visible(), __( 'AMPBenchを表示', THEME_NAME ));
+              // generate_tips_tag(__( '<a href="https://ampbench.appspot.com/" target="_blank" rel="noopener">AMPBench</a>でチェックするためのリンクの表示。', THEME_NAME ));
               ?>
             </div>
           </td>
@@ -231,25 +275,25 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             <div class="indent">
               <?php
               generate_checkbox_tag(OP_ADMIN_PAGESPEED_INSIGHTS_VISIBLE, is_admin_pagespeed_insights_visible(), __( 'PageSpeed Insightsを表示する', THEME_NAME ));
-              generate_tips_tag(__( '<a href="https://developers.google.com/speed/pagespeed/insights/?filter_third_party_resources=true" target="_blank">PageSpeed Insights</a>リンクの表示。', THEME_NAME ));
+              generate_tips_tag(__( '<a href="https://developers.google.com/speed/pagespeed/insights/?filter_third_party_resources=true" target="_blank" rel="noopener">PageSpeed Insights</a>リンクの表示。', THEME_NAME ));
 
               generate_checkbox_tag(OP_ADMIN_GTMETRIX_VISIBLE, is_admin_gtmetrix_visible(), __( 'GTmetrixを表示する', THEME_NAME ));
-              generate_tips_tag(__( '<a href="https://gtmetrix.com/" target="_blank">GTmetrix</a>リンクの表示。', THEME_NAME ));
+              generate_tips_tag(__( '<a href="https://gtmetrix.com/" target="_blank" rel="noopener">GTmetrix</a>リンクの表示。', THEME_NAME ));
 
               generate_checkbox_tag(OP_ADMIN_MOBILE_FRIENDLY_TEST_VISIBLE, is_admin_mobile_friendly_test_visible(), __( 'モバイルフレンドリーテストを表示する', THEME_NAME ));
-              generate_tips_tag(__( '<a href="https://search.google.com/test/mobile-friendly" target="_blank">モバイルフレンドリーテスト</a>リンクの表示。', THEME_NAME ));
+              generate_tips_tag(__( '<a href="https://search.google.com/test/mobile-friendly" target="_blank" rel="noopener">モバイルフレンドリーテスト</a>リンクの表示。', THEME_NAME ));
 
               generate_checkbox_tag(OP_ADMIN_STRUCTURED_DATA_VISIBLE, is_admin_structured_data_visible(), __( '構造化データチェックを表示する', THEME_NAME ));
-              generate_tips_tag(__( '<a href="https://search.google.com/structured-data/testing-tool#" target="_blank">構造化データ テストツール</a>リンクの表示。', THEME_NAME ));
+              generate_tips_tag(__( '<a href="https://search.google.com/structured-data/testing-tool#" target="_blank" rel="noopener">構造化データ テストツール</a>リンクの表示。', THEME_NAME ));
 
               generate_checkbox_tag(OP_ADMIN_NU_HTML_CHECKER_VISIBLE, is_admin_nu_html_checker_visible(), __( 'HTML5チェックを表示する', THEME_NAME ));
-              generate_tips_tag(__( '<a href="https://validator.w3.org/nu/" target="_blank">Nu Html Checker</a>リンクの表示。', THEME_NAME ));
+              generate_tips_tag(__( '<a href="https://validator.w3.org/nu/" target="_blank" rel="noopener">Nu Html Checker</a>リンクの表示。', THEME_NAME ));
 
               generate_checkbox_tag(OP_ADMIN_HTML5_OUTLINER_VISIBLE, is_admin_html5_outliner_visible(), __( 'HTML5アウトラインチェックを表示する', THEME_NAME ));
-              generate_tips_tag(__( '<a href="https://gsnedders.html5.org/outliner/" target="_blank">HTML 5 Outliner</a>リンクの表示。', THEME_NAME ));
+              generate_tips_tag(__( '<a href="https://gsnedders.html5.org/outliner/" target="_blank" rel="noopener">HTML 5 Outliner</a>リンクの表示。', THEME_NAME ));
 
               generate_checkbox_tag(OP_ADMIN_SEOCHEKI_VISIBLE, is_admin_seocheki_visible(), __( 'SEOチェキを表示する', THEME_NAME ));
-              generate_tips_tag(__( '<a href="http://seocheki.net/" target="_blank">SEOチェキ! 無料で使えるSEOツール</a>リンクの表示。', THEME_NAME ));
+              generate_tips_tag(__( '<a href="http://seocheki.net/" target="_blank" rel="noopener">SEOチェキ! 無料で使えるSEOツール</a>リンクの表示。', THEME_NAME ));
 
               generate_checkbox_tag(OP_ADMIN_TWEET_CHECK_VISIBLE, is_admin_tweet_check_visible(), __( 'ツイートチェックを表示する', THEME_NAME ));
               generate_tips_tag(__( '投稿・固定ページに対するツイートチェックリンクの表示。', THEME_NAME ));
@@ -271,13 +315,13 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             <div class="indent">
               <?php
               generate_checkbox_tag(OP_ADMIN_RESPONSINATOR_VISIBLE, is_admin_responsinator_visible(), __( 'Responsinatorチェックを表示する', THEME_NAME ));
-              generate_tips_tag(__( '<a href="https://www.responsinator.com/" target="_blank">Responsinator</a>チェック用リンクの表示。', THEME_NAME ));
+              generate_tips_tag(__( '<a href="https://www.responsinator.com/" target="_blank" rel="noopener">Responsinator</a>チェック用リンクの表示。', THEME_NAME ));
 
               generate_checkbox_tag(OP_ADMIN_SIZZY_VISIBLE, is_admin_sizzy_visible(), __( 'Sizzyチェックを表示する', THEME_NAME ));
-              generate_tips_tag(__( '<a href="https://sizzy.co/" target="_blank">Sizzy</a>チェック用リンクの表示。', THEME_NAME ));
+              generate_tips_tag(__( '<a href="https://sizzy.co/" target="_blank" rel="noopener">Sizzy</a>チェック用リンクの表示。', THEME_NAME ));
 
               generate_checkbox_tag(OP_ADMIN_MULTI_SCREEN_RESOLUTION_TEST_VISIBLE, is_admin_multi_screen_resolution_test_visible(), __( 'ScreenResolutionチェックを表示する', THEME_NAME ));
-              generate_tips_tag(__( '<a href="http://whatismyscreenresolution.net/multi-screen-test" target="_blank">WhatIsMyScreenResolution</a>チェック用リンクの表示。', THEME_NAME ));
+              generate_tips_tag(__( '<a href="http://whatismyscreenresolution.net/multi-screen-test" target="_blank" rel="noopener">WhatIsMyScreenResolution</a>チェック用リンクの表示。', THEME_NAME ));
               ?>
 
             </div>

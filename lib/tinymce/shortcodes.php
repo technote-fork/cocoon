@@ -8,7 +8,7 @@
 if ( !defined( 'ABSPATH' ) ) exit;
 
 add_action('admin_init', 'add_shortcodes_dropdown');
-add_action('admin_head', 'generate_shortcodes_is');
+add_action('admin_head', 'generate_shortcodes_js');
 
 if ( !function_exists( 'add_shortcodes_dropdown' ) ):
 function add_shortcodes_dropdown(){
@@ -37,8 +37,8 @@ function register_shortcodes( $buttons ){
 endif;
 
 //吹き出しの値渡し用のJavaScriptを生成
-if ( !function_exists( 'generate_shortcodes_is' ) ):
-function generate_shortcodes_is($value){
+if ( !function_exists( 'generate_shortcodes_js' ) ):
+function generate_shortcodes_js($value){
   echo '<script type="text/javascript">
   var shortcodesTitle = "'.__( 'ショートコード', THEME_NAME ).'";
   var shortcodes = new Array();';
@@ -54,36 +54,34 @@ function generate_shortcodes_is($value){
   shortcodes[0].before = '<?php echo $before; ?>';
   shortcodes[0].after = '<?php echo $after; ?>';
 
-  <?php
-  $msg = __( 'こちらのコンテンツはログインユーザーのみに表示されます。', THEME_NAME );
-  $content = __( 'ログインユーザーに表示するコンテンツを入力してください。', THEME_NAME );
-  //ログインユーザーのみショートコード
-  $before = '[login_user_only msg="'.$msg.'"]';
-  $after = '[/login_user_only]';
-   ?>
-  shortcodes[1] = new Array();
-  shortcodes[1].title  = '<?php echo __( 'ログインユーザーのみ表示', THEME_NAME ); ?>';
-  shortcodes[1].tag = '<?php echo $before.$content.$after; ?>';
-  shortcodes[1].before = '<?php echo $before; ?>';
-  shortcodes[1].after = '<?php echo $after; ?>';
-
   <?php //新着記事一覧のショートコード
   $before = '[new_list count="5" type="default" cats="all" children="0" post_type="post"]';
   $after = '';
    ?>
-  shortcodes[2] = new Array();
-  shortcodes[2].title  = '<?php echo __( '新着記事一覧', THEME_NAME ); ?>';
-  shortcodes[2].tag = '<?php echo $before.$after; ?>';
-  shortcodes[2].before = '<?php echo $before; ?>';
-  shortcodes[2].after = '<?php echo $after; ?>';
+  shortcodes[1] = new Array();
+  shortcodes[1].title  = '<?php echo __( '新着記事一覧', THEME_NAME ); ?>';
+  shortcodes[1].tag = '<?php echo $before.$after; ?>';
+  shortcodes[1].before = '<?php echo $before; ?>';
+  shortcodes[1].after = '<?php echo $after; ?>';
 
   <?php //人気記事一覧のショートコード
   $before = '[popular_list days="all" rank="0" pv="0" count="5" type="default" cats="all"]';
   $after = '';
    ?>
+  shortcodes[2] = new Array();
+  shortcodes[2].title  = '<?php echo __( '人気記事一覧', THEME_NAME ); ?>';
+  shortcodes[2].tag = '<?php echo $before.$after; ?>';
+  shortcodes[2].before = '<?php echo $before; ?>';
+  shortcodes[2].after = '<?php echo $after; ?>';
+
+  <?php //ナビカードのショートコード
+  $content = __( 'メニュー名', THEME_NAME );
+  $before = '[navi_list name="';
+  $after = '" type="default" bold="0" arrow="0"]';
+  ?>
   shortcodes[3] = new Array();
-  shortcodes[3].title  = '<?php echo __( '人気記事一覧', THEME_NAME ); ?>';
-  shortcodes[3].tag = '<?php echo $before.$after; ?>';
+  shortcodes[3].title  = '<?php echo __( 'ナビカード一覧', THEME_NAME ); ?>';
+  shortcodes[3].tag = '<?php echo $before.$content.$after; ?>';
   shortcodes[3].before = '<?php echo $before; ?>';
   shortcodes[3].after = '<?php echo $after; ?>';
 
@@ -210,15 +208,50 @@ function generate_shortcodes_is($value){
   shortcodes[15].before = '<?php echo $before; ?>';
   shortcodes[15].after = '<?php echo $after; ?>';
 
-  <?php //評価スター
-  $before = '[star rate="';
-  $after = '" number="1"]';
+  <?php //カウントダウンショートコード
+  $before = '[countdown to="';
+  $after = '"]';
   ?>
   shortcodes[16] = new Array();
-  shortcodes[16].title  = '<?php echo __( '評価スター', THEME_NAME ); ?>';
+  shortcodes[16].title  = '<?php echo __( 'カウントダウン（日にちを入力）', THEME_NAME ); ?>';
   shortcodes[16].tag = '<?php echo $before.$after; ?>';
   shortcodes[16].before = '<?php echo $before; ?>';
   shortcodes[16].after = '<?php echo $after; ?>';
+
+  <?php //評価スター
+  $before = '[star rate="';
+  $after = '" max="5" number="1"]';
+  ?>
+  shortcodes[17] = new Array();
+  shortcodes[17].title  = '<?php echo __( '評価スター', THEME_NAME ); ?>';
+  shortcodes[17].tag = '<?php echo $before.$after; ?>';
+  shortcodes[17].before = '<?php echo $before; ?>';
+  shortcodes[17].after = '<?php echo $after; ?>';
+
+  <?php
+  $msg = __( 'こちらのコンテンツはログインユーザーのみに表示されます。', THEME_NAME );
+  $content = __( 'ログインユーザーに表示するコンテンツを入力してください。', THEME_NAME );
+  //ログインユーザーのみショートコード
+  $before = '[login_user_only msg="'.$msg.'"]';
+  $after = '[/login_user_only]';
+   ?>
+  shortcodes[18] = new Array();
+  shortcodes[18].title  = '<?php echo __( 'ログインユーザーのみ表示', THEME_NAME ); ?>';
+  shortcodes[18].tag = '<?php echo $before.$content.$after; ?>';
+  shortcodes[18].before = '<?php echo $before; ?>';
+  shortcodes[18].after = '<?php echo $after; ?>';
+
+  <?php //キャンペーン
+  $content = __( 'キャンペーン中に表示するコンテンツを入力してください。', THEME_NAME );
+
+  $before = '[campaign from="" to=""]';
+  $after = '[/campaign]';
+   ?>
+  shortcodes[19] = new Array();
+  shortcodes[19].title  = '<?php echo __( 'キャンペーン期間中のみ表示', THEME_NAME ); ?>';
+  shortcodes[19].tag = '<?php echo $before.$content.$after; ?>';
+  shortcodes[19].before = '<?php echo $before; ?>';
+  shortcodes[19].after = '<?php echo $after; ?>';
 
   <?php
   echo '</script>';

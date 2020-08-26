@@ -14,13 +14,15 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
   <div class="inside">
 
     <p><?php _e( 'ヘッダー下でアピールしたい内容を入力します。', THEME_NAME ) ?></p>
-    <p class="preview-label"><?php _e( 'プレビュー', THEME_NAME ) ?></p>
-    <div class="demo appeal-area-demo" style="">
-      <?php get_template_part('tmp/appeal') ?>
-    </div>
-    <?php
-    generate_tips_tag(__( 'デモの表示は実際の表示と多少変わる可能性があります。', THEME_NAME ));
-    ?>
+    <?php if (DEBUG_ADMIN_DEMO_ENABLE && apply_filters('cocoon_setting_preview_appeal', true)): ?>
+      <p class="preview-label"><?php _e( 'プレビュー', THEME_NAME ) ?></p>
+      <div class="demo appeal-area-demo" style="">
+        <?php get_sanitize_preview_template_part('tmp/appeal') ?>
+      </div>
+      <?php
+      generate_tips_tag(__( 'デモの表示は実際の表示と多少変わる可能性があります。', THEME_NAME ));
+      ?>
+    <?php endif; ?>
 
     <table class="form-table">
       <tbody>
@@ -80,12 +82,26 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
         <!-- 背景色 -->
         <tr>
           <th scope="row">
-            <?php generate_label_tag(OP_APPEAL_AREA_BACKGROUND_COLOR, __('エリア背景色', THEME_NAME) ); ?>
+            <?php generate_label_tag(OP_APPEAL_AREA_BACKGROUND_COLOR, __('エリア背景色', THEME_NAME) );
+            generate_select_color_tip_tag(); ?>
           </th>
           <td>
             <?php
             generate_color_picker_tag(OP_APPEAL_AREA_BACKGROUND_COLOR,  get_appeal_area_background_color(), '背景色');
             generate_tips_tag(__( 'アピールエリアの背景色を設定してください。背景画像を設定すると隠れるエリアとなります。ただ、画像読み込み中に表示される部分でもあります。', THEME_NAME ));
+            ?>
+          </td>
+        </tr>
+
+        <!-- テキストエリア表示 -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag(OP_APPEAL_AREA_CONTENT_VISIBLE, __('テキストエリア表示', THEME_NAME) ); ?>
+          </th>
+          <td>
+            <?php
+            generate_checkbox_tag(OP_APPEAL_AREA_CONTENT_VISIBLE, is_appeal_area_content_visible(), __( 'テキストメッセージエリアを表示する', THEME_NAME ));
+            generate_tips_tag(__( 'この設定を無効にすると「タイトル」や「メッセージ」、「ボタン」は表示されず背景画像のみが表示されます。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/hide-contents-of-appeal-area/'));
             ?>
           </td>
         </tr>
@@ -167,7 +183,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           </th>
           <td>
             <?php
-            generate_color_picker_tag(OP_APPEAL_AREA_BUTTON_BACKGROUND_COLOR,  get_appeal_area_button_background_color(), 'ボタン色');
+            generate_color_picker_tag(OP_APPEAL_AREA_BUTTON_BACKGROUND_COLOR,  get_appeal_area_button_background_color(), __( 'ボタン色', THEME_NAME ));
             generate_tips_tag(__( 'ボタン全体の色を選択してください。文字は白色となるので濃いめの色を設定することをおすすめします。', THEME_NAME ));
             ?>
           </td>

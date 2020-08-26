@@ -24,9 +24,14 @@
   margin-bottom: 3em;
 }
 
+pre,
+pre *{
+  line-height: 1.6;
+  word-wrap: normal;
+}
+
 /*本文下カテゴリとタグ*/
 .entry-categories-tags{
-  font-family: $meiryo_font;
   @extend %bottom_margin;
   >div{
     margin-bottom: 0.5em;
@@ -68,10 +73,6 @@
   border-radius: $badge_border_radius;
   word-break: break-all;
 
-  &::before{
-    @include fontawesome('\f07b');
-  }
-
   &:hover{
     opacity: 0.5;
     color: $white;
@@ -90,10 +91,6 @@
   border: 1px solid $x_pallid_text_color;
   border-radius: $badge_border_radius;
   word-break: break-all;
-
-  &::before{
-    @include fontawesome('\f02b');
-  }
 
   &:hover{
     @include bgc_hover;
@@ -142,12 +139,23 @@ table {
 ///////////////////////////////////////
 .scrollable-table{
   -webkit-overflow-scrolling: touch;
+
+  //1列目を固定
+  &.stfc-sticky tr{
+    >*:first-child {
+      background-color: #e9eff2;
+      color: $text_color;
+      position: sticky;
+      position: -webkit-sticky;
+      left: 0;
+      z-index: 2;
+    }
+  }
 }
 
 .scrollable-table table{
   border-collapse: collapse;
-  margin: 1em 0;
-  max-width: 100%;
+  max-width: none;
 }
 
 .scrollable-table th{
@@ -162,8 +170,56 @@ table {
 }
 
 .scrollable-table {
-  overflow-x: auto;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
   margin-bottom: 1em;
+}
+
+// figure.wp-block-table.scrollable-block-table{
+//   &.aligncenter,
+//   &.alignleft,
+//   &.alignright{
+//     display: block;
+//   }
+// }
+
+///////////////////////////////////////////
+// テーブル修正
+// 草村さん案
+///////////////////////////////////////////
+figure.wp-block-table table {
+  width: auto;
+}
+// figure.wp-block-table[class*="align"] {
+//   max-width: 100%;
+//   display: block;
+// }
+// figure.wp-block-table[class*="align"] table {
+//   width: auto;
+//   margin-left: auto;
+//   margin-right: auto;
+// }
+figure.wp-block-table.alignwide table,
+figure.wp-block-table.alignfull table{
+  width: 100%;
+}
+.main figure.wp-block-table {
+  width: auto;
+  max-width: 100%;
+  display: block;
+}
+figure.wp-block-table table {
+  margin-right: auto;
+}
+figure.wp-block-table.aligncenter table {
+  margin-left: auto;
+}
+figure.wp-block-table.alignright table {
+  margin-left: 0;
+}
+
+.scroll-hint-icon-wrap {
+  overflow: hidden;
 }
 
 
@@ -184,7 +240,6 @@ blockquote {
   &::before,
   &::after{
     color: #C8C8C8;
-    content: "\"";
     font-family: serif;
     position: absolute;
     font-size: 300%;
@@ -192,15 +247,21 @@ blockquote {
   }
 
   &::before {
+    content: "“";
     line-height: 1.1;
     left: 10px;
     top: 0;
   }
 
   &::after {
+    content: "”";
     line-height: 0;
     right: 10px;
     bottom: 0px;
+  }
+
+  cite{
+    font-size: 0.7em;
   }
 }
 
@@ -214,10 +275,6 @@ blockquote {
 .author-info .post-author{
   font-size: 14px;
 }
-.author-info::before{
-  @include fontawesome('\f040');
-  padding-right: 0;
-}
 
 /************************************
 ** ページ管理画面の設定で「本文のみ」表示
@@ -225,7 +282,6 @@ blockquote {
 .content-only{
   .header-container,
   .appeal,
-  .carousel,
   .ad-area,
   .sns-share,
   .date-tags,
@@ -235,9 +291,16 @@ blockquote {
   .breadcrumb,
   .main-scroll,
   .footer,
-  .go-to-top-button
+  .go-to-top-button,
+  .notice-area,
+  .content-top,
+  .content-bottom,
+  .recommended
   {
     display: none;
+  }
+  .carousel{
+    display: none !important;
   }
 }
 
@@ -270,3 +333,10 @@ span.internal-icon{
   display: none;
 }
 
+.read-time{
+  text-align: center;
+  font-size: 0.7em;
+  border-top: 4px double $x_thin;
+  border-bottom: 4px double $x_thin;
+  margin: 0 3%;
+}

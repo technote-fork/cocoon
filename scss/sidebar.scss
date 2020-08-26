@@ -12,8 +12,9 @@
 
   h3{
     background-color: $xx_thin;
-    padding: 16px 10px;
+    padding: 12px;
     margin: 16px 0;
+    border-radius: $badge_border_radius;
   }
 }
 
@@ -27,10 +28,9 @@
   top: 0;
 }
 
-
-// .sidebar-scroll{
-//   background-color: $white;
-// }
+.sidebar-menu-content .sidebar{
+  height: auto;
+}
 
 /************************************
 ** サイドバーの非表示
@@ -83,6 +83,8 @@
 ///////////////////////////////////////
 // ブログカード
 ///////////////////////////////////////
-// .nwa{
-
-// }
+.nwa{
+  .blogcard-wrap{
+    width: auto;
+  }
+}

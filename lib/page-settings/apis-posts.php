@@ -25,6 +25,25 @@ update_theme_option(OP_AMAZON_ITEM_CATALOG_IMAGE_VISIBLE);
 //Amazon商品リンク価格表示
 update_theme_option(OP_AMAZON_ITEM_PRICE_VISIBLE);
 
+
+//Amazon商品リンクで表示する価格
+update_theme_option(OP_AMAZON_ITEM_PRICE_TYPE);
+
+// //Amazon商品リンク在庫価格表示
+// update_theme_option(OP_AMAZON_ITEM_STOCK_PRICE_VISIBLE);
+
+// //Amazon商品リンクの最安価格を表示する
+// update_theme_option(OP_AMAZON_ITEM_LOWEST_PRICE_VISIBLE);
+
+//Amazon商品リンク説明文表示
+update_theme_option(OP_AMAZON_ITEM_DESCRIPTION_VISIBLE);
+
+//Amazon商品レビュー表示
+update_theme_option(OP_AMAZON_ITEM_CUSTOMER_REVIEWS_VISIBLE);
+
+//Amazon商品レビュー文字
+update_theme_option(OP_AMAZON_ITEM_CUSTOMER_REVIEWS_TEXT);
+
 //Amazonロゴ表示
 update_theme_option(OP_AMAZON_ITEM_LOGO_VISIBLE);
 
@@ -70,6 +89,15 @@ update_theme_option(OP_YAHOO_SEARCH_BUTTON_VISIBLE);
 //Yahoo!検索ボタンテキスト
 update_theme_option(OP_YAHOO_SEARCH_BUTTON_TEXT);
 
+//DMMアフィリエイトID
+update_theme_option(OP_DMM_AFFILIATE_ID);
+
+//DMM検索ボタンを表示する
+update_theme_option(OP_DMM_SEARCH_BUTTON_VISIBLE);
+
+//DMM検索ボタン文字
+update_theme_option(OP_DMM_SEARCH_BUTTON_TEXT);
+
 //もしもアフィリエイトリンクを有効にする
 update_theme_option(OP_MOSHIMO_AFFILIATE_LINK_ENABLE);
 
@@ -84,3 +112,7 @@ update_theme_option(OP_MOSHIMO_YAHOO_ID);
 
 //APIキャッシュの保存期間
 update_theme_option(OP_API_CACHE_RETENTION_PERIOD);
+
+
+//APIエラーメールを送信する
+update_theme_option(OP_API_ERROR_MAIL_ENABLE);

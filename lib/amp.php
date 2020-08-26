@@ -49,7 +49,6 @@ function has_amp_page(){
 endif;
 
 //AMP用にコンテンツを変換する
-//add_filter('the_content','convert_content_for_amp', 999999999);
 if ( !function_exists( 'convert_content_for_amp' ) ):
 function convert_content_for_amp($the_content){
   if ( !is_amp() ) {
@@ -61,16 +60,11 @@ function convert_content_for_amp($the_content){
 
 
   // バリューコマースのバナー変換
-  $pattern = '/<script .+?ad\.jp\.ap\.valuecommerce\.com\/servlet\/jsbanner.+?<a.+?ck\.jp\.ap\.valuecommerce\.com.+?sid=(\d+).+?pid=(\d+).+?<\/a><\/noscript>/';
-  // preg_match($pattern, $the_content, $m);
-  // _v($the_content);
-  // _v($m);
+  $pattern = '/<script language="javascript" src="(https?)?\/\/ad\.jp\.ap\.valuecommerce\.com\/servlet\/jsbanner.+?<a.+?ck\.jp\.ap\.valuecommerce\.com.+?sid=(\d+).+?pid=(\d+).+?<\/a><\/noscript>/';
+
   $append =
-    '<amp-ad width="300" height="250"
-    type="valuecommerce"
-    data-sid="$1"
-    data-pid="$2">
-    </amp-ad>';
+    '<amp-ad width="300" height="250" type="valuecommerce" data-sid="$2" data-pid="$3"></amp-ad>';
+
   $the_content = preg_replace($pattern, $append, $the_content);
 
   //noscriptタグの削除
@@ -151,8 +145,6 @@ function convert_content_for_amp($the_content){
   //target属性を取り除く
   $the_content = preg_replace('/ +?target=["](?!.*_blank).*?["]/i', '', $the_content);
   $the_content = preg_replace('/ +?target=[\'](?!.*_blank).*?[\']/i', '', $the_content);
-  // $the_content = preg_replace('/ +?target=["][^"]*?["]/i', '', $the_content);
-  // $the_content = preg_replace('/ +?target=[\'][^\']*?[\']/i', '', $the_content);
 
   //rel属性を取り除く
   $the_content = preg_replace('/ +?rel=["][^"]*?["]/i', '', $the_content);
@@ -191,8 +183,6 @@ function convert_content_for_amp($the_content){
   $the_content = preg_replace('/ +?xml:lang=[\'][^\']*?[\']/i', '', $the_content);
 
   // //type属性を取り除く
-  // $the_content = preg_replace('/ +?type=["][^"]*?["]/i', '', $the_content);
-  // $the_content = preg_replace('/ +?type=[\'][^\']*?[\']/i', '', $the_content);
   $the_content = str_replace(' type="text/html"', '', $the_content);
 
   //YouTubeプレイヤーのtype属性を取り除く
@@ -239,19 +229,47 @@ function convert_content_for_amp($the_content){
   $the_content = preg_replace('{<select.+?</select>}is', '', $the_content);
 
   //アプリーチの画像対応
-  $the_content = preg_replace('/<img([^>]+?src="[^"]+?(mzstatic\.com|phobos\.apple\.com|ggpht\.com)[^"]+?[^>\/]+)\/?>/is', '<amp-img$1 width="75" height="75" sizes="(max-width: 75px) 100vw, 75px"></amp-img>', $the_content);
+  $the_content = preg_replace('/<img([^>]+?src="[^"]+?(mzstatic\.com|phobos\.apple\.com|ggpht\.com)[^"]+?[^>\/]+alt="Appreach"[^>\/]+)\/?>/is', '<amp-img$1 width="75" height="75" sizes="(max-width: 75px) 100vw, 75px"></amp-img>', $the_content);
   $the_content = preg_replace('/<img([^>]+?src="[^"]+?nabettu\.github\.io[^"]+?[^>\/]+)\/?>/is', '<amp-img$1 width="120" height="36" sizes="(max-width: 120px) 100vw, 120px"></amp-img>', $the_content);
+
+  //数式変換
+  if (is_formula_enable() && is_math_shortcode_exist()) {
+    // $the_content = preg_replace('/\\\\\\(.+?\\\\\\)/', '<amp-mathml layout="container" inline data-formula="$0"></amp-mathml>', $the_content);
+    // $the_content = preg_replace('/\\\\\\[[\s\S]+?\\\\\\]/', '<amp-mathml layout="container" data-formula="$0"></amp-mathml>', $the_content);
+
+    // //インライン
+    // $the_content = str_replace('\(', '<amp-mathml layout="container" inline data-formula="\(', $the_content);
+    // $the_content = str_replace('\)', '\)"></amp-mathml>', $the_content);
+    // //ブロック
+    // $the_content = str_replace('\[', '<amp-mathml " layout="container" data-formula="\[', $the_content);
+    // $the_content = str_replace('\]', '\]"></amp-mathml>', $the_content);
+
+    if (preg_match_all('#<p[^>]*?>[\s\S]+?</p>#', $the_content, $m)) {
+      //_v($m);
+      $paragraphs = $m[0];
+      foreach ($paragraphs as $paragraph) {
+        // preg_match_all('#\$.+?\$#', $the_content, $m);
+        // _v($m);
+        $old_p = $paragraph;
+        $new_p = preg_replace('/\\\\\\(.+?\\\\\\)/', '<amp-mathml layout="container" inline data-formula="$0"></amp-mathml>', $old_p);
+        $new_p = preg_replace('/\\\\\\[[\s\S]+?\\\\\\]/', '<amp-mathml layout="container" data-formula="$0"></amp-mathml>', $new_p);
+        // $new_p = preg_replace('#\$.+?\$#', '<amp-mathml layout="container" inline data-formula="$0"></amp-mathml>', $new_p);
+        $the_content = str_replace($old_p, $new_p, $the_content);
+      }
+    }
+
+  }
 
   //imgタグをamp-imgタグに変更する
   $res = preg_match_all('/<img(.+?)\/?>/is', $the_content, $m);
-  //var_dump($res);
-  //var_dump($m);
+
   if ($res) {//画像タグがある場合
-    //_v($m);
     foreach ($m[0] as $match) {
       //変数の初期化
       $src_attr = null;
       $url = null;
+      $id_attr = null;
+      $class_attr = null;
       $width_attr = null;
       $width_value = null;
       $height_attr = null;
@@ -261,13 +279,24 @@ function convert_content_for_amp($the_content){
       $title_attr = null;
       $title_value = null;
       $sizes_attr = null;
-      //var_dump(htmlspecialchars($match));
 
       //src属性の取得（画像URLの取得）
       $src_res = preg_match('/src=["\']([^"\']+?)["\']/is', $match, $srcs);
       if ($src_res) {
         $src_attr = ' '.$srcs[0];//src属性を作成
         $url = $srcs[1];//srcの値（URL）を取得する
+      }
+
+      //id属性の取得
+      $id_res = preg_match('/id=["\']([^"\']*?)["\']/is', $match, $ids);
+      if ($id_res) {
+        $id_attr = ' '.$ids[0];//id属性を作成
+      }
+
+      //class属性の取得
+      $class_res = preg_match('/class=["\']([^"\']*?)["\']/is', $match, $classes);
+      if ($class_res) {
+        $class_attr = ' '.$classes[0];//id属性を作成
       }
 
       //width属性の取得
@@ -283,18 +312,6 @@ function convert_content_for_amp($the_content){
       if ($height_res) {
         $height_attr = ' '.$heights[0];//height属性を作成
         $height_value = $heights[1];//heightの値（高さ）を取得する
-      }
-
-      //class属性の取得
-      $class_value = null;
-      $class_attr = null;
-      $class_res = preg_match('/class=["\']([^"\']*?)["\']/is', $match, $classes);
-      if ($class_res) {
-        $class_attr = ' '.$classes[0];//class属性を作成
-        $class_value = $classes[1];//classの値を取得する
-        if ($class_value) {
-          $class_value = ' '.$class_value;
-        }
       }
 
       //alt属性の取得
@@ -318,17 +335,13 @@ function convert_content_for_amp($the_content){
       //widthとheight属性のないものは画像から情報取得
       if ($url && (empty($width_value) || empty($height_value))) {
         $size = get_image_width_and_height($url);
-        //_v($class_value);
         if ($size) {
-          //$class_attr = ' class="internal-content-img'.$class_value.'"';
           $width_value = $size['width'];
           $width_attr = ' width="'.$width_value.'"';//width属性を作成
           $height_value = $size['height'];
           $height_attr = ' height="'.$height_value.'"';//height属性を作成
         } else {
           //外部サイトにある画像の場合
-          //$class_attr = ' class="external-content-img'.$class_value.'"';
-          //var_dump($url);
           if (
             strpos($url,'//images-fe.ssl-images-amazon.com') !== false ||
             strpos($url,'//thumbnail.image.rakuten.co.jp') !== false ||
@@ -345,7 +358,6 @@ function convert_content_for_amp($the_content){
             $height_value = get_amp_default_image_height();
             $height_attr = ' height="'.$height_value.'"';//height属性を作成
           }
-
         }
       }
 
@@ -355,16 +367,7 @@ function convert_content_for_amp($the_content){
       }
 
       //amp-imgタグの作成
-      $tag = '<amp-img'.$src_attr.$width_attr.$height_attr.$alt_attr.$title_attr.$sizes_attr.$class_attr.'></amp-img>';
-      //_v($tag);
-      // echo('<pre>');
-      // var_dump($srcs);
-      // var_dump(htmlspecialchars($tag));
-      // var_dump($widths);
-      // var_dump($heights);
-      // var_dump($alts);
-      // var_dump($titles);
-      // echo('</pre>');
+      $tag = '<amp-img'.$src_attr.$id_attr.$class_attr.$width_attr.$height_attr.$alt_attr.$title_attr.$sizes_attr.'></amp-img>';
 
       //imgタグをamp-imgタグに置換
       $the_content = preg_replace('{'.preg_quote($match).'}', $tag , $the_content, 1);
@@ -373,9 +376,15 @@ function convert_content_for_amp($the_content){
 
   //画像タグをAMP用に置換
   $the_content = preg_replace('/<img(.+?)\/?>/is', '<amp-img$1></amp-img>', $the_content);
+  /* AMP画像置換修正候補
+  $the_content = preg_replace('{<img([^>]+?)/?>}is', '<amp-img$1></amp-img>', $the_content);
+  */
 
   // Twitterをamp-twitterに置換する（埋め込みコード）
+  /*
   $pattern = '{<blockquote class="twitter-tweet".*?>.+?<a.+?href="https://twitter.com/.*?/status/([^\?"]+).*?">.+?</blockquote>}is';
+  */
+  $pattern = '{<blockquote class="twitter-tweet"[^>]*?>.+?<a[^>]+?href="https://twitter\.com/[^/]*?/status/([^\?"]+)[^>]*?">.+?</blockquote>}is';
   $append = '<p><amp-twitter width=592 height=472 layout="responsive" data-tweetid="$1"></amp-twitter></p>';
   $the_content = preg_replace($pattern, $append, $the_content);
 
@@ -384,32 +393,33 @@ function convert_content_for_amp($the_content){
   $append = '<amp-facebook width=324 height=438 layout="responsive" data-href="$1"></amp-facebook>';
   $the_content = preg_replace($pattern, $append, $the_content);
 
-  // vineをamp-vineに置換する
-  $pattern = '/<iframe[^>]+?src="https:\/\/vine.co\/v\/(.+?)\/embed\/simple".+?><\/iframe>/is';
-  $append = '<p><amp-vine data-vineid="$1" width="592" height="592" layout="responsive"></amp-vine></p>';
+  // vineをamp-vineに置換する（サービス終了したけど一応）
+  $pattern = '{<iframe[^>]+?src="https://vine.co/v/([^/]+?)/embed/simple"[^>]+?></iframe>}is';
+  $append = '<amp-vine data-vineid="$1" width="592" height="592" layout="responsive"></amp-vine>';
   $the_content = preg_replace($pattern, $append, $the_content);
 
   // Instagramをamp-instagramに置換する
-  $pattern = '{<blockquote class="instagram-media".+?"https://www.instagram.com/p/(.+?)/.*?".+?</blockquote>}is';
-  $append = '<p><amp-instagram layout="responsive" data-shortcode="$1" width="592" height="592" ></amp-instagram></p>';
+  //$pattern = '{<blockquote class="instagram-media".+?"https://www.instagram.com/p/(.+?)/.*?".+?</blockquote>}is';
+  $pattern = '{<blockquote class="instagram-media"[^>]+?"https://www.instagram.com/p/([^/]+?)/[^"]*?".+?</blockquote>}is';
+  $append = '<amp-instagram layout="responsive" data-shortcode="$1" width="592" height="592" ></amp-instagram>';
   $the_content = preg_replace($pattern, $append, $the_content);
 
   // audioをamp-audioに置換する
-  $pattern = '/<audio .+?src="([^"]+?)".+?<\/audio>/is';
-  $append = '<p><amp-audio src="$1"></amp-audio></p>';
+  $pattern = '{<audio .+?src="([^"]+?)".+?</audio>}is';
+  $append = '<amp-audio src="$1"></amp-audio>';
   $the_content = preg_replace($pattern, $append, $the_content);
 
   // videoをamp-videoに置換する
-  $pattern = '/<video/i';
-  $append = '<amp-video controls layout="responsive" width="640" height="360"';
-  $the_content = preg_replace($pattern, $append, $the_content);
-  $pattern = '/<\/video>/i';
+  $pattern = '<video';
+  $append = '<amp-video layout="responsive"';
+  $the_content = str_replace($pattern, $append, $the_content);
+  $pattern = '</video>';
   $append = '</amp-video>';
-  $the_content = preg_replace($pattern, $append, $the_content);
+  $the_content = str_replace($pattern, $append, $the_content);
 
 
   // YouTubeを置換する（埋め込みコード）
-  $pattern = '/<iframe[^>]+?src="https?:\/\/www.youtube.com\/embed\/([^\?"]+).*?".*?><\/iframe>/is';
+  $pattern = '{<iframe[^>]+?src="https?://www\.youtube\.com/embed/([^\?"]+)[^"]*?"[^>]*?></iframe>}is';
   $append = '<amp-youtube layout="responsive" data-videoid="$1" width="800" height="450"></amp-youtube>';
   $the_content = preg_replace($pattern, $append, $the_content);
 
@@ -426,12 +436,12 @@ function convert_content_for_amp($the_content){
 
 
   //はてなブログカードiframe用の処理追加
-  $pattern = '{<iframe.+?src="(https?://hatenablog-parts\.com/embed.+?)".+?></iframe>}is';
+  $pattern = '{<iframe[^>]+?src="(https?://hatenablog-parts\.com/embed.+?)"[^>]+?></iframe>}is';
   $append = '<amp-iframe src="$1" width="500" height="190"></amp-iframe>';
   $the_content = preg_replace($pattern, $append, $the_content);
 
   //Amazon商品紹介iframeのAMP化
-  $pattern = '{<iframe.+?src="(.+?rcm-fe\.amazon-adsystem\.com.+?)".+?(width="(\d+)")?.(height="(\d+)")?.+?</iframe>}is';
+  $pattern = '{<iframe[^>]+?src="(.+?rcm-fe\.amazon-adsystem\.com[^"]+?)"[^>]+?(width="(\d+)")?.(height="(\d+)")?.+?</iframe>}is';
   if (preg_match_all($pattern, $the_content, $m)) {
     $all_idx = 0;
     $url_idx = 1;
@@ -439,7 +449,7 @@ function convert_content_for_amp($the_content){
     $width_idx = 3;
     $height_attr_idx = 4;
     $height_idx = 5;
-    //_v($m);
+
     if ($m[0]) {
       $i = 0;
       foreach ($m[$all_idx] as $key => $iframe_raw) {
@@ -453,12 +463,11 @@ function convert_content_for_amp($the_content){
           }
         }
         $iframe_new = '<amp-iframe sandbox="allow-scripts allow-same-origin allow-popups" src="'.$url.'" width="'.$width.'" height="'.$height.'">'.$amp_placeholder.'</amp-iframe>';
-        //_v($iframe_new);
+
         $the_content = str_replace($iframe_raw, $iframe_new, $the_content);
         $i++;
       }
     }
-    //_v($m);
   }
 
   //タイトルつきiframeでhttpを呼び出している場合は通常リンクに修正
@@ -494,9 +503,8 @@ function convert_content_for_amp($the_content){
     }
   }
 
-
   //スクリプトを除去する
-  $pattern = '/<p><script.+?<\/script><\/p>/i';
+  $pattern = '{(<p>)<script[^>]+?></script>(</p>)/}i';
   $append = '';
   $the_content = preg_replace($pattern, $append, $the_content);
   $pattern = '/<script(?!.*type="application\/json").+?<\/script>/is';
@@ -507,33 +515,36 @@ function convert_content_for_amp($the_content){
   $pattern = '{<style.+?</style>}is';
   $append = '';
   $the_content = preg_replace($pattern, $append, $the_content);
-
-  // $pattern = '/<script.+?<\/script>/is';
-  // $append = '';
-  // $the_content = preg_replace($pattern, $append, $the_content);
+  //@keyframesスタイルを</body>手前に記入
+  $amp_keyframes_tag = get_style_amp_keyframes_tag();
+  $pattern = '</body>';
+  $append = $amp_keyframes_tag."\n".$pattern;
+  $the_content = str_replace($pattern, $append, $the_content);
 
   //空のamp-imgタグは削除
   $pattern = '{<amp-img></amp-img>}i';
   $append = '';
   $the_content = preg_replace($pattern, $append, $the_content);
 
-
   //空のpタグは削除
   $pattern = '{<p></p>}i';
   $append = '';
   $the_content = preg_replace($pattern, $append, $the_content);
 
-
+  //画像拡大効果spotlightクラスの削除
+  $pattern = '<a class="spotlight" ';
+  $append = '<a ';
+  $the_content = str_replace($pattern, $append, $the_content);
 
   switch (get_amp_image_zoom_effect()) {
     case 'amp-image-lightbox':
       //amp-img を amp-image-lightbox 用に置換
-      $pattern     = '{<p><a href="[^"]+?/wp-content/uploads.+?"><amp-img(.+?)></a></p>}i';
-      $append      = '<p><amp-img class="amp-lightbox amp-image-lightbox" on="tap:amp-lightbox" role="button" tabindex="0"$1></p>';
-      // $the_content = preg_replace( $pattern, $append, $the_content );
+      $pattern     = '{<a ([a-z]+?="[^"]+?" )?href="[^"]+?/wp-content/uploads[^"]+?"><amp-img([^>]+?)></amp-img></a>}i';
+      // $append      = '<amp-img class="amp-lightbox amp-image-lightbox" on="tap:amp-lightbox" role="button" tabindex="0"$1></amp-img>';
+
       if (preg_match_all($pattern, $the_content, $m)) {
         $all_idx = 0;
-        $etc_idx = 1;
+        $etc_idx = 2;
         $i = 0;
         foreach ($m[$all_idx] as $tag) {
           $all_tag = $tag;
@@ -541,11 +552,11 @@ function convert_content_for_amp($the_content){
           if (preg_match('/class="(.+?)"/i', $etc_tag, $n)) {
             $etc_tag = preg_replace('/class=".+?"/i', '', $etc_tag );
             $the_content = str_replace($all_tag,
-            '<p><amp-img class="amp-lightbox amp-image-lightbox '.$n[1].'" on="tap:amp-lightbox" role="button" tabindex="0"'.$etc_tag.'></p>',
+            '<p><amp-img class="amp-lightbox amp-image-lightbox '.$n[1].'" on="tap:amp-lightbox" role="button" tabindex="0"'.$etc_tag.'></amp-img></p>',
               $the_content);
           } else {
             $the_content = str_replace($all_tag,
-              '<p><amp-img class="amp-lightbox amp-image-lightbox" on="tap:amp-lightbox" role="button" tabindex="0"'.$etc_tag.'></p>',
+              '<p><amp-img class="amp-lightbox amp-image-lightbox" on="tap:amp-lightbox" role="button" tabindex="0"'.$etc_tag.'></amp-img></p>',
               $the_content);
           }
           $i++;
@@ -554,12 +565,10 @@ function convert_content_for_amp($the_content){
       break;
     case 'amp-lightbox-gallery':
       // amp-img を amp-lightbox-gallery 用に置換
-      $pattern     = '{<p><a href="[^"]+?/wp-content/uploads.+?"><amp-img(.+?)></a></p>}i';
-      //$append      = '<p><amp-img class="amp-lightbox amp-lightbox-gallery" lightbox$1></p>';
-      //$the_content = preg_replace( $pattern, $append, $the_content );
+      $pattern     = '{<a ([a-z]+?="[^"]+?" )?href="[^"]+?/wp-content/uploads[^"]+?"><amp-img([^>]+?)></amp-img></a>}i';
       if (preg_match_all($pattern, $the_content, $m)) {
         $all_idx = 0;
-        $etc_idx = 1;
+        $etc_idx = 2;
         $i = 0;
         foreach ($m[$all_idx] as $tag) {
           $all_tag = $tag;
@@ -567,11 +576,11 @@ function convert_content_for_amp($the_content){
           if (preg_match('/class="(.+?)"/i', $etc_tag, $n)) {
             $etc_tag = preg_replace('/class=".+?"/i', '', $etc_tag );
             $the_content = str_replace($all_tag,
-              '<p><amp-img class="amp-lightbox amp-lightbox-gallery '.$n[1].'" lightbox'.$etc_tag.'></p>',
+              '<p><amp-img class="amp-lightbox amp-lightbox-gallery '.$n[1].'" lightbox'.$etc_tag.'></amp-img></p>',
               $the_content);
           } else {
             $the_content = str_replace($all_tag,
-              '<p><amp-img class="amp-lightbox amp-lightbox-gallery" lightbox'.$etc_tag.'></p>',
+              '<p><amp-img class="amp-lightbox amp-lightbox-gallery" lightbox'.$etc_tag.'></amp-img></p>',
               $the_content);
           }
           $i++;
@@ -579,13 +588,6 @@ function convert_content_for_amp($the_content){
       }
       break;
   }
-
-    //$the_content = str_replace('</body>', '<amp-image-lightbox id="amp-lightbox" layout="nodisplay"></amp-image-lightbox></body>', $the_content);
-    //_v($the_content);
-
-  // echo('<pre>');
-  // var_dump(htmlspecialchars($the_content));
-  // echo('</pre>');
 
   return apply_filters('convert_content_for_amp', $the_content);
 }//convert_content_for_amp
@@ -611,7 +613,7 @@ function generate_amp_adsense_code(){
     ob_start();
     dynamic_sidebar('adsense-300');
     $ad300 .= ob_get_clean();
-    //var_dump(htmlspecialchars($ad300));
+
     preg_match('/data-ad-client="(ca-pub-[^"]+?)"/i', $ad300, $m);
     if (empty($m[1])) return;
     $data_ad_client = $m[1];
@@ -620,7 +622,6 @@ function generate_amp_adsense_code(){
     $data_ad_slot = $m[1];
     if (!$data_ad_slot) return;
     $adsense_code = '<amp-ad width="300" height="250" type="adsense" data-ad-client="'.$data_ad_client.'" data-ad-slot="'.$data_ad_slot.'"></amp-ad>';
-    //var_dump(htmlspecialchars($adsense_code));
   }
   return $adsense_code;
 }
@@ -660,25 +661,6 @@ function get_amp_permalink(){
 }
 endif;
 
-// //画像URLから幅と高さを取得する（同サーバー内ファイルURLのみ）
-// function get_image_width_and_height($image_url){
-//   //URLにサイトアドレスが含まれていない場合
-//   if (!includes_site_url($image_url)) {
-//     return false;
-//   }
-//   $wp_upload_dir = wp_upload_dir();
-//   $uploads_dir = $wp_upload_dir['basedir'];
-//   $uploads_url = $wp_upload_dir['baseurl'];
-//   $image_file = str_replace($uploads_url, $uploads_dir, $image_url);
-//   $imagesize = getimagesize($image_file);
-//   if ($imagesize) {
-//     $res = array();
-//     $res['width'] = $imagesize[0];
-//     $res['height'] = $imagesize[1];
-//     return $res;
-//   }
-// }
-
 //AMPページではCrayon Syntax Highlighterを表示しない
 add_action( 'wp_loaded','remove_crayon_syntax_highlighter' );
 if ( !function_exists( 'remove_crayon_syntax_highlighter' ) ):
@@ -694,46 +676,58 @@ endif;
 if ( !function_exists( 'get_the_singular_content' ) ):
 function get_the_singular_content(){
   $all_content = null;
-  //while(have_posts()): the_post();
-    ob_start();//バッファリング
-    get_template_part('tmp/body-top');//bodyタグ直下から本文まで
-    $body_top_content = ob_get_clean();
 
-    ob_start();//バッファリング
-    if (is_single()) {
-      get_template_part('tmp/single-contents');
-    } else {
-      get_template_part('tmp/page-contents');
-    }
-    $body_content = ob_get_clean();
-    //_v($body_content);
+  ob_start();//バッファリング
+  get_template_part('tmp/body-top');//bodyタグ直下から本文まで
+  $body_top_content = ob_get_clean();
 
-    ob_start();//バッファリング
-    dynamic_sidebar( 'sidebar' );
-    $sidebar_content = ob_get_clean();
-    //_v($sidebar_content);
+  ob_start();//バッファリング
+  if (is_single()) {
+    get_template_part('tmp/single-contents');
+  } else {
+    get_template_part('tmp/page-contents');
+  }
+  $body_content = ob_get_clean();
 
-    ob_start();//バッファリング
-    dynamic_sidebar( 'sidebar-scroll' );
-    $sidebar_scroll_content = ob_get_clean();
+  ob_start();//バッファリング
+  dynamic_sidebar( 'sidebar' );
+  $sidebar_content = ob_get_clean();
 
-    // ob_start();//バッファリング
-    // get_template_part('tmp/mobile-menu-buttons');
-    // $mobile_menu_buttons = ob_get_clean();
+  ob_start();//バッファリング
+  dynamic_sidebar( 'sidebar-scroll' );
+  $sidebar_scroll_content = ob_get_clean();
 
-    ob_start();//バッファリング
-    dynamic_sidebar('footer-left');
-    dynamic_sidebar('footer-center');
-    dynamic_sidebar('footer-right');
-    $footer_content = ob_get_clean();
+  ob_start();//バッファリング
+  dynamic_sidebar('footer-left');
+  dynamic_sidebar('footer-center');
+  dynamic_sidebar('footer-right');
+  dynamic_sidebar('footer-mobile');
+  $footer_content = ob_get_clean();
 
-    ob_start();//バッファリング
-    get_template_part('tmp/amp-footer-insert');
-    $footer_insert = ob_get_clean();
+  ob_start();//バッファリング
+  get_template_part('tmp/amp-footer-insert');
+  $footer_insert = ob_get_clean();
 
-    $all_content = $body_top_content.$body_content.$sidebar_content.$sidebar_scroll_content.$footer_content.$footer_insert;
-  //endwhile;
-  //$all_content = convert_content_for_amp($all_content);
+  //モバイルメニューボタン
+  //モバイルフッターボタンのみ
+  if (is_mobile_button_layout_type_footer_mobile_buttons()) {
+    ob_start();
+    get_template_part('tmp/mobile-footer-menu-buttons');
+    $mobile_menu_buttons = ob_get_clean();
+  } elseif //モバイルヘッダーボタンのみ
+  (is_mobile_button_layout_type_header_mobile_buttons()) {
+    ob_start();
+    get_template_part('tmp/mobile-header-menu-buttons');
+    $mobile_menu_buttons = ob_get_clean();
+  } else {//ヘッダーとフッター双方のモバイルボタン
+    ob_start();
+    get_template_part('tmp/mobile-header-menu-buttons');
+    get_template_part('tmp/mobile-footer-menu-buttons');
+    $mobile_menu_buttons = ob_get_clean();
+  }
+
+  $all_content = $body_top_content.$body_content.$sidebar_content.$sidebar_scroll_content.$footer_content.$footer_insert;
+
   return $all_content;
 }
 endif;
@@ -760,6 +754,16 @@ function generate_style_amp_custom_tag(){?>
   }
 
   ///////////////////////////////////////////
+  //Font Awesome5のスタイル
+  ///////////////////////////////////////////
+  if (is_site_icon_font_font_awesome_5()) {
+    $css_fa5 = css_url_to_css_minify_code(get_template_directory_uri().'/css/fontawesome5.css');
+    if ($css_fa5 !== false) {
+      $css_all .= apply_filters( 'amp_font_awesome_5_css', $css_fa5 );
+    }
+  }
+
+  ///////////////////////////////////////////
   //スキンのスタイル
   ///////////////////////////////////////////
   if ( ($skin_url = get_skin_url()) && is_amp_skin_style_enable() ) {//設定されたスキンがある場合
@@ -777,46 +781,20 @@ function generate_style_amp_custom_tag(){?>
     }
   }
 
-
-  /*
-  ///////////////////////////////////////
-  // 本文中に挿入されたスタイル（ギャラリーなど）
-  ///////////////////////////////////////
-  //$content = do_shortcode(get_the_content());
-  //_v($content);
-  $pattern = '{<style[^>]*?>(.+?)</style>}is';
-  if (preg_match_all($pattern, $content, $m)) {
-    $all_idx = 0;
-    $css_idx = 1;
-    //_v($m);
-    if ($m[$css_idx]) {
-      foreach ($m[$css_idx] as$key => $css) {
-        //do_shortcodeすると、おそらくIDが一つ進むと思われ
-        //それに対応するためID番号に＋1している
-        if (preg_match('{#gallery-(\d+)}', $css, $n)) {
-          $css = str_replace($n[$all_idx], '#gallery-'.strval(intval($n[1])+1), $css);
-        }
-        $css_all .= minify_css($css);
-      }
-    }
-  }
-  */
-
-
   ///////////////////////////////////////////
   //カスタマイザーのスタイル
   ///////////////////////////////////////////
   ob_start();//バッファリング
   get_template_part('tmp/css-custom');//カスタムテンプレートの呼び出し
   $css_custom = ob_get_clean();
-  $css_all .= apply_filters( 'amp_custum_css', minify_css($css_custom) );
+  $css_all .= apply_filters( 'amp_custum_css', $css_custom );
 
   ///////////////////////////////////////////
   //子テーマのスタイル
   ///////////////////////////////////////////
   if ( is_child_theme() && is_amp_child_theme_style_enable() ) {
     //通常のスキンスタイル
-    $css_child_url = get_stylesheet_directory_uri().'/style.css';
+    $css_child_url = CHILD_THEME_STYLE_CSS_URL;
     $child_css = css_url_to_css_minify_code($css_child_url);
     if ($child_css !== false) {
       $css_all .= apply_filters( 'amp_child_css', $child_css );
@@ -828,6 +806,12 @@ function generate_style_amp_custom_tag(){?>
     if ($child_amp_css !== false) {
       $css_all .= apply_filters( 'amp_child_amp_css', $child_amp_css );
     }
+  }
+  ///////////////////////////////////////////
+  //カスタマイザー「追加CSS」のスタイル
+  ///////////////////////////////////////////
+  if ($wp_custom_css = wp_get_custom_css()){
+    $css_all .= apply_filters( 'amp_wp_custom_css', $wp_custom_css );
   }
 
   ///////////////////////////////////////////
@@ -849,6 +833,62 @@ function generate_style_amp_custom_tag(){?>
 <?php
 }
 endif;
+
+//<style amp-keyframes>タグの取得
+if ( !function_exists( 'get_style_amp_keyframes_tag' ) ):
+function get_style_amp_keyframes_tag(){
+  $css_all = '';
+  //AMPスタイルの取得（SCSSで出力したAMP用のCSS）
+  $keyframes_css_url = get_template_directory_uri().'/keyframes.css';
+  $css = css_url_to_css_minify_code($keyframes_css_url);
+  if ($css !== false) {
+    $css_all .= apply_filters( 'amp_parent_keyframes_css', $css );
+  }
+
+  ///////////////////////////////////////////
+  //スキンのスタイル
+  ///////////////////////////////////////////
+  if ( ($skin_url = get_skin_url()) && is_amp_skin_style_enable() ) {//設定されたスキンがある場合
+    //通常のスキンスタイル
+    $skin_keyframes_url = str_replace('style.css', 'keyframes.css', $skin_url);
+    $skin_keyframes_css = css_url_to_css_minify_code($skin_keyframes_url);
+    if ($skin_keyframes_css !== false) {
+      $css_all .= apply_filters( 'amp_skin_keyframes_css', $skin_keyframes_css );
+    }
+  }
+
+  ///////////////////////////////////////////
+  //子テーマのスタイル
+  ///////////////////////////////////////////
+  if ( is_child_theme() && is_amp_child_theme_style_enable() ) {
+    //通常のスキンスタイル
+    $css_child_keyframes_url = CHILD_THEME_KEYFRAMES_CSS_URL;
+    $child_keyframes_css = css_url_to_css_minify_code($css_child_keyframes_url);
+    if ($child_keyframes_css !== false) {
+      $css_all .= apply_filters( 'amp_child_keyframes_css', $child_keyframes_css );
+    }
+  }
+
+  //!importantの除去
+  $css_all = preg_replace('/!important/i', '', $css_all);
+
+  //CSSの縮小化
+  $css_all = minify_css($css_all);
+  $css_all = apply_filters( 'amp_all_keyframes_css', $css_all );
+
+  $tag = '<style amp-keyframes>'.$css_all.'</style>';
+  //全てのCSSの出力
+  return $tag;
+}
+endif;
+
+//<style amp-keyframes>タグの出力
+if ( !function_exists( 'generate_style_amp_keyframes_tag' ) ):
+function generate_style_amp_keyframes_tag(){
+  echo get_style_amp_keyframes_tag();
+}
+endif;
+
 
 if ( !function_exists( 'get_cleaned_css_selector' ) ):
 function get_cleaned_css_selector($selector){
@@ -891,21 +931,11 @@ function is_comma_splited_selector_exists_in_body_tag($comma_splited_selector, $
   if (strpos($comma_splited_selector, 'amp-img') !== false) {
     return true;
   }
-  // if (strpos($comma_splited_selector, 'first-child') !== false) {
-  //   return true;
-  // }
+
   $comma_splited_selector = get_cleaned_css_selector($comma_splited_selector);
   $space_splited_selectors = explode(' ', $comma_splited_selector);
-  // if (count($space_splited_selectors) > 8) {
-  //   _v($comma_splited_selector);
-  // }
-  foreach ($space_splited_selectors as $selector) {
-    // if (preg_match('/amp-img/', $selector)) {
-    //   _v(strpos($body_tag, $selector) !== false);
-    //   _v($body_tag);
-    // }
-    //$selector = get_cleaned_css_selector($selector);
 
+  foreach ($space_splited_selectors as $selector) {
     //調べるまでもなく最初から存在するとわかっているセレクターは次に飛ばす（多少なりとも処理時間の短縮）
     $elements = array('html', 'body', 'div', 'span', 'a', 'aside', 'section', 'figure', 'main', 'header', 'footer', 'sidebar', 'article', 'ul', 'ol', 'li', 'p', 'h1', 'h2', 'h3');
     if (in_array($selector, $elements)) {
@@ -945,10 +975,8 @@ function get_dieted_amp_css_tag($style_amp_custom_tag, $body_tag){
           $delete_target_selectors[] = $delete_target_selector;
         }
       }
-
-
     }
-    //_v($delete_target_selectors);
+
     //削除候補のCSSセレクタを置換で削除
     foreach ($delete_target_selectors as $delete_target_selector) {
       $css = preg_replace('/\}'.preg_quote($delete_target_selector, '/').',/i', '}', $css);
@@ -960,21 +988,6 @@ function get_dieted_amp_css_tag($style_amp_custom_tag, $body_tag){
     //余計なメディアクエリを削除
     //$css = preg_replace('/@media screen and \(max-width:\d+px\)\{\}/i', '', $css);
 
-    // $css = preg_replace('/\}\{.+?\}/i', '}', $css);
-    // $css = preg_replace('/\}\{.+?\}/i', '}', $css);
-    // $css = preg_replace('/\}\{.+?\}/i', '}', $css);
-    // $css = preg_replace('/\}\{.+?\}/i', '}', $css);
-
-    // if (preg_match_all('/\}(\{.+?\})/i', $css, $m) && $m[1]) {
-    //   //_v($m[1]);
-    //   $delete_css_codes = $m[1];
-    //   foreach ($delete_css_codes as $delete_css_code) {
-    //     $css = str_replace($delete_css_code, '', $css);
-    //   }
-    // }
-    // if (preg_match_all('/[\.#\-a-zA-Z0-9\s>,:@]+?\{.+?\}/i', $css, $m)) {
-    //   _v($m[0]);
-    // }
   }
   return $css;
 }
@@ -994,7 +1007,6 @@ function html_ampfy_call_back( $html ) {
   if (is_admin()) {
     return $html;
   }
-  //_v('$html');
 
   if (!is_amp()) {
     return $html;
@@ -1003,11 +1015,11 @@ function html_ampfy_call_back( $html ) {
   global $post;
   //キャッシュの存在
   $transient_id = TRANSIENT_AMP_PREFIX.$post->ID;
-  $transient_file = get_theme_amp_cache_dir().$transient_id;
+  $transient_file = get_theme_amp_cache_path().$transient_id;
   $file_path_cache = get_transient( $transient_id );
   if ($file_path_cache && DEBUG_CACHE_ENABLE && !is_user_administrator()) {
     if (file_exists($transient_file)) {
-      $html_cache = get_file_contents($transient_file);
+      $html_cache = wp_filesystem_get_contents($transient_file);
       if ($html_cache) {
         return $html_cache;
       }
@@ -1035,10 +1047,10 @@ function html_ampfy_call_back( $html ) {
   if (preg_match('{<style amp-custom>.+</style>}is', $head_tag, $m)) {
     if (isset($m[0])) {
       $default_style_amp_custom_tag = $m[0];
-      //_v($default_style_amp_custom_tag);
+
       //不要なCSSを削除してサイズ削減
       $dieted_style_amp_custom_tag = get_dieted_amp_css_tag($default_style_amp_custom_tag, $body_tag);
-      //_v($dieted_style_amp_custom_tag);
+
       //ヘッダーの<style amp-custom>をサイズ削減したものに入れ替える
       $head_tag = str_replace($default_style_amp_custom_tag, $dieted_style_amp_custom_tag, $head_tag);
     }
@@ -1057,15 +1069,12 @@ function html_ampfy_call_back( $html ) {
     $is_include_body = includes_string($all_tag, '</body>');
     if ($is_include_body && DEBUG_CACHE_ENABLE && !is_user_administrator()) {
       set_transient($transient_id, $transient_file, DAY_IN_SECONDS * 1);
-      put_file_contents($transient_file, $all_tag);
+      wp_filesystem_put_contents($transient_file, $all_tag);
     }
 
     //AMP用全てのHTMLタグ編集用のフック
     return $body_tag = apply_filters('amp_html_all_tag', $all_tag);
   }
-
-  //_v($body);
-  //_v('$html');
 
   return $html;
 }

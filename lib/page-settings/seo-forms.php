@@ -28,19 +28,33 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 
             //canonicalタグ
             generate_checkbox_tag(OP_CANONICAL_TAG_ENABLE, is_canonical_tag_enable(), __( 'canonicalタグの追加', THEME_NAME ));
-            generate_tips_tag(__( 'Wordpressデフォルトでも投稿・固定ページには、canonicalタグは挿入されます。', THEME_NAME ).'<br>'.__( 'この機能を有効にするとトップページやカテゴリページ等にもcanonicalタグが挿入されます。', THEME_NAME ));
+            generate_tips_tag(__( 'WordPressデフォルトでも投稿・固定ページには、canonicalタグは挿入されます。', THEME_NAME ).'<br>'.__( 'この機能を有効にするとトップページやカテゴリページ等にもcanonicalタグが挿入されます。', THEME_NAME ));
 
             //prev nextタグ
             generate_checkbox_tag(OP_PREV_NEXT_ENABLE, is_prev_next_enable(), __( '分割ページにrel="next"/"prev"タグの追加', THEME_NAME ));
             generate_tips_tag(__( '検索エンジンに続き物ページの順番を知らせます。無効にした場合はWordPressデフォルトのnext/prev設定になります。', THEME_NAME ));
 
-            //カテゴリページの2ページ目以降をnoindexとする
-            generate_checkbox_tag(OP_PAGED_CATEGORY_PAGE_NOINDEX, is_paged_category_page_noindex(), __( 'カテゴリページの2ページ目以降をnoindexとする', THEME_NAME ));
-            generate_tips_tag(__( 'カテゴリページのトップページ以外はnoindex設定にします。', THEME_NAME ));
+            //カテゴリページをnoindexとする
+            generate_checkbox_tag(OP_CATEGORY_PAGE_NOINDEX, is_category_page_noindex(), __( 'カテゴリページをnoindexとする', THEME_NAME ));
+            generate_tips_tag(__( 'カテゴリページ全体をnoindex設定にします。', THEME_NAME ));
+
+            echo '<div class="indent'.get_not_allowed_form_class(!is_category_page_noindex(), true).'">';
+              //カテゴリページの2ページ目以降をnoindexとする
+              generate_checkbox_tag(OP_PAGED_CATEGORY_PAGE_NOINDEX, is_paged_category_page_noindex(), __( 'カテゴリページの2ページ目以降をnoindexとする', THEME_NAME ));
+              generate_tips_tag(__( 'カテゴリページのトップページ以外はnoindex設定にします。', THEME_NAME ));
+            echo '</div>';
+
 
             //タグページをnoindexとする
             generate_checkbox_tag(OP_TAG_PAGE_NOINDEX, is_tag_page_noindex(), __( 'タグページをnoindexとする', THEME_NAME ));
             generate_tips_tag(__( 'タグのインデックスページをnoindex設定にします。', THEME_NAME ));
+
+
+            echo '<div class="indent'.get_not_allowed_form_class(!is_tag_page_noindex(), true).'">';
+              //タグページの2ページ目以降をnoindexとする
+              generate_checkbox_tag(OP_PAGED_TAG_PAGE_NOINDEX, is_paged_tag_page_noindex(), __( 'タグページの2ページ目以降をnoindexとする', THEME_NAME ));
+              generate_tips_tag(__( 'タグページのトップページ以外はnoindex設定にします。', THEME_NAME ));
+            echo '</div>';
 
             //その他のアーカイブページをnoindexとする
             generate_checkbox_tag(OP_OTHER_ARCHIVE_PAGE_NOINDEX, is_other_archive_page_noindex(), __( 'その他のアーカイブページをnoindexとする', THEME_NAME ));
@@ -53,6 +67,21 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           </td>
         </tr>
 
+        <!-- 構造化データ  -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag('', __( '構造化データ', THEME_NAME ) ); ?>
+          </th>
+          <td>
+            <?php
+
+            //JSON-LD
+            generate_checkbox_tag(OP_JSON_LD_TAG_ENABLE, is_json_ld_tag_enable(), __( 'JSON-LDを出力', THEME_NAME ));
+            generate_tips_tag(__( '構造化データのJSON-LD情報をヘッダーに出力するかどうか。', THEME_NAME ));
+
+            ?>
+          </td>
+        </tr>
 
       </tbody>
     </table>

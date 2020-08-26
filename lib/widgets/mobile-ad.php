@@ -17,7 +17,7 @@ class MobileAdWidgetItem extends WP_Widget {
     parent::__construct(
       'mobile_ad',
       WIDGET_NAME_PREFIX.__( '広告（モバイル用）', THEME_NAME ), //ウイジェット名
-      array('description' => __( 'モバイルのみで表示される広告ウィジェットです。768px以下で表示されます。', THEME_NAME )),
+      array('description' => __( 'モバイルのみで表示される広告ウィジェットです。834px以下で表示されます。', THEME_NAME )),
       array( 'width' => 400, 'height' => 350 )
     );
   }
@@ -28,15 +28,12 @@ class MobileAdWidgetItem extends WP_Widget {
     $is_label_visible = apply_filters( 'widget_is_label_visible', !empty($instance['is_label_visible']) ? $instance['is_label_visible'] : 0 );
 
     if ( !is_404() && //404ページでないとき
-         is_all_ads_visible() //広告表示がオンのとき
-       ):
+          is_ads_visible() //広告表示がオンのとき
+       ){
        echo $args['before_widget'];
        get_template_part_with_ad_format($format, 'mobile-ad-widget', $is_label_visible, $ad);
-       ?>
-
-      <?php echo $args['after_widget'];
-    endif //!is_404 ?>
-  <?php
+       echo $args['after_widget'];
+    } //!is_404
   }
   function update($new_instance, $old_instance) {
     $instance = $old_instance;

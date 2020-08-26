@@ -32,11 +32,11 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
         <!-- 広告ラベル -->
         <tr>
           <th scope="row">
-            <?php generate_label_tag(OP_AD_LABEL, __( '広告ラベル', THEME_NAME )); ?>
+            <?php generate_label_tag(OP_AD_LABEL_CAPTION, __( '広告ラベル', THEME_NAME )); ?>
           </th>
           <td>
             <?php
-            generate_textbox_tag(OP_AD_LABEL, get_ad_label(), __( '「スポンサーリンク」か「広告」推奨', THEME_NAME ));
+            generate_textbox_tag(OP_AD_LABEL_CAPTION, get_ad_label_caption(), __( '「スポンサーリンク」か「広告」推奨', THEME_NAME ));
             generate_tips_tag(__( '広告上部ラベルに表示されるテキストの入力です。', THEME_NAME ));
             ?>
           </td>
@@ -92,9 +92,20 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             generate_toggle_area(__( 'リンクユニット用コード入力', THEME_NAME ), $form);
             //入力チェック
             generate_toggle_entered($link_unit_code);
-            // if (get_ad_link_unit_code()) {
-            //   echo ' <span class="toggle-entered">['.__( '入力済', THEME_NAME ).']</span>';
-            // }
+            echo get_help_page_tag('https://wp-cocoon.com/adsense-link-unit/');
+
+            echo '<br>';
+
+            //関連コンテンツユニット
+            $related_contents_unit_code = get_ad_related_contents_unit_code();
+            ob_start();
+            generate_textarea_tag(OP_AD_RELATED_CONTENTS_UNIT_CODE, $related_contents_unit_code, __( 'アドセンス関連コンテンツコードを入力', THEME_NAME )) ;
+            generate_tips_tag(__( '関連コンテンツ用の広告コードを入力してください。ここに広告コードを入力することでAMPページでも関連コンテンツが表示されます。', THEME_NAME ));
+            $form = ob_get_clean();
+            generate_toggle_area(__( '関連コンテンツ用コード入力', THEME_NAME ), $form);
+            //入力チェック
+            generate_toggle_entered($related_contents_unit_code);
+            echo get_help_page_tag('https://wp-cocoon.com/related-contents-unit/');
             ?>
           </td>
         </tr>
@@ -108,18 +119,15 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             <?php
             $options = array(
               'by_auto' => __( 'アドセンス自動広告のみ利用', THEME_NAME ),
-              'by_auto_and_myself' => __( '自動広告とマニュアル広告を併用', THEME_NAME ),
-              'by_myself' => __( 'マニュアル広告設定（自前で位置を設定）', THEME_NAME ),
+              //'by_auto_and_myself' => __( '自動広告とマニュアル広告を併用', THEME_NAME ),
+              'by_myself' => __( 'マニュアル広告設定（自前で位置を設定）', THEME_NAME ).__( '※要AdSense管理画面で自動広告無効', THEME_NAME ).get_image_preview_tag('https://im-cocoon.net/wp-content/uploads/auto-adsense-off.png', __( 'AdSenseの「広告」設定からドメインの「編集」ボタンを押して「自動広告」の「無効」にしてください。', THEME_NAME ), 500),
             );
             generate_radiobox_tag(OP_ADSENSE_DISPLAY_METHOD, $options, get_adsense_display_method());
             generate_tips_tag(__( '「自動広告」を選択した場合は、AdSenseが勝手に広告コードを挿入するので制御はできません。「自動広告のみ」が有効の場合、「広告の表示位置」や「[ad]ショートコード」で設定した広告の表示は無効になります。', THEME_NAME ));
             ?>
-            <?php
-            // generate_checkbox_tag( OP_AUTO_ADSENSE_ENABLE, is_auto_adsense_enable(), __( '自動アドセンスを有効にする', THEME_NAME ));
-            // generate_tips_tag(__( 'AdSenseの自動広告機能を利用して広告を表示します。この機能を有効にすると「広告の表示位置」や「[ad]ショートコード」で設定した広告の表示は無効になります', THEME_NAME ));
-            ?>
           </td>
         </tr>
+
 
         <!-- 広告の表示位置 -->
         <tr<?php generate_not_allowed_form_class(!is_auto_adsens_only_enable()); ?>>
@@ -263,6 +271,42 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
   </div>
 </div>
 
+<!-- バリューコマース -->
+<div id="valuecommerce-ads" class="postbox">
+  <h2 class="hndle"><?php _e( 'バリューコマース', THEME_NAME ) ?></h2>
+  <div class="inside">
+
+    <p><?php _e( 'バリューコマース関連の広告設定です。', THEME_NAME ) ?></p>
+
+    <table class="form-table">
+      <tbody>
+        <!-- LinkSwitch -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag(OP_AD_LINKSWITCH_ENABLE, __( 'LinkSwitch', THEME_NAME )); ?>
+          </th>
+          <td>
+            <?php
+            generate_checkbox_tag(OP_AD_LINKSWITCH_ENABLE, is_ad_linkswitch_enable(), __( 'LinkSwitchを有効にする', THEME_NAME ));
+            generate_tips_tag(__('バリューコマースのLinkSwitch機能を有効にするか。LinkSwitch IDが入力されている必要があります。', THEME_NAME));
+
+
+            generate_label_tag(OP_AD_LINKSWITCH_ID, __( 'LinkSwitch ID', THEME_NAME ));
+            echo '<br>';
+            generate_textbox_tag(OP_AD_LINKSWITCH_ID, get_ad_linkswitch_id(), __( 'LinkSwitch IDの入力', THEME_NAME ));
+            echo get_image_preview_tag('https://im-cocoon.net/wp-content/uploads/linkswtch-id.png', __( 'バリューコマースの「便利ツール」メニューの「LinkSwitch」からIDを取得してください。', THEME_NAME ));
+            generate_tips_tag(__( 'LinkSwitchタグから取得できるIDを入力してください。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/linkswitch/'));
+            ?>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+
 <!-- 広告除外設定 -->
 <div id="exclude-ads" class="postbox">
   <h2 class="hndle"><?php _e( '広告除外設定', THEME_NAME ) ?></h2>
@@ -294,7 +338,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             <?php
             generate_hierarchical_category_check_list( 0, OP_AD_EXCLUDE_CATEGORY_IDS, get_ad_exclude_category_ids(), 300 );
             //generate_textbox_tag(OP_AD_EXCLUDE_CATEGORY_IDS, get_ad_exclude_category_ids(), __( '例：111,222,3333', THEME_NAME ));
-            generate_tips_tag(__( '広告を表示するカテゴリを選択してください。', THEME_NAME ));
+            generate_tips_tag(__( '広告を非表示にするカテゴリを選択してください。', THEME_NAME ));
             ?>
           </td>
         </tr>

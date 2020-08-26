@@ -7,7 +7,7 @@
   Author URI: https://ganchan.info/
   Screenshot URI: https://im-cocoon.net/wp-content/uploads/skin-ganchan01.png
   Version: 0.0.1
-  Priority: 200201
+  Priority: 9910002000
 */
 /*以下にスタイルシートを記入してください*/
 
@@ -17,7 +17,8 @@
     padding-top: 4px;
 }
 
-.navi {
+.navi,
+.navi-in > ul .sub-menu {
     background-color: #333;
 }
 
@@ -45,17 +46,17 @@ main.main {
     font-weight: 500;
 }
 
-.entry-title, .archive-title {
+.entry-title, #editor .entry-title, .archive-title {
     padding: 20px;
     margin:38px 0;
     background-color: #234777;
-    color: #fff;
+    color: #fff !important;
     font-size: 24px;
     border-left: solid 4px #FEBF00;
 }
 
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 834px){
 
 main.main, div.sidebar {
     padding: 10px;
@@ -109,24 +110,20 @@ main.main, div.sidebar {
 
 
 @media screen and (max-width: 480px){
-.archive-title,.entry-title {
-    font-size: 18px;
-}
+    .archive-title,.entry-title {
+        font-size: 18px;
+    }
 
-.article h2 {
-    padding: 14px 0px;
-    font-size: 16px;
-}
+    .article h2 {
+        padding: 14px 0px;
+        font-size: 16px;
+    }
 
-.article h3, .article h4, .article h5, .article h6 {
-    font-size: 16px;
-}
-}
+    .article h3, .article h4, .article h5, .article h6 {
+        font-size: 16px;
+    }
 
-.navi-in>ul li {
-    background-color: #333;
 }
-
 
 .comment-title {
     font-size: 18px;
@@ -145,18 +142,8 @@ main.main, div.sidebar {
     font-size: 16px;
 }
 
-.widget-sidebar h3 {
-    margin:0px;
-}
 .widget_item_ranking h3 {
     margin: 16px 0;
-}
-
-
-
-.widget-sidebar a {
-    border: 1px solid #ddd;
-    border-top: 0;
 }
 
 .widget_recent_entries ul li a, .widget_categories ul li a, .widget_archive ul li a, .widget_pages ul li a, .widget_meta ul li a, .widget_rss ul li a, .widget_nav_menu ul li a {
@@ -171,6 +158,7 @@ main.main, div.sidebar {
 .footer {
     background-color: #333;
     border-bottom: solid 6px #234777;
+    color: #fff;
 }
 
 .footer.logo-text {
@@ -208,9 +196,7 @@ main.main, div.sidebar {
 }
 
 .widget_author_box.author-thumb img {
-	-webkit-border-radius: 50px;
-	-moz-border-radius: 50px;
-	border-radius: 50px;
+    border-radius: 50px;
 }
 .author-display-name{
     display:none;

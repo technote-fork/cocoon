@@ -17,13 +17,9 @@ remove_action( 'init', 'wpcom_youtube_embed_crazy_url_init' );
 add_filter('embed_oembed_html', 'youtube_embed_oembed_html', 1, 3);
 if ( !function_exists( 'youtube_embed_oembed_html' ) ):
 function youtube_embed_oembed_html ($cache, $url, $attr) {
-  if (is_amp()) {
+  if (is_amp() || is_feed()) {
     return $cache;
   }
-
-  //_v($url);
-  // preg_match( '{<iframe.+?</iframe>}i', $cache, $match_cache);
-  // $cache = $match_cache[0];
 
   // data-youtubeチェック
   if (strpos($cache, 'data-youtube')) {
@@ -52,7 +48,8 @@ function youtube_embed_oembed_html ($cache, $url, $attr) {
       // プレイリストIDの抽出
       preg_match( '/(?<=list=)(.+?)(?=")/', $cache, $list );
       // ビデオIDの取得
-      $json = json_decode(file_get_contents('https://www.youtube.com/oembed?url=http://www.youtube.com/playlist?list='.$list[1]), true);
+      $json_data = @wp_filesystem_get_contents('https://www.youtube.com/oembed?url=http://www.youtube.com/playlist?list='.$list[1], true);
+      $json = json_decode($json_data, true);
       // ビデオIDの抽出
       preg_match( '/(?<=vi\/)(.+?)(?=\/)/', $json['thumbnail_url'], $video_id );
     } else {
@@ -126,45 +123,33 @@ function youtube_embed_oembed_html ($cache, $url, $attr) {
 
   $youtube   = preg_replace("/data-youtube=\"(.+?)\"/", "", $cache);
   if (preg_match( '{src=[\'"](.+?)[\'"]}i', $youtube, $m)) {
-    $default_args = array('rel' => 0, 'autoplay' => 1);
+    $default_args = array('autoplay' => 1);
     $default_args = apply_filters('youtube_embed_default_args', $default_args);
-    //_v($default_args);
+
     //元のURL情報の取得
     $urls = parse_url($url);
     $query = isset($urls['query']) ? $urls['query'] : '';
     parse_str($query, $args);
     //デフォルトパラメータと結合
     $args = array_merge($default_args, $args);
-    //_v($args);
-    // $args['autoplay'] = 1;
-    // //デフォルトで関連動画は無効にする
-    // if (!isset($args['rel'])) {
-    //   $args['rel'] = 0;
-    // }
+
     //動画IDは不要なので削除
     if (isset($args['v'])) {
       $args['v'] = null;
     }
     //srcのURL
     $youtube_old_url = $m[1];
+    // var_dump($youtube_old_url);
     //デフォルトのパラメータ設定
     $args = apply_filters('youtube_embed_args', $args);
     //クエリを追加
     $youtube_new_url = add_query_arg($args, $youtube_old_url);
+    // var_dump($youtube_new_url);
 
-    // if (includes_string($youtube_old_url, '?')) {
-    //   $youtube_new_url = $youtube_old_url.'&autoplay=1&rel=0';
-    // } else {
-    //   $youtube_new_url = $youtube_old_url.'?autoplay=1&rel=0';
-    // }
-
-    //$youtube_new_url = 'https://www.youtube.com/embed/'.$json['video_id'].'?feature=oembed&autoplay=1';
     $youtube = str_replace($youtube_old_url, $youtube_new_url, $youtube);
   }
-  // $video_tag = '<video src="'.$youtube_new_url.'" muted autoplay></video>';
-  // $youtube   = $video_tag;
+
   $youtube   = htmlentities($youtube);
-  //$youtube   = htmlentities(str_replace( '=oembed','=oembed&autoplay=1', $youtube ));
 
   $thumb_url  = "https://i.ytimg.com/vi/{$json['video_id']}/hqdefault.jpg";
   $wrap_start = '<div class="video-container">';
@@ -177,12 +162,3 @@ function youtube_embed_oembed_html ($cache, $url, $attr) {
 
 };
 endif;
-
-
-// add_action('after_setup_theme', 'remove_filter_video', 9999);
-// function remove_filter_video(){
-//   // remove_filter( 'video_embed_html',   'jetpack_responsive_videos_embed_html' );
-//   // remove_filter( 'embed_oembed_html', 'jetpack_responsive_videos_maybe_wrap_oembed', 10 );
-//   // remove_filter( 'embed_handler_html', 'jetpack_responsive_videos_maybe_wrap_oembed', 10 );
-//   remove_action( 'after_setup_theme', 'jetpack_responsive_videos_init', 99 );
-// }

@@ -1,5 +1,5 @@
 /************************************
-** Wordpress管理画面用のCSS
+** WordPress管理画面用のCSS
 ** ※管理画面にしか適用されません
 ************************************/
 
@@ -9,7 +9,7 @@ body.wp-admin{
 
 //固定値
 @import "defins";
-@import "admin-snipets";
+@import "admin-snippets";
 .admin-settings .demo{
   @import "amp-imports";
   @import "imports";
@@ -29,11 +29,15 @@ body.wp-admin{
     padding: 10px;
   }
 
+  .entry-content{
+    margin: 0;
+  }
+
   .search-result{
     padding: 10px;
     font-size: 16px;
     line-height: 1.4;
-    font-family: arial,sans-serif;
+    // font-family: Arial,sans-serif;
     max-width: 600px;
 
 
@@ -112,6 +116,10 @@ body.wp-admin{
     width: 100%;
     height: 100%;
   }
+
+  .recommended-in.wrap{
+    padding: 0 5%;
+  }
 }
 
 .demo #related-entries h2{
@@ -136,6 +144,23 @@ body.wp-admin{
 .column-thumbnail{
   width:80px;
 }
+/*記事一覧のPV幅*/
+.column-pv{
+  width:70px;
+}
+/*記事一覧の投稿ID幅*/
+.column-post-id{
+  width:42px;
+}
+/*記事一覧の文字数幅*/
+.column-word-count{
+  width:76px;
+}
+// .word-count-title-count,
+// .word-count-content-count{
+//   white-space: pre-wrap;
+//   font-family: Consolas, monospace;
+// }
 
 .admin-custum-label{
   margin-left: -30px;
@@ -158,49 +183,51 @@ body.wp-admin{
   margin-bottom: 0;
 }
 
-
-/*設定項目のヒント*/
-p,
-a,
-.form-table td p{
-
-  &.tips,
-  &.alert,
-  &.help-page{
-    font-size: 14px;
-    font-style: italic;
-    margin-bottom: 1em;
-
-    &::before{
-      font-family: FontAwesome;
-      margin-right: 4px;
-    }
-
-    + .tips{
-      margin-top: -14px;
-    }
-  }
-
-  &.tips{
-    &::before{
-      content: '\f05a';
-    }
-  }
-
-  &.help-page{
-    &::before{
-      content: '\f059';
-    }
-  }
-
-  &.alert{
-    color: red;
-
-    &::before{
-      content: '\f071';
-    }
-  }
+.tips{
+  margin: 4px 0 12px !important;
 }
+/*設定項目のヒント*/
+// p,
+// a,
+// .form-table td p{
+
+//   // &.tips,
+//   &.alert,
+//   &.help-page{
+//     font-size: 14px;
+//     font-style: italic;
+//     margin-bottom: 1em;
+
+//     &::before{
+//       font-family: FontAwesome;
+//       margin-right: 4px;
+//     }
+
+//     // + .tips{
+//     //   margin-top: -14px;
+//     // }
+//   }
+
+//   // &.tips{
+//   //   &::before{
+//   //     content: '\f05a';
+//   //   }
+//   // }
+
+//   &.help-page{
+//     &::before{
+//       content: '\f059';
+//     }
+//   }
+
+//   &.alert{
+//     color: red;
+
+//     &::before{
+//       content: '\f071';
+//     }
+//   }
+// }
 
 
 
@@ -225,11 +252,16 @@ form.admin-settings{
     cursor: pointer;
     display: inline-block !important;
     margin: 0 !important;
-    padding: 5px 8px 3px !important;
+    padding: 4px 9px 3px !important;
     border-color: #999 #999 currentcolor;
     border-image: none;
     border-style: solid solid none;
     border-width: 1px 1px medium;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    &:hover{
+      background-color: #fff;
+    }
 
     &.selected{
       background-color: #fff;
@@ -446,6 +478,7 @@ select option.fa{
 // }
 .list-content,
 .tabs .tab-content,
+.tabs .tagcloud-list,
 .widget-content .tab-content{
   height: 200px;
   overflow: auto;
@@ -469,7 +502,10 @@ select option.fa{
   height: 120px;
   margin-bottom: 1em;
 }
-
+.tabs .tagcloud-list{
+  height: auto;
+  max-height: 200px;
+}
 
 // .tabs-widget{
 //   padding-top: 6px;
@@ -532,8 +568,20 @@ select option.fa{
   margin-left: 1em;
 }
 
-#singular_redirect_settings input[type="text"]{
+//ビジュアルエディター
+.postbox-container input[type="text"],
+//ブロックエディター
+.components-panel input[type="text"]{
   width: 100%;
+}
+
+.components-panel {
+  input[type="range"]{
+    width: calc(100% - 18px);
+  }
+  .range-wrap{
+    width: 100%;
+  }
 }
 
 
@@ -568,11 +616,13 @@ select option.fa{
     &:last-of-type{
       background-color: #fff;
     }
+
   }
 
   .ranking-item-name-text .tips{
     font-weight: normal;
   }
+
 
   .ranking-item{
     margin-bottom: 1em;
@@ -580,6 +630,16 @@ select option.fa{
     overflow: visible;
     background-color: #fafafa;
 
+    ul{
+      display: flex;
+      padding-left: 0;
+      li{
+        margin-right: 12px;
+        input{
+          margin-right: 2px;
+        }
+      }
+    }
 
     &:last-of-type{
       background-color: #eaf5fa;
@@ -623,7 +683,7 @@ select option.fa{
     }
   }
 
-  .ranking-item-rating{
+  .rating-star{
     color: #333;
     font-size: 1em;
   }
@@ -649,10 +709,10 @@ select option.fa{
 
   }
 
-  .tips{
-    margin: 0;
-  }
-  .ranking-item-rating{
+  // .tips{
+  //   margin: 0;
+  // }
+  .rating-star{
     label{
       float: left;
     }
@@ -674,7 +734,6 @@ select option.fa{
 
   .ranking-item-link-tag textarea{
     height: 80px;
-
   }
 
   .ranking-item-img-desc > div,
@@ -714,8 +773,9 @@ select option.fa{
 //   display: none;
 // }
 
-.speech-balloon p{
+.speech-wrap div.speech-balloon p{
   font-size: 16px;
+  margin: 0;
 }
 
 
@@ -917,7 +977,8 @@ select option.fa{
   }
 }
 
-.tooltip.fa-picture-o{
+.tooltip .fa-image,
+.tooltip .fa-picture-o {
   color: #285294;
 }
 
@@ -1047,4 +1108,45 @@ textarea[name="the_page_memo"]{
 //ブロックエディターのインクリメントサーチボックス
 .editor-inserter__search {
   max-width: 370px;
+}
+
+#carousel{
+  display: block;
+}
+
+.components-popover__content{
+  //拡張クラス
+  @import "extension";
+  .red{
+    margin: 0;
+  }
+  //フォント
+  @import "font";
+}
+
+.tagcloud {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  .admin-tag {
+    @include tagcloud_a;
+    flex: 0 1 auto;
+  }
+  input{
+    margin-right: 5px;
+  }
+  // .tag-link-count{
+  //   margin-left: 20px;
+  //   // padding: 0px 4px;
+  //   // background-color: #eee;
+  //   // border: 1px solid #ddd;
+  //   // border-radius: 6px;
+  // }
+}
+
+//管理画面のボタン色
+.wp-core-ui .button-primary {
+  background: #0071a1 !important;
+  border-color: #0071a1 !important;
+  color: #fff !important;
 }

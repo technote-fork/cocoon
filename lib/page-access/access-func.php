@@ -52,7 +52,8 @@ endif;
 //ページタイプの取得
 if ( !function_exists( 'get_accesses_post_type' ) ):
 function get_accesses_post_type(){
-  if (is_page()) {
+  global $post_type;
+  if (is_page() || ($post_type === 'page')) {
     $res = 'page'; //page
   } else {
     $res = 'post'; //single
@@ -259,19 +260,12 @@ endif;
 if ( !function_exists( 'get_todays_access_count' ) ):
 function get_todays_access_count($post_id = null){
   $res = 0;
-  if (is_singular()) {
-    global $post;
-    if (!$post_id) {
-      $post_id = $post->ID;
-    }
-    // $date = current_time('Y-m-d');
-    // $post_type = get_accesses_post_type();
-
-    // $record = get_accesse_record_from($post_id, $date, $post_type);
-    // $res = $record->count;
-
-    $res = get_several_access_count($post_id, 1);
+  global $post;
+  if (!$post_id) {
+    $post_id = $post->ID;
   }
+
+  $res = get_several_access_count($post_id, 1);
   return $res;
 }
 endif;
@@ -280,7 +274,7 @@ endif;
 if ( !function_exists( 'get_several_access_count' ) ):
 function get_several_access_count($post_id = null, $days = 'all'){
   $res = 0;
-  if (is_singular() && is_access_count_enable()) {
+  if (is_access_count_enable()) {
     global $post;
     global $wpdb;
 
@@ -340,8 +334,8 @@ function get_all_access_count($post_id = null){
 }
 endif;
 
-if ( !function_exists( 'wrap_joined_wp_posts_sql' ) ):
-function wrap_joined_wp_posts_query($query){
+if ( !function_exists( 'wrap_joined_wp_posts_query' ) ):
+function wrap_joined_wp_posts_query($query, $limit){
   global $wpdb;
   $wp_posts = $wpdb->posts;
   $ranks_posts = 'ranks_posts';
@@ -354,6 +348,8 @@ function wrap_joined_wp_posts_query($query){
     INNER JOIN {$wp_posts} ON {$ranks_posts}.post_id = {$wp_posts}.id
     WHERE post_status = 'publish' AND
           post_type = '{$post_type}'
+    ORDER BY sum_count DESC
+    LIMIT $limit
   ";
   //_v($query);
   //var_dump($query);
@@ -363,38 +359,44 @@ endif;
 
 //アクセスランキングを取得
 if ( !function_exists( 'get_access_ranking_records' ) ):
-function get_access_ranking_records($days = 'all', $limit = 5, $type = 'post', $cat_ids = array(), $exclude_post_ids = array(), $exclude_cat_ids = array()){
+function get_access_ranking_records($days = 'all', $limit = 5, $type = 'post', $cat_ids = array(), $exclude_post_ids = array(), $exclude_cat_ids = array(), $children = 0){
   // //ページの判別ができない場合はDBにアクセスしない
   // if (!is_singular()) {
   //   return null;
   // }
   //var_dump($cat_ids);
 
-
-
-  //$exclude_cat_ids = array(62);
-
-
-
-
   //アクセスキャッシュを有効にしている場合
   if (is_access_count_cache_enable()) {
     $cats = implode(',', $cat_ids);
+    if ($cat_ids) {
+      //子孫カテゴリも含める場合
+      if ($children) {
+        $categories = $cat_ids;
+        $res = $categories;
+        foreach ($categories as $category) {
+          $res = array_merge($res, get_term_children( $category, 'category' ));
+        }
+        $cat_ids = $res;
+        $cats = implode(',', $res);
+      }
+    }
     $expids = implode(',', $exclude_post_ids);
     $excats = implode(',', $exclude_cat_ids);
     $type = get_accesses_post_type();
-    $transient_id = TRANSIENT_POPULAR_PREFIX.'?days='.$days.'&limit='.$limit.'&type='.$type.'&cats='.$cats.'&expids='.$expids.'&excats='.$excats;
+    $transient_id = TRANSIENT_POPULAR_PREFIX.'?days='.$days.'&limit='.$limit.'&type='.$type.'&cats='.$cats.'&children='.$children.'&expids='.$expids.'&excats='.$excats;
     //_v($transient_id);
     $cache = get_transient( $transient_id );
     if ($cache) {
-      if (DEBUG_MODE) {
-        echo('<pre>');
-        echo $transient_id;
-        echo('</pre>');
+      if (DEBUG_MODE && is_user_administrator()) {
+        // echo('<pre>');
+        // echo $transient_id;
+        // echo('</pre>');
+      } elseif (is_user_administrator()){
+
       } else {
         return $cache;
       }
-
     }
   }
 
@@ -432,7 +434,8 @@ function get_access_ranking_records($days = 'all', $limit = 5, $type = 'post', $
     //カテゴリー指定
     if (is_ids_exist($cat_ids)) {
       $cat_ids = implode(',', $cat_ids);
-      $where .= " AND {$term_relationships}.term_taxonomy_id IN ({$cat_ids}) ".PHP_EOL;
+      //$where .= " AND {$term_relationships}.term_taxonomy_id IN ({$cat_ids}) ".PHP_EOL;
+      $where .= " AND {$term_taxonomy}.term_id IN ({$cat_ids}) ".PHP_EOL;
     }
     //除外カテゴリー指定
     if (is_ids_exist($exclude_cat_ids)) {
@@ -463,21 +466,19 @@ function get_access_ranking_records($days = 'all', $limit = 5, $type = 'post', $
 
         GROUP BY {$joined_table}.post_id
         ORDER BY sum_count DESC
-        LIMIT $limit
     ";
     //_v($query);
     //1回のクエリで投稿データを取り出せるようにケーブル結合クエリを追加
-    $query = wrap_joined_wp_posts_query($query);
+    $query = wrap_joined_wp_posts_query($query, $limit);
   } else {
     $query = "
       SELECT {$access_table}.post_id, SUM({$access_table}.count) AS sum_count
         FROM {$access_table} $where
         GROUP BY {$access_table}.post_id
         ORDER BY sum_count DESC
-        LIMIT $limit
     ";
     //1回のクエリで投稿データを取り出せるようにケーブル結合クエリを追加
-    $query = wrap_joined_wp_posts_query($query);
+    $query = wrap_joined_wp_posts_query($query, $limit);
   }
 
   //_v($query);

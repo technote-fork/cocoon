@@ -4,14 +4,15 @@
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
  */
+
 wp.domReady(function () {
     // add classes
     const addClasses = function () {
         // add body class
-        $('#editor .editor-writing-flow').addClass('article main page-body');
+        jQuery('#editor .block-editor-writing-flow').addClass('body main article page-body' + gbSettings['siteIconFont'] + gbSettings['pageTypeClass']);
 
         // add title class
-        $('#editor .editor-post-title__input').addClass('entry-title');
+        jQuery('#editor .editor-post-title__input').addClass('entry-title');
     };
     addClasses();
 
@@ -34,8 +35,8 @@ wp.domReady(function () {
     // remove style
     const removeStyle = function (regexp, applyTo, index, keep, keepOriginal) {
         // TODO: consider media query
-        $('style').each(function () {
-            const html = $(this).html();
+        jQuery('style').each(function () {
+            const html = jQuery(this).html();
 
             // get all matched styles
             let m;
@@ -54,7 +55,7 @@ wp.domReady(function () {
                     match[index].replace(/\/\*[\s\S]+?\*\//g, '').trim().split(/\r\n|\r|\n/).forEach(function (item) {
                         const split = item.split(':');
                         if (split.length >= 2) {
-                            if (!keep || $.inArray(split[0], keep) >= 0) {
+                            if (!keep || jQuery.inArray(split[0], keep) >= 0) {
                                 style += item.replace(/;$/, '') + ';';
                             }
                         }
@@ -63,7 +64,7 @@ wp.domReady(function () {
                         replaced += ' ' + applyTo + ' {' + style + '}';
                     }
                 });
-                $(this).html(replaced);
+                jQuery(this).html(replaced);
             }
         });
     };
@@ -106,18 +107,24 @@ wp.domReady(function () {
         removeStyle(/\.editor-styles-wrapper\s+.article\s+h1\s*{([\s\S]+?)}/g, '.editor-post-title__block .editor-post-title__input.entry-title', 1);
     }
 
-    $('style').each(function () {
-        $(this).html($(this).html().replace(/main\.main/g, '.editor-writing-flow.main'));
+    jQuery('style').each(function () {
+        jQuery(this).html(jQuery(this).html().replace(/main\.main/g, '.block-editor-writing-flow.main'));
     });
+
+    // jQuery('.block-editor-block-preview__content .wp-block-group').removeAttr('style');
 });
 
-// (function($){
-//   //タイマーを使ったあまり美しくない方法
-//   //tiny_mce_before_initフック引数配列のbody_classがなかったもので。
-//   //もしWordPressフックを使った方法や、もうちょっと綺麗なjQueryの書き方があればフォーラムで教えていただければ幸いです。
-//   //https://wp-cocoon.com/community/cocoon-theme/
-//   setInterval(function(){
-//     $('.mce-content-body').addClass('article');
-//   },1000);
+(function($){
+  //タイマーを使ったあまり美しくない方法
+  //tiny_mce_before_initフック引数配列のbody_classがなかったもので。
+  //もしWordPressフックを使った方法や、もうちょっと綺麗なjQueryの書き方があればフォーラムで教えていただければ幸いです。
+  //https://wp-cocoon.com/community/cocoon-theme/
+  setInterval(function(){
+    //$('#editor .block-editor-writing-flow').addClass('body main article page-body ' + gbSettings['siteIconFont']);
 
-// })(jQuery);
+    //グループボックスのスタイルプレビューに余計なstyle属性が入り込んでしまうのを削除
+    //もっと良い方法があるのかもしれない
+    jQuery('.block-editor-block-preview__content .wp-block-group').removeAttr('style');
+  },1000);
+
+})(jQuery);

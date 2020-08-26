@@ -13,10 +13,12 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
   <h2 class="hndle"><?php _e( 'トップへ戻るボタン設定', THEME_NAME ) ?></h2>
   <div class="inside">
 
-    <p><?php _e( 'ページトップにスクロール移動するかボタンの設定です。', THEME_NAME ) ?></p>
+    <p><?php _e( 'ページトップにスクロール移動するボタンの設定です。', THEME_NAME ) ?></p>
 
     <table class="form-table">
       <tbody>
+
+      <?php if (DEBUG_ADMIN_DEMO_ENABLE && apply_filters('cocoon_setting_preview_buttons', true)): ?>
         <!-- プレビュー画面 -->
         <tr>
           <th scope="row">
@@ -24,11 +26,12 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           </th>
           <td>
             <div class="demo go-to-top" style="">
-              <?php get_template_part('tmp/button-go-to-top') ?>
+              <?php get_sanitize_preview_template_part('tmp/button-go-to-top') ?>
             </div>
             <?php generate_tips_tag(__( 'デモは動作しません。', THEME_NAME )); ?>
           </td>
         </tr>
+        <?php endif; ?>
 
         <!-- トップへ戻るボタンの表示 -->
         <tr>
@@ -51,19 +54,19 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           <td>
             <?php
             $options = array(
-              'fa-angle-double-up' => __( '&#xf102', THEME_NAME ),
-              'fa-angle-up' => __( '&#xf106', THEME_NAME ),
-              'fa-arrow-circle-up' => __( '&#xf0aa', THEME_NAME ),
-              'fa-arrow-up' => __( '&#xf062', THEME_NAME ),
-              'fa-caret-up' => __( '&#xf0d8', THEME_NAME ),
-              'fa-caret-square-o-up' => __( '&#xf151', THEME_NAME ),
-              'fa-chevron-circle-up' => __( '&#xf139', THEME_NAME ),
-              'fa-chevron-up' => __( '&#xf077', THEME_NAME ),
-              'fa-hand-o-up' => __( '&#xf0a6', THEME_NAME ),
-              'fa-long-arrow-up' => __( '&#xf176', THEME_NAME ),
-              'fa-caret-square-o-up' => __( '&#xf151', THEME_NAME ),
+              'fa-angle-double-up' => change_fa('<span class="fa fa-angle-double-up" aria-hidden="true"></span>'),
+              'fa-angle-up' => change_fa('<span class="fa fa-angle-up" aria-hidden="true"></span>'),
+              'fa-arrow-circle-up' => change_fa('<span class="fa fa-arrow-circle-up" aria-hidden="true"></span>'),
+              'fa-arrow-up' => change_fa('<span class="fa fa-arrow-up" aria-hidden="true"></span>'),
+              'fa-caret-up' => change_fa('<span class="fa fa-caret-up" aria-hidden="true"></span>'),
+              'fa-caret-square-o-up' => change_fa('<span class="fa fa-caret-square-o-up" aria-hidden="true"></span>'),
+              'fa-chevron-circle-up' => change_fa('<span class="fa fa-chevron-circle-up" aria-hidden="true"></span>'),
+              'fa-chevron-up' => change_fa('<span class="fa fa-chevron-up" aria-hidden="true"></span>'),
+              'fa-hand-o-up' => change_fa('<span class="fa fa-hand-o-up" aria-hidden="true"></span>'),
+              'fa-long-arrow-up' => change_fa('<span class="fa fa-long-arrow-up" aria-hidden="true"></span>'),
+              'fa-caret-square-o-up' => change_fa('<span class="fa fa-caret-square-o-up" aria-hidden="true"></span>'),
             );
-            generate_selectbox_tag(OP_GO_TO_TOP_BUTTON_ICON_FONT, $options, get_go_to_top_button_icon_font(),__( 'アイコンフォント', THEME_NAME ) , true);
+            generate_radiobox_tag(OP_GO_TO_TOP_BUTTON_ICON_FONT, $options, get_go_to_top_button_icon_font(),__( 'アイコンフォント', THEME_NAME ) , true);
             generate_tips_tag(__( 'トップへ戻るボタンを示すアイコンフォントを選択します。', THEME_NAME ));
             ?>
           </td>
@@ -77,10 +80,10 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           </th>
           <td>
             <?php
-            generate_color_picker_tag(OP_GO_TO_TOP_BACKGROUND_COLOR,  get_go_to_top_background_color(), '背景色');
+            generate_color_picker_tag(OP_GO_TO_TOP_BACKGROUND_COLOR,  get_go_to_top_background_color(), __( '背景色', THEME_NAME ));
             generate_tips_tag(__( 'ボタンの背景色を設定します。', THEME_NAME ));
 
-            generate_color_picker_tag(OP_GO_TO_TOP_TEXT_COLOR,  get_go_to_top_text_color(), '文字色');
+            generate_color_picker_tag(OP_GO_TO_TOP_TEXT_COLOR,  get_go_to_top_text_color(), __( '文字色', THEME_NAME ));
             generate_tips_tag(__( 'ボタンの文字色を設定します。', THEME_NAME ));
             ?>
           </td>

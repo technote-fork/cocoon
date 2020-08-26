@@ -24,6 +24,12 @@ ol{
   }
 }
 
+.wp-block-gallery{
+  ul{
+    padding-left: 0;
+  }
+}
+
 h1,
 h2,
 h3,
@@ -48,24 +54,25 @@ h4,
 h5,
 h6{
   font-size: 20px;
-  padding: 6px 10px;
+  padding: 9px 10px;
 }
 
 h2 {
   font-size: 24px;
-  // margin-top: 40px;
-  // margin-bottom: 20px;
+  //margin-top: 40px;
+  //margin-bottom: 20px;
   padding: 25px;
   background-color: $xx_thin;
+  border-radius: $badge_border_radius;
 }
 
 h3 {
-  border-left: 6px solid $middle_thickness;
+  border-left: 7px solid $middle_thickness;
   border-right: 1px solid $thin;
   border-top: 1px solid $thin;
   border-bottom: 1px solid $thin;
   font-size: 22px;
-  padding: 6px 20px;
+  padding: 12px 20px;
 
 }
 

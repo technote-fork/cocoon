@@ -26,7 +26,7 @@ class SocialFollowWidgetItem extends WP_Widget {
     $title_popular = apply_filters( 'widget_title_social_follow', $instance['title_social_follow'] );
     $title_popular = apply_filters( 'widget_title', $title_popular, $instance, $this->id_base );
     echo $args['before_widget'];
-    if ($title_popular !== null) {
+    if (!is_null($title_popular)) {
       echo $args['before_title'];
       if ($title_popular) {
         echo $title_popular;
@@ -36,7 +36,7 @@ class SocialFollowWidgetItem extends WP_Widget {
       echo $args['after_title'];
     }
 
-    get_template_part('tmp/sns-follow-buttons'); //SNSフォローボタン
+    get_template_part_with_option('tmp/sns-follow-buttons', SF_WIDGET); //SNSフォローボタン
     echo $args['after_widget']; ?>
   <?php
   }

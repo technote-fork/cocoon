@@ -6,6 +6,7 @@
   //margin: 24px 0;
   text-align: center;
   margin-bottom: 1.8em;
+  overflow:hidden;
 }
 
 .entry-content .ad-area{
@@ -20,6 +21,12 @@
 
 .ad-content-top{
   margin-top: 1em;
+}
+
+.ad-responsive{
+  ins{
+    width: 100%;
+  }
 }
 
 .ad-single-rectangle,
@@ -108,8 +115,8 @@
   }
 }
 
-//768px以下
-@media screen and (max-width: 768px){
+//834px以下
+@media screen and (max-width: 834px){
   .sidebar{
     .ad-vertical{
       .ad-usual{

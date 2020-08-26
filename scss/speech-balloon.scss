@@ -6,12 +6,13 @@
   margin-bottom: 1em;
   //font-size: 16px;
   display: flex;
+
 }
 
 .speech-person{
   //float: left;
-  width: 80px;
-  min-width: 80px;
+  width: 12%;
+  min-width: 12%;
 }
 
 .speech-icon img,
@@ -26,7 +27,7 @@
   font-size: 13px;
 }
 
-.speech-balloon{
+div.speech-balloon{
   //display: block;
   height: 100%;
   //display: table;
@@ -37,7 +38,7 @@
   background-color: $white;
   border: 2px solid $basic_border_color;
   border-radius: 6px;
-  word-break: break-all;
+  max-width: calc(100% - 14%);
   p{
     margin: 0;
   }
@@ -112,6 +113,7 @@
   .speech-icon-image{
     border-radius: 0;
     border-style: none;
+    box-shadow: none;
   }
 }
 
@@ -124,6 +126,7 @@
 .sbis-cn{
   .speech-icon-image{
     border-style: none;
+    box-shadow: none;
   }
 }
 
@@ -225,73 +228,3 @@ div.sbs-think{
     }
   }
 }
-
-// @media screen and (max-width: 768px) {
-//   .speech-wrap.sbs-think.sbp-l{
-//       margin-right: 0;
-//   }
-//   .speech-wrap.sbs-think.sbp-r{
-//       margin-left: 0;
-//   }
-// }
-// @media screen and (max-width: 480px) {
-//   .speech-wrap.sbs-think{
-//     &.sbp-l{
-//       .speech-balloon{
-//         margin-left: 68px;
-//       }
-//     }
-//     .speech-balloon{
-//       //margin-left: 68px;
-//       //margin-right: 0;
-
-//       &::before {
-//         //border: 1px;
-//         //border: 1px solid $basic_border_color;
-//         top: 4px;
-//         left: -19px;
-//         width: 12px;
-//         height: 12px;
-//       }
-
-//       &::after {
-//         //border: 1px;
-//         //border: 1px solid $basic_border_color;
-//         top: 16px;
-//         width: 6px;
-//         height: 6px;
-//         left: -27px;
-//       }
-//     }
-//   }
-
-//   .speech-wrap.sbs-think.sbp-r{
-//     .speech-balloon{
-//       //margin-left: 0;
-//       margin-right: 68px;
-
-//       &::before {
-//         border: 2px solid $basic_border_color;
-//         left: auto;
-//         right: -19px;
-//       }
-
-//       &::after {
-//         border: 2px solid $basic_border_color;
-//         left: auto;
-//         right: -27px;
-//       }
-//     }
-//   }
-// }
-
-// #main .speech-balloon{
-//   display: table;
-// }
-// #main .sbp-r .speech-balloon{
-//   margin-left: auto;
-// }
-
-// .speech-balloon{
-//   width: 100%;
-// }

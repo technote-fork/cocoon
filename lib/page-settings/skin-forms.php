@@ -14,7 +14,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
   <div class="inside">
 
     <p><?php _e( 'スキンを変更することで、サイトのデザインを手軽に変更できます。', THEME_NAME ) ?></p>
-    <?php if(DEBUG_ADMIN_DEMO_ENABLE): ?>
+    <?php if (DEBUG_ADMIN_DEMO_ENABLE && apply_filters('cocoon_setting_preview_skins', true)): ?>
         <p class="preview-label"><?php _e( 'プレビュー', THEME_NAME ) ?></p>
       <div class="demo iframe-standard-demo skin-demo">
         <iframe id="skin-demo" class="iframe-demo" src="<?php echo home_url(); ?>" width="1000" height="400"></iframe>
@@ -47,18 +47,18 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
               $version = $info['version'];
               $visibility = $info['visibility'];
               //表示を無効にしている場合は設定画面に表示しない
-              if (!DEBUG_MODE && !$visibility) {
+              if (!DEBUG_MODE && (!$visibility || is_exclude_skin($file_url))) {
                 continue;
               }
 
               $skin_text = $skin_name.' ';
               if ($skin_page_uri) {
-                $skin_text = '<a href="'.$skin_page_uri.'" target="_blank">'.$skin_name.'</a> ';
+                $skin_text = '<a href="'.$skin_page_uri.'" target="_blank" rel="noopener">'.$skin_name.'</a> ';
               }
 
               $author_text = $author.' ';
               if ($author_uri) {
-                $author_text = '&nbsp;&nbsp;<span style="font-style: italic;font-size: 0.9em;">['.__( '作者', THEME_NAME ).': <a href="'.$author_uri.'" target="_blank">'.$author.'</a>]</span>';
+                $author_text = '&nbsp;&nbsp;<span style="font-style: italic;font-size: 0.9em;">['.__( '作者', THEME_NAME ).': <a href="'.$author_uri.'" target="_blank" rel="noopener">'.$author.'</a>]</span>';
               }
 
               $screenshot_text = null;
@@ -76,6 +76,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 
               $caption = $screenshot_text.$skin_text.$author_text;//.$description;
               //var_dump($caption);
+              $file_url = apply_filters('cocoon_skin_file_url', $file_url);
               $options += array($file_url => $caption);
             }
             //var_dump($options);
@@ -111,7 +112,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           </th>
           <td>
             <p><?php _e( 'もしスキンを作成された際には、是非ご連絡ください。サイトで紹介させていただければと思います。', THEME_NAME ) ?></p>
-            <p><?php _e( '詳しくはこちら', THEME_NAME ) ?> <span class="fa fa-arrow-right"></span> <a href="https://wp-cocoon.com/skin-make/" target="_blanl"><?php _e( 'オリジナルスキンのCocoonサイト紹介について', THEME_NAME ) ?></a></p>
+            <p><?php _e( '詳しくはこちら', THEME_NAME ) ?> <span class="fa fa-arrow-right" aria-hidden="true"></span> <a href="https://wp-cocoon.com/skin-make/" target="_blanl"><?php _e( 'オリジナルスキンのCocoonサイト紹介について', THEME_NAME ) ?></a></p>
           </td>
         </tr>
 

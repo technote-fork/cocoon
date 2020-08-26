@@ -20,6 +20,7 @@ function wp_enqueue_scripts_custom() {
   //テーマスタイルの呼び出し
   ///////////////////////////////////////////
   wp_enqueue_style_theme_style();
+  wp_enqueue_style_theme_keyframes();
 
   ///////////////////////////////////////////
   //Font Awesome
@@ -52,6 +53,11 @@ function wp_enqueue_scripts_custom() {
   wp_enqueue_baguettebox();
 
   ///////////////////////////////////
+  //画像リンク拡大効果がspotlightのとき
+  ///////////////////////////////////
+  wp_enqueue_spotlight();
+
+  ///////////////////////////////////
   //サイドバー追従領域やグローバルナビの追従用
   ///////////////////////////////////
   //wp_enqueue_clingify();
@@ -76,11 +82,6 @@ function wp_enqueue_scripts_custom() {
   ///////////////////////////////////
   wp_enqueue_scrollhint();
 
-  ///////////////////////////////////////////
-  //Google Fonts
-  ///////////////////////////////////////////
-  wp_enqueue_google_fonts();
-
 ////////////////////////////////////////////////////////////////
 //
 //スキンスタイルの呼び出し
@@ -91,6 +92,7 @@ function wp_enqueue_scripts_custom() {
   //スキンスタイルの読み込み
   ///////////////////////////////////////////
   wp_enqueue_style_theme_skin_style();
+  wp_enqueue_style_theme_skin_keyframes();
 
 
 ////////////////////////////////////////////////////////////////
@@ -114,10 +116,11 @@ function wp_enqueue_scripts_custom() {
   //子テーマのstyle.css
   ///////////////////////////////////////////
   wp_enqueue_style_theme_child_style();
+  wp_enqueue_style_theme_child_keyframes();
 
 ////////////////////////////////////////////////////////////////
 //
-//Wordpress関係スクリプトの呼び出し
+//WordPress関係スクリプトの呼び出し
 //
 ////////////////////////////////////////////////////////////////
 
@@ -128,6 +131,11 @@ function wp_enqueue_scripts_custom() {
 
   //レンダリングをブロックしている jQuery, jQuery-migrate をフッタに移動する
   if (!is_admin()) {
+
+    ///////////////////////////////////////////
+    // barba.jsスクリプトの読み込み
+    ///////////////////////////////////////////
+    wp_enqueue_script_barba_js();
 
     ///////////////////////////////////
     //WEBフォントの非同期読み込み
@@ -142,18 +150,11 @@ function wp_enqueue_scripts_custom() {
     //jQueryライブラリの読み込み
     wp_enqueue_script_jquery_js();
 
-    // wp_deregister_script('jquery');
-    // //wp_deregister_script('jquery-core');
-    // wp_deregister_script('jquery-migrate');
-
-    // wp_register_script('jquery', false, array('jquery-core', 'jquery-migrate'), '1.12.4', true);
-    // wp_enqueue_script('jquery');
-
-    // wp_enqueue_script('jquery-core', '//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js', array(), '1.12.4', true);
-    // wp_enqueue_script('jquery-migrate', '//cdnjs.cloudflare.com/ajax/libs/jquery-migrate/1.4.1/jquery-migrate.min.js', array(), '1.4.1', true);
-
     //タイルカード
     wp_enqueue_jquery_masonry();
+
+    //MathJax
+    // wp_enqueue_mathjax();
   }
 
   ///////////////////////////////////////////
@@ -169,7 +170,7 @@ function wp_enqueue_scripts_custom() {
   ///////////////////////////////////
   //はてブシェアボタン用のスクリプト呼び出し
   ///////////////////////////////////
-  wp_enqueue_script_hatebu_share_button_js();
+  //wp_enqueue_script_hatebu_share_button_js();
 
   ///////////////////////////////////
   //クリップボードスクリプトの呼び出し
@@ -204,5 +205,10 @@ function wp_enqueue_scripts_custom() {
   wp_enqueue_script_theme_child_js();
 
 
+
+  ///////////////////////////////////////////
+  //Google Fonts
+  ///////////////////////////////////////////
+  wp_enqueue_google_fonts();
 }
 endif;

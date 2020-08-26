@@ -12,7 +12,10 @@ if ( !defined( 'ABSPATH' ) ) exit;
 ///////////////////////////////////////
 if ( !function_exists( 'tag_code_to_minify_js' ) ):
 function tag_code_to_minify_js($buffer) {
-  //_v($buffer);
+  //Aurora Heatmapプラグインの分析画面の場合
+  if (isset($_GET['aurora-heatmap'])) {
+    return $buffer;
+  }
 
   if (is_admin()) {
     return $buffer;
@@ -64,6 +67,8 @@ function tag_code_to_minify_js($buffer) {
               //プレイリストのJSは除外
               || includes_string($url, '/mediaelement-and-player.min.js')
               || includes_string($url, '/wp-includes/js/underscore.min.js')
+              // //Lityの除外
+              // || includes_string($url, '/plugins/lity/dist/lity.min.js')
               // || includes_string($url, '/wp-playlist.min.js')
               // || includes_string($url, '/wp-mediaelement.min.js')
               // || includes_string($url, '/mediaelement-migrate.min.js')
@@ -71,7 +76,8 @@ function tag_code_to_minify_js($buffer) {
               // || includes_string($url, '/wp-includes/js/wp-util.min.js')
               //コードハイライト
               //|| (strpos($url, '/plugins/highlight-js/highlight.min.js') !== false)
-              || includes_string($url, '/plugins/highlight-js/highlight.min.js')
+              || includes_string($url, '/plugins/highlight-js/highlight')
+              || includes_string($url, '/plugins/spotlight-master/dist/spotlight')
               || includes_string($url, '/plugins/ip-geo-block/')
               //|| (strpos($url, '/plugins/wpforo/') !== false)
               //|| (strpos($url, '/buddypress/bp-core/js/') !== false)
@@ -98,15 +104,18 @@ function tag_code_to_minify_js($buffer) {
 
             //JS URLからJSコードの取得
             $js = js_url_to_js_minify_code( $url );
-            if ($js) {
-              $start_name_url = $url.'-start';
-              $start_url = 'performance.mark("'.$start_name_url.'");';
-              $end_name_url = $url.'-end';
-              $end_url = 'performance.mark("'.$end_name_url.'");';
-              $measure_url = 'performance.measure("'.$url.'", "'.$start_name_url.'", "'.$end_name_url.'");';
-              $js = $start_url.$js.$end_url.$measure_url;
-              //_v($js);
-            }
+            // if (includes_string($url, '/plugins/lity/dist/lity.min.js')) {
+            //   _v($js);
+            // }
+            // if ($js) {
+            //   $start_name_url = $url.'-start';
+            //   $start_url = 'performance.mark("'.$start_name_url.'");';
+            //   $end_name_url = $url.'-end';
+            //   $end_url = 'performance.mark("'.$end_name_url.'");';
+            //   $measure_url = 'performance.measure("'.$url.'", "'.$start_name_url.'", "'.$end_name_url.'");';
+            //   $js = $start_url.$js.$end_url.$measure_url;
+            //   //_v($js);
+            // }
 
 
             //縮小化可能なJSな時
@@ -127,7 +136,9 @@ function tag_code_to_minify_js($buffer) {
         //インラインタイプのJavaScriptコードだった場合
         if ($js_code) {
           $js = minify_js($js_code);
-          if ($js) {
+          //JSON-LDスクリプトは除外
+          /*
+          if ($js && !preg_match('/<script.*? type="application\/ld\+json".*?>/i', $script_tag)) {
             $start_name_in = 'inline-js-'.$i.'-start';
             $start_in = 'performance.mark("'.$start_name_in.'");';
             $end_name_in = 'inline-js-'.$i.'-end';
@@ -136,6 +147,7 @@ function tag_code_to_minify_js($buffer) {
             $js = $start_in.$js.$end_in.$measure_in;
             //_v($js);
           }
+          */
 
           //インラインタイプのscriptタグを縮小化して置換する
           $buffer = str_replace($script_tag, '<script'.$attr_code.'>'.$js.'</script>', $buffer);
@@ -144,6 +156,9 @@ function tag_code_to_minify_js($buffer) {
       }//foreach
     }//$res && isset($m[1])
   }//is_js_minify_enable()
+
+  //対症療法
+  $buffer = str_replace("'s our plugin doing the blocking", '', $buffer);
 
   return apply_filters('tag_code_to_minify_js', $buffer);
 }
@@ -163,6 +178,9 @@ function js_url_to_js_minify_code( $url ) {
 
     //コメントの除去
     $js = remove_code_comments($js);
+    // if (!includes_string($url, '/plugins/lity/dist/lity.min.js')) {
+    //   _v($js);
+    // }
     //CSS内容を縮小化して書式を統一化する
     $js = minify_js($js);
     //コード内scriptタグの処理
@@ -187,30 +205,36 @@ function remove_code_comments($code){
 }
 endif;
 
-/*async defer*/
-//add_filter( 'script_loader_tag', 'add_defer_async_scripts', 10, 3 );
-if ( !function_exists( 'add_defer_async_scripts' ) ):
-function add_defer_async_scripts( $tag, $handle, $src ) {
-  $async_defer = array(
-    'jquery',
-    'jquery-migrate',
-    'jquery-core',
+/*スクリプトの特性を変更する（async defer ）*/
+add_filter( 'script_loader_tag', 'change_script_tag_attrs', 10, 3 );
+if ( !function_exists( 'change_script_tag_attrs' ) ):
+function change_script_tag_attrs( $tag, $handle, $src ) {
+  $async_defers = array(
+    // 'jquery',
+    // 'jquery-migrate',
+    // 'jquery-core',
   );
-  $async_scripts = array(
+  $asyncs = array(
     //'crayon_js',
   );
-  $defer_scripts = array(
+  $defers = array(
     //'code-highlight-js',
   );
+  $crossorigin_anonymouses = array(
+    'barba-js-polyfill',
+  );
 
-  if ( in_array( $handle, $async_defer ) ) {
-      return '<script type="text/javascript" src="' . $src . '" async defer></script>' . PHP_EOL;
+  if ( in_array( $handle, $async_defers ) ) {
+      return '<script async defer src="' . esc_url($src) . '"></script>' . PHP_EOL;
   }
-  if ( in_array( $handle, $async_scripts ) ) {
-      return '<script type="text/javascript" src="' . $src . '" async></script>' . PHP_EOL;
+  if ( in_array( $handle, $asyncs ) ) {
+      return '<script async src="' . esc_url($src) . '"></script>' . PHP_EOL;
   }
-  if ( in_array( $handle, $defer_scripts ) ) {
-      return '<script type="text/javascript" src="' . $src . '" defer></script>' . PHP_EOL;
+  if ( in_array( $handle, $defers ) ) {
+      return '<script defer src="' . esc_url($src) . '"></script>' . PHP_EOL;
+  }
+  if ( in_array( $handle, $crossorigin_anonymouses ) ) {
+      return '<script crossorigin="anonymous" src="' . esc_url($src) . '"></script>' . PHP_EOL;
   }
 
   return $tag;

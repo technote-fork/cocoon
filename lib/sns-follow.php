@@ -134,16 +134,21 @@ function user_contactmethods_custom($prof_items){
   //項目の追加
   $prof_items['twitter_url'] = __( 'Twitter URL', THEME_NAME );
   $prof_items['facebook_url'] = __( 'Facebook URL', THEME_NAME );
-  $prof_items['google_plus_url'] = __( 'Google+ URL', THEME_NAME );
+  //$prof_items['google_plus_url'] = __( 'Google+ URL', THEME_NAME );
   $prof_items['hatebu_url'] = __( 'はてブ URL', THEME_NAME );
   $prof_items['instagram_url'] = __( 'Instagram URL', THEME_NAME );
   $prof_items['pinterest_url'] = __( 'Pinterest URL', THEME_NAME );
   $prof_items['youtube_url'] = __( 'YouTube URL', THEME_NAME );
+  $prof_items['linkedin_url'] = __( 'LinkedIn URL', THEME_NAME );
+  $prof_items['note_url'] = __( 'note URL', THEME_NAME );
+  $prof_items['soundcloud_url'] = __( 'SoundCloud URL', THEME_NAME );
   $prof_items['flickr_url'] = __( 'Flickr URL', THEME_NAME );
   $prof_items['line_at_url'] = __( 'LINE@ URL', THEME_NAME );
   $prof_items['amazon_url'] = __( 'Amazon URL', THEME_NAME );
   $prof_items['rakuten_room_url'] = __( '楽天 ROOM URL', THEME_NAME );
+  $prof_items['slack_url'] = __( 'Slack URL', THEME_NAME );
   $prof_items['github_url'] = __( 'GitHub URL', THEME_NAME );
+  $prof_items['codepen_url'] = __( 'CodePen URL', THEME_NAME );
 
   return $prof_items;
 }
@@ -193,30 +198,34 @@ endif;
 
 //投稿者名の取得
 if ( !function_exists( 'get_the_author_display_name' ) ):
-function get_the_author_display_name(){
-  return esc_html(get_the_author_meta('display_name', get_the_posts_author_id()));
+function get_the_author_display_name($id = null){
+  $user_id = $id ? $id : get_the_posts_author_id();
+  return esc_html(get_the_author_meta('display_name', $user_id));
 }
 endif;
 
 //投稿者情報の取得
 if ( !function_exists( 'get_the_author_description_text' ) ):
-function get_the_author_description_text(){
-  return get_the_author_meta('description', get_the_posts_author_id());
+function get_the_author_description_text($id = null){
+  $user_id = $id ? $id : get_the_posts_author_id();
+  return get_the_author_meta('description', $user_id);
 }
 endif;
 
 
 //プロフィール画面で設定したウェブサイトURLの取得
 if ( !function_exists( 'get_the_author_website_url' ) ):
-function get_the_author_website_url(){
-  return esc_html(get_the_author_meta('url', get_the_posts_author_id()));
+function get_the_author_website_url($id = null){
+  $user_id = $id ? $id : get_the_posts_author_id();
+  return esc_html(get_the_author_meta('url', $user_id));
 }
 endif;
 
 //プロフィール画面で設定したTwitter URLの取得
 if ( !function_exists( 'get_the_author_twitter_url' ) ):
-function get_the_author_twitter_url(){
-  return esc_html(get_the_author_meta('twitter_url', get_the_posts_author_id()));
+function get_the_author_twitter_url($id = null){
+  $user_id = $id ? $id : get_the_posts_author_id();
+  return esc_html(get_the_author_meta('twitter_url', $user_id));
 }
 endif;
 
@@ -235,57 +244,89 @@ endif;
 
 //プロフィール画面で設定したFacebook URLの取得
 if ( !function_exists( 'get_the_author_facebook_url' ) ):
-function get_the_author_facebook_url(){
-  return esc_html(get_the_author_meta('facebook_url', get_the_posts_author_id()));
+function get_the_author_facebook_url($id = null){
+  $user_id = $id ? $id : get_the_posts_author_id();
+  return esc_html(get_the_author_meta('facebook_url', $user_id));
 }
 endif;
 
 //プロフィール画面で設定したGoogle+ URLの取得
 if ( !function_exists( 'get_the_author_google_plus_url' ) ):
-function get_the_author_google_plus_url(){
-  return esc_html(get_the_author_meta('google_plus_url', get_the_posts_author_id()));
+function get_the_author_google_plus_url($id = null){
+  $user_id = $id ? $id : get_the_posts_author_id();
+  return null;//esc_html(get_the_author_meta('google_plus_url', $user_id));
 }
 endif;
 
 //プロフィール画面で設定したはてブ URLの取得
 if ( !function_exists( 'get_the_author_hatebu_url' ) ):
-function get_the_author_hatebu_url(){
-  return esc_html(get_the_author_meta('hatebu_url', get_the_posts_author_id()));
+function get_the_author_hatebu_url($id = null){
+  $user_id = $id ? $id : get_the_posts_author_id();
+  return esc_html(get_the_author_meta('hatebu_url', $user_id));
 }
 endif;
 
 //プロフィール画面で設定したInstagram URLの取得
 if ( !function_exists( 'get_the_author_instagram_url' ) ):
-function get_the_author_instagram_url(){
-  return esc_html(get_the_author_meta('instagram_url', get_the_posts_author_id()));
+function get_the_author_instagram_url($id = null){
+  $user_id = $id ? $id : get_the_posts_author_id();
+  return esc_html(get_the_author_meta('instagram_url', $user_id));
 }
 endif;
 
 //プロフィール画面で設定したPinterest URLの取得
 if ( !function_exists( 'get_the_author_pinterest_url' ) ):
-function get_the_author_pinterest_url(){
-  return esc_html(get_the_author_meta('pinterest_url', get_the_posts_author_id()));
+function get_the_author_pinterest_url($id = null){
+  $user_id = $id ? $id : get_the_posts_author_id();
+  return esc_html(get_the_author_meta('pinterest_url', $user_id));
 }
 endif;
 
 //プロフィール画面で設定したYouTube URLの取得
 if ( !function_exists( 'get_the_author_youtube_url' ) ):
-function get_the_author_youtube_url(){
-  return esc_html(get_the_author_meta('youtube_url', get_the_posts_author_id()));
+function get_the_author_youtube_url($id = null){
+  $user_id = $id ? $id : get_the_posts_author_id();
+  return esc_html(get_the_author_meta('youtube_url', $user_id));
 }
 endif;
 
-//プロフィール画面で設定した立夏 URLの取得
+//プロフィール画面で設定したLinkedIn URLの取得
+if ( !function_exists( 'get_the_author_linkedin_url' ) ):
+function get_the_author_linkedin_url($id = null){
+  $user_id = $id ? $id : get_the_posts_author_id();
+  return esc_html(get_the_author_meta('linkedin_url', $user_id));
+}
+endif;
+
+//プロフィール画面で設定したnote URLの取得
+if ( !function_exists( 'get_the_author_note_url' ) ):
+function get_the_author_note_url($id = null){
+  $user_id = $id ? $id : get_the_posts_author_id();
+  return esc_html(get_the_author_meta('note_url', $user_id));
+}
+endif;
+
+//プロフィール画面で設定しSoundCloud URLの取得
+if ( !function_exists( 'get_the_author_soundcloud_url' ) ):
+function get_the_author_soundcloud_url($id = null){
+  $user_id = $id ? $id : get_the_posts_author_id();
+  return esc_html(get_the_author_meta('soundcloud_url', $user_id));
+}
+endif;
+
+//プロフィール画面で設定しFlickr URLの取得
 if ( !function_exists( 'get_the_author_flickr_url' ) ):
-function get_the_author_flickr_url(){
-  return esc_html(get_the_author_meta('flickr_url', get_the_posts_author_id()));
+function get_the_author_flickr_url($id = null){
+  $user_id = $id ? $id : get_the_posts_author_id();
+  return esc_html(get_the_author_meta('flickr_url', $user_id));
 }
 endif;
 
 //プロフィール画面で設定したLINE@ URLの取得
 if ( !function_exists( 'get_the_author_line_at_url' ) ):
-function get_the_author_line_at_url(){
-  return esc_html(get_the_author_meta('line_at_url', get_the_posts_author_id()));
+function get_the_author_line_at_url($id = null){
+  $user_id = $id ? $id : get_the_posts_author_id();
+  return esc_html(get_the_author_meta('line_at_url', $user_id));
 }
 endif;
 //プロフィール画面で設定したTwitter URLからLINE IDの取得
@@ -307,22 +348,41 @@ endif;
 
 //プロフィール画面で設定したAmazon URLの取得
 if ( !function_exists( 'get_the_author_amazon_url' ) ):
-function get_the_author_amazon_url(){
-  return esc_html(get_the_author_meta('amazon_url', get_the_posts_author_id()));
+function get_the_author_amazon_url($id = null){
+  $user_id = $id ? $id : get_the_posts_author_id();
+  return esc_html(get_the_author_meta('amazon_url', $user_id));
 }
 endif;
 
 //プロフィール画面で設定した楽天ROOM URLの取得
 if ( !function_exists( 'get_the_author_rakuten_room_url' ) ):
-function get_the_author_rakuten_room_url(){
-  return esc_html(get_the_author_meta('rakuten_room_url', get_the_posts_author_id()));
+function get_the_author_rakuten_room_url($id = null){
+  $user_id = $id ? $id : get_the_posts_author_id();
+  return esc_html(get_the_author_meta('rakuten_room_url', $user_id));
+}
+endif;
+
+//プロフィール画面で設定したSlack URLの取得
+if ( !function_exists( 'get_the_author_slack_url' ) ):
+function get_the_author_slack_url($id = null){
+  $user_id = $id ? $id : get_the_posts_author_id();
+  return esc_html(get_the_author_meta('slack_url', $user_id));
 }
 endif;
 
 //プロフィール画面で設定したGitHub URLの取得
 if ( !function_exists( 'get_the_author_github_url' ) ):
-function get_the_author_github_url(){
-  return esc_html(get_the_author_meta('github_url', get_the_posts_author_id()));
+function get_the_author_github_url($id = null){
+  $user_id = $id ? $id : get_the_posts_author_id();
+  return esc_html(get_the_author_meta('github_url', $user_id));
+}
+endif;
+
+//プロフィール画面で設定したCodePen URLの取得
+if ( !function_exists( 'get_the_author_codepen_url' ) ):
+function get_the_author_codepen_url($id = null){
+  $user_id = $id ? $id : get_the_posts_author_id();
+  return esc_html(get_the_author_meta('codepen_url', $user_id));
 }
 endif;
 
@@ -332,21 +392,30 @@ function is_author_follow_buttons_exits(){
   return get_the_author_website_url()
          || get_the_author_twitter_url()
          || get_the_author_facebook_url()
-         || get_the_author_google_plus_url()
+         //|| get_the_author_google_plus_url()
          || get_the_author_hatebu_url()
          || get_the_author_instagram_url()
          || get_the_author_pinterest_url()
          || get_the_author_youtube_url()
+         || get_the_author_linkedin_url()
+         || get_the_author_note_url()
+         || get_the_author_soundcloud_url()
          || get_the_author_flickr_url()
          || get_the_author_line_at_url()
-         || get_the_author_github_url();
+         || get_the_author_amazon_url()
+         || get_the_author_rakuten_room_url()
+         || get_the_author_slack_url()
+         || get_the_author_github_url()
+         || get_the_author_codepen_url();
 }
 endif;
 
 //全てのフォローボタンのうちどれかが表示されているか
 if ( !function_exists( 'is_any_sns_follow_buttons_exist' ) ):
 function is_any_sns_follow_buttons_exist(){
-  return get_the_author_website_url() || get_the_author_twitter_url() || get_the_author_facebook_url() || get_the_author_google_plus_url() || get_the_author_hatebu_url() || get_the_author_instagram_url() || get_the_author_pinterest_url() || get_the_author_youtube_url() || get_the_author_flickr_url() || get_the_author_line_at_url() || get_the_author_github_url() || is_feedly_follow_button_visible() || is_rss_follow_button_visible();
+  return is_author_follow_buttons_exits()
+      || is_feedly_follow_button_visible()
+      || is_rss_follow_button_visible();
 }
 endif;
 

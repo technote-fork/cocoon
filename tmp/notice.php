@@ -8,24 +8,26 @@
 if ( !defined( 'ABSPATH' ) ) exit;
 
 $msg = get_notice_area_message();
-if (is_notice_area_visible() && $msg && !is_amp()):
+if (is_notice_area_visible() && $msg && !is_amp() && apply_filters('notice_area_visible', true)):
   $url = get_notice_area_url();
  ?>
 
 <?php //リンクの開始タグ
 if ($url):
-  $target = is_notice_link_target_blank() ? ' target="_blank"' : '';
+  $target = is_notice_link_target_blank() ? ' target="_blank" rel="noopener"' : '';
 ?>
-<a href="<?php echo $url; ?>" class="notice-area-wrap"<?php echo $target; ?>>
-<?php endif ?>
+<div id="notice-area-wrap" class="notice-area-wrap">
+  <a href="<?php echo $url; ?>" id="notice-area-link" class="notice-area-link"<?php echo $target; ?>>
+  <?php endif ?>
 
-<div id="notice-area" class="notice-area notice-area nt-<?php echo get_notice_type(); ?>">
-  <?php echo $msg; ?>
+    <div id="notice-area" class="notice-area nt-<?php echo get_notice_type(); ?>">
+      <?php echo $msg; ?>
+    </div>
+
+  <?php //aリンクの閉じタグ
+  if ($url): ?>
+  </a>
 </div>
-
-<?php //aリンクの閉じタグ
-if ($url): ?>
-</a>
 <?php endif ?>
 
 <?php endif ?>

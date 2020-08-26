@@ -9,7 +9,6 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 require_once ABSPATH.'wp-admin/includes/file.php';//WP_Filesystemの使用
 //abspath(__FILE__)
-require_once abspath(__FILE__).'language.php';   //マルチ言語設定
 require_once abspath(__FILE__).'utils.php';      //ユーティリティー関数
 require_once abspath(__FILE__).'page-settings/skin-funcs.php';       //スキン設定関数
 if (get_skin_url() && !isset($_POST[HIDDEN_FIELD_NAME])) {
@@ -19,6 +18,7 @@ require_once abspath(__FILE__).'language.php';   //マルチ言語設定
 require_once abspath(__FILE__).'utils.php';      //ユーティリティー関数
 require_once abspath(__FILE__).'html-forms.php'; //HTMLフォーム生成関数
 require_once abspath(__FILE__).'html-tooltips.php'; //HTMLツールチップ生成関数
+require_once abspath(__FILE__).'gutenberg.php';   //ブロックエディター関係の関数
 require_once abspath(__FILE__).'ad.php';         //広告関係の設定
 require_once abspath(__FILE__).'sns.php';        //SNS関係の設定
 require_once abspath(__FILE__).'sns-share.php';  //SNSシェア関数
@@ -27,12 +27,16 @@ require_once abspath(__FILE__).'open-graph.php'; //OGP取得ライブラリ
 require_once abspath(__FILE__).'punycode.php';   //ピュニコードライブラリ
 require_once abspath(__FILE__).'medias.php';     //メディアライブラリ
 require_once abspath(__FILE__).'links.php';      //本文リンクライブラリ
-require_once abspath(__FILE__).'category.php';   //カテゴリー関係の関数
+require_once abspath(__FILE__).'content-category.php';   //カテゴリー関係の関数
+require_once abspath(__FILE__).'content-tag.php';   //タグ関係の関数
 require_once abspath(__FILE__).'entry-card.php'; //エントリーカード関数
 require_once abspath(__FILE__).'amp.php';        //AMP関係の関数
 require_once abspath(__FILE__).'content.php';    //本文関係の関数
 require_once abspath(__FILE__).'comments.php';   //コメント関係の関数
-require_once abspath(__FILE__).'php-html-css-js-minifier.php'; //HTML・CSS・JavaScript縮小化ライブラリ
+require_once abspath(__FILE__).'related-entries.php';   //関連記事関係の関数
+require_once abspath(__FILE__).'walkers.php';  //Walker_Nav_Menuまとめ
+require_once abspath(__FILE__).'plugins.php';   //プラグイン関係の関数
+require_once abspath(__FILE__).'php-html-css-js-minifier-new.php'; //HTML・CSS・JavaScript縮小化ライブラリ
 require_once abspath(__FILE__).'page-settings/all-funcs.php';        //全体設定関数
 require_once abspath(__FILE__).'page-settings/header-funcs.php';     //ヘッダー設定関数
 require_once abspath(__FILE__).'page-settings/navi-funcs.php';       //グローバルナビ設定関数
@@ -56,12 +60,14 @@ require_once abspath(__FILE__).'page-settings/code-funcs.php';       //コード
 require_once abspath(__FILE__).'page-settings/comment-funcs.php';    //コメント設定関数
 require_once abspath(__FILE__).'page-settings/notice-funcs.php';     //通知エリア設定関数
 require_once abspath(__FILE__).'page-settings/appeal-funcs.php';     //アピールエリア設定関数
+require_once abspath(__FILE__).'page-settings/recommended-funcs.php';//おすすめカード設定関数
 require_once abspath(__FILE__).'page-settings/carousel-funcs.php';   //カルーセル設定関数
 require_once abspath(__FILE__).'page-settings/footer-funcs.php';     //フッター設定関数
 require_once abspath(__FILE__).'page-settings/buttons-funcs.php';    //ボタン設定関数
 require_once abspath(__FILE__).'page-settings/mobile-buttons-funcs.php'; //モバイルボタン設定関数
 require_once abspath(__FILE__).'page-settings/404-funcs.php';        //404ページ設定関数
 require_once abspath(__FILE__).'page-settings/amp-funcs.php';        //AMP設定関数
+require_once abspath(__FILE__).'page-settings/pwa-funcs.php';        //PWA設定関数
 require_once abspath(__FILE__).'page-settings/admin-funcs.php';      //管理画面設定関数
 require_once abspath(__FILE__).'page-settings/editor-funcs.php';     //エディター設定関数
 require_once abspath(__FILE__).'page-settings/widget-funcs.php';     //ウィジェット設定関数
@@ -82,12 +88,14 @@ require_once abspath(__FILE__).'custom-fields/seo-field.php'; //SEOのページ�
 require_once abspath(__FILE__).'custom-fields/ad-field.php';  //広告のページ設定
 require_once abspath(__FILE__).'custom-fields/page-field.php';//投稿・固定ページのページ設定
 require_once abspath(__FILE__).'custom-fields/update-field.php'; //アップデートのページ設定
+require_once abspath(__FILE__).'custom-fields/review-field.php'; //レビュー設定
 require_once abspath(__FILE__).'custom-fields/redirect-field.php'; //リダイレクト設定
 require_once abspath(__FILE__).'custom-fields/amp-field.php'; //AMPのページ設定
 require_once abspath(__FILE__).'custom-fields/custom-css-field.php'; //カスタムCSS設定
 require_once abspath(__FILE__).'custom-fields/custom-js-field.php';  //カスタJS設定
 require_once abspath(__FILE__).'custom-fields/memo-field.php';  //メモ
 require_once abspath(__FILE__).'custom-fields/sns-image-field.php';  //SNS画像
+require_once abspath(__FILE__).'custom-fields/other-field.php';  //その他
 require_once abspath(__FILE__).'seo.php';      //SEO関数
 require_once abspath(__FILE__).'ogp.php';      //OGP関数
 require_once abspath(__FILE__).'blogcard-in.php';  //内部ブログカード関数
@@ -110,7 +118,18 @@ require_once abspath(__FILE__).'html5.php'; //HTML5チェック関係
 //フルパスを指定しないとうまくいかないファイル
 require_once abspath(__FILE__).'profile.php'; //プロフィール関係の処理
 require_once abspath(__FILE__).'youtube.php'; //YouTube関係の処理
+require_once abspath(__FILE__).'font-awesome.php'; //Font Awesome
 require_once abspath(__FILE__).'admin.php'; //管理者機能
+if ( function_exists( 'register_block_style' ) && is_block_editor_style_block_option_visible() ){
+  require_once abspath(__FILE__).'block-editor-styles-paragraph.php'; //ブロックエディタースタイル（段落）
+  require_once abspath(__FILE__).'block-editor-styles-group.php'; //ブロックエディタースタイル（グループ）
+  require_once abspath(__FILE__).'block-editor-styles-list.php'; //ブロックエディタースタイル（リスト）
+}
+
+//Cocoon Blocks
+if ( !function_exists( 'cocoon_blocks_cgb_block_assets' ) && is_gutenberg_editor_enable() ):
+  require_once get_template_directory().'/blocks/plugin.php';
+endif;
 
 
 //TinyMCE
@@ -125,10 +144,12 @@ if (is_admin()) {;
   require_once abspath(__FILE__).'tinymce/shortcodes.php'; //ショートコード追加
   require_once abspath(__FILE__).'admin-tools.php'; //外部ツールを利用したもの
   require_once abspath(__FILE__).'admin-forms.php'; //管理画面で使用するフォームパーツ
-  require_once abspath(__FILE__).'gutenberg.php';   //ブロックエディター関係の関数
+  // if (is_dashboard_message_visible()) {
+  //   require_once abspath(__FILE__).'dashboard-message.php'; //ダッシュボードに表示するメッセージ
+  // }
 }
 
-require_once abspath(__FILE__).'settings.php';   //Wordpressの設定
+require_once abspath(__FILE__).'settings.php';   //WordPressの設定
 
 
 //新着記事ウィジェット
@@ -167,3 +188,13 @@ require_once abspath(__FILE__).'widgets/ad.php';
 require_once abspath(__FILE__).'widgets/toc.php';
 //ウィジェットの表示制御
 require_once abspath(__FILE__).'widgets/display-widgets.php';
+//メニューを取得
+$nav_menus = wp_get_nav_menus();
+if (!empty($nav_menus)) {
+  //ナビカードウィジェット
+  require_once abspath(__FILE__).'widgets/navi-entries.php';
+  //おすすめカードウィジェット
+  require_once abspath(__FILE__).'widgets/recommended-cards.php';
+  //ボックスメニューウィジェット
+  require_once abspath(__FILE__).'widgets/box-menus.php';
+}

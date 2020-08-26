@@ -7,14 +7,27 @@
  */
 if ( !defined( 'ABSPATH' ) ) exit;
 
-if (is_carousel_visible() && get_carousel_category_ids() && !is_amp()): ?>
+if (is_carousel_visible() && !is_amp() && apply_filters('carousel_visible', true)): ?>
 <?php //カルーセルに関連付けられた投稿の取得
 $args = array(
-  'cat' => get_carousel_category_ids(),
+  'category__in' => get_carousel_category_ids(),
+  'tag__in' => get_carousel_tag_ids(),
   'orderby' => get_carousel_orderby(), //ランダム表示
   'no_found_rows' => true,
   'posts_per_page' => get_carousel_max_count(),
 );
+//人気記事が有効の場合
+if ( is_carousel_popular_posts_enable()) {
+  $days = get_carousel_popular_posts_count_days();
+  $limit = get_carousel_max_count();
+  $records = get_access_ranking_records($days, $limit);
+  $post_ids = array();
+  //取得した投稿IDをセット
+  foreach ($records as $post) {
+    $post_ids[] = $post->ID; // 配列に追加
+  }
+  $args += array('post__in' => $post_ids);
+}
 $args = apply_filters('cocoon_carousel_args', $args);
 $query = new WP_Query( $args );
 // var_dump($query -> have_posts());

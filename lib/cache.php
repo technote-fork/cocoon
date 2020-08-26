@@ -16,7 +16,7 @@ function delete_theme_resource_caches() {
   //シェア・フォローカウントキャッシュの削除
   delete_sns_cache_transients();
   //キャッシュ用リソースフォルダの削除
-  remove_all_directory(get_theme_resources_dir());
+  remove_all_directory(get_theme_resources_path());
 }
 endif;
 
@@ -44,13 +44,13 @@ endif;
 
 
 
-//AMP個別キャシュの削除
+//AMP個別キャッシュの削除
 add_action( 'publish_post', 'delete_amp_page_cache');
 if ( !function_exists( 'delete_amp_page_cache' ) ):
 function delete_amp_page_cache($id){
   if (is_user_administrator()) {
     $transient_id = TRANSIENT_AMP_PREFIX.$id;
-    $transient_file = get_theme_amp_cache_dir().$transient_id;
+    $transient_file = get_theme_amp_cache_path().$transient_id;
     if (file_exists($transient_file)) {
       return wp_filesystem_delete($transient_file) &&
              delete_db_cache_records(TRANSIENT_AMP_PREFIX.$id);

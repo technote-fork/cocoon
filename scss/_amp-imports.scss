@@ -78,8 +78,23 @@
 @import "searchform";
 //タイムライン
 @import "timeline";
+//ナビメニューショートコード
+@import "navi-shortcode";
+//Font Awesomeのアイコン
+@import "fontawesome-before";
+//おすすめカード
+@import "recommended-cards";
+//ボックスメニュー
+@import "box-menus";
 
+//優先度を高くしたい
+.no-border{
+  border: none;
+}
 
+.no-after::after{
+  display: none;
+}
 
 .display-block{
   display: block;

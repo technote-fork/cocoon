@@ -56,7 +56,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           <td>
             <?php
             generate_textbox_tag(OP_GOOGLE_TAG_MANAGER_TRACKING_ID, get_google_tag_manager_tracking_id(), __( 'GTM-XXXXXXX', THEME_NAME ));
-            generate_tips_tag(__( 'GoogleタグマネージャのトラッキングIDを入力してください。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/google-tag-manager-id/'));
+            generate_tips_tag(__( 'GoogleタグマネージャのトラッキングIDを入力してください。Google AnalyticsトラッキングIDが入っていてもこちらが優先して計測されます。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/google-tag-manager-id/'));
             ?>
           </td>
         </tr>
@@ -98,7 +98,24 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           <td>
             <?php
             generate_textbox_tag(OP_GOOGLE_ANALYTICS_TRACKING_ID, get_google_analytics_tracking_id(), __( 'UA-00000000-0', THEME_NAME ));
-            generate_tips_tag(__( 'Google AnalyticsのトラッキングIDを入力してください。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/google-analytics/'));
+            generate_tips_tag(__( 'Google AnalyticsのトラッキングIDを入力してください。タグマネージャのトラッキングIDが入っている場合はタグマネージャが優先されます。SmartNewsフィードのトラッキングIDとしても利用します', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/google-analytics/'));
+            ?>
+          </td>
+        </tr>
+
+        <!-- スクリプト  -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag(OP_GOOGLE_ANALYTICS_SCRIPT, __('スクリプト', THEME_NAME) ); ?>
+          </th>
+          <td>
+            <?php
+            $options = array(
+              'gtag.js' => __( 'gtag.js（公式）', THEME_NAME ),
+              'ga-lite.min.js' => __( 'ga-lite.min.js（高速化）', THEME_NAME ),
+            );
+            generate_radiobox_tag(OP_GOOGLE_ANALYTICS_SCRIPT, $options, get_google_analytics_script());
+            generate_tips_tag(__('アクセス解析で利用するスクリプトを指定します。よくわからない場合は公式スクリプトのgtag.jsをご利用ください。', THEME_NAME));
             ?>
           </td>
         </tr>

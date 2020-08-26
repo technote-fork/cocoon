@@ -32,7 +32,7 @@ function register_sidebar_scroll_widget_area(){
     array(
     'name' => __( 'サイドバースクロール追従', THEME_NAME ),
     'id' => 'sidebar-scroll',
-    'description' => __( 'サイドバーで下にスクロールすると追いかけてくるエリアです。※ここにGoogle AdSenseを貼るのはポリシー違反です。', THEME_NAME ),
+    'description' => __( 'サイドバーで下にスクロールすると追いかけてくるエリアです。', THEME_NAME ),
     'before_widget' => '<aside id="%1$s" class="widget widget-sidebar widget-sidebar-scroll %2$s">',
     'after_widget' => '</aside>',
     'before_title' => '<h3 class="widget-sidebar-scroll-title widget-title">',
@@ -48,7 +48,7 @@ function register_main_scroll_widget_area(){
     array(
     'name' => __( 'メインカラムスクロール追従', THEME_NAME ),
     'id' => 'main-scroll',
-    'description' => __( 'メインカラムで下にスクロールすると追いかけてくるエリアです。サイドバーの方が長い場合に追従してきます。※ここにGoogle AdSenseを貼るのはポリシー違反です。', THEME_NAME ),
+    'description' => __( 'メインカラムで下にスクロールすると追いかけてくるエリアです。サイドバーの方が長い場合に追従してきます。', THEME_NAME ),
     'before_widget' => '<aside id="%1$s" class="widget widget-main-scroll %2$s">',
     'after_widget' => '</aside>',
     'before_title' => '<h2 class="widget-main-scroll-title main-widget-label">',
@@ -218,6 +218,38 @@ register_sidebars(1,
 endif;
 register_below_single_comment_form_widget_area();
 
+if ( !function_exists( 'register_above_page_content_title_widget_area' ) ):
+function register_above_page_content_title_widget_area(){
+  register_sidebars(1,
+    array(
+    'name' => __( '固定ページタイトル上', THEME_NAME ),
+    'id' => 'above-page-content-title',
+    'description' => __( '固定ページタイトル上に表示されるウイジェット。', THEME_NAME ),
+    'before_widget' => '<div id="%1$s" class="widget widget-above-page-content-title %2$s">',
+    'after_widget' => '</div>',
+    'before_title' => '<div class="widget-above-page-content-title-title main-widget-label">',
+    'after_title' => '</div>',
+  ));
+}
+endif;
+register_above_page_content_title_widget_area();
+
+if ( !function_exists( 'register_below_page_content_title_widget_area' ) ):
+function register_below_page_content_title_widget_area(){
+  register_sidebars(1,
+    array(
+    'name' => __( '固定ページタイトル下', THEME_NAME ),
+    'id' => 'below-page-content-title',
+    'description' => __( '固定ページタイトル下に表示されるウイジェット。', THEME_NAME ),
+    'before_widget' => '<div id="%1$s" class="widget widget-below-page-content-title %2$s">',
+    'after_widget' => '</div>',
+    'before_title' => '<div class="widget-below-page-content-title-title main-widget-label">',
+    'after_title' => '</div>',
+  ));
+}
+endif;
+register_below_page_content_title_widget_area();
+
 if ( !function_exists( 'register_page_content_top_widget_area' ) ):
 function register_page_content_top_widget_area(){
   register_sidebars(1,
@@ -347,6 +379,38 @@ function register_index_bottom_widget_area(){
 endif;
 register_index_bottom_widget_area();
 
+if ( !function_exists( 'register_content_top_widget_area' ) ):
+function register_content_top_widget_area(){
+  register_sidebars(1,
+    array(
+    'name' => __( 'コンテンツ上部', THEME_NAME ),
+    'id' => 'content-top',
+    'description' => __( 'メインカラムとサイドバーの上部エリア。グローバルメニューの下にもなります。', THEME_NAME ),
+    'before_widget' => '<aside id="%1$s" class="widget widget-content-top %2$s">',
+    'after_widget' => '</aside>',
+    'before_title' => '<h2 class="widget-content-top-title main-widget-label">',
+    'after_title' => '</h2>',
+  ));
+}
+endif;
+register_content_top_widget_area();
+
+if ( !function_exists( 'register_content_bottom_widget_area' ) ):
+function register_content_bottom_widget_area(){
+  register_sidebars(1,
+    array(
+    'name' => __( 'コンテンツ下部', THEME_NAME ),
+    'id' => 'content-bottom',
+    'description' => __( 'メインカラムとサイドバーの下部エリア。フッターの上になります。', THEME_NAME ),
+    'before_widget' => '<aside id="%1$s" class="widget widget-content-bottom %2$s">',
+    'after_widget' => '</aside>',
+    'before_title' => '<h2 class="widget-content-bottom-title main-widget-label">',
+    'after_title' => '</h2>',
+  ));
+}
+endif;
+register_content_bottom_widget_area();
+
 if ( !function_exists( 'register_footer_left_widget_area' ) ):
 function register_footer_left_widget_area(){
   register_sidebars(1,
@@ -402,7 +466,7 @@ function register_footer_mobile_widget_area(){
     array(
     'name' => __( 'フッター（モバイル用）', THEME_NAME ),
     'id' => 'footer-mobile',
-    'description' => __( 'モバイルで表示するウィジットエリアです。768px以下で表示されます。', THEME_NAME ),
+    'description' => __( 'モバイルで表示するウィジットエリアです。834px以下で表示されます。', THEME_NAME ),
     'before_widget' => '<aside id="%1$s" class="widget widget-footer-mobile %2$s">',
     'after_widget' => '</aside>',
     'before_title' => '<h3 class="widget-footer-mobile-title footer-title">',
@@ -464,7 +528,7 @@ endif;
 /////////////////////////////////////
 // 固定ページ本文中にウィジェットを表示する
 /////////////////////////////////////
-add_filter('the_content','add_widget_area_before_1st_h2_in_page');
+add_filter('the_content','add_widget_area_before_1st_h2_in_page', BEFORE_1ST_H2_AD_PRIORITY_STANDARD);
 if ( !function_exists( 'add_widget_area_before_1st_h2_in_page' ) ):
 function add_widget_area_before_1st_h2_in_page($the_content) {
   // if ( is_amp() ) {

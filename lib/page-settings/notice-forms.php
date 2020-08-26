@@ -19,11 +19,13 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
      ?>
     </p>
 
+    <?php if (DEBUG_ADMIN_DEMO_ENABLE && apply_filters('cocoon_setting_preview_notice', true)): ?>
     <p class="preview-label"><?php _e( 'プレビュー', THEME_NAME ) ?></p>
     <div class="demo notice-area-demo">
       <?php //通知エリア
       get_template_part('tmp/notice'); ?>
     </div>
+    <?php endif; ?>
 
     <table class="form-table">
       <tbody>
@@ -101,15 +103,16 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
         <!-- 背景色 -->
         <tr>
           <th scope="row">
-            <?php generate_label_tag(OP_NOTICE_AREA_BACKGROUND_COLOR, __('色', THEME_NAME) ); ?>
+            <?php generate_label_tag(OP_NOTICE_AREA_BACKGROUND_COLOR, __('色', THEME_NAME) );
+            generate_select_color_tip_tag() ?>
           </th>
           <td>
             <?php
-            generate_color_picker_tag(OP_NOTICE_AREA_BACKGROUND_COLOR,  get_notice_area_background_color(), '通知エリア背景色');
+            generate_color_picker_tag(OP_NOTICE_AREA_BACKGROUND_COLOR,  get_notice_area_background_color(), __( '通知エリア背景色', THEME_NAME ));
             generate_tips_tag(__( 'メッセージに対して独自の背景色を設定したい場合は色を選択してください。デフォルト色を変更したい場合は、こちらの色が優先されます。', THEME_NAME ));
 
-            generate_color_picker_tag(OP_NOTICE_AREA_TEXT_COLOR,  get_notice_area_text_color(), '通知エリア文字色');
-            generate_tips_tag(__( 'メッセージに対して独自の背テキスト色を設定したい場合は色を選択してください。デフォルト色を変更したい場合は、こちらの色が優先されます。', THEME_NAME ));
+            generate_color_picker_tag(OP_NOTICE_AREA_TEXT_COLOR,  get_notice_area_text_color(), __( '通知エリア文字色', THEME_NAME ));
+            generate_tips_tag(__( 'メッセージに対して独自のテキスト色を設定したい場合は色を選択してください。デフォルト色を変更したい場合は、こちらの色が優先されます。', THEME_NAME ));
             ?>
           </td>
         </tr>

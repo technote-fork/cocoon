@@ -2,8 +2,7 @@
 ** パンくずリスト
 ************************************/
 .breadcrumb{
-  margin-top: 20px;
-  margin-bottom: 1em;
+  margin: 1em .4em;
   color: $pallid_text_color;
   font-size: 13px;
 }
@@ -12,7 +11,7 @@
   display: inline;
 }
 
-.breadcrumb span.sp{
+.breadcrumb .sp{
   margin: 0 10px;
 }
 
@@ -27,10 +26,14 @@
 .breadcrumb.pbp-footer-before{
   background-color: $white;
   margin: 12px auto 0;
-  padding: 5px;
+  padding: .6em 1em;
 }
 
 .breadcrumb.sbp-main-before + .content,
 .breadcrumb.pbp-main-before + .content{
   margin-top: 12px;
+}
+
+.breadcrumb-caption{
+  margin: 0 3px;
 }

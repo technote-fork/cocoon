@@ -58,12 +58,45 @@ require_once abspath(__FILE__).'sns-share-forms-bottom.php';
           </th>
           <td>
             <?php
-            generate_textbox_tag(OP_TWITTER_HASH_TAG, get_twitter_hash_tag(), '#'.get_bloginfo('name').' '.__( '#ハッシュタグ', THEME_NAME ));
+            generate_textbox_tag(OP_TWITTER_HASH_TAG, get_twitter_hash_tag(), '#wpcocoon '.__( '#ハッシュタグ', THEME_NAME ));
             generate_tips_tag(__( 'ツイート時に含めるハッシュタグを入力してください。半角スペースで区切って複数入力も可能です。URLやタイトルを含めて140文字を超える場合は正常動作しない可能性もあります。', THEME_NAME ));
 
             ?>
           </td>
         </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+
+
+
+
+<!-- Facebook設定 -->
+<div id="sns-share-facebook" class="postbox">
+  <h2 class="hndle"><?php _e( 'Facebook設定', THEME_NAME ) ?></h2>
+  <div class="inside">
+    <p><?php _e( 'Facebookのシェア数に関する設定です。', THEME_NAME ) ?></p>
+    <table class="form-table">
+      <tbody>
+
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag(OP_FACEBOOK_ACCESS_TOKEN, __( 'アクセストークン', THEME_NAME )); ?>
+          </th>
+          <td>
+          <td>
+            <?php
+            generate_textbox_tag(OP_FACEBOOK_ACCESS_TOKEN, get_facebook_access_token(), __( 'access_tokenを入力', THEME_NAME ));
+            generate_tips_tag(__( 'Facebookのシェア数を取得するのに必要なアクセストークンを入力します。当テーマではリアクションカウントをシェア数として採用しています。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/facebook-share-count/'));
+
+            ?>
+          </td>
+          </td>
+        </tr>
+
       </tbody>
     </table>
 
@@ -113,10 +146,10 @@ require_once abspath(__FILE__).'sns-share-forms-bottom.php';
     <table class="form-table">
       <tbody>
 
-        <!-- キャシュの有効化 -->
+        <!-- キャッシュの有効化 -->
         <tr>
           <th scope="row">
-            <?php generate_label_tag(OP_SNS_SHARE_COUNT_CACHE_ENABLE, __( 'キャシュの有効化', THEME_NAME )); ?>
+            <?php generate_label_tag(OP_SNS_SHARE_COUNT_CACHE_ENABLE, __( 'キャッシュの有効化', THEME_NAME )); ?>
           </th>
           <td>
             <?php

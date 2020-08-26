@@ -17,6 +17,8 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 
     <table class="form-table">
       <tbody>
+
+        <?php if (DEBUG_ADMIN_DEMO_ENABLE && apply_filters('cocoon_setting_preview_title_front', true)): ?>
         <!-- プレビュー画面 -->
         <tr>
           <th scope="row">
@@ -25,7 +27,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           <td>
             <div class="demo">
               <div class="search-result">
-                <a href="<?php echo home_url(); ?>" class="title" target="_blank"><?php echo get_front_page_title_caption(); ?></a>
+                <a href="<?php echo home_url(); ?>" class="title" target="_blank" rel="noopener"><?php echo get_front_page_title_caption(); ?></a>
                 <div class="url"><?php echo home_url(); ?></div>
                 <div class="description"><?php echo get_front_page_meta_description(); ?></div>
               </div>
@@ -33,6 +35,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             <?php generate_tips_tag(__( 'プレビューはあくまで目安です。表示は検索エンジンによって変更される可能性があります。', THEME_NAME )) ?>
           </td>
         </tr>
+        <?php endif; ?>
 
         <!-- フロントページタイトル  -->
         <tr>
@@ -97,6 +100,8 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 
     <table class="form-table">
       <tbody>
+
+        <?php if (DEBUG_ADMIN_DEMO_ENABLE && apply_filters('cocoon_setting_preview_title_singular', true)): ?>
         <!-- プレビュー画面 -->
         <tr>
           <th scope="row">
@@ -110,7 +115,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             <?php if ($rand_post): ?>
               <div class="demo">
                 <div class="search-result">
-                  <a href="<?php the_permalink($rand_post->ID); ?>" class="title" target="_blank"><?php echo get_singular_title_caption($rand_post); ?></a>
+                  <a href="<?php the_permalink($rand_post->ID); ?>" class="title" target="_blank" rel="noopener"><?php echo get_singular_title_caption($rand_post); ?></a>
                   <div class="url"><?php the_permalink($rand_post->ID); ?></div>
                   <div class="description">
                     <?php
@@ -130,6 +135,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             generate_tips_tag(__( 'プレビューはあくまで目安です。表示は検索エンジンによって変更される可能性があります。', THEME_NAME )); ?>
           </td>
         </tr>
+        <?php endif; ?>
 
         <!-- 投稿・固定ページタイトル  -->
         <tr>
@@ -146,11 +152,6 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             generate_radiobox_tag(OP_SINGULAR_PAGE_TITLE_FORMAT, $options, get_singular_page_title_format());
             generate_tips_tag(__( '投稿・固定ページで出力するタイトルタグのフォーマットを選択してください。', THEME_NAME ));
 
-            generate_label_tag(OP_SIMPLIFIED_SITE_NAME, __('簡略化したサイト名', THEME_NAME) );
-            echo '<br>';
-            generate_textbox_tag(OP_SIMPLIFIED_SITE_NAME, get_simplified_site_name(), '', 20);
-            generate_tips_tag(__( 'サイト名が長すぎるので簡略化したサイト名をタイトルに含めたい場合は入力してください。入力しない場合は、通常のサイト名が表示されます。', THEME_NAME ));
-
             ?>
           </td>
         </tr>
@@ -158,7 +159,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
         <!--  メタディスクリプション -->
         <tr>
           <th scope="row">
-            <?php generate_label_tag(OP_META_DESCRIPTION_TO_SINGULAR, __( 'メタディスクリプションの出力', THEME_NAME ) ); ?>
+            <?php generate_label_tag(OP_META_DESCRIPTION_TO_SINGULAR, __( 'メタディスクリプション', THEME_NAME ) ); ?>
           </th>
           <td>
             <?php
@@ -171,7 +172,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
         <!--  メタキーワード -->
         <tr>
           <th scope="row">
-            <?php generate_label_tag(OP_META_KEYWORDS_TO_SINGULAR, __( 'メタキーワードの出力', THEME_NAME ) ); ?>
+            <?php generate_label_tag(OP_META_KEYWORDS_TO_SINGULAR, __( 'メタキーワード', THEME_NAME ) ); ?>
           </th>
           <td>
             <?php
@@ -188,15 +189,17 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 </div>
 
 
-<!-- カテゴリーページタイトル設定 -->
-<div id="title-category" class="postbox">
-  <h2 class="hndle"><?php _e( 'カテゴリーページ設定', THEME_NAME ) ?></h2>
+<!-- カテゴリー・タグページタイトル設定 -->
+<div id="title-category-tag" class="postbox">
+  <h2 class="hndle"><?php _e( 'カテゴリー・タグページ設定', THEME_NAME ) ?></h2>
   <div class="inside">
 
-    <p><?php _e( 'カテゴリーページの、タイトル、メタディスクリプション、メタキーワードの設定です。', THEME_NAME ) ?></p>
+    <p><?php _e( 'カテゴリー・タグページの、タイトル、メタディスクリプション、メタキーワードの設定です。', THEME_NAME ) ?></p>
 
     <table class="form-table">
       <tbody>
+
+        <?php if (DEBUG_ADMIN_DEMO_ENABLE && apply_filters('cocoon_setting_preview_title_category', true)): ?>
         <!-- プレビュー画面 -->
         <tr>
           <th scope="row">
@@ -217,7 +220,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
              ?>
               <div class="demo">
                 <div class="search-result">
-                  <a href="<?php echo get_category_link($rand_category->term_id); ?>" class="title" target="_blank"><?php echo get_category_title_caption($rand_category); ?></a>
+                  <a href="<?php echo get_category_link($rand_category->term_id); ?>" class="title" target="_blank" rel="noopener"><?php echo get_category_title_caption($rand_category); ?></a>
                   <div class="url"><?php echo get_category_link($rand_category->term_id); ?></div>
                   <div class="description">
                     <?php
@@ -234,11 +237,12 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             generate_tips_tag(__( 'プレビューはあくまで目安です。表示は検索エンジンによって変更される可能性があります。', THEME_NAME )); ?>
           </td>
         </tr>
+        <?php endif; ?>
 
         <!-- カテゴリーページタイトル  -->
         <tr>
           <th scope="row">
-            <?php generate_label_tag(OP_CATEGORY_PAGE_TITLE_FORMAT, __( 'カテゴリーページタイトル', THEME_NAME ) ); ?>
+            <?php generate_label_tag(OP_CATEGORY_PAGE_TITLE_FORMAT, __( 'ページタイトル', THEME_NAME ) ); ?>
           </th>
           <td>
             <?php
@@ -248,7 +252,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
               'sitename_category' => __( 'サイト名', THEME_NAME ).get_title_separator_caption().__( 'ページタイトル', THEME_NAME ),
             );
             generate_radiobox_tag(OP_CATEGORY_PAGE_TITLE_FORMAT, $options, get_category_page_title_format());
-            generate_tips_tag(__( 'カテゴリーページで出力するタイトルタグのフォーマットを選択してください。', THEME_NAME ));
+            generate_tips_tag(__( 'カテゴリー・タグページで出力するタイトルタグのフォーマットを選択してください。', THEME_NAME ));
             ?>
           </td>
         </tr>
@@ -256,12 +260,12 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
         <!--  メタディスクリプション -->
         <tr>
           <th scope="row">
-            <?php generate_label_tag(OP_META_DESCRIPTION_TO_CATEGORY, __( 'メタディスクリプションの出力', THEME_NAME ) ); ?>
+            <?php generate_label_tag(OP_META_DESCRIPTION_TO_CATEGORY, __( 'メタディスクリプション', THEME_NAME ) ); ?>
           </th>
           <td>
             <?php
             generate_checkbox_tag(OP_META_DESCRIPTION_TO_CATEGORY, is_meta_description_to_category(), __( 'メタディスクリプションタグを出力する', THEME_NAME ));
-            generate_tips_tag(__( 'カテゴリーページのページのheadタグ内に、メタディスクリプションタグを出力するか。※SEO的にはほとんど意味のない設定だと思います。', THEME_NAME ));
+            generate_tips_tag(__( 'カテゴリー・タグページのページのheadタグ内に、メタディスクリプションタグを出力するか。※SEO的にはほとんど意味のない設定だと思います。', THEME_NAME ));
             ?>
           </td>
         </tr>
@@ -269,12 +273,12 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
         <!--  メタキーワード -->
         <tr>
           <th scope="row">
-            <?php generate_label_tag(OP_META_KEYWORDS_TO_CATEGORY, __( 'メタキーワードの出力', THEME_NAME ) ); ?>
+            <?php generate_label_tag(OP_META_KEYWORDS_TO_CATEGORY, __( 'メタキーワード', THEME_NAME ) ); ?>
           </th>
           <td>
             <?php
             generate_checkbox_tag(OP_META_KEYWORDS_TO_CATEGORY, is_meta_keywords_to_category(), __( 'メタキーワードタグを出力する', THEME_NAME ));
-            generate_tips_tag(__( 'カテゴリーページのページのheadタグ内に、メタキーワードタグを出力するか。', THEME_NAME ));
+            generate_tips_tag(__( 'カテゴリー・タグページのページのheadタグ内に、メタキーワードタグを出力するか。', THEME_NAME ));
             ?>
           </td>
         </tr>
@@ -294,6 +298,21 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 
     <table class="form-table">
       <tbody>
+
+        <!-- 簡略化したサイト名  -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag(OP_TITLE_SEPARATOR, __( '簡略化したサイト名', THEME_NAME ) ); ?>
+          </th>
+          <td>
+            <?php
+            generate_label_tag(OP_SIMPLIFIED_SITE_NAME, __('短縮形のサイト名', THEME_NAME) );
+            echo '<br>';
+            generate_textbox_tag(OP_SIMPLIFIED_SITE_NAME, get_simplified_site_name(), '', 20);
+            generate_tips_tag(__( 'サイト名が長すぎるので簡略化したサイト名をタイトルに含めたい場合は入力してください。入力しない場合は、通常のサイト名が表示されます。この短縮サイト名は投稿・固定・カテゴリー・タグページで適用されます', THEME_NAME ));
+            ?>
+          </td>
+        </tr>
 
         <!-- セパレーター  -->
         <tr>

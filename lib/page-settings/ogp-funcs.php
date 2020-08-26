@@ -35,7 +35,7 @@ endif;
 define('OP_TWITTER_CARD_TYPE', 'twitter_card_type');
 if ( !function_exists( 'get_twitter_card_type' ) ):
 function get_twitter_card_type(){
-  return get_theme_option(OP_TWITTER_CARD_TYPE, 'summary');
+  return get_theme_option(OP_TWITTER_CARD_TYPE, 'summary_large_image');
 }
 endif;
 
@@ -50,7 +50,7 @@ function get_ogp_home_image_url(){
   if (empty($url)) {
     $url = $def_url;
   }
-  return $url;
+  return apply_filters('get_ogp_home_image_url', $url);
 }
 endif;
 

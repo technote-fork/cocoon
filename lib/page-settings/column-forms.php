@@ -13,9 +13,9 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
   <h2 class="hndle"><?php _e( 'メインカラム設定', THEME_NAME ) ?></h2>
   <div class="inside">
 
-    <p><?php _e( 'メインカラムの幅、余白幅、枠線の設定です。', THEME_NAME ) ?></p>
+    <p><?php echo __( 'メインカラムの幅、余白幅、枠線の設定です。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/column-settiongs/') ?></p>
 
-    <?php if(DEBUG_ADMIN_DEMO_ENABLE): ?>
+    <?php if (DEBUG_ADMIN_DEMO_ENABLE && apply_filters('cocoon_setting_preview_columns', true)): ?>
       <p class="preview-label"><?php _e( 'プレビュー', THEME_NAME ) ?></p>
       <div class="demo iframe-standard-demo column-demo">
         <?php
@@ -77,7 +77,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           </th>
           <td>
             <?php
-            generate_color_picker_tag(OP_MAIN_COLUMN_BORDER_COLOR,  get_main_column_border_color(), 'ボーダー色');
+            generate_color_picker_tag(OP_MAIN_COLUMN_BORDER_COLOR,  get_main_column_border_color(), __( 'ボーダー色', THEME_NAME ));
             generate_tips_tag(__( 'メインカラムのボーダー色を設定します。未入力でデフォルトの透過色になります。', THEME_NAME ));
             ?>
           </td>
@@ -96,7 +96,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
   <h2 class="hndle"><?php _e( 'サイドバー設定', THEME_NAME ) ?></h2>
   <div class="inside">
 
-    <p><?php _e( 'サイドバーの幅、余白幅、枠線の設定です。', THEME_NAME ) ?></p>
+    <p><?php echo __( 'サイドバーの幅、余白幅、枠線の設定です。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/column-settiongs/') ?></p>
 
     <table class="form-table">
       <tbody>
@@ -108,7 +108,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           </th>
           <td>
             <?php
-            generate_number_tag(OP_SIDEBAR_CONTENTS_WIDTH,  get_sidebar_contents_width(), 336, 200, 500, 10);
+            generate_number_tag(OP_SIDEBAR_CONTENTS_WIDTH,  get_sidebar_contents_width(), 336, 200, 500, 1);
             generate_tips_tag(__( 'サイドバーコンテンツ部分の幅を設定します。（最小：200px、最大：500px）', THEME_NAME ));
             ?>
           </td>
@@ -121,7 +121,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           </th>
           <td>
             <?php
-            generate_number_tag(OP_SIDEBAR_PADDING,  get_sidebar_padding(), 9, 5, 40);
+            generate_number_tag(OP_SIDEBAR_PADDING,  get_sidebar_padding(), 19, 5, 40);
             generate_tips_tag(__( 'サイドバーコンテンツ両サイドの余白幅を設定します。（最小：5px、最大：40px）', THEME_NAME ));
             ?>
           </td>
@@ -147,7 +147,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           </th>
           <td>
             <?php
-            generate_color_picker_tag(OP_SIDEBAR_BORDER_COLOR,  get_sidebar_border_color(), 'ボーダー色');
+            generate_color_picker_tag(OP_SIDEBAR_BORDER_COLOR,  get_sidebar_border_color(), __( 'ボーダー色', THEME_NAME ));
             generate_tips_tag(__( 'サイドバーのボーダー色を設定します。未入力でデフォルトの透過色になります。', THEME_NAME ));
             ?>
           </td>
@@ -165,7 +165,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
   <h2 class="hndle"><?php _e( 'カラム間余白設定', THEME_NAME ) ?></h2>
   <div class="inside">
 
-    <p><?php _e( 'メインカラムとサイドバーの間隔設定です。', THEME_NAME ) ?></p>
+    <p><?php echo __( 'メインカラムとサイドバーの間隔設定です。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/column-settiongs/') ?></p>
 
     <table class="form-table">
       <tbody>

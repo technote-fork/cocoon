@@ -13,10 +13,12 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
   <h2 class="hndle"><?php _e( '目次設定', THEME_NAME ) ?></h2>
   <div class="inside">
 
-    <p><?php _e( 'Table of contentsライクな目次設定です。', THEME_NAME ) ?></p>
+    <p><?php _e( 'プラグインのTable of contentsに似た目次設定です。', THEME_NAME ) ?></p>
 
     <table class="form-table">
       <tbody>
+
+        <?php if (DEBUG_ADMIN_DEMO_ENABLE && apply_filters('cocoon_setting_preview_toc', true)): ?>
         <!-- プレビュー画面 -->
         <tr>
           <th scope="row">
@@ -26,13 +28,14 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             <div class="demo toc" style="height: 300px;overflow: auto;">
               <article class="article">
                 <?php query_posts('posts_per_page=1&orderby=rand&no_found_rows=1'); ?>
-                <?php get_template_part('tmp/content') ?>
+                <?php get_sanitize_preview_template_part('tmp/content') ?>
                 <?php wp_reset_query(); ?>
               </article>
             </div>
             <?php generate_tips_tag(__( 'デモの記事はランダムです。H2見出しがない本文には目次は表示されません。', THEME_NAME )); ?>
           </td>
         </tr>
+        <?php endif; ?>
 
         <!-- 目次の表示 -->
         <tr>
@@ -57,6 +60,11 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             generate_checkbox_tag(OP_SINGLE_TOC_VISIBLE , is_single_toc_visible(), __( '投稿ページ', THEME_NAME ));
             echo '<br>';
             generate_checkbox_tag(OP_PAGE_TOC_VISIBLE , is_page_toc_visible(), __( '固定ページ', THEME_NAME ));
+            echo '<br>';
+            generate_checkbox_tag(OP_CATEGORY_TOC_VISIBLE , is_category_toc_visible(), __( 'カテゴリーページ', THEME_NAME ));
+            echo '<br>';
+            generate_checkbox_tag(OP_TAG_TOC_VISIBLE , is_tag_toc_visible(), __( 'タグページ', THEME_NAME ));
+            echo '<br>';
             generate_tips_tag(__( '上記のページの目次表示を切り替えることができます。※[toc]ショートコードで目次を表示させている場合は一貫して表示されます。', THEME_NAME ));
             ?>
           </td>
@@ -181,6 +189,19 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             <?php
             generate_checkbox_tag(OP_TOC_BEFORE_ADS , is_toc_before_ads(), __( '広告の手前に目次を表示する', THEME_NAME ));
             generate_tips_tag(__( '広告やウィジェットの手前に目次を表示します。※最初のH2見出し手前に表示されているとき', THEME_NAME ));
+            ?>
+          </td>
+        </tr>
+
+        <!-- 目次の表示順 -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag(OP_TOC_HEADING_INNER_HTML_TAG_ENABLE, __('見出し内タグ', THEME_NAME) ); ?>
+          </th>
+          <td>
+            <?php
+            generate_checkbox_tag(OP_TOC_HEADING_INNER_HTML_TAG_ENABLE , is_toc_heading_inner_html_tag_enable(), __( 'H見出し内のタグを有効にする', THEME_NAME ));
+            generate_tips_tag(__( 'h2-h6見出し内のHTMLタグをそのまま出力します。', THEME_NAME ));
             ?>
           </td>
         </tr>

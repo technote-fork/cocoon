@@ -10,7 +10,8 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 <?php //モバイルサイトフォント
 if (get_mobile_site_font_size()): ?>
 @media screen and (max-width: 480px){
-  .page-body{
+  .page-body,
+  .menu-content{
     font-size: <?php echo get_mobile_site_font_size(); ?>;
   }
 }
@@ -26,7 +27,7 @@ if (get_site_key_color()): ?>
 .cat-label,
 .appeal-content .appeal-button,
 .demo .cat-label,
-.blogcard-type .blogcard::before,
+.blogcard-type .blogcard-label,
 #footer{
   background-color: <?php echo get_site_key_color(); ?>;
 }
@@ -270,8 +271,8 @@ $colors = array();
 $text_colors = array();
 //カテゴリ色の振り分け
 foreach ($cats as $cat) {
-  $color = get_category_color($cat->cat_ID);
-  $text_color = get_category_text_color($cat->cat_ID);
+  $color = get_the_category_color($cat->cat_ID);
+  $text_color = get_the_category_text_color($cat->cat_ID);
   $cat_label_pre = '.cat-label.cat-label-';
   $cat_link_pre = '.cat-link.cat-link-';
   if ($color) {
@@ -327,9 +328,10 @@ if (get_main_column_padding()): ?>
 }
 <?php endif ?>
 <?php //枠線の幅
-if (get_main_column_border_width()): ?>
+$main_column_border_width = get_main_column_border_width();
+if (is_numeric($main_column_border_width)): ?>
 .main{
-  border-width: <?php echo get_main_column_border_width(); ?>px;
+  border-width: <?php echo $main_column_border_width; ?>px;
 }
 <?php endif ?>
 <?php //枠線の色
@@ -351,13 +353,14 @@ if (get_sidebar_width()): ?>
 <?php //パディング
 if (get_sidebar_padding()): ?>
 .sidebar{
-  padding: 9px <?php echo get_sidebar_padding(); ?>px;
+  padding: 19px <?php echo get_sidebar_padding(); ?>px;
 }
 <?php endif ?>
 <?php //枠線の幅
-if (get_sidebar_border_width()): ?>
+$sidebar_border_width = get_sidebar_border_width();
+if (is_numeric($sidebar_border_width)): ?>
 .sidebar{
-  border-width: <?php echo get_sidebar_border_width(); ?>px;
+  border-width: <?php echo $sidebar_border_width; ?>px;
 }
 <?php endif ?>
 <?php //枠線の色
@@ -367,13 +370,14 @@ if (get_sidebar_border_color()): ?>
 }
 <?php endif ?>
 <?php //カラム間の幅
-if (get_main_sidebar_margin()): ?>
+$main_sidebar_margin = get_main_sidebar_margin();
+if (false && is_numeric($main_sidebar_margin)): ?>
 .main{
-  <?php if(is_sidebar_position_right()): ?>
-  margin-right: <?php echo get_main_sidebar_margin(); ?>px;
+  <?php if (is_sidebar_position_right()): ?>
+  margin-right: <?php echo $main_sidebar_margin; ?>px;
   margin-left: 0;
   <?php else: ?>
-  margin-left: <?php echo get_main_sidebar_margin(); ?>px;
+  margin-left: <?php echo $main_sidebar_margin; ?>px;
   margin-right: 0;
   <?php endif; ?>
 }
@@ -411,7 +415,7 @@ if ($color = get_notice_area_text_color()): ?>
 <?php //アクセスカウント取得用スタイル
 if (!is_admin() && is_singular() && is_access_count_enable()): ?>
 body::after{
-  content: url("<?php echo get_template_directory_uri(); ?>/lib/analytics/access.php?post_id=<?php echo get_the_ID(); ?>&post_type=<?php echo get_accesses_post_type(); ?>");
+  content: url("<?php echo get_template_directory_uri(); ?>/lib/analytics/access.php?post_id=<?php echo get_the_ID(); ?>&post_type=<?php echo get_accesses_post_type(); ?>&nonce=<?php echo wp_create_nonce( 'access-' . get_the_ID() );?>");
   visibility: hidden;
   position: absolute;
   bottom: 0;
@@ -480,7 +484,7 @@ if ($site_logo_width = get_the_site_logo_width()): ?>
 <?php endif ?>
 <?php //モバイルのヘッダーの高さ
 if ($mhah = get_mobile_header_area_height()): ?>
-@media screen and (max-width: 768px){
+@media screen and (max-width: 834px){
   .header div.header-in{
     min-height: <?php echo $mhah; ?>px;
   }
@@ -586,3 +590,180 @@ if ($footer_text_color = get_footer_text_color()): ?>
   color: <?php echo $footer_text_color; ?>;
 }
 <?php endif ?>
+<?php //行の高さ
+if ($entry_content_line_hight = get_entry_content_line_hight()): ?>
+.entry-content > *,
+.demo .entry-content p {
+  line-height: <?php echo $entry_content_line_hight; ?>;
+}
+  <?php //管理画面用
+  if(is_admin() && is_gutenberg_editor_enable()): ?>
+  .main,
+  .main p,
+  .main p.wp-block-paragraph {
+    line-height: <?php echo $entry_content_line_hight; ?>;
+  }
+  <?php endif; ?>
+<?php endif ?>
+<?php //行の余白
+if ($entry_content_margin_hight = get_entry_content_margin_hight()): ?>
+.entry-content > *,
+.demo .entry-content p {
+  margin-top: <?php echo $entry_content_margin_hight; ?>em;
+  margin-bottom: <?php echo $entry_content_margin_hight; ?>em;
+}
+.article .micro-top{
+  margin-bottom: -<?php echo $entry_content_margin_hight * 1.1; ?>em;
+}
+.article .micro-balloon{
+  margin-bottom: -<?php echo $entry_content_margin_hight * 0.8; ?>em;
+}
+.article .micro-bottom{
+  margin-top: -<?php echo $entry_content_margin_hight * 1.1; ?>em;
+}
+.article .micro-bottom.micro-balloon{
+  margin-top: -<?php echo $entry_content_margin_hight * 0.8; ?>em;
+  margin-bottom: <?php echo $entry_content_margin_hight; ?>em;
+}
+  <?php ////管理画面用
+  if(is_admin() && is_gutenberg_editor_enable()): ?>
+  .article .wp-block {
+    margin-top: <?php echo $entry_content_margin_hight; ?>em;
+    margin-bottom: <?php echo $entry_content_margin_hight; ?>em;
+  }
+  <?php //公開ページと同じにすると「＋」ボタンが押せなかったので少し変更 ?>
+  .article .micro-top{
+    margin-bottom: -<?php echo $entry_content_margin_hight; ?>em;
+  }
+  .article .micro-bottom{
+    margin-top: -<?php echo $entry_content_margin_hight; ?>em;
+  }
+  <?php endif; ?>
+<?php endif ?>
+.blank-box.bb-key-color{
+  border-color: <?php echo get_editor_key_color(); ?>;
+}
+.iic-key-color li::before{
+  color: <?php echo get_editor_key_color(); ?>;
+}
+.blank-box.bb-tab.bb-key-color::before {
+  background-color: <?php echo get_editor_key_color(); ?>;
+}
+.tb-key-color .toggle-button {
+  border: 1px solid <?php echo get_editor_key_color(); ?>;
+  background: <?php echo get_editor_key_color(); ?>;
+  color: #fff;
+}
+.tb-key-color .toggle-button::before {
+  color: #ccc;
+}
+.tb-key-color .toggle-checkbox:checked ~ .toggle-content {
+  border-color: <?php echo get_editor_key_color(); ?>;
+}
+.cb-key-color.caption-box {
+  border-color: <?php echo get_editor_key_color(); ?>;
+}
+.cb-key-color .caption-box-label {
+  background-color: <?php echo get_editor_key_color(); ?>;
+  color: #fff;
+}
+.tcb-key-color .tab-caption-box-label {
+  background-color: <?php echo get_editor_key_color(); ?>;
+  color: #fff;
+}
+.tcb-key-color .tab-caption-box-content {
+  border-color: <?php echo get_editor_key_color(); ?>;
+}
+.lb-key-color .label-box-content {
+  border-color: <?php echo get_editor_key_color(); ?>;
+}
+.mc-key-color {
+  background-color: <?php echo get_editor_key_color(); ?>;
+  color: #fff;
+  border: none;
+}
+.mc-key-color.micro-bottom::after {
+  border-bottom-color: <?php echo get_editor_key_color(); ?>;
+  border-top-color: transparent;
+}
+.mc-key-color::before {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+}
+.mc-key-color::after {
+  border-top-color: <?php echo get_editor_key_color(); ?>;
+}
+.btn-key-color, .btn-wrap.btn-wrap-key-color > a {
+  background-color: <?php echo get_editor_key_color(); ?>;
+}
+.has-text-color.has-key-color-color {
+  color: <?php echo get_editor_key_color(); ?>;
+}
+.has-background.has-key-color-background-color {
+  background-color: <?php echo get_editor_key_color(); ?>;
+}
+<?php //エディター背景色
+$editor_background_color = get_editor_background_color();
+if (!$editor_background_color) {
+  $editor_background_color = '#fff';
+} ?>
+.article.page-body,
+body#tinymce.wp-editor{
+  background-color: <?php echo $editor_background_color; ?>
+}
+<?php //エディター文字色
+$editor_text_color = get_editor_text_color();
+if (!$editor_text_color) {
+  $editor_text_color = '#333';
+} ?>
+.article.page-body,
+.editor-post-title__block .editor-post-title__input,
+body#tinymce.wp-editor{
+  color: <?php echo $editor_text_color; ?>
+}
+<?php //Internet Explorer（IE）用
+global $is_IE;
+if ($is_IE): ?>
+.wp-block-image figure.aligncenter {
+  display: block;
+  text-align: center;
+}
+.wp-block-image figure.aligncenter figcaption{
+  display: block;
+}
+  <?php if(is_singular() && is_eyecatch_visible() && has_post_thumbnail()): ?>
+  .eye-catch-wrap {
+    text-align: center;
+  }
+  .eye-catch{
+    display: inline-block;
+  }
+  <?php endif; ?>
+<?php endif; ?>
+<?php //デフォルトブロックエディター色の色指定
+if (!is_admin()) {
+  echo get_block_editor_color_palette_css();
+}
+?>
+<?php if (is_code_row_number_enable()):
+$max_code_row_count = 99;
+$max_code_row_count = apply_filters('max_code_row_count', $max_code_row_count);
+$rows = array();
+for ($i=1; $i <= $max_code_row_count; $i++) {
+  $rows[] = $i.'\A';
+}
+?>
+.is-code-row-number-enable pre::before {
+  content: "<?php echo implode(' ', $rows); ?>";
+}
+<?php endif; ?>
+<?php //ボックスメニュースタイル
+$color = get_site_key_color() ? get_site_key_color() : '#f6a068';
+ ?>
+.box-menu:hover{
+  box-shadow: inset 2px 2px 0 0 <?php echo $color; ?>, 2px 2px 0 0 <?php echo $color; ?>, 2px 0 0 0 <?php echo $color; ?>, 0 2px 0 0
+<?php echo $color; ?>;
+}
+.box-menu-icon{
+  color: <?php echo $color; ?>;
+}

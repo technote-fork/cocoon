@@ -30,10 +30,6 @@ a:hover {
   border: 1px solid #89c3eb;
 }
 
-.toc {
-  width: 80%;
-}
-
 .page-numbers,
 .pagination-next-link {
   border-radius: 8px;
@@ -73,11 +69,6 @@ div.mobile-menu-buttons .menu-button:hover,
   left: 0;
   border: none;
   border-bottom-right-radius: 3px;
-}
-
-.search-edit, input[type="text"], input[type="password"], input[type="date"], input[type="datetime"], input[type="email"], input[type="number"], input[type="search"], input[type="tel"], input[type="time"], input[type="url"], textarea, select {
-  border: 1px solid #ccc;
-  border-radius: 4px;
 }
 
 .widget_recent_entries ul li a,
@@ -144,6 +135,10 @@ div.mobile-menu-buttons .menu-button:hover,
   border: 2px solid #eee;
 }
 
+.appeal-button {
+  background-color: #0095d9;
+}
+
 .navi {
   background-color: #fff;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.25);
@@ -205,8 +200,4 @@ div.mobile-menu-buttons .menu-button:hover,
 .article h5,
 .article h6 {
   border: none;
-}
-
-blockquote::before, blockquote::after {
-  content: "“";
 }

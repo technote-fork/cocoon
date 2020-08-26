@@ -37,10 +37,10 @@ function __replace_html_style_for_minify($m) {
 
 function __replace_html_for_minify($m) {
     if(isset($m[2])) {
-        // Minify inline CSS declaration(s)
-        if(stripos($m[2], ' style=') !== false) {
-            $m[2] = preg_replace_callback('#( style=)([\'"]?)(.*?)\2#i', '__replace_html_style_for_minify', $m[2]);
-        }
+        // // Minify inline CSS declaration(s)
+        // if(stripos($m[2], ' style=') !== false) {
+        //     $m[2] = preg_replace_callback('#( style=)([\'"]?)(.*?)\2#i', '__replace_html_style_for_minify', $m[2]);
+        // }
         return '<' . $m[1] . preg_replace(
             array(
                 // From `defer="defer"`, `defer='defer'`, `defer="true"`, `defer='true'`, `defer=""` and `defer=''` to `defer` [^1]
@@ -141,7 +141,7 @@ function _minify_css($input) {
             // Remove white-space(s) around punctuation(s) [^4]
             '#\s*([~!@*\(\)+=\{\}\[\]:;,>\/])\s*#',
             // Replace zero unit(s) with `0` [^5]
-            '#\b(?:0\.)?0([a-z]+\b|%)#i',
+            '#\b(?:0\.)?0([a-z]+\b)#i',
             // Replace `0.6` with `.6` [^6]
             '#\b0+\.(\d+)#',
             // Replace `:0 0`, `:0 0 0` and `:0 0 0 0` with `:0` [^7]

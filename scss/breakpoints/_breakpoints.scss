@@ -8,9 +8,14 @@
   @import "max-width-1023";
 }
 
-//768px以下
-@media screen and (max-width: 768px){
-  @import "max-width-768";
+//834px以下
+@media screen and (max-width: 834px){
+  @import "max-width-834";
+}
+
+//599px以下
+@media screen and (max-width: 599px){
+  @import "max-width-599";
 }
 
 //480px以下

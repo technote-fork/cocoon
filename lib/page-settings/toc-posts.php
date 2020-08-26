@@ -16,6 +16,12 @@ update_theme_option(OP_SINGLE_TOC_VISIBLE);
 //固定ページで目次の表示
 update_theme_option(OP_PAGE_TOC_VISIBLE);
 
+//カテゴリーページで目次の表示
+update_theme_option(OP_CATEGORY_TOC_VISIBLE);
+
+//タグページで目次の表示
+update_theme_option(OP_TAG_TOC_VISIBLE);
+
 //目次タイトル
 update_theme_option(OP_TOC_TITLE);
 
@@ -45,3 +51,6 @@ update_theme_option(OP_TOC_POSITION_CENTER);
 
 //目次を広告の手前に表示
 update_theme_option(OP_TOC_BEFORE_ADS);
+
+//見出し内のHTMLタグを有効にする
+update_theme_option(OP_TOC_HEADING_INNER_HTML_TAG_ENABLE);

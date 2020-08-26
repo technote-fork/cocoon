@@ -20,7 +20,7 @@ function url_to_external_blog_card_tag($url){
     }//IDが取得できない場合は外部リンクとして処理する
   }
 
-  //独自プローブカード（キャッシュ）の利用
+  //独自ブログカード（キャッシュ）の利用
   $tag = url_to_external_ogp_blogcard_tag($url);
 
   return $tag;
@@ -30,6 +30,8 @@ endif;
 //本文中の外部URLをはてなブログカードタグに変更する
 if ( !function_exists( 'url_to_external_blog_card' ) ):
 function url_to_external_blog_card($the_content) {
+  // //ブロックエディターのブログカード用の本文整形
+  // $the_content = fix_blogcard_content($the_content);
   //1行にURLのみが期待されている行（URL）を全て$mに取得
   $res = preg_match_all('/^(<p>)?(<a[^>]+?>)?https?:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+(<\/a>)?(?!.*<br *\/?>).*?(<\/p>)?/im', $the_content,$m);
 
@@ -42,6 +44,14 @@ function url_to_external_blog_card($the_content) {
     }
 
     $url = strip_tags($match);//URL
+
+    //ブログカード化しないURLで除外
+    $exclude_urls = apply_filters('exclusion_external_blog_card_urls', array());
+    foreach ($exclude_urls as $exclude_url) {
+      if (includes_string($url, $exclude_url)) {
+        return $match;
+      }
+    }
 
     $tag = url_to_external_blog_card_tag($url);
 
@@ -61,15 +71,20 @@ if ( is_external_blogcard_enable() ) {//外部リンクブログカードが有�
   add_filter('the_content','url_to_external_blog_card', 11);//本文表示をフック
   add_filter('widget_text', 'url_to_external_blog_card', 11);//テキストウィジェットをフック
   add_filter('widget_text_pc_text', 'url_to_external_blog_card', 11);
-  add_filter('widget_classic_text', 'url_to_external_blog_card', 11);
+  //add_filter('widget_classic_text', 'url_to_external_blog_card', 11);
   add_filter('widget_text_mobile_text', 'url_to_external_blog_card', 11);
-  add_filter('the_category_content', 'url_to_external_blog_card', 11);
+  add_filter('the_category_tag_content', 'url_to_external_blog_card', 11);
+  //コメント内ブログカード
+  if (is_comment_external_blogcard_enable()) {
+    add_filter('comment_text', 'url_to_external_blog_card', 11);
+  }
 }
 
 
 //外部サイトからブログカードサムネイルを取得する
 if ( !function_exists( 'fetch_card_image' ) ):
-function fetch_card_image($image){
+function fetch_card_image($image, $url = null){
+  //var_dump($image);
   //URLの？以降のクエリを削除
   $image = preg_replace('/\?.*$/i', '', $image);
   $filename = substr($image, (strrpos($image, '/'))+1);
@@ -87,7 +102,7 @@ function fetch_card_image($image){
   }
 
   //キャッシュディレクトリ
-  $dir = get_theme_blog_card_cache_dir();
+  $dir = get_theme_blog_card_cache_path();
   //画像の読み込み
   if ( $file_data = @wp_filesystem_get_contents($image, true) ) {
 
@@ -97,13 +112,23 @@ function fetch_card_image($image){
     }
     //ローカル画像ファイルパス
     $new_file = $dir.md5($image).'.'.$ext;
+    // var_dump($new_file);
 
     if ( $file_data ) {
       wp_filesystem_put_contents($new_file, $file_data);
       //画像編集オブジェクトの作成
       $image_editor = wp_get_image_editor($new_file);
       if ( !is_wp_error($image_editor) ){
-        $image_editor->resize(THUMB160WIDTH, THUMB160HEIGHT, true);
+        if (is_amazon_site_page($url)) {
+          $width = apply_filters('external_blogcard_amazon_image_width',THUMB160WIDTH );
+          $height = apply_filters('external_blogcard_amazon_image_height',THUMB160WIDTH );
+          $image_editor->resize($width, $height, true);
+        } else {
+          $width = apply_filters('external_blogcard_image_width',THUMB160WIDTH );
+          $height = apply_filters('external_blogcard_image_height',THUMB160HEIGHT );
+          $image_editor->resize($width, $height, true);
+        }
+
         $image_editor->save( $new_file );
         return str_replace(WP_CONTENT_DIR, content_url(), $new_file);
       }
@@ -124,8 +149,8 @@ function url_to_external_ogp_blogcard_tag($url){
   $url = ampersand_urldecode($url);
   $params = get_url_params($url);
   $user_title = !empty($params['title']) ? $params['title'] : null;
-  $user_snipet = !empty($params['snipet']) ? $params['snipet'] : null;
-  //$url = add_query_arg(array('title' => null, 'snipet' => null), $url);
+  $user_snippet = !empty($params['snippet']) ? $params['snippet'] : null;
+  //$url = add_query_arg(array('title' => null, 'snippet' => null), $url);
   //_v($url);
 
   $url_hash = TRANSIENT_BLOGCARD_PREFIX.md5( $url );
@@ -134,7 +159,7 @@ function url_to_external_ogp_blogcard_tag($url){
   $error_image = get_site_screenshot_url($url);
 
   $image = $error_image;
-  $snipet = '';
+  $snippet = '';
   $error_rel_nofollow = ' rel="nofollow"';
 
 
@@ -148,23 +173,24 @@ function url_to_external_ogp_blogcard_tag($url){
 
   if ( empty($ogp) ) {
     $ogp = OpenGraphGetter::fetch( $url );
+    //_v($ogp);
     if ( $ogp == false ) {
       $ogp = 'error';
     } else {
       //キャッシュ画像の取得
-      $res = fetch_card_image($ogp->image);
+      $res = fetch_card_image($ogp->image, $url);
 
       if ( $res ) {
         $ogp->image = $res;
       }
 
-      if ( isset( $ogp->title ) )
+      if ( isset( $ogp->title ) && $ogp->title )
         $title = $ogp->title;//タイトルの取得
 
-      if ( isset( $ogp->description ) )
-        $snipet = $ogp->description;//ディスクリプションの取得
+      if ( isset( $ogp->description ) && $ogp->description )
+        $snippet = $ogp->description;//ディスクリプションの取得
 
-      if ( isset( $ogp->image ) )
+      if ( isset( $ogp->image ) && $ogp->image )
         $image = $ogp->image;////画像URLの取得
 
       $error_rel_nofollow = null;
@@ -176,13 +202,13 @@ function url_to_external_ogp_blogcard_tag($url){
   } elseif ( $ogp == 'error' ) {
     //前回取得したとき404ページだったら何も出力しない
   } else {
-    if ( isset( $ogp->title ) )
+    if ( isset( $ogp->title ) && $ogp->title )
       $title = $ogp->title;//タイトルの取得
 
-    if ( isset( $ogp->description ) )
-      $snipet = $ogp->description;//ディスクリプションの取得
+    if ( isset( $ogp->description ) && $ogp->description )
+      $snippet = $ogp->description;//ディスクリプションの取得
 
-    if ( isset( $ogp->image ) )
+    if ( isset( $ogp->image ) && $ogp->image )
       $image = $ogp->image;//画像URLの取得
 
     $error_rel_nofollow = null;
@@ -201,44 +227,65 @@ function url_to_external_ogp_blogcard_tag($url){
   if ($user_title) {
     $title = $user_title;
   }
+  //タイトルのフック
+  $title = apply_filters('cocoon_blogcard_title',$title);
+  $title = apply_filters('cocoon_external_blogcard_title',$title);
 
 
   $image = strip_tags($image);
 
-  $snipet = get_content_excerpt( $snipet, 160 );
-  $snipet = strip_tags($snipet);
-  if ($user_snipet) {
-    $snipet = $user_snipet;
+  $snippet = get_content_excerpt( $snippet, 160 );
+  $snippet = strip_tags($snippet);
+  if ($user_snippet) {
+    $snippet = $user_snippet;
   }
+  $snippet = apply_filters( 'cocoon_blogcard_snippet', $snippet );
+  $snippet = apply_filters( 'cocoon_external_blogcard_snippet', $snippet );
 
   //新しいタブで開く場合
   $target = is_external_blogcard_target_blank() ? ' target="_blank"' : '';
 
+  $rel = '';
+  if (is_external_blogcard_target_blank()) {
+    $rel = ' rel="noopener"';
+  }
   //コメント内でブログカード呼び出しが行われた際はnofollowをつける
   global $comment; //コメント内以外で$commentを呼び出すとnullになる
-  $nofollow = $comment || $error_rel_nofollow ? ' rel="nofollow"' : null;
+  if (is_external_blogcard_target_blank() && $comment) {
+    $rel = ' rel="nofollow noopener"';
+  }
 
   //GoogleファビコンAPIを利用する
   ////www.google.com/s2/favicons?domain=nelog.jp
-  $favicon_tag = '<div class="blogcard-favicon external-blogcard-favicon"><img src="//www.google.com/s2/favicons?domain='.$domain.'" class="blogcard-favicon-image" alt="" width="16" height="16" /></div>';
+  //後で消す
+  // $favicon_tag = '<div class="blogcard-favicon external-blogcard-favicon"><img src="//www.google.com/s2/favicons?domain='.$domain.'" class="blogcard-favicon-image" alt="" width="16" height="16" /></div>';
+  $favicon_tag = '<div class="blogcard-favicon external-blogcard-favicon">'.
+    get_original_image_tag(get_the_ID(), 'https://www.google.com/s2/favicons?domain='.$domain, 16, 16, 'blogcard-favicon-image external-blogcard-favicon-image').
+  '</div>';
 
   //サイトロゴ
   $site_logo_tag = '<div class="blogcard-domain external-blogcard-domain">'.$domain.'</div>';
   $site_logo_tag = '<div class="blogcard-site external-blogcard-site">'.$favicon_tag.$site_logo_tag.'</div>';
 
   //サムネイルを取得できた場合
+  $image = apply_filters('get_external_blogcard_thumbnail_url', $image);
   if ( $image ) {
-    $thumbnail = '<img src="'.$image.'" alt="" class="blogcard-thumb-image external-blogcard-thumb-image" width="'.THUMB160WIDTH.'" height="'.THUMB160HEIGHT.'" />';
+    //後で消す
+    // $thumbnail = '<img src="'.esc_url($image).'" alt="" class="blogcard-thumb-image external-blogcard-thumb-image" width="'.THUMB160WIDTH.'" height="'.THUMB160HEIGHT.'" />';
+    $thumbnail = get_original_image_tag(get_the_ID(), $image, THUMB160WIDTH, THUMB160HEIGHT, 'blogcard-thumb-image external-blogcard-thumb-image');
   }
 
   //取得した情報からブログカードのHTMLタグを作成
   $tag =
-  '<a href="'.$url.'" title="'.esc_attr($title).'" class="blogcard-wrap external-blogcard-wrap a-wrap cf"'.$target.$nofollow.'>'.
+  '<a href="'.esc_url($url).'" title="'.esc_attr($title).'" class="blogcard-wrap external-blogcard-wrap a-wrap cf"'.$target.$rel.'>'.
     '<div class="blogcard external-blogcard'.get_additional_external_blogcard_classes().' cf">'.
+      '<div class="blogcard-label external-blogcard-label">'.
+        '<span class="fa"></span>'.
+      '</div>'.
       '<figure class="blogcard-thumbnail external-blogcard-thumbnail">'.$thumbnail.'</figure>'.
       '<div class="blogcard-content external-blogcard-content">'.
         '<div class="blogcard-title external-blogcard-title">'.$title.'</div>'.
-        '<div class="blogcard-snipet external-blogcard-snipet">'.$snipet.'</div>'.
+        '<div class="blogcard-snippet external-blogcard-snippet">'.$snippet.'</div>'.
       '</div>'.
       '<div class="blogcard-footer external-blogcard-footer cf">'.$site_logo_tag.'</div>'.
     '</div>'.

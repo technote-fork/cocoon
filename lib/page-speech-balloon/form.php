@@ -8,6 +8,7 @@
 if ( !defined( 'ABSPATH' ) ) exit; ?>
 
 <p><?php _e( '吹き出し用の設定です。', THEME_NAME ) ?></p>
+
 <form name="form1" method="post" action="">
   <?php
 
@@ -137,8 +138,8 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
         </th>
         <td>
           <?php
-          generate_checkbox_tag('visible' , $visible, __( 'ビジュアルエディターのリストに表示', THEME_NAME ));
-          generate_tips_tag(__( 'ビジュアルエディター（TinyMCE）のドロップダウンリストに表示しなくて良い場合は、無効にしてください。', THEME_NAME ));
+          generate_checkbox_tag('visible' , $visible, __( 'エディターのリストに表示', THEME_NAME ));
+          generate_tips_tag(__( 'エディターのドロップダウンリストに表示しなくて良い場合は、無効にしてください。', THEME_NAME ));
           ?>
         </td>
       </tr>
@@ -150,3 +151,5 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
   <input type="hidden" name="<?php echo HIDDEN_FIELD_NAME; ?>" value="<?php echo wp_create_nonce('speech-balloon');?>">
   <?php submit_button(__( '保存', THEME_NAME )); ?>
 </form>
+
+<p class="alert"><?php _e( 'ブロックエディターの「吹き出しブロック」で利用後、設定を変更すると、ブロックエディター上で再編集できなくなります。', THEME_NAME ) ?></p>

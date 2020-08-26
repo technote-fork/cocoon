@@ -16,7 +16,46 @@ function get_appeal_area_display_type(){
 endif;
 if ( !function_exists( 'is_appeal_area_visible' ) ):
 function is_appeal_area_visible(){
-  return get_appeal_area_display_type() != 'none';
+  $is_visible =  (
+    is_appeal_area_display_type_all_page() ||
+    (is_front_top_page() && is_appeal_area_display_type_front_page_only()) ||
+    (!is_singular() && is_appeal_area_display_type_not_singular()) ||
+    (is_singular() && is_appeal_area_display_type_singular_only()) ||
+    (is_single() && is_appeal_area_display_type_single_only()) ||
+    (is_page() && is_appeal_area_display_type_page_only()) ||
+    (is_admin() && get_appeal_area_display_type() != 'none') //設定プレビュー
+  );
+  return apply_filters('is_appeal_area_visible', $is_visible);
+}
+endif;
+if ( !function_exists( 'is_appeal_area_display_type_all_page' ) ):
+function is_appeal_area_display_type_all_page(){
+  return get_appeal_area_display_type() == 'all_page';
+}
+endif;
+if ( !function_exists( 'is_appeal_area_display_type_front_page_only' ) ):
+function is_appeal_area_display_type_front_page_only(){
+  return get_appeal_area_display_type() == 'front_page_only';
+}
+endif;
+if ( !function_exists( 'is_appeal_area_display_type_not_singular' ) ):
+function is_appeal_area_display_type_not_singular(){
+  return get_appeal_area_display_type() == 'not_singular';
+}
+endif;
+if ( !function_exists( 'is_appeal_area_display_type_singular_only' ) ):
+function is_appeal_area_display_type_singular_only(){
+  return get_appeal_area_display_type() == 'singular_only';
+}
+endif;
+if ( !function_exists( 'is_appeal_area_display_type_single_only' ) ):
+function is_appeal_area_display_type_single_only(){
+  return get_appeal_area_display_type() == 'single_only';
+}
+endif;
+if ( !function_exists( 'is_appeal_area_display_type_page_only' ) ):
+function is_appeal_area_display_type_page_only(){
+  return get_appeal_area_display_type() == 'page_only';
 }
 endif;
 
@@ -52,6 +91,14 @@ function is_appeal_area_background_attachment_fixed(){
 }
 endif;
 
+//アピールエリアメッセージ表示
+define('OP_APPEAL_AREA_CONTENT_VISIBLE', 'appeal_area_content_visible');
+if ( !function_exists( 'is_appeal_area_content_visible' ) ):
+function is_appeal_area_content_visible(){
+  return get_theme_option(OP_APPEAL_AREA_CONTENT_VISIBLE, 1);
+}
+endif;
+
 //アピールエリアタイトル
 define('OP_APPEAL_AREA_TITLE', 'appeal_area_title');
 if ( !function_exists( 'get_appeal_area_title' ) ):
@@ -65,7 +112,7 @@ define('OP_APPEAL_AREA_MESSAGE', 'appeal_area_message');
 if ( !function_exists( 'get_appeal_area_message' ) ):
 function get_appeal_area_message(){
   $appeal_area_message = stripslashes_deep(get_theme_option(OP_APPEAL_AREA_MESSAGE));
-  return apply_filters('appeal_area_message', $appeal_area_message);
+  return $appeal_area_message;
 }
 endif;
 

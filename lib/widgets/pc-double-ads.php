@@ -17,7 +17,7 @@ class PcDoubleAdsWidgetItem extends WP_Widget {
     parent::__construct(
       'pc_double_ads', //ウイジェット名
       WIDGET_NAME_PREFIX.__( 'PC用ダブルレクタングル広告', THEME_NAME ),
-      array('description' => __( 'パソコンのみで表示されるダブルレクタングル広告ウィジェットです。768pxより大きな画面で表示されます。', THEME_NAME )),
+      array('description' => __( 'パソコンのみで表示されるダブルレクタングル広告ウィジェットです。834pxより大きな画面で表示されます。', THEME_NAME )),
       array( 'width' => 400, 'height' => 350 )
     );
   }
@@ -28,16 +28,17 @@ class PcDoubleAdsWidgetItem extends WP_Widget {
 
     //classにwidgetと一意となるクラス名を追加する
     if ( !is_404() && //PCかつ404ページでないとき
-         is_all_ads_visible()  ):
+          is_ads_visible()  ):
       echo $args['before_widget']; ?>
       <div class="ad-area ad-widget ad-dabble-rectangle">
-        <div class="ad-label"><?php echo get_ad_label() ?></div>
+        <div class="ad-label" data-nosnippet><?php echo get_ad_label_caption() ?></div>
         <div class="ad-wrap">
           <div class="ad-left ad-pc ad-responsive"><?php echo $ad1;?></div>
           <div class="ad-right ad-pc ad-responsive"><?php echo $ad2;?></div>
         </div>
       </div>
-      <?php echo $args['after_widget'];
+      <?php
+      echo $args['after_widget'];
     endif //is_mobile ?>
   <?php
   }

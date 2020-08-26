@@ -7,7 +7,7 @@
  */
 if ( !defined( 'ABSPATH' ) ) exit;
 
-//Wordpress管理画面にオリジナルメニューを追加する
+//WordPress管理画面にオリジナルメニューを追加する
 add_action('admin_menu', 'add_original_menu_in_admin_page');
 if ( !function_exists( 'add_original_menu_in_admin_page' ) ):
 function add_original_menu_in_admin_page() {
@@ -15,9 +15,9 @@ function add_original_menu_in_admin_page() {
   //_v($GLOBALS['menu']);
 
   //セパレーターの挿入
-  add_admin_menu_separator(28);
+  add_admin_menu_separator(apply_filters('cocoon_add_theme_settings_page_separator_position', 28));
   //トップレベルメニューを追加する
-  add_menu_page(SETTING_NAME_TOP, SETTING_NAME_TOP, 'manage_options', THEME_SETTINGS_PAFE, 'add_theme_settings_page', get_template_directory_uri().'/images/admin-menu-logo.png', 29 );
+  add_menu_page(SETTING_NAME_TOP, SETTING_NAME_TOP, 'manage_options', THEME_SETTINGS_PAFE, 'add_theme_settings_page', get_template_directory_uri().'/images/admin-menu-logo.png', apply_filters('cocoon_add_theme_settings_page_position', 29) );
 
 
   //add_menu_page();

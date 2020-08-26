@@ -10,8 +10,20 @@ if ( !defined( 'ABSPATH' ) ) exit;
 //カルーセルの表示
 update_theme_option(OP_CAROUSEL_DISPLAY_TYPE);
 
+//カルーセルをスマホで表示する
+update_theme_option(OP_CAROUSEL_SMARTPHONE_VISIBLE);
+
+//カルーセルに人気記事を表示する
+update_theme_option(OP_CAROUSEL_POPULAR_POSTS_ENABLE);
+
+//カルーセル人気記事の集計期間
+update_theme_option(OP_CAROUSEL_POPULAR_POSTS_COUNT_DAYS);
+
 //カルーセルに表示するカテゴリID
 update_theme_option(OP_CAROUSEL_CATEGORY_IDS);
+
+//カルーセルに表示するタグID
+update_theme_option(OP_CAROUSEL_TAG_IDS);
 
 //カルーセルの表示順
 update_theme_option(OP_CAROUSEL_ORDERBY);

@@ -201,6 +201,7 @@ endif;
 if ( !function_exists( 'get_rating_star_tag' ) ):
 function get_rating_star_tag($rate, $max = 5, $number = false){
   $rate = floatval($rate);
+  $rate = floor($rate * 10) / 10;
   $max = intval($max);
   //数字じゃない場合
   if (!is_numeric($rate) || !is_numeric($max)) {
@@ -211,21 +212,16 @@ function get_rating_star_tag($rate, $max = 5, $number = false){
     return $rate;
   }
 
-  $tag = '<div class="ranking-item-rating rating-star">';
+  $tag = '<span class="rating-star">';
 
-  // //とりあえず小数点1桁形式にする
-  // if (!includes_string('.', $rate)) {
-  //   $rate .= '.0';
-  // }
-  // _v($rate);
   //小数点で分割
   $rates = explode('.', $rate);
   if (!isset($rates[0])) {
     return $rate;
   }
-  //小数点以下が5かどうか
+  //小数点以下が5以上かどうか
   if (isset($rates[1])) {
-    $has_herf = intval($rates[1]) == 5;
+    $has_herf = intval($rates[1]) >= 5;
   } else {
     $has_herf = false;
   }
@@ -238,26 +234,26 @@ function get_rating_star_tag($rate, $max = 5, $number = false){
     $middle = 0;
     $after = $max - $before;
     //3.2とかの場合は小数点以下を切り捨てる
-    $rate = floor(floatval($rate));
+    //$rate = floor(floatval($rate));
   }
   //スターの出力
   for ($j=1; $j <= $before; $j++) {
-    $tag .= '<span class="fa fa-star"></span>';
+    $tag .= '<span class="fa fa-star" aria-hidden="true"></span>';
   }
   //半分スターの出力
   for ($j=1; $j <= $middle; $j++) {
-    $tag .= '<span class="fa fa-star-half-o"></span>';
+    $tag .= '<span class="fa fa-star-half-o" aria-hidden="true"></span>';
   }
   //空スターの出力
   for ($j=1; $j <= $after; $j++) {
-    $tag .= '<span class="fa fa-star-o"></span>';
+    $tag .= '<span class="fa fa-star-o" aria-hidden="true"></span>';
   }
 
   if ($number) {
-    $tag .= '<span class="rating-number">'.$rate.'</span>';
+    $tag .= '<span class="rating-number">'.sprintf('%.1f', $rate).'</span>';
   }
 
-  $tag .= '</div>';
+  $tag .= '</span>';
   return $tag;
 }
 endif;
@@ -318,7 +314,9 @@ function generate_item_ranking_tag($id, $is_first_only = false){
 
       <?php //評価が設定されている場合
       if ($rating != 'none'){
+        echo '<div class="ranking-item-rating">';
         echo get_rating_star_tag($rating);
+        echo '</div>';
       } ?>
 
       <?php //continue; ?>
@@ -343,9 +341,11 @@ function generate_item_ranking_tag($id, $is_first_only = false){
       <div class="ranking-item-link-buttons">
 
         <?php //詳細ページURLがあるとき
-        if ($detail_url): ?>
+        if ($detail_url):
+          $target = apply_filters('cocoon_ranking_detail_page_target', '_self' );
+        ?>
         <div class="ranking-item-detail">
-          <a href="<?php echo $detail_url; ?>"><?php echo apply_filters('cocoon_ranking_detail_page_caption', __( '詳細ページ', THEME_NAME ) )  ?></a>
+          <a href="<?php echo $detail_url; ?>" target="<?php echo $target; ?>"><?php echo apply_filters('cocoon_ranking_detail_page_caption', __( '詳細ページ', THEME_NAME ) )  ?></a>
         </div>
         <?php endif ?>
 
@@ -353,8 +353,10 @@ function generate_item_ranking_tag($id, $is_first_only = false){
         <?php //リンク情報があるとき
         if ($link_url || $link_tag): ?>
         <div class="ranking-item-link">
-          <?php if ($link_url): ?>
-            <a href="<?php echo $link_url; ?>" target="_blank"><?php echo apply_filters('cocoon_ranking_official_page_caption', __( '公式ページ', THEME_NAME )) ?></a>
+          <?php if ($link_url):
+              $target = apply_filters('cocoon_ranking_official_page_target', '_blank' );
+            ?>
+            <a href="<?php echo $link_url; ?>" target="<?php echo $target; ?>"><?php echo apply_filters('cocoon_ranking_official_page_caption', __( '公式ページ', THEME_NAME )) ?></a>
           <?php else: ?>
             <?php echo $link_tag; ?>
           <?php endif ?>

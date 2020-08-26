@@ -5,10 +5,15 @@
  * @link: https://wp-cocoon.com/
  * @license: http://www.gnu.org/licenses/gpl-2.0.html GPL v2 or later
  */
-if ( !defined( 'ABSPATH' ) ) exit; ?>
+if ( !defined( 'ABSPATH' ) ) exit;
+$article_id_attr = null;
+if (is_front_page_type_index()) {
+  $article_id_attr = ' id="post-'.get_the_ID().'"';
+}
+?>
 
-<a href="<?php the_permalink(); ?>" class="entry-card-wrap a-wrap border-element cf" title="<?php echo esc_attr(get_the_title()); ?>">
-  <article id="post-<?php the_ID(); ?>" <?php post_class( array('post-'.get_the_ID(), 'entry-card','e-card', 'cf') ); ?>>
+<a href="<?php echo esc_url(get_the_permalink()); ?>" class="entry-card-wrap a-wrap border-element cf" title="<?php echo esc_attr(get_the_title()); ?>">
+  <article<?php echo $article_id_attr; ?> <?php post_class( array('post-'.get_the_ID(), 'entry-card','e-card', 'cf') ); ?>>
     <figure class="entry-card-thumb card-thumb e-card-thumb">
       <?php
       //サムネイルタグを取得
@@ -23,12 +28,11 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
         );
       // サムネイルを持っているとき
       if ( has_post_thumbnail() && $thumbnail_tag ): ?>
-        <?php echo $thumbnail_tag;
-        //the_post_thumbnail(get_entry_card_thumbnail_size() , array('class' => 'entry-card-thumb-image card-thumb-image', 'alt' => '') ); ?>
+        <?php echo $thumbnail_tag; ?>
       <?php else: // サムネイルを持っていないとき ?>
         <?php echo get_entry_card_no_image_tag($count); ?>
       <?php endif; ?>
-      <?php the_nolink_category(); //カテゴリラベルの取得 ?>
+      <?php the_nolink_category(null, apply_filters('is_entry_card_category_label_visible', true)); //カテゴリラベルの取得 ?>
     </figure><!-- /.entry-card-thumb -->
 
     <div class="entry-card-content card-content e-card-content">
@@ -36,9 +40,13 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
       <?php //スニペットの表示
       if (is_entry_card_snippet_visible()): ?>
       <div class="entry-card-snippet card-snippet e-card-snippet">
-        <?php echo get_the_snipet( get_the_content(''), get_entry_card_excerpt_max_length() ); //カスタマイズで指定した文字の長さだけ本文抜粋?>
+        <?php echo get_the_snippet( get_the_content(''), get_entry_card_excerpt_max_length() ); //カスタマイズで指定した文字の長さだけ本文抜粋?>
       </div>
       <?php endif ?>
+      <?php //PVエリアの表示
+      if (is_admin_index_pv_visible() && is_user_administrator() || apply_filters('public_page_entry_card_pv_visible', false)) {
+        get_template_part('tmp/admin-pv');
+      } ?>
       <div class="entry-card-meta card-meta e-card-meta">
         <div class="entry-card-info e-card-info">
           <?php
@@ -46,12 +54,11 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           $update_time = get_update_time(get_site_date_format());
           //投稿日の表示
           if (is_entry_card_post_date_visible() || (is_entry_card_post_date_or_update_visible() && !$update_time && is_entry_card_post_update_visible())): ?>
-            <span class="post-date"><?php the_time(get_site_date_format()); ?></span>
+            <span class="post-date"><span class="fa fa-clock-o" aria-hidden="true"></span> <?php the_time(get_site_date_format()); ?></span>
           <?php endif ?>
           <?php //更新時の表示
-
-          if (is_entry_card_post_update_visible() && $update_time): ?>
-            <span class="post-update"><?php echo $update_time; ?></span>
+          if (is_entry_card_post_update_visible() && $update_time && (get_the_time('U') < get_update_time('U'))): ?>
+            <span class="post-update"><span class="fa fa-history" aria-hidden="true"></span> <?php echo $update_time; ?></span>
           <?php endif ?>
           <?php //投稿者の表示
           if (is_entry_card_post_author_visible()): ?>
@@ -61,8 +68,9 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             </span>
           <?php endif ?>
           <?php //コメント数の表示
-          if(is_entry_card_post_comment_count_visible() && is_single_comment_visible()): ?>
-            <span class="post-comment-count"><?php echo get_comments_number(); ?></span>
+          $count = get_comments_number();
+          if(is_entry_card_post_comment_count_visible() && is_single_comment_visible() && apply_filters('entry_card_post_comment_count_visible', true, $count)): ?>
+            <span class="post-comment-count"><span class="fa fa-comment-o" aria-hidden="true"></span> <?php echo $count; ?></span>
           <?php endif; ?>
         </div>
         <div class="entry-card-categorys"><?php the_nolink_categories() ?></div>

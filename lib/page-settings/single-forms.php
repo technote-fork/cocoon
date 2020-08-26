@@ -17,6 +17,8 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 
     <table class="form-table">
       <tbody>
+
+        <?php if (DEBUG_ADMIN_DEMO_ENABLE && apply_filters('cocoon_setting_preview_singular_categories_tags', true)): ?>
         <!-- プレビュー画面 -->
         <tr>
           <th scope="row">
@@ -24,11 +26,12 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           </th>
           <td>
             <div class="demo" style="overflow: auto;">
-              <?php get_template_part('tmp/categories-tags'); ?>
+              <?php get_sanitize_preview_template_part('tmp/categories-tags'); ?>
             </div>
             <?php generate_tips_tag(__( 'デモはランダムです。', THEME_NAME )); ?>
           </td>
         </tr>
+        <?php endif; ?>
 
         <!-- カテゴリ・タグ表示 -->
         <tr>
@@ -50,6 +53,24 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           </td>
         </tr>
 
+        <!-- カテゴリ・タグ表示位置 -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag(OP_CATEGORY_TAG_DISPLAY_POSITION, __('カテゴリ・タグ表示位置', THEME_NAME) ); ?>
+          </th>
+          <td>
+            <?php
+            $options = array(
+              'title_top' => __( 'タイトル上', THEME_NAME ),
+              'content_top' => __( '本文上', THEME_NAME ),
+              'content_bottom' => __( '本文下（デフォルト）', THEME_NAME ),
+            );
+            generate_selectbox_tag(OP_CATEGORY_TAG_DISPLAY_POSITION, $options, get_category_tag_display_position());
+            generate_tips_tag(__( 'カテゴリとタグの表示位置を設定します。', THEME_NAME ));
+            ?>
+          </td>
+        </tr>
+
       </tbody>
     </table>
 
@@ -66,6 +87,8 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 
     <table class="form-table">
       <tbody>
+
+        <?php if (DEBUG_ADMIN_DEMO_ENABLE && apply_filters('cocoon_setting_preview_singular_related_entries', true)): ?>
         <!-- プレビュー画面 -->
         <tr>
           <th scope="row">
@@ -74,12 +97,13 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           <td>
             <div class="demo" style="height: 300px;overflow: auto;">
               <div <?php body_class(); ?>>
-              <?php get_template_part('tmp/related-entries') ?>
+              <?php get_sanitize_preview_template_part('tmp/related-entries') ?>
               </div>
             </div>
             <?php generate_tips_tag(__( 'デモの関連記事はランダムです。', THEME_NAME )); ?>
           </td>
         </tr>
+        <?php endif; ?>
 
         <!-- 表示 -->
         <tr>
@@ -106,7 +130,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
               'tag' => __( 'タグ', THEME_NAME ),
             );
             generate_radiobox_tag(OP_RELATED_ASSOCIATION_TYPE, $options, get_related_association_type());
-            generate_tips_tag(__( '関連記事にカテゴリーを関連づけるかタグを関連づけるか。', THEME_NAME ));
+            generate_tips_tag(__( '関連記事にカテゴリーを関連づけるかタグを関連づけるか。タグに関連付けて、タグがない場合はカテゴリー関連記事が表示されます。逆もしかり。', THEME_NAME ));
             ?>
           </td>
         </tr>
@@ -136,8 +160,8 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             $options = array(
               'entry_card' => __( 'エントリーカード（デフォルト）', THEME_NAME ),
               'mini_card' => __( 'ミニカード（推奨表示数：偶数）', THEME_NAME ),
-              'vartical_card_3' => __( '縦型カード3列（推奨表示数：6, 12, 18...）', THEME_NAME ),
-              'vartical_card_4' => __( '縦型カード4列（推奨表示数：4, 8, 12...）', THEME_NAME ),
+              'vertical_card_3' => __( '縦型カード3列（推奨表示数：6, 12, 18...）', THEME_NAME ),
+              'vertical_card_4' => __( '縦型カード4列（推奨表示数：4, 8, 12...）', THEME_NAME ),
               DATA_AD_FORMAT_AUTORELAXED => __( 'AdSense関連コンテンツユニット', THEME_NAME ),
             );
             generate_radiobox_tag(OP_RELATED_ENTRY_TYPE, $options, get_related_entry_type());
@@ -155,6 +179,32 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             <?php
             generate_number_tag(OP_RELATED_ENTRY_COUNT,  get_related_entry_count(), 6, 2, 30);
             generate_tips_tag(__( '関連記事で表示する投稿数の設定です。（最小：2、最大：30）', THEME_NAME ));
+            ?>
+          </td>
+        </tr>
+
+        <!-- 取得期間 -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag(OP_RELATED_ENTRY_PERIOD, __('取得期間', THEME_NAME) ); ?>
+          </th>
+          <td>
+            <?php
+            $options = array(
+              '' => __( '全期間', THEME_NAME ),
+              '-1 week' => __( '1週間', THEME_NAME ),
+              '-2 week' => __( '2週間', THEME_NAME ),
+              '-3 week' => __( '3週間', THEME_NAME ),
+              '-1 month' => __( '1ヶ月', THEME_NAME ),
+              '-2 month' => __( '2ヶ月', THEME_NAME ),
+              '-3 month' => __( '3ヶ月', THEME_NAME ),
+              '-6 month' => __( '6ヶ月', THEME_NAME ),
+              '-1 year' => __( '1年', THEME_NAME ),
+              '-2 year' => __( '2年', THEME_NAME ),
+              '-3 year' => __( '3年', THEME_NAME ),
+            );
+            generate_selectbox_tag(OP_RELATED_ENTRY_PERIOD, $options, get_related_entry_period());
+            generate_tips_tag(__( '関連記事を取得する期間を選択することで新鮮な記事を表示しやすくします。ニュースサイト等で、新しい記事が並んで欲しい時に設定します。頻回にサイトを更新していない場合は利用しないことをおすすめします。', THEME_NAME ));
             ?>
           </td>
         </tr>
@@ -233,6 +283,9 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 
     <table class="form-table">
       <tbody>
+
+
+        <?php if (DEBUG_ADMIN_DEMO_ENABLE && apply_filters('cocoon_setting_preview_singular_pager_post_navi', true)): ?>
         <!-- プレビュー画面 -->
         <tr>
           <th scope="row">
@@ -241,12 +294,13 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           <td>
             <div class="demo">
               <div <?php body_class(); ?>>
-              <?php get_template_part('tmp/pager-post-navi') ?>
+              <?php get_sanitize_preview_template_part('tmp/pager-post-navi') ?>
               </div>
             </div>
             <?php generate_tips_tag(__( 'デモはランダム表示です。', THEME_NAME )); ?>
           </td>
         </tr>
+        <?php endif; ?>
 
         <!-- 表示 -->
         <tr>
@@ -274,6 +328,43 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             );
             generate_radiobox_tag(OP_POST_NAVI_TYPE, $options, get_post_navi_type());
             generate_tips_tag(__( 'ページ送りナビの見た目を変更します。', THEME_NAME ));
+            ?>
+          </td>
+        </tr>
+
+        <!-- 表示位置 -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag(OP_POST_NAVI_POSITION, __('表示位置', THEME_NAME) ); ?>
+          </th>
+          <td>
+            <?php
+            $options = array(
+              'under_content' => __( '本文下', THEME_NAME ),
+              'over_related' => __( '関連記事上', THEME_NAME ),
+              'under_related' => __( '関連記事下（デフォルト）', THEME_NAME ),
+              'under_comment' => __( 'コメント下', THEME_NAME ),
+            );
+            generate_radiobox_tag(OP_POST_NAVI_POSITION, $options, get_post_navi_position());
+            generate_tips_tag(__( 'ページ送りナビを表示する位置を変更します。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/post-navi-position/'));
+            ?>
+          </td>
+        </tr>
+
+        <!-- カテゴリー -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag(OP_POST_NAVI_SAME_CATEGORY_ENABLE, __('カテゴリー', THEME_NAME) ); ?>
+          </th>
+          <td>
+            <?php
+            generate_checkbox_tag(OP_POST_NAVI_SAME_CATEGORY_ENABLE , is_post_navi_same_category_enable(), __( '同一カテゴリーのものを表示する', THEME_NAME ));
+            generate_tips_tag(__( '投稿と同一カテゴリーのページ送りナビを表示するかどうか。複数カテゴリが設定してある場合は、複数に属するものが表示されます。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/in-same-categories-post-navi/'));
+
+            //除外カテゴリー
+            generate_label_tag(OP_POST_NAVI_EXCLUDE_CATEGORY_IDS, __('除外カテゴリー', THEME_NAME) );
+            generate_hierarchical_category_check_list( 0, OP_POST_NAVI_EXCLUDE_CATEGORY_IDS, get_post_navi_exclude_category_ids(), 300 );
+            generate_tips_tag(__( 'ページ送りナビに表示させないカテゴリを選択してください。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/excluded-categories-post-navi/'));
             ?>
           </td>
         </tr>

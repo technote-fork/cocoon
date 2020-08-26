@@ -51,7 +51,7 @@ endif;
 define('OP_BOTTOM_GOOGLE_PLUS_SHARE_BUTTON_VISIBLE', 'bottom_google_plus_share_button_visible');
 if ( !function_exists( 'is_bottom_google_plus_share_button_visible' ) ):
 function is_bottom_google_plus_share_button_visible(){
-  return get_theme_option(OP_BOTTOM_GOOGLE_PLUS_SHARE_BUTTON_VISIBLE, 1);
+  return 0;//get_theme_option(OP_BOTTOM_GOOGLE_PLUS_SHARE_BUTTON_VISIBLE, 0);
 }
 endif;
 
@@ -75,7 +75,15 @@ endif;
 define('OP_BOTTOM_PINTEREST_SHARE_BUTTON_VISIBLE', 'bottom_pinterest_share_button_visible');
 if ( !function_exists( 'is_bottom_pinterest_share_button_visible' ) ):
 function is_bottom_pinterest_share_button_visible(){
-  return get_theme_option(OP_BOTTOM_PINTEREST_SHARE_BUTTON_VISIBLE, 0);
+  return get_theme_option(OP_BOTTOM_PINTEREST_SHARE_BUTTON_VISIBLE);
+}
+endif;
+
+//LinkedInシェアボタンの表示
+define('OP_BOTTOM_LINKEDIN_SHARE_BUTTON_VISIBLE', 'bottom_linkedin_share_button_visible');
+if ( !function_exists( 'is_bottom_linkedin_share_button_visible' ) ):
+function is_bottom_linkedin_share_button_visible(){
+  return get_theme_option(OP_BOTTOM_LINKEDIN_SHARE_BUTTON_VISIBLE);
 }
 endif;
 
@@ -83,7 +91,55 @@ endif;
 define('OP_BOTTOM_COPY_SHARE_BUTTON_VISIBLE', 'bottom_copy_share_button_visible');
 if ( !function_exists( 'is_bottom_copy_share_button_visible' ) ):
 function is_bottom_copy_share_button_visible(){
-  return get_theme_option(OP_BOTTOM_COPY_SHARE_BUTTON_VISIBLE, 0);
+  return get_theme_option(OP_BOTTOM_COPY_SHARE_BUTTON_VISIBLE, 1);
+}
+endif;
+
+//コメントボタンの表示
+define('OP_BOTTOM_COMMENT_SHARE_BUTTON_VISIBLE', 'bottom_comment_share_button_visible');
+if ( !function_exists( 'is_bottom_comment_share_button_visible' ) ):
+function is_bottom_comment_share_button_visible(){
+  return get_theme_option(OP_BOTTOM_COMMENT_SHARE_BUTTON_VISIBLE);
+}
+endif;
+
+//フロントページシェアボタンの表示
+define('OP_SNS_FRONT_PAGE_BOTTOM_SHARE_BUTTONS_VISIBLE', 'sns_front_page_bottom_share_buttons_visible');
+if ( !function_exists( 'is_sns_front_page_bottom_share_buttons_visible' ) ):
+function is_sns_front_page_bottom_share_buttons_visible(){
+  return get_theme_option(OP_SNS_FRONT_PAGE_BOTTOM_SHARE_BUTTONS_VISIBLE);
+}
+endif;
+
+//投稿シェアボタンの表示
+define('OP_SNS_SINGLE_BOTTOM_SHARE_BUTTONS_VISIBLE', 'sns_single_bottom_share_buttons_visible');
+if ( !function_exists( 'is_sns_single_bottom_share_buttons_visible' ) ):
+function is_sns_single_bottom_share_buttons_visible(){
+  return get_theme_option(OP_SNS_SINGLE_BOTTOM_SHARE_BUTTONS_VISIBLE, 1);
+}
+endif;
+
+//固定ページシェアボタンの表示
+define('OP_SNS_PAGE_BOTTOM_SHARE_BUTTONS_VISIBLE', 'sns_page_bottom_share_buttons_visible');
+if ( !function_exists( 'is_sns_page_bottom_share_buttons_visible' ) ):
+function is_sns_page_bottom_share_buttons_visible(){
+  return get_theme_option(OP_SNS_PAGE_BOTTOM_SHARE_BUTTONS_VISIBLE, 1);
+}
+endif;
+
+//カテゴリーシェアボタンの表示
+define('OP_SNS_CATEGORY_BOTTOM_SHARE_BUTTONS_VISIBLE', 'sns_category_bottom_share_buttons_visible');
+if ( !function_exists( 'is_sns_category_bottom_share_buttons_visible' ) ):
+function is_sns_category_bottom_share_buttons_visible(){
+  return get_theme_option(OP_SNS_CATEGORY_BOTTOM_SHARE_BUTTONS_VISIBLE);
+}
+endif;
+
+//タグシェアボタンの表示
+define('OP_SNS_TAG_BOTTOM_SHARE_BUTTONS_VISIBLE', 'sns_tag_bottom_share_buttons_visible');
+if ( !function_exists( 'is_sns_tag_bottom_share_buttons_visible' ) ):
+function is_sns_tag_bottom_share_buttons_visible(){
+  return get_theme_option(OP_SNS_TAG_BOTTOM_SHARE_BUTTONS_VISIBLE);
 }
 endif;
 

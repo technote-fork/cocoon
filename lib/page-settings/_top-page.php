@@ -14,6 +14,7 @@ $is_post_ok = isset($_POST[HIDDEN_FIELD_NAME]) &&
 if( $is_post_ok ):
   //var_dump($_POST[OP_RESET_ALL_SETTINGS]);
 
+  do_action('cocoon_settings_before_save');
   ///////////////////////////////////////
   // 設定の保存
   ///////////////////////////////////////
@@ -67,6 +68,8 @@ if( $is_post_ok ):
   require_once abspath(__FILE__).'notice-posts.php';
   //アピールエリア
   require_once abspath(__FILE__).'appeal-posts.php';
+  //おすすめカード
+  require_once abspath(__FILE__).'recommended-posts.php';
   //カルーセル
   require_once abspath(__FILE__).'carousel-posts.php';
   //フッター
@@ -79,6 +82,8 @@ if( $is_post_ok ):
   require_once abspath(__FILE__).'404-posts.php';
   //AMP
   require_once abspath(__FILE__).'amp-posts.php';
+  //PWA
+  require_once abspath(__FILE__).'pwa-posts.php';
   //管理画面
   require_once abspath(__FILE__).'admin-posts.php';
   //ウィジェット
@@ -92,25 +97,6 @@ if( $is_post_ok ):
   //その他
   require_once abspath(__FILE__).'others-posts.php';
 
-  ///////////////////////////////////////
-  // ビジュアルエディター用のカスタマイズCSS出力
-  ///////////////////////////////////////
-  ob_start();
-  get_template_part('tmp/css-custom');
-  $custum_css = ob_get_clean();
-  if ($custum_css) {
-    $custum_css_file = get_theme_css_cache_file();
-    //_v($custum_css_file);
-    //ビジュアルエディター用CSSファイルの書き出し
-    wp_filesystem_put_contents($custum_css_file, $custum_css);
-  }
-  // if ($custum_css && WP_Filesystem()) {
-  //   global $wp_filesystem;//$wp_filesystemオブジェクトの呼び出し
-  //   $custum_css_file = get_theme_css_cache_file();
-  //   //$wp_filesystemオブジェクトのメソッドとしてファイルに書き込む
-  //   $wp_filesystem->put_contents($custum_css_file, $custum_css);
-  // }
-
   ///////////////////////////////////////////
   // テーマ設定ページではスキン設定の読み込みを保存後にするために遅らせる
   ///////////////////////////////////////////
@@ -118,10 +104,22 @@ if( $is_post_ok ):
     require_once get_template_directory().'/lib/skin.php';   //スキン
   }
 
+  do_action('cocoon_settings_after_save');
 
-  //_v($custum_css);
+  ///////////////////////////////////////
+  // エディター用のカスタマイズCSS出力
+  ///////////////////////////////////////
+  ob_start();
+  get_template_part('tmp/css-custom');
+  $custum_css = ob_get_clean();
+  if ($custum_css) {
+    $custum_css_file = get_theme_css_cache_file();
+    //エディター用CSSファイルの書き出し
+    wp_filesystem_put_contents($custum_css_file, $custum_css);
+  }
 
 endif;
+
 //画面に「設定は保存されました」メッセージを表示
 $is_reset_ok = isset($_GET['reset']) && $_GET['reset'];
 if ($is_post_ok || $is_reset_ok):
@@ -156,7 +154,7 @@ endif;
 ?>
 <div class="wrap admin-settings">
 <h1><?php _e( SETTING_NAME_TOP, THEME_NAME ) ?></h1>
-<p><?php _e( 'Cocoonの設定全般についてはマニュアルを参照してください。', THEME_NAME ) ?><a href="https://wp-cocoon.com/manual/" target="_blank"><span class="fa fa-book"></span>
+<p><?php _e( 'Cocoonの設定全般についてはマニュアルを参照してください。', THEME_NAME ) ?><a href="https://wp-cocoon.com/manual/" target="_blank" rel="noopener"><?php echo change_fa('<span class="fa fa-book" aria-hidden="true">'); ?></span>
 <?php _e( 'テーマ利用マニュアル', THEME_NAME ) ?></a></p>
 <?php //var_dump($_POST) ?>
 <form name="form1" method="post" action="<?php echo add_query_arg(array('reset' => null)); ?>" class="admin-settings">
@@ -164,9 +162,9 @@ endif;
 <!-- タブ機能の実装 -->
 <div id="tabs" class="tabs">
   <ul>
+    <li class="skin"><?php _e( 'スキン', THEME_NAME ) ?></li>
     <li class="all"><?php _e( '全体', THEME_NAME ) ?></li>
     <li class="theme-header"><?php _e( 'ヘッダー', THEME_NAME ) ?></li>
-    <li class="skin"><?php _e( 'スキン', THEME_NAME ) ?></li>
     <li class="ads"><?php _e( '広告', THEME_NAME ) ?></li>
     <li class="title"><?php _e( 'タイトル', THEME_NAME ) ?></li>
     <li class="seo"><?php _e( 'SEO', THEME_NAME ) ?></li>
@@ -186,12 +184,14 @@ endif;
     <li class="comment"><?php _e( 'コメント', THEME_NAME ) ?></li>
     <li class="notice-area"><?php _e( '通知', THEME_NAME ) ?></li>
     <li class="appeal-area"><?php _e( 'アピールエリア', THEME_NAME ) ?></li>
-    <li class="carousel-area"><?php _e( 'カルーセル', THEME_NAME ) ?></li>
+    <li class="recommended"><?php _e( 'おすすめカード', THEME_NAME ) ?></li>
+    <li class="carousel"><?php _e( 'カルーセル', THEME_NAME ) ?></li>
     <li class="footer"><?php _e( 'フッター', THEME_NAME ) ?></li>
     <li class="buttons"><?php _e( 'ボタン', THEME_NAME ) ?></li>
     <li class="mobile-buttons"><?php _e( 'モバイル', THEME_NAME ) ?></li>
     <li class="page-404"><?php _e( '404ページ', THEME_NAME ) ?></li>
     <li class="amp"><?php _e( 'AMP', THEME_NAME ) ?></li>
+    <li class="pwa"><?php _e( 'PWA', THEME_NAME ) ?></li>
     <li class="admin"><?php _e( '管理者画面', THEME_NAME ) ?></li>
     <li class="widget"><?php _e( 'ウィジェット', THEME_NAME ) ?></li>
     <li class="widget-area"><?php _e( 'ウィジェットエリア', THEME_NAME ) ?></li>
@@ -204,6 +204,14 @@ endif;
 
   <?php submit_button(__( '変更をまとめて保存', THEME_NAME )); ?>
 
+  <?php //スキン制御変数のクリアとバックアップ
+  clear_global_skin_theme_options(); ?>
+
+  <!-- スキン -->
+  <div class="skin metabox-holder">
+    <?php require_once abspath(__FILE__).'skin-forms.php'; ?>
+  </div><!-- /.metabox-holder -->
+
   <!-- 全体タブ -->
   <div class="all metabox-holder">
     <?php require_once abspath(__FILE__).'all-forms.php'; ?>
@@ -212,11 +220,6 @@ endif;
   <!-- ヘッダータブ -->
   <div class="theme-header metabox-holder">
     <?php require_once abspath(__FILE__).'header-forms.php'; ?>
-  </div><!-- /.metabox-holder -->
-
-  <!-- スキン -->
-  <div class="skin metabox-holder">
-    <?php require_once abspath(__FILE__).'skin-forms.php'; ?>
   </div><!-- /.metabox-holder -->
 
   <!-- 広告タブ -->
@@ -315,6 +318,11 @@ endif;
     <?php require_once abspath(__FILE__).'appeal-forms.php'; ?>
   </div><!-- /.metabox-holder -->
 
+  <!-- おすすめカード -->
+  <div class="recommended metabox-holder">
+    <?php require_once abspath(__FILE__).'recommended-forms.php'; ?>
+  </div><!-- /.metabox-holder -->
+
   <!-- カルーセル -->
   <div class="carousel-area metabox-holder">
     <?php require_once abspath(__FILE__).'carousel-forms.php'; ?>
@@ -343,6 +351,11 @@ endif;
   <!-- AMP -->
   <div class="amp metabox-holder">
     <?php require_once abspath(__FILE__).'amp-forms.php'; ?>
+  </div><!-- /.metabox-holder -->
+
+  <!-- PWA -->
+  <div class="pwa metabox-holder">
+    <?php require_once abspath(__FILE__).'pwa-forms.php'; ?>
   </div><!-- /.metabox-holder -->
 
   <!-- 管理画面 -->
@@ -384,6 +397,9 @@ endif;
   <div class="theme-about metabox-holder">
     <?php require_once abspath(__FILE__).'about-forms.php'; ?>
   </div><!-- /.metabox-holder -->
+
+  <?php //スキン制御変数の復元
+  restore_global_skin_theme_options(); ?>
 
 </div><!-- /#tabs -->
 <input type="hidden" name="<?php echo HIDDEN_FIELD_NAME; ?>" value="<?php echo wp_create_nonce('settings');?>">

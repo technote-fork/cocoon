@@ -23,10 +23,14 @@ function widget_tag_cloud_args_custom($args) {
 endif;
 
 //カテゴリウィジェットの投稿数のカッコを取り除く
-add_filter( 'wp_list_categories', 'remove_post_count_parentheses' );
-add_filter( 'get_archives_link',  'remove_post_count_parentheses' );
+add_filter( 'wp_list_categories', 'remove_post_count_parentheses', 10, 2 );
+add_filter( 'get_archives_link',  'remove_post_count_parentheses', 10, 2 );
 if ( !function_exists( 'remove_post_count_parentheses' ) ):
-function remove_post_count_parentheses( $output ) {
+function remove_post_count_parentheses( $output, $var ) {
+  //カテゴリの場合（wp_list_categoriesは配列を返す、get_archives_linkはURLを返す）
+  if (is_array($var)) {
+    $output = str_replace('<a href=','<a class="cf" href=',$output);
+  }
   $output = preg_replace('/<\/a>.*\(([0-9,]+)\)/','<span class="post-count">$1</span></a>',$output);
   return $output;
 }
@@ -39,7 +43,7 @@ function wp_tag_cloud_custom( $output, $args ) {
   //style属性を取り除く
   $output = preg_replace( '/\s*?style="[^"]+?"/i', '',  $output);
   //タグテキストにspanタグの取り付け
-  $output = preg_replace( '/ aria-label="([^"]+?)">/i', ' aria-label="$1"><span class="tag-caption">',  $output);
+  $output = preg_replace( '/ aria-label="([^"]+?)">/i', ' aria-label="$1"><span class="tag-caption"><span class="fa fa-tag" aria-hidden="true"></span> ',  $output);
   //数字を表示しているとき
   if (isset($args['show_count']) && $args['show_count']) {
     $output = str_replace( '<span class="tag-link-count">', '</span><span class="tag-link-count">',  $output);
@@ -75,10 +79,8 @@ endif;
 add_filter('widget_title', 'widget_title_hidable');
 if ( !function_exists( 'widget_title_hidable' ) ):
 function widget_title_hidable($title){
-  // _v($title);
-  // _v(strpos($title, '!') === 0);
   //ウィジェットタイトルの最初の一文字が！のとき
-  if (strpos($title, '!') === 0) {
+  if (is_first_char_exclamation($title)) {
     return null;
   }
   return $title;

@@ -61,22 +61,29 @@ class OpenGraphGetter implements Iterator
         global $wp_version;
 
         $args = array(
-          'sslverify' => false,
+          //'sslverify' => false,
           //'redirection' => 10,
           'cocoon' => true,
           'user-agent' => $_SERVER['HTTP_USER_AGENT'],
         );
         $res = wp_remote_get( $URI, $args );
         $response_code = wp_remote_retrieve_response_code( $res );
-        // echo('<pre>');
-        // var_dump($res);
-        // echo('</pre>');
+        //echo('<pre>');
+        // _v($res);
+        // _v($response_code);
+        //echo('</pre>');
         if (!is_wp_error( $res ) && $response_code === 200) {
           $response = $res['body'];
+        } else if (!is_admin()) {
+          $response = wp_filesystem_get_contents($URI, true);
+
+          if (!$response) {
+            $response = get_http_content($URI);
+          }
         }
         //var_dump($response);
         if (!empty($response)) {
-            return self::_parse($response);
+            return self::_parse($response, $URI);
         } else {
             return false;
         }
@@ -89,14 +96,18 @@ class OpenGraphGetter implements Iterator
    * @param $HTML    HTML to parse
    * @return OpenGraphGetter
    */
-	static private function _parse($HTML) {
+	static private function _parse($HTML, $URI = null) {
 		$old_libxml_error = libxml_use_internal_errors(true);
 
 		$doc = new DOMDocument();
-    //UTF-8ページの文字化け問題
-    //対処法1：http://qiita.com/kobake@github/items/3c5d09f9584a8786339d
-    //対処法2：http://nplll.com/archives/2011/06/_domdocumentloadhtml.php
-    $HTML = mb_convert_encoding($HTML,'HTML-ENTITIES', 'ASCII, JIS, UTF-8, EUC-JP, SJIS');
+    // //UTF-8ページの文字化け問題
+    // //対処法1：http://qiita.com/kobake@github/items/3c5d09f9584a8786339d
+    // //対処法2：http://nplll.com/archives/2011/06/_domdocumentloadhtml.php
+    // if (get_option('WPLANG') == 'ja') {
+    //   mb_language("Japanese");
+    // }
+    $HTML = @mb_convert_encoding($HTML,'HTML-ENTITIES', 'ASCII, JIS, UTF-8, EUC-JP, SJIS');
+    //$HTML = mb_convert_encoding($HTML,'HTML-ENTITIES', 'ASCII, JIS, UTF-8');
 		$doc->loadHTML($HTML);
 
     //タイトルタグからタイトル情報を取得
@@ -186,6 +197,58 @@ class OpenGraphGetter implements Iterator
     }
     if (empty($page_description)) {
       $page->_values['description'] = $description;
+    }
+
+    //Amazonページかどうか
+    if (is_amazon_site_page($URI)
+      //(includes_string($URI, '//amzn.to/') || includes_string($URI, '//www.amazon.co'))
+    //  || (includes_string($HTML, '//images-fe.ssl-images-amazon.com')
+    //  && includes_string($HTML, '//m.media-amazon.com'))
+    ) {
+      $image_url = null;
+      //Amazonページなら画像取得
+      if (includes_string($HTML, 'id="landingImage"')) {
+        //通常商品ページ用
+        if (preg_match('|https://images-na.ssl-images-amazon.com/images/I/\d[^&"]+?_S[A-Z]\d{3}(,\d{3})?_\.jpg|i', $HTML, $m)) {
+          if (isset($m[0])) {
+            //_v($m[0]);
+            $image_url = $m[0];
+          }
+        } else {
+          //https://images-na.ssl-images-amazon.com/images/I/41b9TQppZJL._AC_.jp
+          //https://images-na.ssl-images-amazon.com/images/I/81OcexSf0SL._AC_UX625_.jpg
+          if (preg_match('/"(https:\/\/images-na\.ssl-images-amazon\.com\/images\/I\/[^&"]+?\._AC_(U[XY][^&"]+?)?\.jpg)"/i', $HTML, $m)) {
+            //var_dump($m[1]);
+            if (isset($m[1])) {
+              //_v($m[0]);
+              $image_url = $m[1];
+            }
+          }
+        }
+      } else if (includes_string($HTML, 'id="imgBlkFront"')) {
+        //書籍ページ用
+        //https://images-fe.ssl-images-amazon.com/images/I/51aV7NaxG4L.jpg
+        $res = preg_match('/id="imgBlkFront" data-a-dynamic-image="\{&quot;(https:\/\/images-(fe|na).ssl-images-amazon.com\/images\/I\/.+?\.jpg)&quot;:/i', $HTML, $m);
+        if ($res && isset($m[1])) {
+          $image_url = $m[1];
+        }
+      } else if (includes_string($HTML, 'id="MusicCartToastContainer"')) {
+        //Amazon Music
+        //https://m.media-amazon.com/images/I/61+mhXhVhfL._SS500_.jpg
+        //https://images-na.ssl-images-amazon.com/images/I/41AFHM036KL._AC_.jpg
+        $res = preg_match('/<img.+?src="(https:\/\/m.media-amazon.com\/images\/I\/.+?)">/i', $HTML, $m);
+        if ($res && isset($m[1])) {
+          $image_url = $m[1];
+        }
+      } else if (includes_string($HTML, 'id="ebooksImgBlkFront"')) {
+        //Amazon Kindle
+        //https://m.media-amazon.com/images/I/51tY7U5mUHL.jpg
+        $res = preg_match('/"(https:\/\/m.media-amazon\.com\/images\/I\/[^&"]+?\.jpg)"/i', $HTML, $m);
+        if ($res && isset($m[1])) {
+          $image_url = $m[1];
+        }
+      }
+      $page->_values['image'] = $image_url;
     }
 
 		return $page;

@@ -89,6 +89,12 @@ function is_baguettebox_effect_enable(){
   return get_image_zoom_effect() == 'baguettebox';
 }
 endif;
+//Spotlightが有効
+if ( !function_exists( 'is_spotlight_effect_enable' ) ):
+function is_spotlight_effect_enable(){
+  return get_image_zoom_effect() == 'spotlight';
+}
+endif;
 
 //本文中画像の中央寄せ
 define('OP_CONTENT_IMAGE_CENTER_ENABLE', 'content_image_center_enable');
@@ -190,17 +196,27 @@ function get_no_image_file(){
   return url_to_local(get_no_image_url());
 }
 endif;
-if ( !function_exists( 'get_no_image_sized_url' ) ):
-function get_no_image_sized_url($url, $w, $h){
+if ( !function_exists( 'get_image_sized_url' ) ):
+function get_image_sized_url($url, $w, $h){
   $ext = get_extention($url);
   $sized_url = str_replace('.'.$ext, '-'.$w.'x'.$h.'.'.$ext, $url);
   return $sized_url;
 }
 endif;
+if ( !function_exists( 'get_no_image_large_url' ) ):
+function get_no_image_large_url(){
+  if ($no_image_url = get_no_image_url()) {
+    $res = $no_image_url;
+  } else {
+    $res = NO_IMAGE_LARGE;
+  }
+  return $res;
+}
+endif;
 if ( !function_exists( 'get_no_image_320x180_url' ) ):
 function get_no_image_320x180_url(){
   if ($no_image_url = get_no_image_url()) {
-    $res = get_no_image_sized_url(get_no_image_url(), THUMB320WIDTH, THUMB320HEIGHT);
+    $res = get_image_sized_url(get_no_image_url(), THUMB320WIDTH, THUMB320HEIGHT);
   } else {
     $res = NO_IMAGE_320;
   }
@@ -215,7 +231,7 @@ endif;
 if ( !function_exists( 'get_no_image_160x90_url' ) ):
 function get_no_image_160x90_url(){
   if ($no_image_url = get_no_image_url()) {
-    $res = get_no_image_sized_url(get_no_image_url(), THUMB160WIDTH, THUMB160HEIGHT);
+    $res = get_image_sized_url(get_no_image_url(), THUMB160WIDTH, THUMB160HEIGHT);
   } else {
     $res = NO_IMAGE_160;
   }
@@ -230,7 +246,7 @@ endif;
 if ( !function_exists( 'get_no_image_120x68_url' ) ):
 function get_no_image_120x68_url(){
   if ($no_image_url = get_no_image_url()) {
-    $res = get_no_image_sized_url(get_no_image_url(), THUMB120WIDTH, THUMB120HEIGHT);
+    $res = get_image_sized_url($no_image_url, THUMB120WIDTH, THUMB120HEIGHT);
   } else {
     $res = NO_IMAGE_120;
   }
@@ -245,7 +261,7 @@ endif;
 if ( !function_exists( 'get_no_image_150x150_url' ) ):
 function get_no_image_150x150_url(){
   if ($no_image_url = get_no_image_url()) {
-    $res = get_no_image_sized_url(get_no_image_url(), THUMB150WIDTH, THUMB150HEIGHT);
+    $res = get_image_sized_url($no_image_url, THUMB150WIDTH, THUMB150HEIGHT);
   } else {
     $res = NO_IMAGE_150;
   }
@@ -265,5 +281,18 @@ function get_no_image_large_url(){
     $res = NO_IMAGE_LARGE;
   }
   return $res;
+}
+endif;
+
+//オリジナルサムネイルタグの取得
+if ( !function_exists( 'get_original_image_tag' ) ):
+function get_original_image_tag($post_id, $image_url, $width, $height, $class, $alt = null){
+  $html = '<img src="'.esc_url($image_url).'" alt="'.esc_attr($alt).'" class="'.esc_attr($class).'" width="'.esc_attr($width).'" height="'.esc_attr($height).'" />';
+  $post_thumbnail_id = null;
+  $size ='no-image' ;
+  $attr = array();
+  $attr['class'] = $class;
+  $attr['alt'] = $alt;
+  return apply_filters('post_thumbnail_html', $html, $post_id, $post_thumbnail_id, $size, $attr);
 }
 endif;

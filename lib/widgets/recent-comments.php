@@ -38,7 +38,7 @@ class RecentCommentsWidgetItem extends WP_Widget {
       <?php //classにwidgetと一意となるクラス名を追加する ?>
       <?php echo $args['before_widget']; ?>
         <?php
-        if ($title !== null) {
+        if (!is_null($title)) {
           echo $args['before_title'];
           if ($title) {
             echo $title;//タイトルが設定されている場合は使用する
@@ -61,13 +61,16 @@ class RecentCommentsWidgetItem extends WP_Widget {
           $comments = $comments_query->query( $comments_args );
           //コメントループ
           if ( $comments ) {
+            //日付フォーマットの指定
+            $format = get_site_date_format();
+            $format = apply_filters('recent_comments_widget_date_format', $format);
             foreach ( $comments as $comment ) {
               //var_dump($comment);
               $url = get_permalink($comment->comment_post_ID).'#comment-'.$comment->comment_ID;
               $title = $comment->post_title;
               $avatar = get_avatar( $comment, '42', null );
               $author = get_comment_author($comment->comment_ID);
-              $date = get_comment_date( get_site_date_format(), $comment->comment_ID);
+              $date = get_comment_date($format, $comment->comment_ID);
               $comment_content = strip_tags($comment->comment_content);
               if(mb_strlen($comment_content,"UTF-8") > $str_count) {
                 $comment_content = mb_substr($comment_content, 0, $str_count).'...';
@@ -89,7 +92,7 @@ class RecentCommentsWidgetItem extends WP_Widget {
                       <div class="recent-comment-content">
                         <?php echo $comment_content; ?>
                       </div>
-                      <div class="recent-comment-article"><?php echo $title; ?>
+                      <div class="recent-comment-article"><span class="fa fa-link" aria-hidden="true"></span> <?php echo $title; ?>
                       </div>
                     </div><!-- /.recent-comment -->
                   </a>
@@ -112,10 +115,14 @@ class RecentCommentsWidgetItem extends WP_Widget {
   }
   function update($new_instance, $old_instance) {
     $instance = $old_instance;
-    $instance['title'] = strip_tags($new_instance['title']);
-    $instance['count'] = $new_instance['count'];
-    $instance['str_count'] = $new_instance['str_count'];
-    $instance['author_not_in'] = $new_instance['author_not_in'];
+    $instance['title'] =
+      isset($new_instance['title']) ? strip_tags($new_instance['title']) : null;
+    $instance['count'] =
+      isset($new_instance['count']) ? $new_instance['count'] : null;
+    $instance['str_count'] =
+      isset($new_instance['str_count']) ? $new_instance['str_count'] : null;
+    $instance['author_not_in'] =
+      isset($new_instance['author_not_in']) ? $new_instance['author_not_in'] : null;
     return $instance;
   }
   function form($instance) {
