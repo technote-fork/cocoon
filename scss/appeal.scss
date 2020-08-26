@@ -16,7 +16,7 @@
   // align-content: center;
   // flex-wrap: wrap;
   // position: relative;
-  min-height: 200px;
+  min-height: 300px;
   padding: 3% 5%;
 }
 
@@ -28,10 +28,10 @@
   // left: 0;
   // right: 0;
   // bottom: 0;
-  max-width: 800px;
+  max-width: 740px;
   background-color: rgba(255, 255, 255, 0.85);
   margin: auto;
-  padding: 1em;
+  padding: 2em;
   text-align: center;
   border-radius: $basic_border_radius;
 
@@ -54,13 +54,13 @@
 .appeal-button{
   @include link_cancel($white);
 
-  background-color: $google_plus_color;
+  background-color: #c9171e;
   font-weight: bold;
   text-align: center;
-  display: block;
-  max-width: 80%;
-  margin: auto;
-  padding: 10px 2em;
+  display: inline-block;
+  //max-width: 80%;
+  //margin: auto;
+  padding: 9px 42px;
   border-radius: $basic_border_radius;
   &:hover{
     color: $white;

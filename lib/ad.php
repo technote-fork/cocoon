@@ -21,11 +21,11 @@ function is_ads_visible(){
   //広告の除外（いずれかがあてはまれば表示しない）
   $is_exclude_ids = (
     //記事の除外
-    (!$post_ids_empty && is_single( $post_ids )) || //投稿ページの除外
-    (!$post_ids_empty && is_page( $post_ids )) ||   //個別ページの除外
+    (!$post_ids_empty && is_single( $post_ids ))//投稿ページの除外
+    || (!$post_ids_empty && is_page( $post_ids )) //個別ページの除外
     //カテゴリの除外
-    (!$category_ids_empty && is_single() && in_category( $category_ids )) ||//投稿ページの除外
-    (!$category_ids_empty && in_category( $category_ids )) //アーカイブページの除外
+    || (!$category_ids_empty && is_single() && in_category( $category_ids )) //投稿ページの除外
+    || (!$category_ids_empty && is_category( $category_ids )) //カテゴリーアーカイブページの除外
   );
 
   return is_all_ads_visible() &&
@@ -48,12 +48,12 @@ function get_adsense_ids($code = null){
   //AdSenseコードからIDを取得する
   $res = preg_match(
     '/'.preg_quote(DATA_AD_CLIENT).'="([^"]+?)".+?'.preg_quote(DATA_AD_SLOT).'="([^"]+?)"/is', $code, $m);
- if ($res && isset($m[1]) && isset($m[2])) {
-   return array(
-    DATA_AD_CLIENT => $m[1],
-    DATA_AD_SLOT   => $m[2],
-    );
- }
+  if ($res && isset($m[1]) && isset($m[2])) {
+    return array(
+      DATA_AD_CLIENT => $m[1],
+      DATA_AD_SLOT   => $m[2],
+      );
+  }
 }
 endif;
 
@@ -89,15 +89,6 @@ function get_normal_adsense_responsive_code($format = DATA_AD_FORMAT_AUTO, $code
   if (get_adsense_ids($code)) {
     $data_ad_layout = null;
 
-    // //フォーマットが設定されていない場合はフォーマットをコード内から取得
-    // if ($format == DATA_AD_FORMAT_NONE) {
-    //   if (preg_match('{data-ad-format="([^"]+?)"}i', $code, $m)) {
-    //     if (isset($m[1])) {
-    //       $format = $m[1];
-    //     }
-    //   }
-    // }
-
     //記事内広告の場合は付け加える
     if ($format == DATA_AD_FORMAT_FLUID) {
       $data_ad_layout = '     data-ad-layout="in-article"';
@@ -106,25 +97,16 @@ function get_normal_adsense_responsive_code($format = DATA_AD_FORMAT_AUTO, $code
     global $_IS_ADSENSE_EXIST;
     $_IS_ADSENSE_EXIST = true;
 
-    // //アドセンススクリプトコードの設定
-    // global $_IS_ADSENSE_SCRIPT_EMPTY;
     $adsense_script = null;
-    // if ($_IS_ADSENSE_SCRIPT_EMPTY) {
-    //   $adsense_script = ADSENSE_SCRIPT_CODE;
-    //   $_IS_ADSENSE_SCRIPT_EMPTY = false;
-    //   //_v($adsense_script);
-    // }
-    // _v($format);
-    // _v($_IS_ADSENSE_SCRIPT_EMPTY);
-    // _v($adsense_script);
+
     return $adsense_script.
 '<!-- レスポンシブコード -->
 <ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="'.get_adsense_data_ad_client($code).'"
-     data-ad-slot="'.get_adsense_data_ad_slot($code).'"'.
-     $data_ad_layout.'
-     data-ad-format="'.$format.'"></ins>
+  style="display:block"
+  data-ad-client="'.get_adsense_data_ad_client($code).'"
+  data-ad-slot="'.get_adsense_data_ad_slot($code).'"'.
+  $data_ad_layout.'
+  data-ad-format="'.$format.'"></ins>
 <script>
 (adsbygoogle = window.adsbygoogle || []).push({});
 </script>';
@@ -141,18 +123,31 @@ function get_amp_adsense_responsive_code($format = DATA_AD_FORMAT_AUTO, $code = 
   if (get_adsense_ids($code)) {
     $ad_client = get_adsense_data_ad_client($code);
     $ad_slot = get_adsense_data_ad_slot($code);
-    //_v($format);
     //関連コンテンツユニットの場合
     if ($format == DATA_AD_FORMAT_AUTORELAXED) {
-      $layout = ' layout="fixed-height" height="600" ';
-      $code = '<amp-ad
-        '.$layout.'
-        type="adsense"
-        data-ad-client="'.$ad_client.'"
-        data-ad-slot="'.$ad_slot.'">
+      $code = '
+        <amp-ad
+          media="(max-width: 480px)"
+          layout="fixed-height"
+          height="800"
+          type="adsense"
+          data-ad-client="'.$ad_client.'"
+          data-ad-slot="'.$ad_slot.'"
+          data-auto-format="rspv"
+          data-full-width>
+        </amp-ad>
+
+        <amp-ad
+          media="(min-width: 481px)"
+          layout="fixed-height"
+          height="320"
+          type="adsense"
+          data-ad-client="'.$ad_client.'"
+          data-ad-slot="'.$ad_slot.'"
+          data-auto-format="rspv"
+          data-full-width>
         </amp-ad>';
     } else {
-      //$layout = ' width="300" height="250" ';
       //リンクユニットの場合
       if ($format == DATA_AD_FORMAT_LINK) {
         $code = '<amp-ad
@@ -183,7 +178,6 @@ function get_amp_adsense_responsive_code($format = DATA_AD_FORMAT_AUTO, $code = 
         </amp-ad>';
       } else {
         $code = '<amp-ad
-          media="(max-width: 480px)"
           width="100vw"
           height="320"
           type="adsense"
@@ -192,15 +186,6 @@ function get_amp_adsense_responsive_code($format = DATA_AD_FORMAT_AUTO, $code = 
           data-auto-format="rspv"
           data-full-width>
             <div overflow></div>
-        </amp-ad>
-
-        <amp-ad
-          media="(min-width: 481px)"
-          layout="fixed-height"
-          height="280"
-          type="adsense"
-          data-ad-client="'.$ad_client.'"
-          data-ad-slot="'.$ad_slot.'">
         </amp-ad>';
       }
     }
@@ -228,7 +213,7 @@ endif;
 
 //H2見出しを判別する正規表現を定数にする
 if ( !defined('H2_REG') )
-  define('H2_REG', '/<h2/i');//H2見出しのパターン
+  define('H2_REG', apply_filters('insertion_heading_regexp', '/<h2/i'));//H2見出しのパターン
 
 //本文中にH2見出しが最初に含まれている箇所を返す（含まれない場合はnullを返す）
 //H3-H6しか使っていない場合は、h2部分を変更してください
@@ -244,19 +229,11 @@ endif;
 add_filter('the_content', 'add_ads_before_1st_h2', BEFORE_1ST_H2_AD_PRIORITY_STANDARD);
 if ( !function_exists( 'add_ads_before_1st_h2' ) ):
 function add_ads_before_1st_h2($the_content) {
-  // if ( is_amp() ) {
-  //   return $the_content;
-  // }
 
-  // //マルチページの2ページ目以降は広告を表示しない
-  // if (is_singular() && is_multi_paged()) {
-  //   return $the_content;
-  // }
-
-  if ( is_singular() && //投稿日・固定ページのとき
-       is_ad_pos_content_middle_visible() &&//設定で表示が許可されているとき
-       is_all_adsenses_visible() && //AdSense設定項目で表示が許可されているか
-       !is_multi_paged() //マルチページの2ページ目以降でない場合
+  if ( is_singular() //投稿日・固定ページのとき
+       && is_ad_pos_content_middle_visible() //設定で表示が許可されているとき
+       && is_all_adsenses_visible() //AdSense設定項目で表示が許可されているか
+       //&& !is_multi_paged() //マルチページの2ページ目以降でない場合
   ){
     //広告（AdSense）タグを記入
     ob_start();//バッファリング
@@ -265,16 +242,15 @@ function add_ads_before_1st_h2($the_content) {
     $h2result = get_h2_included_in_body( $the_content );//本文にH2タグが含まれていれば取得
     //H2見出しが本文中にある場合のみ
     if ( $h2result ) {
-      //本文全てのH2見出し手前に広告を表示するか
-      if (is_ad_pos_all_content_middle_visible()) {
-        //無制限に置換する
-        $limit = -1;
-      } else {
-        //最初のH2の手前に広告を挿入（最初のH2を置換）
+      //本文全てのH2見出し手前に広告を表示しない場合
+      if (!is_ad_pos_all_content_middle_visible()) {
+        //最初のH2の手前のみに広告を挿入（最初のH2を置換）
         $limit = 1;
+      } else {
+        //無制限に置換する
+        $limit = intval(get_ad_pos_content_middle_count());
+        $limit = $limit ? $limit : -1;
       }
-
-
       $the_content = preg_replace(H2_REG, $ad_template.PHP_EOL.PHP_EOL.$h2result, $the_content, $limit);
     }
   }
@@ -298,7 +274,7 @@ endif;
 //インデックスページの最後のページかどうか
 if ( !function_exists( 'is_posts_per_page_6_and_over' ) ):
 function is_posts_per_page_6_and_over(){
-  return ( intval(get_option('posts_per_page')) >= 6 );
+  return get_option_posts_per_page() >= 6;
 }
 endif;
 
@@ -313,22 +289,20 @@ endif;
 //ウィジェットをトップページのリスト表示中間に掲載するか
 if ( !function_exists( 'is_index_middle_widget_visible' ) ):
 function is_index_middle_widget_visible($count){
-  if (
-      //3個目の表示のときのみ
-      ($count == 3) &&
-      // //トップページリストのみ
-      // is_home() &&
-      // //ページネーションの最終ページでないとき
-      // !is_pagination_last_page() &&
-      //1ページに表示する最大投稿数が6以上の時
-      is_posts_per_page_6_and_over() &&
-      //エントリーカードタイプの一覧のとき
-      //is_entry_card_type_entry_card() &&
-      //タイル表示じゃないとき
-      !is_entry_card_type_tile_card() &&
-      //&&//公開記事が6以上の時
-      (get_all_post_count_in_publish() >= 6)
-  ) {
+  $display_count_condition = apply_filters('index_middle_display_count_condition', $count == 3);
+  $is_visible =
+    //3個目の表示のときのみ
+    $display_count_condition && //何番目に表示するかの表示条件（デフォルト：3）
+    //1ページに表示する最大投稿数が6以上の時
+    is_posts_per_page_6_and_over() &&
+    //タイル表示じゃないとき
+    !is_entry_card_type_tile_card() &&
+    //&&//公開記事が6以上の時
+    (get_all_post_count_in_publish() >= 6);
+
+  $is_visible = apply_filters('is_index_middle_widget_visible', $is_visible, $count);
+
+  if ($is_visible) {
     return true;
   }
 }
@@ -337,23 +311,16 @@ endif;
 //広告をトップページのリスト表示中間に掲載するか
 if ( !function_exists( 'is_index_middle_ad_visible' ) ):
 function is_index_middle_ad_visible($count){
-  if (
-      //広告表示設定が有効な時
-      is_ad_pos_index_middle_visible() &&
-      // //3個目の表示のときのみ
-      // ($count == 3) &&
-      // //トップページリストのみ
-      // is_home() &&
-      //ページネーションの最終ページでないとき
-      !is_pagination_last_page() &&
-      // //1ページに表示する最大投稿数が6以上の時
-      // is_posts_per_page_6_and_over() &&
-      // //エントリーカードタイプの一覧のとき
-      // is_entry_card_type_entry_card() &&
-      // //&&//公開記事が6以上の時
-      // (get_all_post_count_in_publish() >= 6)
-      is_index_middle_widget_visible($count)
-  ) {
+  $is_visible =
+    //広告表示設定が有効な時
+    is_ad_pos_index_middle_visible() &&
+    //ページネーションの最終ページでないとき
+    !is_pagination_last_page() &&
+    is_index_middle_widget_visible($count);
+
+  $is_visible = apply_filters('is_index_middle_ad_visible', $is_visible, $count);
+
+  if ($is_visible) {
     return true;
   }
 }
@@ -361,8 +328,6 @@ endif;
 
 //[ad]ショートコードに対して広告を表示する
 add_filter('the_content', 'replace_ad_shortcode_to_advertisement');
-add_filter('the_category_content', 'replace_ad_shortcode_to_advertisement');
-add_filter('the_tag_content', 'replace_ad_shortcode_to_advertisement');
 if ( !function_exists( 'replace_ad_shortcode_to_advertisement' ) ):
 function replace_ad_shortcode_to_advertisement($the_content){
   //[ad]機能が有効な時

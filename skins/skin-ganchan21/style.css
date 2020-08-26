@@ -6,7 +6,7 @@
   Author URI: https://ganchan.info/
   Screenshot URI: https://im-cocoon.net/wp-content/uploads/skin-ganchan21.png
   Version: 0.0.1
-  Priority: 200200
+  Priority: 9910000000
 */
 /*以下にスタイルシートを記入してください*/
 
@@ -577,3 +577,8 @@ main.main, div.sidebar {
 
 }
 
+.font-awesome-5 .toc-title:before,
+.font-awesome-5 .wp-caption-text:before{
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+}

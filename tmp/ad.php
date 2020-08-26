@@ -15,13 +15,14 @@ $ad_code = get_adsense_responsive_code(to_adsense_format($format), $ad_code);
 if (!$ad_code) {
   $ad_code = get_ad_code();
 }
+$ad_code = do_shortcode($ad_code);
 //広告を表示するか
 if (is_ads_visible() && !is_auto_adsens_only_enable() && $ad_code):
 //AdSenseコード時なかった場合は設定コードをそのまま取得
 //var_dump(htmlspecialchars($ad_code));
  ?>
 <div class="ad-area no-icon<?php echo $wrap_class ?> cf" itemscope itemtype="https://schema.org/WPAdBlock">
-  <div class="ad-label" itemprop="name"><?php echo get_ad_label();//広告ラベルの取得 ?></div>
+  <div class="ad-label" itemprop="name" data-nosnippet><?php echo get_ad_label_caption();//広告ラベルの取得 ?></div>
   <div class="ad-wrap">
     <div class="ad-responsive ad-usual"><?php echo $ad_code;//広告コードの取得 ?></div>
     <?php //ダブルレクタングルの場合

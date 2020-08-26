@@ -14,10 +14,10 @@ add_action('admin_menu', 'add_ad_custom_box');
 if ( !function_exists( 'add_ad_custom_box' ) ):
 function add_ad_custom_box(){
   //広告ボックス
-  add_meta_box( 'singular_ad_settings',__( '広告設定', THEME_NAME ), 'view_ad_custom_box', 'post', 'side' );
-  add_meta_box( 'singular_ad_settings',__( '広告設定', THEME_NAME ), 'view_ad_custom_box', 'page', 'side' );
+  add_meta_box( 'singular_ad_settings',__( '広告', THEME_NAME ), 'view_ad_custom_box', 'post', 'side' );
+  add_meta_box( 'singular_ad_settings',__( '広告', THEME_NAME ), 'view_ad_custom_box', 'page', 'side' );
   //カスタム投稿タイプに登録
-  add_meta_box_custom_post_types( 'singular_ad_settings',__( '広告設定', THEME_NAME ), 'view_ad_custom_box', 'custum_post', 'side' );
+  add_meta_box_custom_post_types( 'singular_ad_settings',__( '広告', THEME_NAME ), 'view_ad_custom_box', 'custum_post', 'side' );
 }
 endif;
 
@@ -29,7 +29,7 @@ if ( !function_exists( 'view_ad_custom_box' ) ):
 function view_ad_custom_box(){
   //広告を表示する
   generate_checkbox_tag('the_page_ads_novisible' , is_the_page_ads_novisible(), __( '広告を除外する', THEME_NAME ));
-  generate_howro_tag(__( 'ページ上の広告（AdSenseなど）表示を切り替えます。「広告」設定からカテゴリごとの設定も行えます。', THEME_NAME ));
+  generate_howto_tag(__( 'ページ上の広告（AdSenseなど）表示を切り替えます。「広告」設定からカテゴリごとの設定も行えます。', THEME_NAME ), 'the_page_ads_novisible');
 }
 endif;
 
@@ -57,10 +57,13 @@ endif;
 //広告を除外しているか
 if ( !function_exists( 'is_the_page_ads_novisible' ) ):
 function is_the_page_ads_novisible(){
-  $value = get_post_meta(get_the_ID(), 'the_page_ads_novisible', true);
-  if (is_migrate_from_simplicity()){
-    $simplicity_value = get_post_meta(get_the_ID(), 'is_ads_removed_in_page', true) ? 1 : 0;
-    $value = $value ? $value : $simplicity_value;
+  $value = 0;
+  if (is_singular() || is_admin()) {
+    $value = get_post_meta(get_the_ID(), 'the_page_ads_novisible', true);
+    if (is_migrate_from_simplicity()){
+      $simplicity_value = get_post_meta(get_the_ID(), 'is_ads_removed_in_page', true) ? 1 : 0;
+      $value = $value ? $value : $simplicity_value;
+    }
   }
   return $value;
 }

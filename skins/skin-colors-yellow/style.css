@@ -1,18 +1,18 @@
 @charset "UTF-8";
 /*
   Skin Name: COLORS（イエロー）
-  Description: 日本の伝統食・山吹色（#f8b500）をベースとしたシンプルスキン。
+  Description: 日本の伝統色・山吹色（#f8b500）をベースとしたシンプルスキン。
   Skin URI: https://wp-cocoon.com/skin-colors/
   Author: わいひら
   Author URI: https://nelog.jp/
   Screenshot URI: https://im-cocoon.net/wp-content/uploads/colors-yellow.png
-  Version: 1.0.1
-  Priority: 104
+  Version: 1.0.2
+  Priority: 9880005000
 */
 /*以下にスタイルシートを記入してください*/
 body {
   background-color: #fbfaf5;
-  font-family: 'Hiragino Kaku Gothic ProN', Meiryo, Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
 }
 
 .header, .header .site-name-text {
@@ -21,6 +21,13 @@ body {
 
 .header {
   background-color: #f8b500;
+}
+
+.fixed-header .header {
+  background-color: transparent;
+}
+.fixed-header .navi {
+  box-shadow: none;
 }
 
 .widget_recent_entries ul li a:hover, .widget_categories ul li a:hover, .widget_archive ul li a:hover, .widget_pages ul li a:hover, .widget_meta ul li a:hover, .widget_rss ul li a:hover, .widget_nav_menu ul li a:hover, .tagcloud a:hover, .pagination a:hover, .pager-links a:hover span, .pagination-next-link:hover, .comment-btn:hover, .comment-reply-link:hover, .navi-footer-in a:hover, .navi-footer-in a:hover {
@@ -105,6 +112,14 @@ div.mobile-menu-buttons .menu-button:hover,
   content: '\f105';
 }
 
+.font-awesome-5 .cat-item a::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+}
+.font-awesome-5 .cat-item .children a::before {
+  content: '\f105';
+}
+
 .post-count {
   background-color: #fff6e0;
   padding: 0 8px;
@@ -149,10 +164,14 @@ div.mobile-menu-buttons .menu-button:hover,
 
 .widget-entry-cards.ranking-visible .card-thumb::before {
   border-radius: 50%;
-  background: #f8b500;
+  background: #ffec47;
   top: -10px;
   left: -10px;
   border: 2px solid #eee;
+}
+
+.appeal-button {
+  background-color: #f8b500;
 }
 
 .navi {
@@ -166,7 +185,7 @@ div.mobile-menu-buttons .menu-button:hover,
 }
 .navi ul .sub-menu {
   background-color: #f8b500;
-  opacity: 0.96;
+  opacity: 0.95;
 }
 .navi ul .sub-menu a {
   color: #fff;

@@ -25,7 +25,7 @@
 
 main.main,
 div.sidebar{
-  padding: 10px;
+  padding: 16px;
   margin: 10px 0;
   border-width: 0;
 }
@@ -98,7 +98,7 @@ table{
 /************************************
 ** 関連記事
 ************************************/
-.rect-vartical-card{
+.rect-vertical-card{
   .related-entry-card-wrap{
     width: 49%;
   }
@@ -126,12 +126,23 @@ table{
   flex-direction: column;
 }
 
+// .mblt-header-and-footer-mobile-buttons.is-header-fixed{
+//   // .js-clingify-placeholder{
+//   //   display: none;
+//   // }
+//   .js-clingify-locked{
+//     .header-container-in{
+//       height: 0;
+//     }
+//   }
+// }
+
 // .date-tags{
 //   margin: 0;
 //   line-height: 1;
 // }
 
-.ect-vertical-card-3 .entry-card-wrap{
+.ect-vertical-card .entry-card-wrap{
   width: 49%;
 }
 
@@ -176,13 +187,8 @@ table{
 ///////////////////////////////////////
 // Facebookボックス
 ///////////////////////////////////////
-@include fb_like_box;
-.fb-like-box{
-  max-width: none;
-}
-// .fb-like-thumb{
-//   display: none;
-// }
+@include fb_like_box(none);
+
 
 ///////////////////////////////////////
 // CTAボックス
@@ -235,7 +241,7 @@ table{
 
 .header-container-in.hlt-top-menu {
   display: block;
-  #header{
+  .header{
     .header-in,
     .logo-text{
       display: block;
@@ -288,7 +294,6 @@ textarea {
   margin-top: 10px;
 }
 
-.no-mobile-sidebar #sidebar,
 .product-item-thumb-l,
 .swatchimages{
   display: none;
@@ -324,3 +329,5 @@ textarea {
     height: auto;
   }
 }
+
+@include recommended_nallow;

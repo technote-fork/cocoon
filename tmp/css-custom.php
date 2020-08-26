@@ -10,7 +10,8 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 <?php //モバイルサイトフォント
 if (get_mobile_site_font_size()): ?>
 @media screen and (max-width: 480px){
-  .page-body{
+  .page-body,
+  .menu-content{
     font-size: <?php echo get_mobile_site_font_size(); ?>;
   }
 }
@@ -26,7 +27,7 @@ if (get_site_key_color()): ?>
 .cat-label,
 .appeal-content .appeal-button,
 .demo .cat-label,
-.blogcard-type .blogcard::before,
+.blogcard-type .blogcard-label,
 #footer{
   background-color: <?php echo get_site_key_color(); ?>;
 }
@@ -270,8 +271,8 @@ $colors = array();
 $text_colors = array();
 //カテゴリ色の振り分け
 foreach ($cats as $cat) {
-  $color = get_category_color($cat->cat_ID);
-  $text_color = get_category_text_color($cat->cat_ID);
+  $color = get_the_category_color($cat->cat_ID);
+  $text_color = get_the_category_text_color($cat->cat_ID);
   $cat_label_pre = '.cat-label.cat-label-';
   $cat_link_pre = '.cat-link.cat-link-';
   if ($color) {
@@ -370,9 +371,9 @@ if (get_sidebar_border_color()): ?>
 <?php endif ?>
 <?php //カラム間の幅
 $main_sidebar_margin = get_main_sidebar_margin();
-if (is_numeric($main_sidebar_margin)): ?>
+if (false && is_numeric($main_sidebar_margin)): ?>
 .main{
-  <?php if(is_sidebar_position_right()): ?>
+  <?php if (is_sidebar_position_right()): ?>
   margin-right: <?php echo $main_sidebar_margin; ?>px;
   margin-left: 0;
   <?php else: ?>
@@ -597,6 +598,7 @@ if ($entry_content_line_hight = get_entry_content_line_hight()): ?>
 }
   <?php //管理画面用
   if(is_admin() && is_gutenberg_editor_enable()): ?>
+  .main,
   .main p,
   .main p.wp-block-paragraph {
     line-height: <?php echo $entry_content_line_hight; ?>;
@@ -610,25 +612,31 @@ if ($entry_content_margin_hight = get_entry_content_margin_hight()): ?>
   margin-top: <?php echo $entry_content_margin_hight; ?>em;
   margin-bottom: <?php echo $entry_content_margin_hight; ?>em;
 }
-.entry-content > .micro-top{
+.article .micro-top{
   margin-bottom: -<?php echo $entry_content_margin_hight * 1.1; ?>em;
 }
-.entry-content > .micro-balloon{
+.article .micro-balloon{
   margin-bottom: -<?php echo $entry_content_margin_hight * 0.8; ?>em;
 }
-.entry-content > .micro-bottom{
+.article .micro-bottom{
   margin-top: -<?php echo $entry_content_margin_hight * 1.1; ?>em;
 }
-.entry-content > .micro-bottom.micro-balloon{
+.article .micro-bottom.micro-balloon{
   margin-top: -<?php echo $entry_content_margin_hight * 0.8; ?>em;
   margin-bottom: <?php echo $entry_content_margin_hight; ?>em;
 }
   <?php ////管理画面用
   if(is_admin() && is_gutenberg_editor_enable()): ?>
-  .main p,
-  .main p.wp-block-paragraph {
+  .article .wp-block {
     margin-top: <?php echo $entry_content_margin_hight; ?>em;
     margin-bottom: <?php echo $entry_content_margin_hight; ?>em;
+  }
+  <?php //公開ページと同じにすると「＋」ボタンが押せなかったので少し変更 ?>
+  .article .micro-top{
+    margin-bottom: -<?php echo $entry_content_margin_hight; ?>em;
+  }
+  .article .micro-bottom{
+    margin-top: -<?php echo $entry_content_margin_hight; ?>em;
   }
   <?php endif; ?>
 <?php endif ?>
@@ -712,4 +720,50 @@ if (!$editor_text_color) {
 .editor-post-title__block .editor-post-title__input,
 body#tinymce.wp-editor{
   color: <?php echo $editor_text_color; ?>
+}
+<?php //Internet Explorer（IE）用
+global $is_IE;
+if ($is_IE): ?>
+.wp-block-image figure.aligncenter {
+  display: block;
+  text-align: center;
+}
+.wp-block-image figure.aligncenter figcaption{
+  display: block;
+}
+  <?php if(is_singular() && is_eyecatch_visible() && has_post_thumbnail()): ?>
+  .eye-catch-wrap {
+    text-align: center;
+  }
+  .eye-catch{
+    display: inline-block;
+  }
+  <?php endif; ?>
+<?php endif; ?>
+<?php //デフォルトブロックエディター色の色指定
+if (!is_admin()) {
+  echo get_block_editor_color_palette_css();
+}
+?>
+<?php if (is_code_row_number_enable()):
+$max_code_row_count = 99;
+$max_code_row_count = apply_filters('max_code_row_count', $max_code_row_count);
+$rows = array();
+for ($i=1; $i <= $max_code_row_count; $i++) {
+  $rows[] = $i.'\A';
+}
+?>
+.is-code-row-number-enable pre::before {
+  content: "<?php echo implode(' ', $rows); ?>";
+}
+<?php endif; ?>
+<?php //ボックスメニュースタイル
+$color = get_site_key_color() ? get_site_key_color() : '#f6a068';
+ ?>
+.box-menu:hover{
+  box-shadow: inset 2px 2px 0 0 <?php echo $color; ?>, 2px 2px 0 0 <?php echo $color; ?>, 2px 0 0 0 <?php echo $color; ?>, 0 2px 0 0
+<?php echo $color; ?>;
+}
+.box-menu-icon{
+  color: <?php echo $color; ?>;
 }

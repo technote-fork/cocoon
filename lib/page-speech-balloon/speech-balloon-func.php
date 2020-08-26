@@ -35,7 +35,7 @@ define('SBIS_CIRCLE_NONE', 'cn');
 define('SBIS_CIRCLE_BORDER', 'cb');
 
 //いらすとやさん関係
-define('IRASUTOYA_ CREDIT', '&copy; <a href="http://www.irasutoya.com/" target="_blank">いらすとや</a>');
+define('IRASUTOYA_ CREDIT', '&copy; <a href="http://www.irasutoya.com/" target="_blank" rel="noopener">いらすとや</a>');
 define('IMAGE_CDN_DIR_URL', 'https://im-cocoon.net/wp-content/uploads');
 
 
@@ -377,13 +377,16 @@ function get_rest_speech_balloons( $data ) {
 }
 endif;
 
-//https://cocoon.local/wp-json/cocoon/v1/balloon/
-add_action( 'rest_api_init', function () {
-  register_rest_route( THEME_NAME.'/v1', '/balloon/', array(
-    'methods' => 'GET',
-    'callback' => 'get_rest_speech_balloons',
-  ) );
-} );
+// //https://cocoon.local/wp-json/cocoon/v1/balloon/
+// add_action( 'rest_api_init', 'rest_api_init_balloon_custom' );
+// if ( !function_exists( 'rest_api_init_balloon_custom' ) ):
+// function rest_api_init_balloon_custom(){
+//   register_rest_route( THEME_NAME.'/v1', '/balloon/', array(
+//     'methods' => 'GET',
+//     'callback' => 'get_rest_speech_balloons',
+//   ) );
+// }
+// endif;
 
 //REST API出力用の吹き出しデータ取得
 if ( !function_exists( 'get_rest_speech_balloon' ) ):
@@ -398,10 +401,10 @@ function get_rest_speech_balloon( $data ) {
 }
 endif;
 
-//https://cocoon.local/wp-json/cocoon/v1/balloon/1
-add_action( 'rest_api_init', function () {
-  register_rest_route( THEME_NAME.'/v1', '/balloon/(?P<id>\d+)', array(
-    'methods' => 'GET',
-    'callback' => 'get_rest_speech_balloon',
-  ) );
-} );
+// //https://cocoon.local/wp-json/cocoon/v1/balloon/1
+// add_action( 'rest_api_init', function () {
+//   register_rest_route( THEME_NAME.'/v1', '/balloon/(?P<id>\d+)', array(
+//     'methods' => 'GET',
+//     'callback' => 'get_rest_speech_balloon',
+//   ) );
+// } );

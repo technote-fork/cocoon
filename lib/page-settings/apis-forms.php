@@ -61,10 +61,28 @@ $help_text = __( '取得方法', THEME_NAME );
             generate_checkbox_tag(OP_AMAZON_ITEM_PRICE_VISIBLE , is_amazon_item_price_visible(), __( '価格を表示する', THEME_NAME ));
 
             echo '<div class="indent'.get_not_allowed_form_class(is_amazon_item_price_visible(), true).'">';
-              generate_checkbox_tag(OP_AMAZON_ITEM_STOCK_PRICE_VISIBLE , is_amazon_item_stock_price_visible(), __( 'Amazon在庫価格を表示する', THEME_NAME ));
+            $options = array(
+              'price' => __( '標準価格', THEME_NAME ),
+              'in_stock' => __( '在庫価格（デフォルト）', THEME_NAME ),
+              'lowest_price' => __( '最安値', THEME_NAME ),
+              'highest_price' => __( '最高値', THEME_NAME ),
+            );
+            generate_radiobox_tag(OP_AMAZON_ITEM_PRICE_TYPE, $options, get_amazon_item_price_type());
             echo '</div>';
 
+            // echo '<div class="indent'.get_not_allowed_form_class(is_amazon_item_price_visible(), true).'">';
+            // generate_checkbox_tag(OP_AMAZON_ITEM_LOWEST_PRICE_VISIBLE , is_amazon_item_lowest_price_visible(), __( '最安価格を表示する', THEME_NAME ));
+            // echo '</div>';
+            // echo '<div class="indent'.get_not_allowed_form_class(is_amazon_item_price_visible(), true).'">';
+            //   generate_checkbox_tag(OP_AMAZON_ITEM_STOCK_PRICE_VISIBLE , is_amazon_item_stock_price_visible(), __( 'Amazon在庫価格を表示する', THEME_NAME ));
+            // echo '</div>';
+
             generate_tips_tag(__( 'データー取得時点のAmazon販売ページでの値段を表示します。ショートコードでpriceオプションが設定されている場合は、そちらが優先されます。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/amazon-link-price/').get_image_preview_tag('https://im-cocoon.net/wp-content/uploads/amazon-price.png'));
+
+
+            generate_checkbox_tag(OP_AMAZON_ITEM_DESCRIPTION_VISIBLE , is_amazon_item_description_visible(), __( '説明文を表示する', THEME_NAME ));
+            generate_tips_tag(__( 'Amazon側に登録されている説明文を表示します（情報がない場合は表示されません）。descオプションが設定されている場合は、オプション値が優先して表示されます。', THEME_NAME ).get_image_preview_tag('https://im-cocoon.net/wp-content/uploads/amazon-item-description.png'));
+
 
             generate_checkbox_tag(OP_AMAZON_ITEM_CUSTOMER_REVIEWS_VISIBLE , is_amazon_item_customer_reviews_visible(), __( 'レビューを表示する', THEME_NAME ));
             echo '<br>';
@@ -123,7 +141,7 @@ $help_text = __( '取得方法', THEME_NAME );
               '+itemPrice' => __( '価格順（安い順）', THEME_NAME ),
               '-itemPrice' => __( '価格順（高い順）', THEME_NAME ),
             );
-            generate_selectbox_tag(OP_GET_RAKUTEN_API_SORT, $options, get_rakuten_api_sort(), __( '商品並び替え優先度', THEME_NAME ));
+            generate_radiobox_tag(OP_GET_RAKUTEN_API_SORT, $options, get_rakuten_api_sort(), __( '商品並び替え優先度', THEME_NAME ));
             generate_tips_tag(__( '同一商品番号の商品が複数あった場合の表示優先度です。', THEME_NAME ));
 
             generate_checkbox_tag(OP_RAKUTEN_ITEM_PRICE_VISIBLE , is_rakuten_item_price_visible(), __( '価格を表示する', THEME_NAME ));
@@ -181,6 +199,37 @@ $help_text = __( '取得方法', THEME_NAME );
         </tr>
 
 
+        <!-- DMM -->
+        <tr>
+          <th scope="row">
+            <?php
+            generate_label_tag('', __('DMM', THEME_NAME) );
+            ?>
+          </th>
+          <td>
+            <?php
+            generate_label_tag(OP_DMM_AFFILIATE_ID, __( 'DMMアフィリエイトID', THEME_NAME ));
+            echo '<br>';
+            generate_textbox_tag(OP_DMM_AFFILIATE_ID, get_dmm_affiliate_id(), '');
+            echo '<br>';
+
+            generate_tips_tag(__( 'DMMアフィリエイトの「アフィリエイトID」をを取得してください。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/dmm-search-button/', $help_text));
+
+
+            echo '<div'.get_not_allowed_form_class(get_dmm_affiliate_id()).'>';
+
+            generate_checkbox_tag(OP_DMM_SEARCH_BUTTON_VISIBLE , is_dmm_search_button_visible(), __( 'DMM検索ボタンを表示する', THEME_NAME ));
+            generate_tips_tag(__( 'DMMのキーワード検索ボタンを表示するか。', THEME_NAME ));
+
+            generate_textbox_tag(OP_DMM_SEARCH_BUTTON_TEXT, get_dmm_search_button_text(), '');
+            generate_tips_tag(__( 'DMMの検索ボタンに表示するテキストを入力してください。', THEME_NAME ));
+
+            echo '<div>';
+            ?>
+          </td>
+        </tr>
+
+
         <!-- もしもアフィリエイト -->
         <tr>
           <th scope="row">
@@ -190,7 +239,7 @@ $help_text = __( '取得方法', THEME_NAME );
             <?php
             generate_checkbox_tag(OP_MOSHIMO_AFFILIATE_LINK_ENABLE , is_moshimo_affiliate_link_enable(), __( 'リンクをもしもアフィリエイトを経由にする', THEME_NAME ));
             generate_moshimo_badge_tag(__( 'もしも必須', THEME_NAME ));
-            generate_tips_tag(__( 'もしもアフィリエイト経由でAmazonリンクを掲載し報酬を得ます。【重要】2019年1月23日の<a href="https://affiliate.amazon.co.jp/help/topic/t52/ref=amb_link_zYXX0aRKMACI_Qkj9rR6Nw_1?pf_rd_p=c08a6c9b-94fe-481e-ad8b-b2c640121b1f" target="_blank">PA-APIの仕様変更</a>により、APIが生成するリンクから売上が発生しないとAPIが利用できなくなりました。ですので、<span class="red">もしもアフィリエイト経由の場合は、30日でAPIが利用できなくなる可能性があります</span>。AmazonのAPIを利用したい場合は、この機能は有効にしないことをおすすめします。PA-APIの制限がクリアできない場合は、楽天商品リンクをご利用ください。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/moshimo-amazon-link/'));
+            generate_tips_tag(__( 'もしもアフィリエイト経由でAmazonリンクを掲載し報酬を得ます。【重要】2019年1月23日の<a href="https://affiliate.amazon.co.jp/help/topic/t52/ref=amb_link_zYXX0aRKMACI_Qkj9rR6Nw_1?pf_rd_p=c08a6c9b-94fe-481e-ad8b-b2c640121b1f" target="_blank" rel="noopener">PA-APIの仕様変更</a>により、APIが生成するリンクから売上が発生しないとAPIが利用できなくなりました。ですので、<span class="red">もしもアフィリエイト経由の場合は、30日でAPIが利用できなくなる可能性があります</span>。AmazonのAPIを利用したい場合は、この機能は有効にしないことをおすすめします。PA-APIの制限がクリアできない場合は、楽天商品リンクをご利用ください。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/moshimo-amazon-link/'));
 
             generate_label_tag(OP_MOSHIMO_AMAZON_ID, __( 'Amazon a_id', THEME_NAME ));
             echo '<br>';
@@ -219,9 +268,9 @@ $help_text = __( '取得方法', THEME_NAME );
           </th>
           <td>
             <?php
-            generate_number_tag(OP_API_CACHE_RETENTION_PERIOD, get_api_cache_retention_period(), '', 1, 365);
+            generate_number_tag(OP_API_CACHE_RETENTION_PERIOD, get_api_cache_retention_period(), '', 1, 3650);
             _e( '日', THEME_NAME );
-            generate_tips_tag(__( 'APIキャッシュのリフレッシュ間隔を設定します。1～365日の間隔を選べます。間隔が短いほどAPIのリクエスト制限にかかる可能性が高くなりますのでご注意ください。アクセス数の多いサイトは長めに設定しておくことをおすすめします。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/amazon-api-cache/', __( '削除方法', THEME_NAME )));
+            generate_tips_tag(__( 'APIキャッシュのリフレッシュ間隔を設定します。1～3650日の間隔を選べます。間隔が短いほどAPIのリクエスト制限にかかる可能性が高くなりますのでご注意ください。アクセス数の多いサイトは長めに設定しておくことをおすすめします。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/amazon-api-cache/', __( '削除方法', THEME_NAME )));
             ?>
           </td>
         </tr>
@@ -230,9 +279,9 @@ $help_text = __( '取得方法', THEME_NAME );
     </table>
 
   <p style="text-align: right;">
-    <a href="<?php _e( 'https://affiliate.amazon.co.jp/help/operating/paapilicenseagreement', THEME_NAME ) ?>" target="_blank"><?php _e( 'Amazon.co.jp Product Advertising API ライセンス契約', THEME_NAME ) ?></a><br>
-    <a href="<?php _e( 'https://affiliate.amazon.co.jp/help/topic/t32/', THEME_NAME ) ?>" target="_blank"><?php _e( 'Product Advertising API (PA-API) の利用ガイドライン', THEME_NAME ) ?></a><br>
-    <a href="<?php _e( 'https://webservice.rakuten.co.jp/guide/rule', THEME_NAME ) ?>" target="_blank"><?php _e( '楽天ウェブサービス規約', THEME_NAME ) ?></a>
+    <a href="<?php _e( 'https://affiliate.amazon.co.jp/help/operating/paapilicenseagreement', THEME_NAME ) ?>" target="_blank" rel="noopener"><?php _e( 'Amazon.co.jp Product Advertising API ライセンス契約', THEME_NAME ) ?></a><br>
+    <a href="<?php _e( 'https://affiliate.amazon.co.jp/help/topic/t32/', THEME_NAME ) ?>" target="_blank" rel="noopener"><?php _e( 'Product Advertising API (PA-API) の利用ガイドライン', THEME_NAME ) ?></a><br>
+    <a href="<?php _e( 'https://webservice.rakuten.co.jp/guide/rule', THEME_NAME ) ?>" target="_blank" rel="noopener"><?php _e( '楽天ウェブサービス規約', THEME_NAME ) ?></a>
   </p>
 
   </div>

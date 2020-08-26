@@ -1,12 +1,6 @@
-[class*="fab-"]{
+[class*="fab-"]::before{
   font-family: FontAwesome;
 }
-
-// .block-box{
-//   [class*="fab-"]::before{
-//     margin-right: 0.4em;
-//   }
-// }
 
 .fab-info-circle::before{
   content: '\f05a';
@@ -220,9 +214,15 @@
 }
 
 .iconlist-box{
-  ul,
-  ol{
+  border-color: transparent;
+
+  ul{
     list-style: none;
+  }
+  ol{
+    li::before{
+      display: none;
+    }
   }
   &.list-none{
     ul{

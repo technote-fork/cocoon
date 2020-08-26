@@ -7,7 +7,7 @@
   Author URI: https://mizutama.blog/
   Screenshot URI: https://im-cocoon.net/wp-content/uploads/skin-fuwari-omeshicha.png
   Version: 1.1
-  Priority: 200103
+  Priority: 9890001000
 */
 /************************************
 ** 基本
@@ -252,7 +252,7 @@ table th {
 	width: 80%;
 	padding-top: 0.5em;
 	padding-bottom: 0.5em;
-	border: 1px solid #d7a69c;
+	border: 1px solid #aec9cc;
 }
 
 .toc-content {
@@ -937,19 +937,23 @@ a.page-numbers:hover {
 	border-color: #b4d09b;
 }
 
-.blank-box.bb-tab.bb-yellow::before {
+.blank-box.bb-tab.bb-yellow::before,
+.blank-box.bb-tab.bb-yellow .bb-label {
 	background-color: #e6da94;
 }
 
-.blank-box.bb-tab.bb-red::before {
+.blank-box.bb-tab.bb-red::before,
+.blank-box.bb-tab.bb-red .bb-label {
 	background-color: #df9a87;
 }
 
-.blank-box.bb-tab.bb-blue::before {
+.blank-box.bb-tab.bb-blue::before,
+.blank-box.bb-tab.bb-blue .bb-label {
 	background-color: #9ac4d0;
 }
 
-.blank-box.bb-tab.bb-green::before {
+.blank-box.bb-tab.bb-green::before,
+.blank-box.bb-tab.bb-green .bb-label {
 	background-color: #b4d09b;
 }
 
@@ -993,4 +997,13 @@ a.page-numbers:hover {
 
 .slicknav_menu {
 	background-color: #8eb4b9;
+}
+
+/************************************
+** Font Awesome5対応
+************************************/
+.font-awesome-5 blockquote::before,
+.font-awesome-5 .navi-menu-content .menu-drawer a::after{
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
 }

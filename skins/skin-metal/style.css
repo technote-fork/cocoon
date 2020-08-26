@@ -6,7 +6,7 @@
   Author URI: https://matometaru.com/
   Screenshot URI:https://im-cocoon.net/wp-content/uploads/skin-metal.png
   Version: 1.0.0
-  Priority: 200800
+  Priority: 9970000000
 */
 /*以下にスタイルシートを記入してください*/
 
@@ -194,7 +194,7 @@ body {
 	margin-bottom: .5em;
 }
 
-.entry-content .blogcard-snipet {
+.entry-content .blogcard-snippet {
     line-height: 1.5;
 }
 
@@ -341,7 +341,7 @@ body {
 		margin-bottom: .5em;
 	}
 
-	.entry-content .blogcard-snipet {
+	.entry-content .blogcard-snippet {
 	    line-height: 1.5;
 	}
 

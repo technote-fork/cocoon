@@ -11,7 +11,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
   <h2 class="hndle"><?php _e( 'AMP設定', THEME_NAME ) ?></h2>
   <div class="inside">
 
-    <p><?php _e( 'AMP（Accelerated Mobile Pages）に関する設定です。投稿ページをモバイル上で高速表示させるための仕組みです。', THEME_NAME );
+    <p><?php _e( 'AMP（Accelerated Mobile Pages）に関する設定です。投稿・固定ページをモバイル上で高速表示させるための仕組みです。', THEME_NAME );
     echo get_help_page_tag('https://wp-cocoon.com/amp/'); ?></p>
 
     <table class="form-table">
@@ -51,7 +51,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           <td>
             <?php
             $options = array(
-              'none' => 'なし',
+              'none' => __( 'なし', THEME_NAME ),
               'amp-image-lightbox' => __( 'AMP Lightbox（単一拡大）', THEME_NAME ),
               'amp-lightbox-gallery' => __( 'AMPギャラリー（複数画像ギャラリー表示対応）', THEME_NAME ),
             );
@@ -61,19 +61,6 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           </td>
         </tr>
 
-        <!-- インラインスタイル処理 -->
-        <!-- <tr>
-          <th scope="row">
-            <?php generate_label_tag(OP_AMP_REMOVAL_INLINE_STYLE_ENABLE, __( 'インラインスタイル処理', THEME_NAME )); ?>
-          </th>
-          <td>
-            <?php
-            generate_checkbox_tag(OP_AMP_REMOVAL_INLINE_STYLE_ENABLE, is_amp_removal_inline_style_enable(), __("インラインスタイルを取り除く",THEME_NAME ));
-            generate_tips_tag(__( '本文中のインラインスタイルを取り除きます（有効推奨）。無効にすると、本文内でもインラインのstyle属性でスタイリングできます。ただし、AMPエラーの原因になったり、AMPのサイズ制限（50KB）を超えやすくなるため無効は推奨はしません。', THEME_NAME ));
-            ?>
-          </td>
-        </tr> -->
-
         <!-- インラインスタイル -->
         <tr>
           <th scope="row">
@@ -82,7 +69,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           <td>
             <?php
             generate_checkbox_tag(OP_AMP_INLINE_STYLE_ENABLE, is_amp_inline_style_enable(), __("インラインスタイルを有効にする",THEME_NAME ));
-            generate_tips_tag(__( '本文中のインラインスタイルを有効にします（無効推奨）。有効にすると、本文内でもインラインのstyle属性でスタイリングできます。ただし、AMPエラーの原因になったり、AMPのサイズ制限（50KB）を超えやすくなるため有効は推奨はしません。', THEME_NAME ));
+            generate_tips_tag(__( '本文中のインラインスタイルを有効にします（無効推奨）。有効にすると、本文内でもインラインのstyle属性でスタイリングできます。ただし、AMPエラーの原因になったり、AMPのサイズ制限（50000バイト）を超えやすくなるため有効は推奨はしません。', THEME_NAME ));
             ?>
           </td>
         </tr>
@@ -95,10 +82,10 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           <td>
             <?php
             generate_checkbox_tag(OP_AMP_SKIN_STYLE_ENABLE, is_amp_skin_style_enable(), __('スキンのスタイルを有効にする',THEME_NAME ));
-            generate_tips_tag(__( '凝ったスタイルのスキンを利用していると、AMPのCSSサイズ上限（50KB）を超えてしまう可能性があります。スキンを適用したことにより、AMPエラーが続出した場合は、AMPページでスキンを適用しないことにより、CSSのサイズを減らします。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/skin-child-theme-css-off/'));
+            generate_tips_tag(__( '凝ったスタイルのスキンを利用していると、AMPのCSSサイズ上限（50000バイト）を超えてしまう可能性があります。スキンを適用したことにより、AMPエラーが続出した場合は、AMPページでスキンを適用しないことにより、CSSのサイズを減らします。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/skin-child-theme-css-off/'));
 
             generate_checkbox_tag(OP_AMP_CHILD_THEME_STYLE_ENABLE, is_amp_child_theme_style_enable(), __('子テーマのスタイルを有効にする',THEME_NAME ));
-            generate_tips_tag(__( '子テーマのstyle.cssで凝ったカスタマイズをしていると、AMPのCSSサイズ上限（50KB）を超えてしまう可能性があります。子テーマのCSSカスタマイズにより、AMPエラーが続出した場合は、AMPページで「子テーマCSS」を適用しないことにより、CSSのサイズを減らします。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/skin-child-theme-css-off/'));
+            generate_tips_tag(__( '子テーマのstyle.cssで凝ったカスタマイズをしていると、AMPのCSSサイズ上限（50000バイト）を超えてしまう可能性があります。子テーマのCSSカスタマイズにより、AMPエラーが続出した場合は、AMPページで「子テーマCSS」を適用しないことにより、CSSのサイズを減らします。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/skin-child-theme-css-off/'));
             ?>
           </td>
         </tr>

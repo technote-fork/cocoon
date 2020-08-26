@@ -64,6 +64,7 @@ do_action( 'rss_tag_pre', 'rss2' );
 	if (!$logo_url) {
 		$logo_url = get_amp_logo_image_url();
 	}
+	$logo_url = apply_filters('smartnews_logo_url', $logo_url);
 	?>
 	<snf:logo>
 			<url><?php echo $logo_url; ?></url>
@@ -132,6 +133,7 @@ do_action( 'rss_tag_pre', 'rss2' );
 		//https://publishers.smartnews.com/ja/smartformat/specification_rss/
 		$content = preg_replace('{<a [^>]+?>}i', '', $content);
 		$content = str_replace('</a>', '', $content);
+		$content = apply_filters('get_the_smartnews_content', $content);
 		 ?>
 		<content:encoded><![CDATA[<?php echo $content; ?>]]></content:encoded>
 

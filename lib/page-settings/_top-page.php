@@ -14,6 +14,7 @@ $is_post_ok = isset($_POST[HIDDEN_FIELD_NAME]) &&
 if( $is_post_ok ):
   //var_dump($_POST[OP_RESET_ALL_SETTINGS]);
 
+  do_action('cocoon_settings_before_save');
   ///////////////////////////////////////
   // 設定の保存
   ///////////////////////////////////////
@@ -67,6 +68,8 @@ if( $is_post_ok ):
   require_once abspath(__FILE__).'notice-posts.php';
   //アピールエリア
   require_once abspath(__FILE__).'appeal-posts.php';
+  //おすすめカード
+  require_once abspath(__FILE__).'recommended-posts.php';
   //カルーセル
   require_once abspath(__FILE__).'carousel-posts.php';
   //フッター
@@ -94,23 +97,25 @@ if( $is_post_ok ):
   //その他
   require_once abspath(__FILE__).'others-posts.php';
 
+  ///////////////////////////////////////////
+  // テーマ設定ページではスキン設定の読み込みを保存後にするために遅らせる
+  ///////////////////////////////////////////
+  if (get_skin_url() && is_admin_php_page()) {
+    require_once get_template_directory().'/lib/skin.php';   //スキン
+  }
+
+  do_action('cocoon_settings_after_save');
+
   ///////////////////////////////////////
-  // ビジュアルエディター用のカスタマイズCSS出力
+  // エディター用のカスタマイズCSS出力
   ///////////////////////////////////////
   ob_start();
   get_template_part('tmp/css-custom');
   $custum_css = ob_get_clean();
   if ($custum_css) {
     $custum_css_file = get_theme_css_cache_file();
-    //ビジュアルエディター用CSSファイルの書き出し
+    //エディター用CSSファイルの書き出し
     wp_filesystem_put_contents($custum_css_file, $custum_css);
-  }
-
-  ///////////////////////////////////////////
-  // テーマ設定ページではスキン設定の読み込みを保存後にするために遅らせる
-  ///////////////////////////////////////////
-  if (get_skin_url() && is_admin_php_page()) {
-    require_once get_template_directory().'/lib/skin.php';   //スキン
   }
 
 endif;
@@ -149,7 +154,7 @@ endif;
 ?>
 <div class="wrap admin-settings">
 <h1><?php _e( SETTING_NAME_TOP, THEME_NAME ) ?></h1>
-<p><?php _e( 'Cocoonの設定全般についてはマニュアルを参照してください。', THEME_NAME ) ?><a href="https://wp-cocoon.com/manual/" target="_blank"><span class="fa fa-book"></span>
+<p><?php _e( 'Cocoonの設定全般についてはマニュアルを参照してください。', THEME_NAME ) ?><a href="https://wp-cocoon.com/manual/" target="_blank" rel="noopener"><?php echo change_fa('<span class="fa fa-book" aria-hidden="true">'); ?></span>
 <?php _e( 'テーマ利用マニュアル', THEME_NAME ) ?></a></p>
 <?php //var_dump($_POST) ?>
 <form name="form1" method="post" action="<?php echo add_query_arg(array('reset' => null)); ?>" class="admin-settings">
@@ -179,7 +184,8 @@ endif;
     <li class="comment"><?php _e( 'コメント', THEME_NAME ) ?></li>
     <li class="notice-area"><?php _e( '通知', THEME_NAME ) ?></li>
     <li class="appeal-area"><?php _e( 'アピールエリア', THEME_NAME ) ?></li>
-    <li class="carousel-area"><?php _e( 'カルーセル', THEME_NAME ) ?></li>
+    <li class="recommended"><?php _e( 'おすすめカード', THEME_NAME ) ?></li>
+    <li class="carousel"><?php _e( 'カルーセル', THEME_NAME ) ?></li>
     <li class="footer"><?php _e( 'フッター', THEME_NAME ) ?></li>
     <li class="buttons"><?php _e( 'ボタン', THEME_NAME ) ?></li>
     <li class="mobile-buttons"><?php _e( 'モバイル', THEME_NAME ) ?></li>
@@ -197,6 +203,9 @@ endif;
   </ul>
 
   <?php submit_button(__( '変更をまとめて保存', THEME_NAME )); ?>
+
+  <?php //スキン制御変数のクリアとバックアップ
+  clear_global_skin_theme_options(); ?>
 
   <!-- スキン -->
   <div class="skin metabox-holder">
@@ -309,6 +318,11 @@ endif;
     <?php require_once abspath(__FILE__).'appeal-forms.php'; ?>
   </div><!-- /.metabox-holder -->
 
+  <!-- おすすめカード -->
+  <div class="recommended metabox-holder">
+    <?php require_once abspath(__FILE__).'recommended-forms.php'; ?>
+  </div><!-- /.metabox-holder -->
+
   <!-- カルーセル -->
   <div class="carousel-area metabox-holder">
     <?php require_once abspath(__FILE__).'carousel-forms.php'; ?>
@@ -383,6 +397,9 @@ endif;
   <div class="theme-about metabox-holder">
     <?php require_once abspath(__FILE__).'about-forms.php'; ?>
   </div><!-- /.metabox-holder -->
+
+  <?php //スキン制御変数の復元
+  restore_global_skin_theme_options(); ?>
 
 </div><!-- /#tabs -->
 <input type="hidden" name="<?php echo HIDDEN_FIELD_NAME; ?>" value="<?php echo wp_create_nonce('settings');?>">

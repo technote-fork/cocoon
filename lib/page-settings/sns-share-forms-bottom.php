@@ -6,11 +6,11 @@
  */
 if ( !defined( 'ABSPATH' ) ) exit; ?>
 
-<!-- 本文下シェアボタン -->
+<!-- ボトムシェアボタン -->
 <div id="sns-share-bottom" class="postbox">
-  <h2 class="hndle"><?php _e( '本文下シェアボタン', THEME_NAME ) ?></h2>
+  <h2 class="hndle"><?php _e( 'ボトムシェアボタン', THEME_NAME ) ?></h2>
   <div class="inside">
-    <p><?php _e( '本文下シェアボタンの表示に関する設定です。※AMPページでスタイルは反映されません。', THEME_NAME ) ?></p>
+    <p><?php _e( 'ボトムシェアボタンの表示に関する設定です。', THEME_NAME ) ?></p>
     <table class="form-table">
       <tbody>
 
@@ -30,15 +30,15 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
         </tr>
         <?php endif; ?>
 
-        <!-- 本文下シェアボタンの表示 -->
+        <!-- ボトムシェアボタンの表示 -->
         <tr>
           <th scope="row">
-            <?php generate_label_tag(OP_SNS_BOTTOM_SHARE_BUTTONS_VISIBLE, __( '本文下シェアボタンの表示', THEME_NAME )); ?>
+            <?php generate_label_tag(OP_SNS_BOTTOM_SHARE_BUTTONS_VISIBLE, __( 'ボトムシェアボタンの表示', THEME_NAME )); ?>
           </th>
           <td>
             <?php
-            generate_checkbox_tag( OP_SNS_BOTTOM_SHARE_BUTTONS_VISIBLE, is_sns_bottom_share_buttons_visible(), __( 'メインカラム本文下シェアボタンを表示', THEME_NAME ));
-            generate_tips_tag(__( '投稿・固定ページのメインカラムにある本文下シェアボタンの表示を切り替えます。', THEME_NAME ));
+            generate_checkbox_tag( OP_SNS_BOTTOM_SHARE_BUTTONS_VISIBLE, is_sns_bottom_share_buttons_visible(), __( 'メインカラムボトムシェアボタンを表示', THEME_NAME ));
+            generate_tips_tag(__( 'ボトムシェアボタンの表示を切り替えます。', THEME_NAME ));
             ?>
           </td>
         </tr>
@@ -86,10 +86,44 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
                 <?php generate_checkbox_tag(OP_BOTTOM_PINTEREST_SHARE_BUTTON_VISIBLE, is_bottom_pinterest_share_button_visible(), __( 'Pinterest', THEME_NAME )); ?>
               </li>
               <li>
+                <?php generate_checkbox_tag(OP_BOTTOM_LINKEDIN_SHARE_BUTTON_VISIBLE, is_bottom_linkedin_share_button_visible(), __( 'LinkedIn', THEME_NAME )); ?>
+              </li>
+              <li>
                 <?php generate_checkbox_tag(OP_BOTTOM_COPY_SHARE_BUTTON_VISIBLE, is_bottom_copy_share_button_visible(), __( 'タイトルとURLをコピー', THEME_NAME )); ?>
               </li>
+              <li>
+                <?php generate_checkbox_tag(OP_BOTTOM_COMMENT_SHARE_BUTTON_VISIBLE, is_bottom_comment_share_button_visible(), __( 'コメント', THEME_NAME )); ?>
+              </li>
             </ul>
-            <p><?php _e( '本文下に表示するシェアボタンを選択してください。', THEME_NAME ) ?></p>
+            <p><?php _e( 'シェアボタンを選択してください。', THEME_NAME ) ?></p>
+          </td>
+        </tr>
+
+
+        <!-- 表示ページ -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag('', __( '表示ページ', THEME_NAME )); ?>
+          </th>
+          <td>
+            <p><?php _e( 'シェアボタンを表示するページの切り替え。', THEME_NAME ) ?></p>
+            <ul>
+              <li>
+                <?php generate_checkbox_tag(OP_SNS_FRONT_PAGE_BOTTOM_SHARE_BUTTONS_VISIBLE, is_sns_front_page_bottom_share_buttons_visible(), __( 'フロントページ', THEME_NAME )); ?>
+              </li>
+              <li>
+                <?php generate_checkbox_tag(OP_SNS_SINGLE_BOTTOM_SHARE_BUTTONS_VISIBLE, is_sns_single_bottom_share_buttons_visible(), __( '投稿', THEME_NAME )); ?>
+              </li>
+              <li>
+                <?php generate_checkbox_tag(OP_SNS_PAGE_BOTTOM_SHARE_BUTTONS_VISIBLE, is_sns_page_bottom_share_buttons_visible(), __( '固定ページ', THEME_NAME )); ?>
+              </li>
+              <li>
+                <?php generate_checkbox_tag(OP_SNS_CATEGORY_BOTTOM_SHARE_BUTTONS_VISIBLE, is_sns_category_bottom_share_buttons_visible(), __( 'カテゴリー', THEME_NAME )); ?>
+              </li>
+              <li>
+                <?php generate_checkbox_tag(OP_SNS_TAG_BOTTOM_SHARE_BUTTONS_VISIBLE, is_sns_tag_bottom_share_buttons_visible(), __( 'タグ', THEME_NAME )); ?>
+              </li>
+            <p><?php _e( 'シェアボタンを表示するページを選択してください。', THEME_NAME );echo get_help_page_tag('https://wp-cocoon.com/sns-button-display-switching/'); ?></p>
           </td>
         </tr>
 
@@ -102,12 +136,12 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           <td>
             <?php
             $options = array(
-              'monochrome' => 'モノクロ',
-              'brand_color' => 'ブランドカラー',
-              'brand_color_white' => 'ブランドカラー（白抜き）',
+              'monochrome' => __( 'モノクロ', THEME_NAME ),
+              'brand_color' => __( 'ブランドカラー', THEME_NAME ),
+              'brand_color_white' => __( 'ブランドカラー（白抜き）', THEME_NAME ),
             );
             generate_selectbox_tag(OP_SNS_BOTTOM_SHARE_BUTTON_COLOR, $options, get_sns_bottom_share_button_color());
-            generate_tips_tag(__( '本文下シェアボタンの配色を選択してください。', THEME_NAME ));
+            generate_tips_tag(__( 'ボトムシェアボタンの配色を選択してください。', THEME_NAME ));
             ?>
           </td>
         </tr>
@@ -120,15 +154,15 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           <td>
             <?php
             $options = array(
-              '1' => '1列',
-              '2' => '2列',
-              '3' => '3列',
-              '4' => '4列',
-              '5' => '5列',
-              '6' => '6列',
+              '1' => __( '1列', THEME_NAME ),
+              '2' => __( '2列', THEME_NAME ),
+              '3' => __( '3列', THEME_NAME ),
+              '4' => __( '4列', THEME_NAME ),
+              '5' => __( '5列', THEME_NAME ),
+              '6' => __( '6列', THEME_NAME ),
             );
             generate_selectbox_tag(OP_SNS_BOTTOM_SHARE_COLUMN_COUNT, $options, get_sns_bottom_share_column_count());
-            generate_tips_tag(__( '本文下シェアボタンのカラム数を選択してください。', THEME_NAME ));
+            generate_tips_tag(__( 'ボトムシェアボタンのカラム数を選択してください。', THEME_NAME ));
             ?>
           </td>
         </tr>
@@ -141,12 +175,12 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           <td>
             <?php
             $options = array(
-              'left_and_right' => 'ロゴ・キャプション 左右',
-              'high_and_low_lc' => 'ロゴ・キャプション 上下',
-              'high_and_low_cl' => 'キャプション・ロゴ 上下',
+              'left_and_right' => __( 'ロゴ・キャプション 左右', THEME_NAME ),
+              'high_and_low_lc' => __('ロゴ・キャプション 上下' , THEME_NAME ),
+              'high_and_low_cl' => __( 'キャプション・ロゴ 上下', THEME_NAME ),
             );
             generate_selectbox_tag(OP_SNS_BOTTOM_SHARE_LOGO_CAPTION_POSITION, $options, get_sns_bottom_share_logo_caption_position());
-            generate_tips_tag(__( '本文下シェアボタンのロゴとキャプションの配置を選択してください。', THEME_NAME ));
+            generate_tips_tag(__( 'ボトムシェアボタンのロゴとキャプションの配置を選択してください。', THEME_NAME ));
             ?>
           </td>
         </tr>
@@ -159,7 +193,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           <td>
             <?php
             generate_checkbox_tag( OP_SNS_BOTTOM_SHARE_BUTTONS_COUNT_VISIBLE, is_sns_bottom_share_buttons_count_visible(), __( 'シェア数を表示', THEME_NAME ));
-            generate_tips_tag(__( '投稿・固定ページのメインカラムにある本文下シェアボタンの表示を切り替えます。', THEME_NAME ));
+            generate_tips_tag(__( 'ボトムシェアボタンのシェア数表示を切り替えます。', THEME_NAME ));
             ?>
           </td>
         </tr>

@@ -70,7 +70,7 @@ amp-img[src*="ad.jp.ap.valuecommerce.com"]{
   text-decoration: none;
   text-align: center;
   margin: 0 auto;
-  padding: 3px 6px;
+  padding: 3px 12px;
   top: 8px;
   font-size: 14px;
   font-weight: bold;
@@ -87,8 +87,9 @@ amp-img[src*="ad.jp.ap.valuecommerce.com"]{
 @mixin follow_amp_button($unicode, $bc_color){
   background-color: $bc_color;
   &::before{
-    @include fontawesome($unicode);
-    margin: 0 3px;
+    // @include fontawesome($unicode);
+    // font-family: FontAwesome;
+    // margin: 0 3px;
     font-weight: normal;
   }
 }
@@ -172,4 +173,8 @@ amp-image-lightbox {
 //   padding: 5px 15px;
 //   text-decoration: none;
 //   margin-bottom: 2em;
+// }
+
+// .inline-formula{
+//   display: inline;
 // }

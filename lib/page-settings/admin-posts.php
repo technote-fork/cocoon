@@ -10,6 +10,12 @@ if ( !defined( 'ABSPATH' ) ) exit;
 //アドミンバーに独自管理メニューを表示
 update_theme_option(OP_ADMIN_TOOL_MENU_VISIBLE);
 
+// //ダッシュボードメッセージを表示
+// update_theme_option(OP_DASHBOARD_MESSAGE_VISIBLE);
+
+//インデックスのエントリーカードにPV数を表示
+update_theme_option(OP_ADMIN_INDEX_PV_VISIBLE);
+
 ///////////////////////////////////////
 // 投稿リスト
 ///////////////////////////////////////
@@ -28,11 +34,17 @@ update_theme_option(OP_ADMIN_LIST_COMMENTS_VISIBLE);
 //投稿一覧に日付を表示する
 update_theme_option(OP_ADMIN_LIST_DATE_VISIBLE);
 
-//投稿一覧にアイキャッチを表示する
-update_theme_option(OP_ADMIN_LIST_EYECATCH_VISIBLE);
+//投稿IDを表示する
+update_theme_option(OP_ADMIN_LIST_POST_ID_VISIBLE);
 
 //投稿一覧に文字数を表示する
 update_theme_option(OP_ADMIN_LIST_WORD_COUNT_VISIBLE);
+
+//投稿一覧にPVを表示する
+update_theme_option(OP_ADMIN_LIST_PV_VISIBLE);
+
+//投稿一覧にアイキャッチを表示する
+update_theme_option(OP_ADMIN_LIST_EYECATCH_VISIBLE);
 
 //投稿一覧にメモを表示する
 update_theme_option(OP_ADMIN_LIST_MEMO_VISIBLE);
@@ -44,9 +56,6 @@ update_theme_option(OP_ADMIN_LIST_MEMO_VISIBLE);
 //管理者パネルを表示タイプ
 update_theme_option(OP_ADMIN_PANEL_DISPLAY_TYPE);
 
-// //管理者パネルを表示
-// update_theme_option(OP_ADMIN_PANEL_VISIBLE);
-
 //管理者パネルのPVを表示
 update_theme_option(OP_ADMIN_PANEL_PV_AREA_VISIBLE);
 
@@ -56,7 +65,10 @@ update_theme_option(OP_ADMIN_PANEL_PV_TYPE);
 //管理者パネル編集エリアの表示
 update_theme_option(OP_ADMIN_PANEL_EDIT_AREA_VISIBLE);
 
-//管理者パネルWordpress編集の表示
+//管理者パネルWordPressダッシュボードの表示
+update_theme_option(OP_ADMIN_PANEL_WP_DASHBOARD_VISIBLE);
+
+//管理者パネルWordPress編集の表示
 update_theme_option(OP_ADMIN_PANEL_WP_EDIT_VISIBLE);
 
 //管理者パネルWindows Live Writer編集の表示

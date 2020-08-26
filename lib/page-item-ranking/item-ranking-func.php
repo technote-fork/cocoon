@@ -201,6 +201,7 @@ endif;
 if ( !function_exists( 'get_rating_star_tag' ) ):
 function get_rating_star_tag($rate, $max = 5, $number = false){
   $rate = floatval($rate);
+  $rate = floor($rate * 10) / 10;
   $max = intval($max);
   //数字じゃない場合
   if (!is_numeric($rate) || !is_numeric($max)) {
@@ -211,7 +212,7 @@ function get_rating_star_tag($rate, $max = 5, $number = false){
     return $rate;
   }
 
-  $tag = '<div class="ranking-item-rating rating-star">';
+  $tag = '<span class="rating-star">';
 
   //小数点で分割
   $rates = explode('.', $rate);
@@ -237,22 +238,22 @@ function get_rating_star_tag($rate, $max = 5, $number = false){
   }
   //スターの出力
   for ($j=1; $j <= $before; $j++) {
-    $tag .= '<span class="star"></span>';
+    $tag .= '<span class="fa fa-star" aria-hidden="true"></span>';
   }
   //半分スターの出力
   for ($j=1; $j <= $middle; $j++) {
-    $tag .= '<span class="star-half-o"></span>';
+    $tag .= '<span class="fa fa-star-half-o" aria-hidden="true"></span>';
   }
   //空スターの出力
   for ($j=1; $j <= $after; $j++) {
-    $tag .= '<span class="star-o"></span>';
+    $tag .= '<span class="fa fa-star-o" aria-hidden="true"></span>';
   }
 
   if ($number) {
-    $tag .= '<span class="rating-number">'.$rate.'</span>';
+    $tag .= '<span class="rating-number">'.sprintf('%.1f', $rate).'</span>';
   }
 
-  $tag .= '</div>';
+  $tag .= '</span>';
   return $tag;
 }
 endif;
@@ -313,7 +314,9 @@ function generate_item_ranking_tag($id, $is_first_only = false){
 
       <?php //評価が設定されている場合
       if ($rating != 'none'){
+        echo '<div class="ranking-item-rating">';
         echo get_rating_star_tag($rating);
+        echo '</div>';
       } ?>
 
       <?php //continue; ?>

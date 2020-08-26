@@ -15,6 +15,22 @@ function is_admin_tool_menu_visible(){
 }
 endif;
 
+// ダッシュボードメッセージを表示
+// define('OP_DASHBOARD_MESSAGE_VISIBLE', 'dashboard_message_visible');
+// if ( !function_exists( 'is_dashboard_message_visible' ) ):
+// function is_dashboard_message_visible(){
+//   return get_theme_option(OP_DASHBOARD_MESSAGE_VISIBLE, 1);
+// }
+// endif;
+
+//インデックスのエントリーカードにPV数を表示
+define('OP_ADMIN_INDEX_PV_VISIBLE', 'admin_index_pv_visible');
+if ( !function_exists( 'is_admin_index_pv_visible' ) ):
+function is_admin_index_pv_visible(){
+  return get_theme_option(OP_ADMIN_INDEX_PV_VISIBLE, 1);
+}
+endif;
+
 //投稿一覧に作成者を表示する
 define('OP_ADMIN_LIST_AUTHOR_VISIBLE', 'admin_list_author_visible');
 if ( !function_exists( 'is_admin_list_author_visible' ) ):
@@ -63,11 +79,27 @@ function is_admin_list_eyecatch_visible(){
 }
 endif;
 
+//投稿IDを表示する
+define('OP_ADMIN_LIST_POST_ID_VISIBLE', 'admin_list_post_id_visible');
+if ( !function_exists( 'is_admin_list_post_id_visible' ) ):
+function is_admin_list_post_id_visible(){
+  return get_theme_option(OP_ADMIN_LIST_POST_ID_VISIBLE, 1);
+}
+endif;
+
 //投稿一覧に文字数を表示する
 define('OP_ADMIN_LIST_WORD_COUNT_VISIBLE', 'admin_list_word_count_visible');
 if ( !function_exists( 'is_admin_list_word_count_visible' ) ):
 function is_admin_list_word_count_visible(){
   return get_theme_option(OP_ADMIN_LIST_WORD_COUNT_VISIBLE, 1);
+}
+endif;
+
+//投稿一覧にPVを表示する
+define('OP_ADMIN_LIST_PV_VISIBLE', 'admin_list_pv_visible');
+if ( !function_exists( 'is_admin_list_pv_visible' ) ):
+function is_admin_list_pv_visible(){
+  return get_theme_option(OP_ADMIN_LIST_PV_VISIBLE, 1);
 }
 endif;
 
@@ -88,7 +120,7 @@ endif;
 define('OP_ADMIN_PANEL_DISPLAY_TYPE', 'admin_panel_display_type');
 if ( !function_exists( 'get_admin_panel_display_type' ) ):
 function get_admin_panel_display_type(){
-  return get_theme_option(OP_ADMIN_PANEL_DISPLAY_TYPE, 'all');
+  return get_theme_option(OP_ADMIN_PANEL_DISPLAY_TYPE, 'pc_only');
 }
 endif;
 if ( !function_exists( 'is_admin_panel_all_visible' ) ):
@@ -111,14 +143,6 @@ function is_admin_panel_visible(){
   return get_admin_panel_display_type() != 'none';
 }
 endif;
-
-// //管理者パネルを表示
-// define('OP_ADMIN_PANEL_VISIBLE', 'admin_panel_visible');
-// if ( !function_exists( 'is_admin_panel_visible' ) ):
-// function is_admin_panel_visible(){
-//   return get_theme_option(OP_ADMIN_PANEL_VISIBLE, 1);
-// }
-// endif;
 
 //管理者パネルのPVを表示
 define('OP_ADMIN_PANEL_PV_AREA_VISIBLE', 'admin_panel_pv_area_visible');
@@ -144,7 +168,15 @@ function is_admin_panel_edit_area_visible(){
 }
 endif;
 
-//管理者パネルWordpress編集の表示
+//管理者パネルWordPressダッシュボードの表示
+define('OP_ADMIN_PANEL_WP_DASHBOARD_VISIBLE', 'admin_panel_wp_dashboard_visible');
+if ( !function_exists( 'is_admin_panel_wp_dashboard_visible' ) ):
+function is_admin_panel_wp_dashboard_visible(){
+  return get_theme_option(OP_ADMIN_PANEL_WP_DASHBOARD_VISIBLE);
+}
+endif;
+
+//管理者パネルWordPress編集の表示
 define('OP_ADMIN_PANEL_WP_EDIT_VISIBLE', 'admin_panel_wp_edit_visible');
 if ( !function_exists( 'is_admin_panel_wp_edit_visible' ) ):
 function is_admin_panel_wp_edit_visible(){
@@ -188,7 +220,7 @@ endif;
 define('OP_ADMIN_AMPBENCH_VISIBLE', 'admin_ampbench_visible');
 if ( !function_exists( 'is_admin_ampbench_visible' ) ):
 function is_admin_ampbench_visible(){
-  return get_theme_option(OP_ADMIN_AMPBENCH_VISIBLE, 1);
+  return false;//get_theme_option(OP_ADMIN_AMPBENCH_VISIBLE, 1);
 }
 endif;
 

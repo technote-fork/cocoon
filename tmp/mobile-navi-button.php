@@ -8,19 +8,21 @@
 if ( !defined( 'ABSPATH' ) ) exit;
 global $_MENU_CAPTION;
 global $_MENU_ICON;
-$icon_class = $_MENU_ICON ? $_MENU_ICON : 'navi-menu-icon'; ?>
+$icon_class = $_MENU_ICON ? $_MENU_ICON : 'fa fa-bars'; ?>
 
 <?php if (has_nav_menu( NAV_MENU_HEADER ) || has_nav_menu( NAV_MENU_MOBILE_SLIDE_IN )): ?>
   <!-- メニューボタン -->
   <li class="navi-menu-button menu-button">
     <input id="navi-menu-input" type="checkbox" class="display-none">
     <label id="navi-menu-open" class="menu-open menu-button-in" for="navi-menu-input">
-      <div class="<?php echo esc_attr($icon_class); ?> menu-icon"></div>
-      <div class="navi-menu-caption menu-caption"><?php echo $_MENU_CAPTION ? $_MENU_CAPTION : __( 'メニュー', THEME_NAME ); ?></div>
+      <span class="navi-menu-icon menu-icon">
+        <span class="<?php echo esc_attr($icon_class); ?>" aria-hidden="true"></span>
+      </span>
+      <span class="navi-menu-caption menu-caption"><?php echo $_MENU_CAPTION ? $_MENU_CAPTION : __( 'メニュー', THEME_NAME ); ?></span>
     </label>
     <label class="display-none" id="navi-menu-close" for="navi-menu-input"></label>
     <div id="navi-menu-content" class="navi-menu-content menu-content">
-      <label class="navi-menu-close-button menu-close-button" for="navi-menu-input"></label>
+      <label class="navi-menu-close-button menu-close-button" for="navi-menu-input"><span class="fa fa-close" aria-hidden="true"></span></label>
       <?php //ヘッダーナビ
       ob_start();
       if (has_nav_menu( NAV_MENU_MOBILE_SLIDE_IN )) {
@@ -54,10 +56,30 @@ $icon_class = $_MENU_ICON ? $_MENU_ICON : 'navi-menu-icon'; ?>
       $wp_nav_menu = ob_get_clean();
       //ドロワーメニュー用のグローバルナビからIDを削除（IDの重複HTML5エラー対応）
       $wp_nav_menu = preg_replace('/ id="[^"]+?"/i', '', $wp_nav_menu);
-      //_v($wp_nav_menu);
+      // //ドロワーメニューのアンカーリンク対策
+      // if (preg_match_all('# href="(.+?)"#', $wp_nav_menu, $m)) {
+      //   foreach ($m[1] as $url) {
+      //     if (includes_string($url, '#')) {
+      //       $requested_url = get_requested_url();
+      //       // _v($requested_url);
+      //       // _v($url);
+      //       if (preg_match('/\?$/', $requested_url)) {
+      //         if (includes_string($url, '?')) {
+      //           $changed_url = str_replace('?', '', $url);
+      //         }
+      //       } else {
+      //         if (includes_string($url, '?')) {
+      //           $changed_url = str_replace('#', '&#', $url);
+      //         } else {
+      //           $changed_url = str_replace('#', '?#', $url);
+      //         }
+      //       }
+      //       $wp_nav_menu = str_replace($url, $changed_url, $wp_nav_menu);
+      //     }
+      //   }
+      // }
       echo $wp_nav_menu;
         ?>
-      <!-- <label class="navi-menu-close-button menu-close-button" for="navi-menu-input"></label> -->
     </div>
   </li>
 <?php endif ?>

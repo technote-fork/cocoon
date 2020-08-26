@@ -7,7 +7,7 @@
  */
 if ( !defined( 'ABSPATH' ) ) exit;
 
-//Wordpress4.1からのタイトル自動作成
+//WordPress4.1からのタイトル自動作成
 //https://www.nxworld.net/wordpress/wp-custom-title-tag.html
 add_action( 'after_setup_theme', 'setup_theme_custum' );
 if ( !function_exists( 'setup_theme_custum' ) ):
@@ -16,7 +16,7 @@ function setup_theme_custum() {
 }
 endif;
 
-//Wordpress4.4以上でのタイトルセパレーターの設定
+//WordPress4.4以上でのタイトルセパレーターの設定
 add_filter( 'document_title_separator', 'title_separator_custom' );
 if ( !function_exists( 'title_separator_custom' ) ):
 function title_separator_custom( $sep ){
@@ -26,7 +26,7 @@ function title_separator_custom( $sep ){
 endif;
 
 
-//Wordpress4.4以上でのタイトルカスタマイズ
+//WordPress4.4以上でのタイトルカスタマイズ
 add_filter( 'document_title_parts', 'title_parts_custom' );
 if ( !function_exists( 'title_parts_custom' ) ):
 function title_parts_custom( $title ){
@@ -68,11 +68,14 @@ function title_parts_custom( $title ){
   } elseif (is_category()) {
     $cat_id = get_query_var('cat');
     $cat_name = $title['title'];
-    if ($cat_id && get_category_title($cat_id)) {
-      $cat_name = get_category_title($cat_id);
+    if ($cat_id && get_the_category_title($cat_id)) {
+      $cat_name = get_the_category_title($cat_id);
     }
     $title['title'] = $cat_name;
     $title['site'] = '';
+    if ($simplified_site_name = get_simplified_site_name()) {
+      $site_name = $simplified_site_name;
+    }
     switch (get_category_page_title_format()) {
       case 'category_sitename':
         $title['title'] = $cat_name;
@@ -86,11 +89,14 @@ function title_parts_custom( $title ){
   } elseif (is_tag()) {
     $tag_id = get_query_var('tag_id');
     $tag_name = $title['title'];
-    if ($tag_id && get_tag_title($tag_id)) {
-      $tag_name = get_tag_title($tag_id);
+    if ($tag_id && get_the_tag_title($tag_id)) {
+      $tag_name = get_the_tag_title($tag_id);
     }
     $title['title'] = $tag_name;
     $title['site'] = '';
+    if ($simplified_site_name = get_simplified_site_name()) {
+      $site_name = $simplified_site_name;
+    }
     switch (get_category_page_title_format()) {//※カテゴリーと共通？
       case 'category_sitename':
         $title['title'] = $tag_name;
@@ -163,21 +169,19 @@ if ( !function_exists( 'the_prev_next_link_tag' ) ):
 function the_prev_next_link_tag() {
   //1ページを複数に分けた分割ページ
   if(is_singular()) {
-    global $wp_query;
     global $multipage;
-    //$multipage = check_multi_page();
     if($multipage) {
       $prev = get_multipage_url('prev');
-      $prev_path = user_trailingslashit($prev);
+      $prev_url = user_trailingslashit($prev);
       $next = get_multipage_url('next');
-      $next_path = user_trailingslashit($next);
+      $next_url = user_trailingslashit($next);
       if($prev) {
         echo '<!-- '.THEME_NAME_CAMEL.' prev -->'.PHP_EOL;
-        echo '<link rel="prev" href="'.$prev_path.'" />'.PHP_EOL;
+        echo '<link rel="prev" href="'.esc_url($prev_url).'" />'.PHP_EOL;
       }
       if($next) {
         echo '<!-- '.THEME_NAME_CAMEL.' next -->'.PHP_EOL;
-        echo '<link rel="next" href="'.$next_path.'" />'.PHP_EOL;
+        echo '<link rel="next" href="'.esc_url($next_url).'" />'.PHP_EOL;
       }
     }
   } else if (is_search()){
@@ -188,13 +192,13 @@ function the_prev_next_link_tag() {
       $page = $paged - 1;
       $url = user_trailingslashit(get_site_url()).'?s='.$search_query.'&amp;paged='.$page;
       echo '<!-- '.THEME_NAME_CAMEL.' prev -->'.PHP_EOL;
-      echo '<link rel="prev" href="'.$url.'" />'.PHP_EOL;
+      echo '<link rel="prev" href="'.esc_url($url).'" />'.PHP_EOL;
     }
     if ( get_next_posts_link() ){
       $page = $paged + 1;
       $url = user_trailingslashit(get_site_url()).'?s='.$search_query.'&amp;paged='.$page;
       echo '<!-- '.THEME_NAME_CAMEL.' next -->'.PHP_EOL;
-      echo '<link rel="next" href="'.$url.'" />'.PHP_EOL;
+      echo '<link rel="next" href="'.esc_url($url).'" />'.PHP_EOL;
     }
   } else if (!is_404()){
     //トップページやカテゴリページなどの分割ページの設定
@@ -202,12 +206,12 @@ function the_prev_next_link_tag() {
     if ( get_previous_posts_link() ){
       $url = user_trailingslashit(get_pagenum_link( $paged - 1 ));
       echo '<!-- '.THEME_NAME_CAMEL.' prev -->'.PHP_EOL;
-      echo '<link rel="prev" href="'.$url.'" />'.PHP_EOL;
+      echo '<link rel="prev" href="'.esc_url($url).'" />'.PHP_EOL;
     }
     if ( get_next_posts_link() ){
       $url = user_trailingslashit(get_pagenum_link( $paged + 1 ));
       echo '<!-- '.THEME_NAME_CAMEL.' next -->'.PHP_EOL;
-      echo '<link rel="next" href="'.$url.'" />'.PHP_EOL;
+      echo '<link rel="next" href="'.esc_url($url).'" />'.PHP_EOL;
     }
   }
 }
@@ -223,10 +227,7 @@ function get_multipage_url($rel='prev') {
   global $page;
   global $numpages;
   $url = '';
-  //$multipage = check_multi_page();
   if($multipage) {
-    //$numpages = $multipage[0];
-    //$page = $multipage[1] == 0 ? 1 : $multipage[1];
     $i = 'prev' == $rel? $page - 1: $page + 1;
     if($i && $i > 0 && $i <= $numpages) {
       if(1 == $i) {
@@ -306,7 +307,8 @@ function generate_canonical_url(){
   //タグページはnoindexにしているけどcanonicalタグは必要か？
   //404ページはAll in One SEO Packはcanonicalタグを出力していないようだけど必要か？
   $canonical_url = null;
-
+  //投稿・固定ページの場合のcanonical URL
+  $the_page_canonical_url = get_the_page_canonical_url();
   if (is_home() && is_paged()) {
     $canonical_url = get_query_removed_requested_url();
   } elseif (is_front_page()) {
@@ -318,16 +320,30 @@ function generate_canonical_url(){
   } elseif (is_tag()) {
     $canonical_url = get_query_removed_requested_url();
   } elseif (is_singular() && !$multipage) {
-    $canonical_url = get_permalink();
+    if ($the_page_canonical_url) {
+      $canonical_url = $the_page_canonical_url;
+    } else {
+      $canonical_url = get_permalink();
+    }
   } elseif (is_singular() && ($paged >= 2 || $page >= 2)) {
-    $canonical_url = get_query_removed_requested_url();
-  } elseif (is_singular()) {
-    $canonical_url = get_permalink();
+    if ($the_page_canonical_url) {
+      $canonical_url = $the_page_canonical_url;
+    } else {
+      $canonical_url = get_query_removed_requested_url();
+    }
+  } elseif (is_singular()) {//この条件分岐は不要かも
+    if ($the_page_canonical_url) {
+      $canonical_url = $the_page_canonical_url;
+    } else {
+      $canonical_url = get_permalink();
+    }
   } elseif(is_404()) {
     $canonical_url =  home_url().'/404/';
   } else {
     $canonical_url = get_query_removed_requested_url();
   }
+
+  $canonical_url = user_trailingslashit($canonical_url);
 
   return apply_filters('generate_canonical_url', $canonical_url);
 }
@@ -357,7 +373,7 @@ endif;
 if ( !function_exists( 'get_category_meta_description' ) ):
 function get_category_meta_description($category = null){
   //カテゴリー設定ページのディスクリプションを取得
-  $cat_desc = trim( strip_tags( get_category_description() ) );
+  $cat_desc = trim( strip_tags( get_the_category_meta_description() ) );
   if ( $cat_desc ) {//ディスクリプションが設定されている場合
     return htmlspecialchars($cat_desc);
   }
@@ -369,7 +385,7 @@ function get_category_meta_description($category = null){
   }
 
   //カテゴリ本文から抜粋文を作成
-  $cat_desc = trim( strip_tags( get_content_excerpt(get_category_content(), 160) ) );
+  $cat_desc = trim( strip_tags( get_content_excerpt(get_the_category_content(), 160) ) );
   if ( $cat_desc ) {//カテゴリ設定に説明がある場合はそれを返す
     return htmlspecialchars($cat_desc);
   }
@@ -391,7 +407,7 @@ endif;
 //カテゴリーメタディスクリプション用の説明文を取得
 if ( !function_exists( 'get_category_meta_keywords' ) ):
 function get_category_meta_keywords(){
-  if ($keywords = get_category_keywords()) {
+  if ($keywords = get_the_category_meta_keywords()) {
     $res = $keywords;
   } else {
     $res = single_cat_title('', false);
@@ -414,7 +430,7 @@ function get_the_meta_keywords(){
     foreach($categories as $category):
       array_push( $category_names, $category -> cat_name);
     endforeach ;
-    $keywords = implode($category_names, ',');
+    $keywords = implode(',', $category_names);
   }
   $keywords = htmlspecialchars($keywords);
   return apply_filters('get_the_meta_keywords', $keywords);
@@ -489,7 +505,7 @@ endif;
 if ( !function_exists( 'get_tag_meta_description' ) ):
 function get_tag_meta_description($tag = null){
   //タグ設定ページのディスクリプションを取得
-  $tag_desc = trim( strip_tags( get_tag_description() ) );
+  $tag_desc = trim( strip_tags( get_the_tag_meta_description() ) );
   if ( $tag_desc ) {//ディスクリプションが設定されている場合
     return htmlspecialchars($tag_desc);
   }
@@ -499,7 +515,7 @@ function get_tag_meta_description($tag = null){
     return htmlspecialchars($tag_desc);
   }
   //タグ本文から抜粋文を作成
-  $tag_desc = trim( strip_tags( get_content_excerpt(get_tag_content(), 160) ) );
+  $tag_desc = trim( strip_tags( get_content_excerpt(get_the_tag_content(), 160) ) );
   if ( $tag_desc ) {//タグ設定に説明がある場合はそれを返す
     return htmlspecialchars($tag_desc);
   }
@@ -518,7 +534,7 @@ endif;
 //タグキーワード用のワードを取得
 if ( !function_exists( 'get_tag_meta_keywords' ) ):
 function get_tag_meta_keywords(){
-  if ($keywords = get_tag_keywords()) {
+  if ($keywords = get_the_tag_meta_keywords()) {
     $res = $keywords;
   } else {
     $res = single_tag_title('', false);
@@ -528,13 +544,32 @@ function get_tag_meta_keywords(){
 }
 endif;
 
+//メタサムネイルを出力する
+add_action( 'wp_head', 'generate_meta_thumbnail_tag' );
+if ( !function_exists( 'generate_meta_thumbnail_tag' ) ):
+function generate_meta_thumbnail_tag() {
+  if (is_singular()) {
+    $thumbnail_url = get_singular_eyecatch_image_url();
+
+    if ($thumbnail_url && !is_wpforo_plugin_page()) {
+      echo '<!-- '.THEME_NAME_CAMEL.' meta thumbnail -->'.PHP_EOL;
+      echo '<meta name="thumbnail" content="'.esc_attr($thumbnail_url).'">'.PHP_EOL;
+    }
+  }
+}
+endif;
+
 //json-ldタグを出力する
 add_action( 'wp_head', 'the_json_ld_tag' );
 if ( !function_exists( 'the_json_ld_tag' ) ):
 function the_json_ld_tag() {
-  if (is_singular()) {
+  if (is_singular() && is_json_ld_tag_enable()) {
     echo '<!-- '.THEME_NAME_CAMEL.' JSON-LD -->'.PHP_EOL;
     get_template_part('tmp/json-ld');
+    if (is_the_page_review_enable()) {
+      echo '<!-- '.THEME_NAME_CAMEL.' Review JSON-LD -->'.PHP_EOL;
+      get_template_part('tmp/json-ld-review');
+    }
   }
 }
 endif;
@@ -554,7 +589,7 @@ function get_the_meta_description(){
   }
 
   if ( !$desc ) {//投稿で抜粋が設定されていない場合は、120文字の冒頭の抽出分
-    $desc = strip_shortcodes(get_the_snipet( $post->post_content, 160 ));
+    $desc = strip_shortcodes(get_the_snippet( $post->post_content, 160 ));
     $desc = mb_substr(str_replace(array("\r\n", "\r", "\n"), '', strip_tags($desc)), 0, 120);
 
   }
@@ -565,8 +600,8 @@ endif;
 
 
 //本文抜粋を取得する関数
-if ( !function_exists( 'get_the_snipet' ) ):
-function get_the_snipet($content, $length = 70) {
+if ( !function_exists( 'get_the_snippet' ) ):
+function get_the_snippet($content, $length = 70) {
   global $post;
 
   //抜粋（投稿編集画面）の取得
@@ -588,12 +623,12 @@ function get_the_snipet($content, $length = 70) {
     $description = str_replace('<', '&lt;', $description);
     $description = str_replace('>', '&gt;', $description);
   }
-  return apply_filters( 'get_the_snipet', $description );
+  return apply_filters( 'get_the_snippet', $description );
 }
 endif;
 
 //本文抜粋を取得する関数
-//使用方法：http://nelog.jp/get_the_snipet
+//使用方法：http://nelog.jp/get_the_snippet
 if ( !function_exists( 'get_the_all_in_one_seo_pack_meta_description' ) ):
 function get_the_all_in_one_seo_pack_meta_description($id = null) {
   global $post;

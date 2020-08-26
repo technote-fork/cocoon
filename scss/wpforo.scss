@@ -1,5 +1,5 @@
 div#wpforo-wrap{
-  padding: 0;
+  padding: 10px;
 
   .wpfl-1 .wpforo-forum-description,
   .wpfl-1 .wpforo-last-post-title,
@@ -64,4 +64,64 @@ div#wpforo-wrap .wpforo-post .wpf-right .wpforo-post-content p{
 
 .wpforo-attached-file{
   word-break: break-all;
+}
+
+#wpforo-wrap h3{
+  background-color: transparent;
+  &::after{
+    display: none;
+  }
+}
+
+#wpforo-wrap h3.wpforo-forum-title{
+  &::before,
+  &::after{
+    display: none;
+  }
+}
+
+div#wpforo-wrap .wpforo-post .wpforo-attached-file {
+  display: block;
+}
+
+div#wpforo-wrap .widget-title,
+div.wpforo-widget-wrap .widget-title{
+  padding: 12px;
+  border-bottom: none;
+}
+
+// #tinymce.main.article{
+//   width: 100%;
+// }
+
+// body[class*="wpf-reply-create"],
+// body[class*="wpf-topic-create"]{
+//   width: auto;
+//   border: none;
+// }
+
+// [class^="wpf-reply-create"]#tinymce.main.article{
+//   width: 100%;
+// }
+
+//Recent Postsのテーブルセル内を強制改行
+.wpforo-recent-content.wpfr-posts{
+  table{
+    width: 100%;
+    table-layout: fixed;
+    word-break: break-word;
+    word-wrap: break-word;
+    td{
+      // word-wrap: anywhere;
+      // overflow-wrap: anywhere;
+      word-break: break-word !important;
+    }
+  }
+}
+
+//bbPressスタイル
+div#bbpress-forums fieldset.bbp-form input[type="text"],
+div#bbpress-forums fieldset.bbp-form select {
+  height: 46px;
+  line-height: 46px;
 }

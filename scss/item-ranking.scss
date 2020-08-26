@@ -50,7 +50,7 @@
   padding: 3px 2px 6px;
 }
 
-.ranking-item-rating{
+.rating-star{
   color: #f5bc55;
   font-size: 1.2em;
 }
@@ -89,6 +89,7 @@
   max-width: 302px;
   margin-right: 1em;
   position: relative;
+  align-items: flex-start;
 }
 
 .ranking-item-description{

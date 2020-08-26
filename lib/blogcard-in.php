@@ -15,7 +15,9 @@ function get_blogcard_thumbnail_image_tag($url, $in = true){
   } else {
     $class = ' external-blogcard-thumb-image';
   }
-  return '<img src="'.$url.'" alt="" class="blogcard-thumb-image'.$class.'" width="'.THUMB160WIDTH_DEF.'" height="'.THUMB160HEIGHT_DEF.'" />';
+  //後で消す
+  // return '<img src="'.$url.'" alt="" class="blogcard-thumb-image'.$class.'" width="'.THUMB160WIDTH_DEF.'" height="'.THUMB160HEIGHT_DEF.'" />';
+  return get_original_image_tag(get_the_ID(), $url, THUMB160WIDTH_DEF, THUMB160HEIGHT_DEF, $class);
 }
 endif;
 
@@ -36,7 +38,8 @@ endif;
 //内部ブログカードのサムネイルサイズ
 if ( !function_exists( 'get_internal_blogcard_thumbnail_size' ) ):
 function get_internal_blogcard_thumbnail_size(){
-  return THUMB160;
+  $thumbnail_size = apply_filters('get_blogcard_thumbnail_size', THUMB160);
+  return apply_filters('get_internal_blogcard_thumbnail_size', $thumbnail_size);
 }
 endif;
 
@@ -62,28 +65,26 @@ function url_to_internal_blogcard_tag($url){
     //global $post;
     $post_data = get_post($id);
     setup_postdata($post_data);
-    $exce = $post_data->post_excerpt;
+    wp_reset_query();
 
     $title = $post_data->post_title;//タイトルの取得
 
     //メタディスクリプションの取得
-    $snipet = get_the_page_meta_description($id);
+    $snippet = get_the_page_meta_description($id);
 
     //投稿管理画面の抜粋を取得
-    if (!$snipet) {
-      $snipet = $post_data->post_excerpt;
+    if (!$snippet) {
+      $snippet = $post_data->post_excerpt;
     }
     //All in One SEO Packのメタディスクリプションを取得
-    if (!$snipet) {
-      $snipet = get_the_all_in_one_seo_pack_meta_description($id);
+    if (!$snippet) {
+      $snippet = get_the_all_in_one_seo_pack_meta_description($id);
     }
     //記事本文の抜粋文を取得
-    if (!$snipet) {
-      $snipet = get_content_excerpt($post_data->post_content, get_entry_card_excerpt_max_length());
+    if (!$snippet) {
+      $snippet = get_content_excerpt($post_data->post_content, get_entry_card_excerpt_max_length());
     }
-    $snipet = preg_replace('/\n/', '', $snipet);
-    $snipet = apply_filters( 'cocoon_blogcard_snipet', $snipet );
-    $snipet = apply_filters( 'cocoon_internal_blogcard_snipet', $snipet );
+    $snippet = preg_replace('/\n/', '', $snippet);
 
     //日付表示
     $date = null;
@@ -111,7 +112,7 @@ function url_to_internal_blogcard_tag($url){
   } elseif (is_home_url($url)){
     //トップページの場合
     $title = get_front_page_title_caption();
-    $snipet = get_front_page_meta_description();
+    $snippet = get_front_page_meta_description();
     $image = get_ogp_home_image_url();
     if (!empty($image)) {
       $thumbnail = get_blogcard_thumbnail_image_tag($image);
@@ -120,23 +121,29 @@ function url_to_internal_blogcard_tag($url){
     //カテゴリページの場合
     $cat_id = $cat->cat_ID;
 
-    $title = get_category_title($cat_id);
-    $snipet = get_category_snipet($cat_id);
-    $image = get_category_eye_catch($cat_id);
+    $title = get_the_category_title($cat_id);
+    $snippet = get_the_category_snippet($cat_id);
+    $image = get_the_category_eye_catch_url($cat_id);
 
     if ($image) {
       $thumbnail = get_blogcard_thumbnail_image_tag($image);
     }
   } elseif ($tag = url_to_tag_object($url)) {
     $tag_id = $tag->term_id;
-    $title = get_tag_title($tag_id);
-    $snipet = get_tag_snipet($tag_id);
-    $image = get_tag_eye_catch($tag_id);
+    $title = get_the_tag_title($tag_id);
+    $snippet = get_the_tag_snippet($tag_id);
+    $image = get_the_tag_eye_catch_url($tag_id);
 
     if ($image) {
       $thumbnail = get_blogcard_thumbnail_image_tag($image);
     }
   }
+  //タイトルのフック
+  $title = apply_filters('cocoon_blogcard_title',$title);
+  $title = apply_filters('cocoon_internal_blogcard_title',$title);
+  //スニペットのフック
+  $snippet = apply_filters( 'cocoon_blogcard_snippet', $snippet );
+  $snippet = apply_filters( 'cocoon_internal_blogcard_snippet', $snippet );
 
   //サムネイルが存在しない場合
   if ( !$thumbnail ) {
@@ -147,12 +154,14 @@ function url_to_internal_blogcard_tag($url){
   $additional_class = get_additional_internal_blogcard_classes();
 
   //新しいタブで開く場合
-  $target = is_internal_blogcard_target_blank() ? ' target="_blank"' : '';
+  $target = is_internal_blogcard_target_blank() ? ' target="_blank" rel="noopener"' : '';
 
   //ファビコン
   $favicon_tag =
   '<div class="blogcard-favicon internal-blogcard-favicon">'.
-    '<img src="//www.google.com/s2/favicons?domain='.get_the_site_domain().'" class="blogcard-favicon-image internal-blogcard-favicon-image" alt="" width="16" height="16" />'.
+    //後で消す
+    // '<img src="//www.google.com/s2/favicons?domain='.get_the_site_domain().'" class="blogcard-favicon-image internal-blogcard-favicon-image" alt="" width="16" height="16" />'.
+    get_original_image_tag(get_the_ID(), 'https://www.google.com/s2/favicons?domain='.get_the_site_domain(), 16, 16, 'blogcard-favicon-image internal-blogcard-favicon-image').
   '</div>';
 
   //サイトロゴ
@@ -165,10 +174,13 @@ function url_to_internal_blogcard_tag($url){
   $tag =
   '<a href="'.$url.'" title="'.esc_attr($title).'" class="blogcard-wrap internal-blogcard-wrap a-wrap cf"'.$target.'>'.
     '<div class="blogcard internal-blogcard'.$additional_class.' cf">'.
+      '<div class="blogcard-label internal-blogcard-label">'.
+        '<span class="fa"></span>'.
+      '</div>'.
       '<figure class="blogcard-thumbnail internal-blogcard-thumbnail">'.$thumbnail.'</figure>'.
       '<div class="blogcard-content internal-blogcard-content">'.
         '<div class="blogcard-title internal-blogcard-title">'.$title.'</div>'.
-        '<div class="blogcard-snipet internal-blogcard-snipet">'.$snipet.'</div>'.
+        '<div class="blogcard-snippet internal-blogcard-snippet">'.$snippet.'</div>'.
 
       '</div>'.
       '<div class="blogcard-footer internal-blogcard-footer cf">'.
@@ -184,6 +196,9 @@ endif;
 //本文中のURLをブログカードタグに変更する
 if ( !function_exists( 'url_to_internal_blogcard' ) ):
 function url_to_internal_blogcard($the_content) {
+  // //ブロックエディターのブログカード用の本文整形
+  // $the_content = fix_blogcard_content($the_content);
+  //_v($the_content);
   $res = preg_match_all('/^(<p>)?(<a[^>]+?>)?https?:\/\/'.preg_quote(get_the_site_domain()).'(\/)?([-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)?(<\/a>)?(<\/p>)?/im', $the_content,$m);
   //_v($m);
   foreach ($m[0] as $match) {
@@ -204,7 +219,6 @@ function url_to_internal_blogcard($the_content) {
 
 
     if ( !$tag ) continue;//IDを取得できない場合はループを飛ばす
-
     //本文中のURLをブログカードタグで置換
     $the_content = preg_replace('{^'.preg_quote($match, '{}').'}im', $tag , $the_content, 1);
     wp_reset_postdata();
@@ -218,10 +232,13 @@ if ( is_internal_blogcard_enable() ) {
   add_filter('the_content', 'url_to_internal_blogcard', 11);
   add_filter('widget_text', 'url_to_internal_blogcard', 11);
   add_filter('widget_text_pc_text', 'url_to_internal_blogcard', 11);
-  add_filter('widget_classic_text', 'url_to_internal_blogcard', 11);
+  //add_filter('widget_classic_text', 'url_to_internal_blogcard', 11);
   add_filter('widget_text_mobile_text', 'url_to_internal_blogcard', 11);
-  add_filter('the_category_content', 'url_to_internal_blogcard', 11);
-  add_filter('the_tag_content', 'url_to_internal_blogcard', 11);
+  add_filter('the_category_tag_content', 'url_to_internal_blogcard', 11);
+  //コメント内ブログカード
+  if (is_comment_internal_blogcard_enable()) {
+    add_filter('comment_text', 'url_to_internal_blogcard' ,11);
+  }
 }
 
 //本文中のURLショートコードをブログカードタグに変更する
@@ -287,14 +304,13 @@ function url_shortcode_to_blogcard($the_content) {
   return $the_content;//置換後のコンテンツを返す
 }
 endif;
-add_filter('the_content', 'url_shortcode_to_blogcard' ,9999);
-add_filter('widget_text', 'url_shortcode_to_blogcard' ,9999);
-add_filter('widget_text_pc_text', 'url_shortcode_to_blogcard', 9999);
-add_filter('widget_classic_text', 'url_shortcode_to_blogcard', 9999);
-add_filter('widget_text_mobile_text', 'url_shortcode_to_blogcard', 9999);
-add_filter('comment_text', 'url_shortcode_to_blogcard', 9999);
-add_filter('the_category_content', 'url_shortcode_to_blogcard', 9999);
-add_filter('the_tag_content', 'url_shortcode_to_blogcard', 9999);
+add_filter('the_content', 'url_shortcode_to_blogcard' ,11);
+add_filter('widget_text', 'url_shortcode_to_blogcard' ,11);
+add_filter('widget_text_pc_text', 'url_shortcode_to_blogcard', 11);
+//add_filter('widget_classic_text', 'url_shortcode_to_blogcard', 11);
+add_filter('widget_text_mobile_text', 'url_shortcode_to_blogcard', 11);
+add_filter('comment_text', 'url_shortcode_to_blogcard', 11);
+add_filter('the_category_tag_content', 'url_shortcode_to_blogcard', 11);
 
 //ブログカード置換用テキストにpタグが含まれているかどうか
 if ( !function_exists( 'is_p_tag_appropriate' ) ):

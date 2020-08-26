@@ -5,7 +5,7 @@
   text-align: center;
 }
 //ページネーションボタン
-$pagination_wh: 50px;
+$pagination_wh: 46px;
 @mixin pagination_button {
   @include link_cancel;
   display: inline-block;
@@ -31,17 +31,6 @@ $pagination_wh: 50px;
     background-color: $current_bgc;
   }
 
-  .prev::before{
-    @include fontawesome('\f104');
-    padding-right: 3px;
-  }
-
-  .next::before{
-    @include fontawesome('\f105');
-    padding-left: 3px;
-  }
-
-
   a{
     &:hover {
       @include bgc_hover;
@@ -51,8 +40,9 @@ $pagination_wh: 50px;
 
 .page-numbers{
   @include pagination_button;
-  display: inline-flex;
-  justify-content: center;
+  span{
+    line-height: inherit;
+  }
 }
 
 .page-numbers.dots {
@@ -68,11 +58,11 @@ $pagination_wh: 50px;
   border: 1px solid $thin;
   color: $text_color;
   display: block;
-  font-size: 1.25em;
+  font-size: 1.2em;
   text-decoration: none;
   width: 100%;
   text-align: center;
-  padding: 12px 0;
+  padding: 10px;
   display: block;
 
   &:hover {

@@ -73,14 +73,14 @@ function comment_custom_callback($comment, $args, $depth) {
 endif;
 
 //コメント用の日付フォーマット
-if ( !function_exists( ' simple_thread_comment_date_format' ) ):
+if ( !function_exists( 'simple_thread_comment_date_format' ) ):
 function simple_thread_comment_date_format(){
   return __( 'Y/m/d(D)', THEME_NAME );
 }
 endif;
 
 //コメント用の時間フォーマット
-if ( !function_exists( ' simple_thread_comment_time_format' ) ):
+if ( !function_exists( 'simple_thread_comment_time_format' ) ):
 function simple_thread_comment_time_format(){
   return __( 'H:i:s', THEME_NAME );
 }
@@ -129,5 +129,13 @@ function simple_thread_comment_custom_callback($comment, $args, $depth) {
     </div>
   </li>
 <?php
+}
+endif;
+
+add_filter( 'comment_reply_link', 'comment_reply_link_custom' );
+if ( !function_exists( 'comment_reply_link_custom' ) ):
+function comment_reply_link_custom($tag){
+  $tag = preg_replace('#<a .+?>#', '$0<span class="fa fa-comment-o"></span> ', $tag);
+  return $tag;
 }
 endif;

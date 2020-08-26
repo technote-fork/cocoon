@@ -6,7 +6,7 @@
   Author URI: https://zvalinf.info
   Screenshot URI: https://im-cocoon.net/wp-content/uploads/SAMURAI-Blue-Skin.png
   Version: 0.0.1
-  Priority: 200504
+  Priority: 9830003000
 */
 
 /* ---------------------------------------------------------
@@ -718,4 +718,16 @@ table tr:nth-of-type(2n+1) {
   .article h3{
     padding: .4em 1em;
   }
+}
+
+/* ---------------------------------------------------------
+/ Font Awesome5対応
+--------------------------------------------------------- */
+.font-awesome-5 .boxwt-red ul li:before,
+.font-awesome-5 .boxwt-green ul li:before,
+.font-awesome-5 .boxwt-blue ul li:before,
+.font-awesome-5 .boxwt-brown ul li:before,
+.font-awesome-5 .boxwt-purple ul li:before{
+  font-family: "Font Awesome 5 Free";
+	font-weight: 900;
 }

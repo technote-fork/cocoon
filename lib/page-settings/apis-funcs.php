@@ -26,8 +26,16 @@ endif;
 //AmazonトラッキングID
 define('OP_AMAZON_ASSOCIATE_TRACKING_ID', 'amazon_associate_tracking_id');
 if ( !function_exists( 'get_amazon_associate_tracking_id' ) ):
-function get_amazon_associate_tracking_id(){
-  return get_theme_option(OP_AMAZON_ASSOCIATE_TRACKING_ID);
+function get_amazon_associate_tracking_id($tracking_id = null){
+  //Cocoon設定で入力されているものを取得
+  $id = get_theme_option(OP_AMAZON_ASSOCIATE_TRACKING_ID);
+
+  //個別のトラッキングIDショートコード
+  $tracking_id = trim($tracking_id);
+  if ($tracking_id) {
+    $id = $tracking_id;
+  }
+  return $id;
 }
 endif;
 
@@ -55,11 +63,35 @@ function is_amazon_item_price_visible(){
 }
 endif;
 
-//Amazon商品リンク在庫価格表示
-define('OP_AMAZON_ITEM_STOCK_PRICE_VISIBLE', 'amazon_item_stock_price_visible');
-if ( !function_exists( 'is_amazon_item_stock_price_visible' ) ):
-function is_amazon_item_stock_price_visible(){
-  return get_theme_option(OP_AMAZON_ITEM_STOCK_PRICE_VISIBLE, 1);
+//Amazon商品リンクで表示する価格
+define('OP_AMAZON_ITEM_PRICE_TYPE', 'amazon_item_price_type');
+if ( !function_exists( 'get_amazon_item_price_type' ) ):
+function get_amazon_item_price_type(){
+  return get_theme_option(OP_AMAZON_ITEM_PRICE_TYPE, 'in_stock');
+}
+endif;
+
+// //Amazon商品リンク在庫価格表示
+// define('OP_AMAZON_ITEM_STOCK_PRICE_VISIBLE', 'amazon_item_stock_price_visible');
+// if ( !function_exists( 'is_amazon_item_stock_price_visible' ) ):
+// function is_amazon_item_stock_price_visible(){
+//   return get_theme_option(OP_AMAZON_ITEM_STOCK_PRICE_VISIBLE, 1);
+// }
+// endif;
+
+// //Amazon商品リンクの最安価格を表示する
+// define('OP_AMAZON_ITEM_LOWEST_PRICE_VISIBLE', 'amazon_item_lowest_price_visible');
+// if ( !function_exists( 'is_amazon_item_lowest_price_visible' ) ):
+// function is_amazon_item_lowest_price_visible(){
+//   return get_theme_option(OP_AMAZON_ITEM_LOWEST_PRICE_VISIBLE);
+// }
+// endif;
+
+//Amazon商品リンク説明文表示
+define('OP_AMAZON_ITEM_DESCRIPTION_VISIBLE', 'amazon_item_description_visible');
+if ( !function_exists( 'is_amazon_item_description_visible' ) ):
+function is_amazon_item_description_visible(){
+  return get_theme_option(OP_AMAZON_ITEM_DESCRIPTION_VISIBLE);
 }
 endif;
 
@@ -196,6 +228,30 @@ define('OP_YAHOO_SEARCH_BUTTON_TEXT', 'yahoo_search_button_text');
 if ( !function_exists( 'get_yahoo_search_button_text' ) ):
 function get_yahoo_search_button_text(){
   return stripslashes_deep(get_theme_option(OP_YAHOO_SEARCH_BUTTON_TEXT, __( 'Yahoo!ショッピング', THEME_NAME )));
+}
+endif;
+
+//DMMアフィリエイトID
+define('OP_DMM_AFFILIATE_ID', 'dmm_affiliate_id');
+if ( !function_exists( 'get_dmm_affiliate_id' ) ):
+function get_dmm_affiliate_id(){
+  return get_theme_option(OP_DMM_AFFILIATE_ID);
+}
+endif;
+
+//DMM検索ボタンを表示する
+define('OP_DMM_SEARCH_BUTTON_VISIBLE', 'dmm_search_button_visible');
+if ( !function_exists( 'is_dmm_search_button_visible' ) ):
+function is_dmm_search_button_visible(){
+  return get_theme_option(OP_DMM_SEARCH_BUTTON_VISIBLE, 1);
+}
+endif;
+
+//DMM検索ボタン文字
+define('OP_DMM_SEARCH_BUTTON_TEXT', 'dmm_search_button_text');
+if ( !function_exists( 'get_dmm_search_button_text' ) ):
+function get_dmm_search_button_text(){
+  return stripslashes_deep(get_theme_option(OP_DMM_SEARCH_BUTTON_TEXT, __( 'DMM', THEME_NAME )));
 }
 endif;
 

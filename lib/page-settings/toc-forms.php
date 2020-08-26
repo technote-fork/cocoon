@@ -13,7 +13,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
   <h2 class="hndle"><?php _e( '目次設定', THEME_NAME ) ?></h2>
   <div class="inside">
 
-    <p><?php _e( 'Table of contentsライクな目次設定です。', THEME_NAME ) ?></p>
+    <p><?php _e( 'プラグインのTable of contentsに似た目次設定です。', THEME_NAME ) ?></p>
 
     <table class="form-table">
       <tbody>
@@ -28,7 +28,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             <div class="demo toc" style="height: 300px;overflow: auto;">
               <article class="article">
                 <?php query_posts('posts_per_page=1&orderby=rand&no_found_rows=1'); ?>
-                <?php get_template_part('tmp/content') ?>
+                <?php get_sanitize_preview_template_part('tmp/content') ?>
                 <?php wp_reset_query(); ?>
               </article>
             </div>
@@ -60,6 +60,11 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             generate_checkbox_tag(OP_SINGLE_TOC_VISIBLE , is_single_toc_visible(), __( '投稿ページ', THEME_NAME ));
             echo '<br>';
             generate_checkbox_tag(OP_PAGE_TOC_VISIBLE , is_page_toc_visible(), __( '固定ページ', THEME_NAME ));
+            echo '<br>';
+            generate_checkbox_tag(OP_CATEGORY_TOC_VISIBLE , is_category_toc_visible(), __( 'カテゴリーページ', THEME_NAME ));
+            echo '<br>';
+            generate_checkbox_tag(OP_TAG_TOC_VISIBLE , is_tag_toc_visible(), __( 'タグページ', THEME_NAME ));
+            echo '<br>';
             generate_tips_tag(__( '上記のページの目次表示を切り替えることができます。※[toc]ショートコードで目次を表示させている場合は一貫して表示されます。', THEME_NAME ));
             ?>
           </td>

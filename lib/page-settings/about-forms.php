@@ -26,9 +26,11 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
     $all .= __( 'インクルードURL：', THEME_NAME ).get_remove_home_url(includes_url()).PHP_EOL;
     $all .= __( 'テンプレートURL：', THEME_NAME ).get_remove_home_url(get_template_directory_uri()).PHP_EOL;
     $all .= __( 'スタイルシートURL：', THEME_NAME ).get_remove_home_url(get_stylesheet_directory_uri()).PHP_EOL;
+    //親テーマ
+    $all .= __( '親テーマスタイル：', THEME_NAME ).get_remove_home_url(PARENT_THEME_STYLE_CSS_URL).PHP_EOL;
     //子テーマ
     if (is_child_theme()) {
-      $all .= __( '子テーマスタイル：', THEME_NAME ).get_remove_home_url(get_stylesheet_directory_uri().'/style.css').PHP_EOL;
+      $all .= __( '子テーマスタイル：', THEME_NAME ).get_remove_home_url(CHILD_THEME_STYLE_CSS_URL).PHP_EOL;
     }
     //スキン
     if (get_skin_url()) {
@@ -42,7 +44,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
         $all .= __( 'サーバー：', THEME_NAME ).$host.PHP_EOL;
       }
     }
-    $all .= __( 'Wordpressバージョン：', THEME_NAME ).get_bloginfo('version').PHP_EOL;
+    $all .= __( 'WordPressバージョン：', THEME_NAME ).get_bloginfo('version').PHP_EOL;
     $all .= __( 'PHPバージョン：', THEME_NAME ).phpversion().PHP_EOL;
     if (isset($_SERVER['HTTP_USER_AGENT']))
       $all .= __( 'ブラウザ：', THEME_NAME ).$_SERVER['HTTP_USER_AGENT'].PHP_EOL;
@@ -60,7 +62,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
     $all .= $sep;
 
     //親テーマ
-    $file = get_template_directory().'/style.css';
+    $file = PARENT_THEME_STYLE_CSS_FILE;
     $info = get_theme_info($file);
     if ($info) {
       if (isset($info['theme_name'])) {
@@ -87,7 +89,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 
     //子テーマ
     if (is_child_theme()) {
-      $file = get_stylesheet_directory().'/style.css';
+      $file = CHILD_THEME_STYLE_CSS_FILE;
       $info = get_theme_info($file);
       if ($info) {
         if (isset($info['theme_name'])) {
@@ -95,6 +97,17 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
         }
         if (isset($info['version'])) {
           $all .= __( 'バージョン：', THEME_NAME ).$info['version'].PHP_EOL;
+        }
+
+        //CSSサイズ
+        $css = wp_filesystem_get_contents($file);
+        $all .= __( 'style.cssサイズ：', THEME_NAME ).strlen($css).__( 'バイト', THEME_NAME ).PHP_EOL;
+
+        //functions.phpサイズ
+        $functions_file = get_stylesheet_directory().'/functions.php';
+        if (file_exists($functions_file)) {
+          $php = wp_filesystem_get_contents($functions_file);
+          $all .= __( 'functions.phpサイズ：', THEME_NAME ).strlen($php).__( 'バイト', THEME_NAME ).PHP_EOL;
         }
         $all .= $sep;
       }
@@ -104,6 +117,9 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
     $all .= __( 'Gutenberg：', THEME_NAME ).intval(is_gutenberg_editor_enable()).PHP_EOL;
     $all .= __( 'AMP：', THEME_NAME ).intval(is_amp_enable()).PHP_EOL;
     $all .= __( 'PWA：', THEME_NAME ).intval(is_pwa_enable()).PHP_EOL;
+    $all .= __( 'Font Awesome：', THEME_NAME ).str_replace('font_awesome_', '', get_site_icon_font()).PHP_EOL;
+    $all .= __( 'Auto Post Thumbnail：', THEME_NAME ).intval(is_auto_post_thumbnail_enable()).PHP_EOL;
+    $all .= __( 'Retina：', THEME_NAME ).intval(is_retina_thumbnail_enable()).PHP_EOL;
     $all .= __( 'ホームイメージ：', THEME_NAME ).get_remove_home_url(get_ogp_home_image_url()).PHP_EOL;
     $all .= $sep;
 
@@ -114,7 +130,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
     $all .= __( 'JavaScript縮小化：', THEME_NAME ).intval(is_js_minify_enable()).PHP_EOL;
     $all .= __( 'Lazy Load：', THEME_NAME ).intval(is_lazy_load_enable()).PHP_EOL;
     $all .= __( 'WEBフォントLazy Load：', THEME_NAME ).intval(is_web_font_lazy_load_enable()).PHP_EOL;
-    $all .= __( 'JavaScript（フッター）：', THEME_NAME ).intval(is_footer_javascript_enable()).PHP_EOL;
+    //$all .= __( 'JavaScript（フッター）：', THEME_NAME ).intval(is_footer_javascript_enable()).PHP_EOL;
     $all .= $sep;
 
     //plugin.phpを読み込む

@@ -1599,6 +1599,12 @@ function initialize_tinymce_styles($init_array) {
           'classes' => 'blogcard-type bct-reference'
         ),
         array(
+          'title' => __( '参考リンク', THEME_NAME ),
+          'block' => 'div',
+          'wrapper' => true,
+          'classes' => 'blogcard-type bct-reference-link'
+        ),
+        array(
           'title' => __( '人気記事', THEME_NAME ),
           'block' => 'div',
           'wrapper' => true,
@@ -1634,7 +1640,12 @@ function initialize_tinymce_styles($init_array) {
           'wrapper' => true,
           'classes' => 'blogcard-type bct-official'
         ),
-
+        array(
+          'title' => __( 'ダウンロード', THEME_NAME ),
+          'block' => 'div',
+          'wrapper' => true,
+          'classes' => 'blogcard-type bct-dl'
+        ),
       ),
     ),
   );
@@ -1653,7 +1664,7 @@ function initialize_tinymce_styles($init_array) {
 }
 endif;
 
-//Wordpressビジュアルエディターに文字サイズの変更機能を追加
+//WordPressビジュアルエディターに文字サイズの変更機能を追加
 add_filter('mce_buttons_2', 'add_ilc_mce_buttons_to_bar');
 if ( !function_exists( 'add_ilc_mce_buttons_to_bar' ) ):
 function add_ilc_mce_buttons_to_bar($buttons){

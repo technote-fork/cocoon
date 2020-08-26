@@ -124,11 +124,11 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           </th>
           <td>
             <?php
-            generate_color_picker_tag(OP_PWA_THEME_COLOR,  get_pwa_theme_color(), 'テーマカラー');
+            generate_color_picker_tag(OP_PWA_THEME_COLOR,  get_pwa_theme_color(), __( 'テーマカラー', THEME_NAME ));
 
             generate_tips_tag(__( 'アプリのテーマカラーです。OSによってどこに適用されるかは異なります。', THEME_NAME ));
 
-            generate_color_picker_tag(OP_PWA_BACKGROUND_COLOR,  get_pwa_background_color(), '背景色');
+            generate_color_picker_tag(OP_PWA_BACKGROUND_COLOR,  get_pwa_background_color(), __( '背景色', THEME_NAME ));
             generate_tips_tag(__( 'アプリの背景色です。サイトが表示されるまでの間、この色が適用される場合があります。', THEME_NAME ));
             ?>
           </td>
@@ -162,8 +162,8 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             <?php
             $options = array(
               'any' => __( 'any（回転を許可）', THEME_NAME ),
-              'landscape' => __( 'landscape（縦方向に固定）', THEME_NAME ),
-              'portrait' => __( 'portrait（横方向に固定）', THEME_NAME ),
+              'landscape' => __( 'landscape（横向きに固定）', THEME_NAME ),
+              'portrait' => __( 'portrait（縦向きに固定）', THEME_NAME ),
             );
             generate_selectbox_tag(OP_PWA_ORIENTATION, $options, get_pwa_orientation());
             generate_tips_tag(__( '画面の縦方向、横方向の向きを設定します。', THEME_NAME ));

@@ -6,7 +6,7 @@
   Author URI: https://haiji-blog.com/
   Screenshot URI:https://im-cocoon.net/wp-content/uploads/hygiene.png
   Version: 1.1.5
-  Priority: 200700
+  Priority: 9940000000
 */
 
 /*以下にスタイルシートを記入してください1*/
@@ -458,6 +458,27 @@ border-bottom:4px solid #5572ff;
 .bc-brand-color.sns-share .sns-share-buttons a .share-count.line-share-count{
   filter: drop-shadow(1px 1px 1px #00c400);
 }
+.bc-brand-color.sns-share .sns-share-buttons a .social-icon.icon-pinterest,
+.bc-brand-color.sns-share .sns-share-buttons a .share-count.pinterest-share-count{
+  filter: drop-shadow(1px 1px 1px #bd081c);
+}
+.pinterest-share-count::after {
+  content: 'PIN';
+}
+.bc-brand-color.sns-share .sns-share-buttons a .social-icon.icon-linkedin,
+.bc-brand-color.sns-share .sns-share-buttons a .share-count.linkedin-share-count{
+  filter: drop-shadow(1px 1px 1px #0077b5);
+}
+.linkedin-share-count::after {
+  content: 'SHARE';
+}
+.bc-brand-color.sns-share .sns-share-buttons a .social-icon.icon-copy,
+.bc-brand-color.sns-share .sns-share-buttons a .share-count.copy-share-count{
+  filter: drop-shadow(1px 1px 1px #333);
+}
+.copy-share-count::after {
+  content: 'COPY';
+}
 
 
 
@@ -578,6 +599,22 @@ border-bottom:4px solid #5572ff;
 .author-box .sns-follow-buttons a.follow-button:hover .icon-youtube-logo{
   color: #cd201f;
 }
+.bc-brand-color-white.sns-follow .youtube-button,
+.author-box .sns-follow-buttons a.follow-button.linkedin-button{
+  filter: drop-shadow(1px 1px 1px #0077b5);
+}
+.sns-follow.bc-brand-color-white > .sns-follow-buttons a:hover .icon-linkedin-logo,
+.author-box .sns-follow-buttons a.follow-button:hover .icon-linkedin-logo{
+  color: #0077b5;
+}
+.bc-brand-color-white.sns-follow .note-button,
+.author-box .sns-follow-buttons a.follow-button.note-button{
+  filter: drop-shadow(1px 1px 1px #41c9b4);
+}
+.sns-follow.bc-brand-color-white > .sns-follow-buttons a:hover .icon-note-logo,
+.author-box .sns-follow-buttons a.follow-button:hover .icon-note-logo{
+  color: #41c9b4;
+}
 .bc-brand-color-white.sns-follow .flickr-button,
 .author-box .sns-follow-buttons a.follow-button.flickr-button{
   filter: drop-shadow(1px 1px 1px #111)
@@ -610,6 +647,22 @@ border-bottom:4px solid #5572ff;
 .author-box .sns-follow-buttons a.follow-button:hover .icon-amazon-logo{
   color: #ff9900;
 }
+.bc-brand-color-white.sns-follow .rakuten-room-button,
+.author-box .sns-follow-buttons a.follow-button.rakuten-room-button{
+  filter: drop-shadow(1px 1px 1px #c61e79);
+}
+.sns-follow.bc-brand-color-white > .sns-follow-buttons a:hover .icon-rakuten-room-logo,
+.author-box .sns-follow-buttons a.follow-button:hover .icon-rakuten-room-logo{
+  color: #c61e79;
+}
+.bc-brand-color-white.sns-follow .slack-button,
+.author-box .sns-follow-buttons a.follow-button.slack-button{
+  filter: drop-shadow(1px 1px 1px #e01563);
+}
+.sns-follow.bc-brand-color-white > .sns-follow-buttons a:hover .icon-slack-logo,
+.author-box .sns-follow-buttons a.follow-button:hover .icon-slack-logo{
+  color: #e01563;
+}
 .bc-brand-color-white.sns-follow .github-button,
 .author-box .sns-follow-buttons a.follow-button.github-button{
   filter: drop-shadow(1px 1px 1px #4078c0)
@@ -617,6 +670,14 @@ border-bottom:4px solid #5572ff;
 .sns-follow.bc-brand-color-white > .sns-follow-buttons a:hover .icon-github-logo,
 .author-box .sns-follow-buttons a.follow-button:hover .icon-github-logo{
   color: #4078c0;
+}
+.bc-brand-color-white.sns-follow .codepen-button,
+.author-box .sns-follow-buttons a.follow-button.codepen-button{
+  filter: drop-shadow(1px 1px 1px #333);
+}
+.sns-follow.bc-brand-color-white > .sns-follow-buttons a:hover .icon-codepen-logo,
+.author-box .sns-follow-buttons a.follow-button:hover .icon-codepen-logo{
+  color: #333;
 }
 .bc-brand-color-white.sns-follow .feedly-button,
 .author-box .sns-follow-buttons a.follow-button.feedly-button {
@@ -718,22 +779,31 @@ border-bottom:4px solid #5572ff;
 .tagcloud a .tag-caption::before{
   content: none;
 }
-.widget_recent_entries ul li a::before, .widget_categories ul li a::before, .widget_archive ul li a::before,
- .widget_pages ul li a::before, .widget_meta ul li a::before, .widget_rss ul li a::before, .widget_nav_menu ul li a::before{
-   content: '\f138';
-   font-family: 'FontAwesome';
-   color: #e1b6f6;
-   font-size: 18px;
-   margin-right: 0.4em;
-  }
-.widget_recent_entries ul li ul li a::before, .widget_categories ul li ul li a::before, .widget_archive ul li ul li a::before,
- .widget_pages ul li ul li a::before, .widget_meta ul li ul li a::before, .widget_rss ul li ul li a::before,
-  .widget_nav_menu ul li ul li a::before{
+.widget_recent_entries ul li a::before,
+.widget_categories ul li a::before,
+.widget_archive ul li a::before,
+.widget_pages ul li a::before,
+.widget_meta ul li a::before,
+.widget_rss ul li a::before,
+.widget_nav_menu ul li a::before{
+  content: '\f138';
+  font-family: 'FontAwesome';
+  color: #e1b6f6;
+  font-size: 18px;
+  margin-right: 0.4em;
+}
+.widget_recent_entries ul li ul li a::before,
+.widget_categories ul li ul li a::before,
+.widget_archive ul li ul li a::before,
+.widget_pages ul li ul li a::before,
+.widget_meta ul li ul li a::before,
+.widget_rss ul li ul li a::before,
+.widget_nav_menu ul li ul li a::before{
   content: '\f105';
   font-family: 'FontAwesome';
   background: unset;
-color: #403f3f;
-margin-right: 0;
+  color: #403f3f;
+  margin-right: 0;
 }
 
 
@@ -872,27 +942,24 @@ blockquote a {
     font-weight: bold;
     letter-spacing: -0.5px;
 }
-/*blockquote a::before{
-  content: '出典：';
-  color: #656565;
-}*/
-blockquote::before {
+
+.container blockquote::before {
     content: "\f10d";
-    font-family: FontAwesome!important;
+    font-family: FontAwesome;
     line-height: 1.1;
     left: 20px;
     top: 15px;
 }
-blockquote::after{
+.container blockquote::after{
   content: "\f10e";
-  font-family: FontAwesome!important;
+  font-family: FontAwesome;
   line-height: 1.1;
   right: 20px;
   bottom: 15px;
 }
-blockquote::before, blockquote::after{
+.container blockquote::before, blockquote::after{
   font-size: 100%;
-  color: #31b9ff!important;
+  color: #31b9ff;
 }
 
 
@@ -907,21 +974,21 @@ img.avatar.avatar-200.wp-user-avatar{
   text-align: center;
   padding-left: 0;
 }
-.author-widget-name {
+.author-name {
     text-align: center;
     font-family: serif;
     margin-top: 7px;
 }
-.author-widget-name::before{
+.container .author-name::before{
   content:"\f10d";
-  font-family: FontAwesome!important;
+  font-family: FontAwesome;
   font-size: 10px;
   position: relative;
   top: -10px
 }
-.author-widget-name::after{
+.container .author-name::after{
   content: "\f10e";
-  font-family: FontAwesome!important;
+  font-family: FontAwesome;
   font-size: 10px;
   position: relative;
   bottom: -5px;
@@ -1095,7 +1162,6 @@ a.blogcard-wrap:hover img.blogcard-thumb-image{
 .blogcard-thumbnail {
 	line-height: 0;
 	margin-right: 1rem;
-	overflow: hidden;
   margin-top: 15px;
 }
 
@@ -1104,7 +1170,7 @@ a.blogcard-wrap:hover img.blogcard-thumb-image{
   margin-top: 0.7em;
 }
 
-.blogcard-snipet{
+.blogcard-snippet{
 	font-size: 70%;
 	line-height: 1.7;
 	padding-right: 10%;
@@ -1115,19 +1181,17 @@ a.blogcard-wrap:hover img.blogcard-thumb-image{
 		width: 40%;
     margin-top: 10px
 	}
-	.blogcard-snipet{
+	.blogcard-snippet{
 		display: none;
 	}
 }
 
-.internal-blogcard-footer{
+.internal-blogcard-site,
+.internal-blogcard-date{
 	display: none;
 }
 
-.blogcard::before{
-	content: '\f02d あわせて読みたい';
-  font-family: 'FontAwesome';
-	position: absolute;
+.blogcard-label{
 	top: -1rem;
 	left: 1em;
 	font-size: 75%;
@@ -1138,19 +1202,19 @@ a.blogcard-wrap:hover img.blogcard-thumb-image{
   border-radius: 8px 8px 0 0;
 }
 
-.internal-blogcard::after{
+.internal-blogcard-footer::after{
 	content: '続きを読む \f138';
   font-family: 'FontAwesome';
-	position: relative;
-	font-size: 85%;
-	background: linear-gradient(203deg, #7144f7f5 15px, #d675ce);
+  position: relative;
+  font-size: 16px;
+  background: linear-gradient(203deg, #7144f7f5 15px, #d675ce);
 	padding: .4em 3em;
 	font-weight: bold;
 	color: #fff;
   -webkit-clip-path: polygon(5% 0, 100% 0%, 95% 100%, 0% 100%);
 clip-path: polygon(5% 0, 100% 0%, 95% 100%, 0% 100%);
 text-align: center;
-width: 35%;
+width: 50%;
 margin: 0 auto;
 margin-top: 25px;
 }
@@ -1487,7 +1551,7 @@ margin-top: 25px;
     border-color: #cacaca;
     font-weight: bold;
 }
-.related-vartical-card .related-entry-card-title {
+.related-vertical-card .related-entry-card-title {
     font-size: 15px;
     font-weight: 100;
 }
@@ -1500,7 +1564,7 @@ margin-top: 25px;
   background-color: unset!important;
   color:unset!important;
 }
-.related-vartical-card .related-entry-card-wrap:hover .card-thumb img{
+.related-vertical-card .related-entry-card-wrap:hover .card-thumb img{
   transform: scale(1.07);
   transition: all 0.5s ease;
 }
@@ -1683,8 +1747,8 @@ input[type="checkbox"] {
 
 /* HACK:検索ボタン */
 .search-submit {
-    right: 10px;
-    top: 3.2px;
+    right: 0;
+    top: -1px;
     font-size: 25px;
     line-height: 45px;
     border: none;
@@ -1796,6 +1860,12 @@ border: none;
     border-radius: 50%;
     box-shadow: 0px 2px 8px 3px #0c1256;
 }
+.page-numbers span{
+  display: block;
+  height: 50px;
+  width: 50px;
+  line-height: 50px;
+}
 .pagination .current {
     color: white!important;
     background-color: #1e286f!important;
@@ -1843,9 +1913,9 @@ color: white!important;
 .pager-post-navi a.next-post{
   flex-direction: unset;
 }
-.prev-post-title::before{
+.container .prev-post-title::before{
   content: '\f190';
-  font-family: 'FontAwesome'!important;
+  font-family: 'FontAwesome';
   font-size: 25px;
     bottom: -4px;
     position: relative;
@@ -1853,9 +1923,9 @@ color: white!important;
     left: -3px;
     font-weight: normal;
 }
-.next-post-title::after{
+.container .next-post-title::after{
   content: '\f18e';
-  font-family: 'FontAwesome'!important;
+  font-family: 'FontAwesome';
   font-size: 25px;
   position: relative;
   bottom: -4px;
@@ -2097,4 +2167,53 @@ body{
     display: none;
   }
   /*IEでどうしても表示がおかしくなるものは、IEは切り捨てということで非表示*/
+}
+
+/* FontAwesome 5 */
+.font-awesome-5 .widget_recent_entries ul li a::before,
+.font-awesome-5 .widget_categories ul li a::before,
+.font-awesome-5 .widget_archive ul li a::before,
+.font-awesome-5 .widget_pages ul li a::before,
+.font-awesome-5 .widget_meta ul li a::before,
+.font-awesome-5 .widget_rss ul li a::before,
+.font-awesome-5 .widget_nav_menu ul li a::before,
+.font-awesome-5 .container blockquote::before,
+.font-awesome-5 .container blockquote::after,
+.font-awesome-5 .container .author-name::before,
+.font-awesome-5 .container .author-name::after,
+.font-awesome-5 .toc-title::before,
+.font-awesome-5 .toc ol li ol a::before,
+.font-awesome-5 .blogcard::before,
+.font-awesome-5 .internal-blogcard-footer::after,
+.font-awesome-5 .yubi.hybtn a::after,
+.font-awesome-5 .ya.hybtn a::after,
+.font-awesome-5 .check.hybtn a::after,
+.font-awesome-5 .hato.hybtn a::after,
+.font-awesome-5 .hybtn a:hover,
+.font-awesome-5 .hytext a::before{
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+}
+.font-awesome-5 .toc-title::before,
+.font-awesome-5 .diya.hybtn a::after,
+.font-awesome-5 .container .prev-post-title::before,
+.font-awesome-5 .container .next-post-title::after{
+	font-family: "Font Awesome 5 Free";
+  font-weight: 400;
+}
+.font-awesome-5 .toc-title::before{
+  content: '\f15c';
+}
+.font-awesome-5 .diya.hybtn a::after,
+.font-awesome-5 .diya.hytext a::before{
+  content: '\f3a5';
+}
+.font-awesome-5 .container .prev-post-title::before{
+  content: '\f359';
+}
+.font-awesome-5 .container .next-post-title::after{
+  content: '\f35a';
+}
+.pager-post-navi .iconfont{
+  display: none;
 }

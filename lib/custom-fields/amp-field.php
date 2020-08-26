@@ -14,10 +14,10 @@ add_action('admin_menu', 'add_amp_custom_box');
 if ( !function_exists( 'add_amp_custom_box' ) ):
 function add_amp_custom_box(){
   //AMPボックス
-  add_meta_box( 'singular_amp_settings',__( 'AMP設定', THEME_NAME ), 'view_amp_custom_box', 'post', 'side' );
-  add_meta_box( 'singular_amp_settings',__( 'AMP設定', THEME_NAME ), 'view_amp_custom_box', 'page', 'side' );
+  add_meta_box( 'singular_amp_settings',__( 'AMP', THEME_NAME ), 'view_amp_custom_box', 'post', 'side' );
+  add_meta_box( 'singular_amp_settings',__( 'AMP', THEME_NAME ), 'view_amp_custom_box', 'page', 'side' );
   //カスタム投稿タイプに登録
-  add_meta_box_custom_post_types( 'singular_amp_settings',__( 'AMP設定', THEME_NAME ), 'view_amp_custom_box', 'page', 'side' );
+  add_meta_box_custom_post_types( 'singular_amp_settings',__( 'AMP', THEME_NAME ), 'view_amp_custom_box', 'page', 'side' );
 }
 endif;
 
@@ -29,7 +29,7 @@ if ( !function_exists( 'view_amp_custom_box' ) ):
 function view_amp_custom_box(){
   //AMPページを生成する
   generate_checkbox_tag('the_page_no_amp' , is_the_page_no_amp(), __( 'AMPページを生成しない', THEME_NAME ));
-  generate_howro_tag(__( 'AMP(Accelerated Mobile Pages)ページを生成して、モバイル端末に最適化するかを切り替えます。', THEME_NAME ));
+  generate_howto_tag(__( 'AMP(Accelerated Mobile Pages)ページを生成して、モバイル端末に最適化するかを切り替えます。', THEME_NAME ), 'the_page_no_amp');
 }
 endif;
 

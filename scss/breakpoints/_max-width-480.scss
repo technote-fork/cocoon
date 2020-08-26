@@ -149,6 +149,7 @@ body{
   //font-size: 0.9em;
   .speech-balloon{
     padding: 7px;
+    max-width: calc(100% - 16%);
 
     &::before,
     &::after{
@@ -186,6 +187,7 @@ body{
       }
     }
   }
+
 }
 
 ///////////////////////////////////////
@@ -291,7 +293,7 @@ a.facebook-follow-button{
   font-size: 0.84em;
 }
 
-.blogcard-snipet{
+.blogcard-snippet{
   font-size: 0.74em;
 }
 

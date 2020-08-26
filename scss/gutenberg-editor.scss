@@ -40,11 +40,14 @@
   }
 }
 
+//ブロックエディタークラシックブロック本文の.mce-content-bodyをテーマデフォルトと同じにする
 div.mce-content-body {
-  line-height: inherit;
+  line-height: 1.8;
 }
 
-.editor-block-list__layout .editor-block-list__block {
+.editor-block-list__layout .editor-block-list__block,,//Wordpress 5.4未満
+.block-editor-block-list__layout .block-editor-block-list__block //WordPress 5.4以降
+ {
   &[data-type^="cocoon-blocks/button"], &[data-type^="cocoon-blocks/button-wrap"] {
     height: auto;
     padding: 0 0 1px;
@@ -90,11 +93,27 @@ div.mce-content-body {
   &[data-type^="cocoon-blocks/micro-balloon"][data-align="right"] .micro-copy {
     margin-left: auto;
   }
+  &[data-type="core/freeform"] {
+    clear: both;
+  }
+  &[data-type="core/image"][data-align="left"] .block-editor-block-list__block-edit {
+    float: left;
+    margin-right: 1em;
+  }
+  &[data-type="core/image"][data-align="right"] .block-editor-block-list__block-edit {
+    float: right;
+    margin-left: 1em;
+  }
+  // &[data-type="core/table"]{
+  //   &::before,
+  //   &::after{
+  //     display: none;
+  //   }
+  // }
 
 
   .column-2,
   .column-3{
-    word-break: break-all;
     .editor-inner-blocks{
       .column-left,
       .column-center,
@@ -105,10 +124,14 @@ div.mce-content-body {
   }
 
   .column-wrap{
-    >.editor-inner-blocks{
+    >.editor-inner-blocks ,//Wordpress 5.4未満
+    >.block-editor-inner-blocks //WordPress5.4以降
+    {
       width: 100% !important;
     }
-     > .editor-inner-blocks > .editor-block-list__layout{
+     > .editor-inner-blocks > .editor-block-list__layout,//Wordpress 5.4未満
+     > .block-editor-inner-blocks > .block-editor-block-list__layout //WordPress5.4以降
+     {
       display: flex;
       position: relative;
       margin: 1em 0;
@@ -202,8 +225,29 @@ div.mce-content-body {
 }
 
 /* main */
+.wp-block.editor-block-list__block[data-align="left"],
+.wp-block.editor-block-list__block[data-align="right"] {
+  display: block;
+  > .block-editor-block-list__block-edit{
+    float: none;
+  }
+}
+.block-editor-block-list__block[data-type="core/table"][data-align="left"] table{
+  margin-left: 0;
+  margin-right: auto;
+}
+.block-editor-block-list__block[data-type="core/table"][data-align="right"] table{
+  margin-left: auto;
+  margin-right: 0;
+}
+.wp-block.editor-block-list__block[data-align="wide"],
+.wp-block.editor-block-list__block[data-align="full"]{
+  table{
+    width: 100%;
+  }
+}
 
-.editor-writing-flow {
+.block-editor-writing-flow {
   max-width: 860px;
   margin: auto;
   padding-left: 14px;
@@ -211,7 +255,7 @@ div.mce-content-body {
   background-color: white;
 }
 
-.editor-styles-wrapper .editor-writing-flow.main {
+.editor-styles-wrapper .block-editor-writing-flow.main {
   width: auto;
   padding-left: 14px;
   padding-right: 14px;
@@ -238,7 +282,7 @@ div.mce-content-body {
     margin-left: auto;
     margin-right: auto;
   }
-  .editor-writing-flow textarea {
+  .block-editor-writing-flow textarea {
     min-height: auto;
   }
 }
@@ -289,6 +333,25 @@ ul{
     margin: 1em 0;
   }
 }
+
+.wp-block-table{
+  overflow: hidden;
+  table{
+    font-size: 16px;
+  }
+}
+.wp-block .wp-block-table__cell-content{
+  min-width: 50px;
+  padding: 8px;
+}
+
+// .block-editor-block-list__layout *{
+//   box-sizing: border-box;
+// }
+
+// table{
+//   width: 90% !important;
+// }
 
 /* wp-includes/css/dist/block-library/theme.css
 .wp-block-separator:not(.is-style-wide):not(.is-style-dots){
@@ -417,6 +480,9 @@ ol, ul {
   margin: 0.2em;
 }
  */
+ .editor-styles-wrapper .article .wp-block-gallery ul li{
+  margin-left: 0;
+}
 
 @media (min-width: 600px) {
   .editor-styles-wrapper .article {
@@ -602,7 +668,7 @@ ol, ul {
     display: flex;
     flex-direction: column;
 }
-- clear [height: 100%] of .editor-writing-flow
+- clear [height: 100%] of .block-editor-writing-flow
 */
 
 .edit-post-layout__content .edit-post-visual-editor {
@@ -612,7 +678,7 @@ ol, ul {
 }
 
 .editor-styles-wrapper {
-  .editor-writing-flow {
+  .block-editor-writing-flow {
     height: auto;
     flex-shrink: 0;
     > div {
@@ -633,39 +699,7 @@ ol, ul {
 .editor-styles-wrapper .red{
   margin-left: 0;
 }
-// [aria-label="赤字"],
-// [aria-label="赤太字"]{
-//   color: #E50202;
-// }
-// [aria-label="青字"],
-// [aria-label="青太字"]{
-//   color: blue;
-// }
-// [aria-label="緑字"],
-// [aria-label="緑太字"]{
-//   color: green;
-// }
 
-// [aria-label="黄色マーカー"]{
-//   background-color: #ff6;
-// }
-// [aria-label="黄色アンダーラインマーカー"]{
-//   color: #fcc800;
-// }
-
-// [aria-label="青色マーカー"]{
-//   background-color: #a5d7f9;
-// }
-// [aria-label="青色アンダーラインマーカー"]{
-//   color: #a5d7f9;
-// }
-
-// [aria-label="赤色マーカー"]{
-//   background-color: #ffb6b9;
-// }
-// [aria-label="赤色アンダーラインマーカー"]{
-//   color: #ffb6b9;
-// }
 
 //トグルボックス
 .toggle-wrap{
@@ -707,4 +741,107 @@ ol, ul {
 
 .wp-block .widget.open{
   margin-left: 0;
+}
+
+.micro-content{
+  display: inline-flex;
+}
+
+.btn-wrap{
+  background-color: #f8e58c !important;
+}
+
+.tab-caption-box-label.box-label,
+.label-box-label.box-label {
+  margin-bottom: -2px;
+}
+
+.timeline-box [data-block]{
+  margin: 0;
+}
+
+.editor-styles-wrapper .components-select-control__input{
+  padding: 0 10px;
+}
+
+// .editor-post-title__block {
+//   padding-left: 58px;
+//   padding-right: 58px;
+// }
+
+//WordPress 5.4からの吹き出しの不具合対応
+.speech-wrap .components-button{
+  height: auto;
+}
+
+.page-body,
+.page-body p{
+  font-size: 18px;
+}
+
+//ブロックエディタータイトル余白の修正
+.block-editor-editor-skeleton__body {
+  .editor-post-title{
+    margin: 0 6px;
+  }
+}
+//ブロックエディターパーマリンク余白の修正
+@media screen and (min-width: 600px){
+  .edit-post-visual-editor .editor-post-title__block .editor-post-permalink{
+    margin: 0 -18px;
+  }
+}
+
+//ブロックエディターの吹き出しスタイルの調整
+.speech-balloon{
+  min-width: 160px;
+}
+
+
+//マイクロソフトブラウザーでツールボタンの表示が崩れる不具合修正
+@mixin ms_block_fix{
+  .editor-block-toolbar.block-editor-block-toolbar{
+    position: relative;
+    .block-editor-block-toolbar__slot{
+      display: inline-flex;
+    }
+  }
+}
+//IEのみに適用されるブラウザハック
+@media all and (-ms-high-contrast: none){
+  @include ms_block_fix;
+}
+//Edgeのみに適用されるブラウザハック
+@supports (-ms-ime-align: auto) {
+  @include ms_block_fix;
+}
+
+//ブロックエディター入力カラムの下（SEO等の設定項目の上）にある余白を削除
+.block-editor-writing-flow__click-redirect{
+  display: none;
+}
+
+//ブロックエディターですおが隠れてしまう
+// .wp-block-table {
+// 	overflow: auto;
+// }
+
+//Gutenbergオプションのセレクトボックスの調整
+.meta-box-sortables select {
+  box-sizing: border-box;
+}
+
+// プレイビュースタイルの調整
+.has-drop-cap:not(:focus)::first-letter {
+  float: none;
+  font-size: 1em;
+}
+
+// プレイビュースタイルの背景色を白にする
+.wp-block-paragraph.has-drop-cap{
+  background-color: #fff;
+}
+
+.page-type-wide{
+  max-width: 96% !important;
 }

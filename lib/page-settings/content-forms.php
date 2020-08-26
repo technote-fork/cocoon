@@ -29,13 +29,13 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             <div class="col-2">
               <div style="min-width: 270px;">
               <?php
-              generate_label_tag(OP_ENTRY_CONTENT_LINE_HIGHT, '行の高さ');
+              generate_label_tag(OP_ENTRY_CONTENT_LINE_HIGHT, __( '行の高さ', THEME_NAME ));
               generate_range_tag(OP_ENTRY_CONTENT_LINE_HIGHT, get_entry_content_line_hight(), 1, 4, 0.1);
               generate_tips_tag(__( 'line-hightで、行の高さを指定します。1にすると文字列と同等の高さになります。', THEME_NAME ));
               echo '<br>';
               echo '<br>';
 
-              generate_label_tag(OP_ENTRY_CONTENT_MARGIN_HIGHT, '行の余白（単位：em）');
+              generate_label_tag(OP_ENTRY_CONTENT_MARGIN_HIGHT, __( '行の余白（単位：em）', THEME_NAME ));
               generate_range_tag(OP_ENTRY_CONTENT_MARGIN_HIGHT, get_entry_content_margin_hight(), 0.1, 4, 0.1);
               generate_tips_tag(__( '行間の余白の高さを設定します。1emは、フォントサイズ（font-size）と同等の高さになります。フォントサイズが18pxの場合は余白も18pxになります。', THEME_NAME ));
              ?>
@@ -151,18 +151,18 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           <td>
             <?php
             $options = array(
-              'fa-external-link' => __( '&#xf08e', THEME_NAME ),
-              'fa-link' => __( '&#xf0c1', THEME_NAME ),
-              'fa-level-up' => __( '&#xf148', THEME_NAME ),
-              'fa-share' => __( '&#xf064', THEME_NAME ),
-              'fa-share-square-o' => __( '&#xf045', THEME_NAME ),
-              'fa-share-square' => __( '&#xf14d', THEME_NAME ),
-              'fa-sign-out' => __( '&#xf08b', THEME_NAME ),
-              'fa-plane' => __( '&#xf072', THEME_NAME ),
-              'fa-rocket' => __( '&#xf135', THEME_NAME ),
+              'fa-external-link' => change_fa('<span class="fa fa-external-link" aria-hidden="true"></span>'),
+              'fa-link' => change_fa('<span class="fa fa-link" aria-hidden="true"></span>'),
+              'fa-level-up' => change_fa('<span class="fa fa-level-up" aria-hidden="true"></span>'),
+              'fa-share' => change_fa('<span class="fa fa-share" aria-hidden="true"></span>'),
+              'fa-share-square-o' => change_fa('<span class="fa fa-share-square-o" aria-hidden="true"></span>'),
+              'fa-share-square' => change_fa('<span class="fa fa-share-square" aria-hidden="true"></span>'),
+              'fa-sign-out' => change_fa('<span class="fa fa-sign-out" aria-hidden="true"></span>'),
+              'fa-plane' => change_fa('<span class="fa fa-plane" aria-hidden="true"></span>'),
+              'fa-rocket' => change_fa('<span class="fa fa-rocket" aria-hidden="true"></span>'),
             );
 
-            generate_selectbox_tag(OP_EXTERNAL_LINK_ICON, $options, get_external_link_icon(),__( 'アイコンフォント', THEME_NAME ) , true);
+            generate_radiobox_tag(OP_EXTERNAL_LINK_ICON, $options, get_external_link_icon(),__( 'アイコンフォント', THEME_NAME ) , true);
             generate_tips_tag(__( '外部リンクの右部に表示するFont Awesomeアイコンを設定します。', THEME_NAME ));
             ?>
           </td>
@@ -271,19 +271,18 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           <td>
             <?php
             $options = array(
-              'fa-external-link' => __( '&#xf08e', THEME_NAME ),
-              'fa-link' => __( '&#xf0c1', THEME_NAME ),
-              'fa-level-up' => __( '&#xf148', THEME_NAME ),
-              'fa-share' => __( '&#xf064', THEME_NAME ),
-              'fa-share-square-o' => __( '&#xf045', THEME_NAME ),
-              'fa-share-square' => __( '&#xf14d', THEME_NAME ),
-              'fa-sign-out' => __( '&#xf08b', THEME_NAME ),
-              'fa-sign-in' => __( '&#xf090', THEME_NAME ),
-              'fa-plane' => __( '&#xf072', THEME_NAME ),
-              'fa-rocket' => __( '&#xf135', THEME_NAME ),
+              'fa-external-link' => change_fa('<span class="fa fa-external-link" aria-hidden="true"></span>'),
+              'fa-link' => change_fa('<span class="fa fa-link" aria-hidden="true"></span>'),
+              'fa-level-up' => change_fa('<span class="fa fa-level-up" aria-hidden="true"></span>'),
+              'fa-share' => change_fa('<span class="fa fa-share" aria-hidden="true"></span>'),
+              'fa-share-square-o' => change_fa('<span class="fa fa-share-square-o" aria-hidden="true"></span>'),
+              'fa-share-square' => change_fa('<span class="fa fa-share-square" aria-hidden="true"></span>'),
+              'fa-sign-out' => change_fa('<span class="fa fa-sign-out" aria-hidden="true"></span>'),
+              'fa-plane' => change_fa('<span class="fa fa-plane" aria-hidden="true"></span>'),
+              'fa-rocket' => change_fa('<span class="fa fa-rocket" aria-hidden="true"></span>'),
             );
 
-            generate_selectbox_tag(OP_INTERNAL_LINK_ICON, $options, get_internal_link_icon(),__( 'アイコンフォント', THEME_NAME ) , true);
+            generate_radiobox_tag(OP_INTERNAL_LINK_ICON, $options, get_internal_link_icon(),__( 'アイコンフォント', THEME_NAME ) , true);
             generate_tips_tag(__( '内部リンクの右部に表示するFont Awesomeアイコンを設定します。', THEME_NAME ));
             ?>
           </td>
@@ -317,6 +316,12 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             generate_checkbox_tag(OP_RESPONSIVE_TABLE_ENABLE , is_responsive_table_enable(), __( '横幅の広いテーブルは横スクロール', THEME_NAME ));
             generate_tips_tag(__( '端末幅より広いテーブルが表示されるときは、テーブルを横スクロールして崩れないようにします。', THEME_NAME ));
             ?>
+            <div class="indent<?php echo get_not_allowed_form_class(is_responsive_table_enable(), true); ?>">
+              <?php
+              generate_checkbox_tag(OP_RESPONSIVE_TABLE_FIRST_COLUMN_STICKY_ENABLE, is_responsive_table_first_column_sticky_enable(), __( 'テーブルの1列目を固定表示', THEME_NAME ));
+              generate_tips_tag(__( '横スクロールテーブルで1列目となるth、tdを固定します。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/responsive-table-first-column-fixed/'));
+              ?>
+            </div>
           </td>
         </tr>
 

@@ -7,7 +7,7 @@
   Author URI: https://mizutama.blog/
   Screenshot URI: https://im-cocoon.net/wp-content/uploads/skin-modernblack.png
   Version: 1.2
-  Priority: 200100
+  Priority: 9890000000
 */
 
 /************************************
@@ -374,16 +374,23 @@ blockquote::after {
 .blank-box.bb-green {
 	border-color: #b4d09b;
 }
-.blank-box.bb-tab.bb-yellow::before {
+.blank-box.bb-tab.bb-yellow::before,
+.blank-box.bb-tab.bb-yellow .bb-label {
 	background-color: #e6da94;
 }
-.blank-box.bb-tab.bb-red::before {
+
+.blank-box.bb-tab.bb-red::before,
+.blank-box.bb-tab.bb-red .bb-label {
 	background-color: #df9a87;
 }
-.blank-box.bb-tab.bb-blue::before {
+
+.blank-box.bb-tab.bb-blue::before,
+.blank-box.bb-tab.bb-blue .bb-label {
 	background-color: #9ac4d0;
 }
-.blank-box.bb-tab.bb-green::before {
+
+.blank-box.bb-tab.bb-green::before,
+.blank-box.bb-tab.bb-green .bb-label {
 	background-color: #b4d09b;
 }
 .blank-box.sticky.st-yellow {
@@ -567,4 +574,12 @@ blockquote::after {
 .go-to-top-button:hover {
 	background-color: #807e7d;
 	color: #fff;
+}
+
+/************************************
+** Font Awesome5対応
+************************************/
+.font-awesome-5 blockquote::before{
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
 }

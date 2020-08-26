@@ -7,9 +7,9 @@ figure{
 
 img{
   max-width: 100%;
+  //display: inline-block;
   height: auto;
   border: 0;
-  -webkit-backface-visibility: hidden;
 }
 
 .circle-image img{
@@ -55,7 +55,7 @@ img{
 }
 
 .ect-vertical-card .entry-card-thumb,
-.rect-vartical-card .related-entry-card-thumb{
+.rect-vertical-card .related-entry-card-thumb{
   margin: 0;
 }
 
@@ -77,7 +77,8 @@ img{
 
   .card-content,
   //.blogcard-wrap .blogcard .blogcard-content,
-  .widget-entry-cards .widget-entry-card-content{
+  .widget-entry-cards .widget-entry-card-content,
+  .rect-mini-card .related-entry-card-content{
     margin: 0;
   }
 

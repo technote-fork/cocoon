@@ -6,6 +6,7 @@
   margin-bottom: 1em;
   //font-size: 16px;
   display: flex;
+
 }
 
 .speech-person{
@@ -37,7 +38,7 @@ div.speech-balloon{
   background-color: $white;
   border: 2px solid $basic_border_color;
   border-radius: 6px;
-  word-break: break-all;
+  max-width: calc(100% - 14%);
   p{
     margin: 0;
   }
@@ -112,6 +113,7 @@ div.speech-balloon{
   .speech-icon-image{
     border-radius: 0;
     border-style: none;
+    box-shadow: none;
   }
 }
 
@@ -124,6 +126,7 @@ div.speech-balloon{
 .sbis-cn{
   .speech-icon-image{
     border-style: none;
+    box-shadow: none;
   }
 }
 

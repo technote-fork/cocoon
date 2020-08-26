@@ -76,11 +76,45 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
               <li><?php _e( 'Instagram', THEME_NAME ) ?></li>
               <li><?php _e( 'Pinterest', THEME_NAME ) ?></li>
               <li><?php _e( 'YouTube', THEME_NAME ) ?></li>
+              <li><?php _e( 'LinkedIn', THEME_NAME ) ?></li>
+              <li><?php _e( 'note', THEME_NAME ) ?></li>
               <li><?php _e( 'Flickr', THEME_NAME ) ?></li>
+              <li><?php _e( 'Amazon欲しい物リスト', THEME_NAME ) ?></li>
+              <li><?php _e( '楽天ROOM', THEME_NAME ) ?></li>
+              <li><?php _e( 'Slack', THEME_NAME ) ?></li>
               <li><?php _e( 'GitHub', THEME_NAME ) ?></li>
+              <li><?php _e( 'CodePen', THEME_NAME ) ?></li>
             </ul>
             <p><a href="profile.php"><?php _e( 'あなたのプロフィール', THEME_NAME ) ?></a>から設定</p>
             <p class="tips"><?php _e( '現ログインユーザーのSNSフォローページを設定します。', THEME_NAME ) ?></p>
+          </td>
+        </tr>
+
+
+        <!-- 表示ページ -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag('', __( '表示ページ', THEME_NAME )); ?>
+          </th>
+          <td>
+            <p><?php _e( 'フォローボタンを表示するページの切り替え。', THEME_NAME ) ?></p>
+            <ul>
+              <li>
+                <?php generate_checkbox_tag(OP_SNS_FRONT_PAGE_FOLLOW_BUTTONS_VISIBLE, is_sns_front_page_follow_buttons_visible(), __( 'フロントページ', THEME_NAME )); ?>
+              </li>
+              <li>
+                <?php generate_checkbox_tag(OP_SNS_SINGLE_FOLLOW_BUTTONS_VISIBLE, is_sns_single_follow_buttons_visible(), __( '投稿', THEME_NAME )); ?>
+              </li>
+              <li>
+                <?php generate_checkbox_tag(OP_SNS_PAGE_FOLLOW_BUTTONS_VISIBLE, is_sns_page_follow_buttons_visible(), __( '固定ページ', THEME_NAME )); ?>
+              </li>
+              <li>
+                <?php generate_checkbox_tag(OP_SNS_CATEGORY_FOLLOW_BUTTONS_VISIBLE, is_sns_category_follow_buttons_visible(), __( 'カテゴリー', THEME_NAME )); ?>
+              </li>
+              <li>
+                <?php generate_checkbox_tag(OP_SNS_TAG_FOLLOW_BUTTONS_VISIBLE, is_sns_tag_follow_buttons_visible(), __( 'タグ', THEME_NAME )); ?>
+              </li>
+            <p><?php _e( 'フォローボタンを表示するページを選択してください。', THEME_NAME );echo get_help_page_tag('https://wp-cocoon.com/sns-button-display-switching/'); ?></p>
           </td>
         </tr>
 
@@ -119,9 +153,9 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           <td>
             <?php
             $options = array(
-              'monochrome' => 'モノクロ',
-              'brand_color' => 'ブランドカラー',
-              'brand_color_white' => 'ブランドカラー（白抜き）',
+              'monochrome' => __( 'モノクロ', THEME_NAME ),
+              'brand_color' => __( 'ブランドカラー', THEME_NAME ),
+              'brand_color_white' => __( 'ブランドカラー（白抜き）', THEME_NAME ),
             );
             generate_selectbox_tag(OP_SNS_FOLLOW_BUTTON_COLOR, $options, get_sns_follow_button_color());
             generate_tips_tag(__( 'シェアボタンの配色を選択してください。', THEME_NAME ));
@@ -183,10 +217,10 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
     <table class="form-table">
       <tbody>
 
-        <!-- キャシュの有効化 -->
+        <!-- キャッシュの有効化 -->
         <tr>
           <th scope="row">
-            <?php generate_label_tag(OP_SNS_FOLLOW_COUNT_CACHE_ENABLE, __( 'キャシュの有効化', THEME_NAME )); ?>
+            <?php generate_label_tag(OP_SNS_FOLLOW_COUNT_CACHE_ENABLE, __( 'キャッシュの有効化', THEME_NAME )); ?>
           </th>
           <td>
             <?php

@@ -20,17 +20,25 @@
 .product-item-box{
   position: relative;
   &::after{
-    @include fontawesome('\f270');
+    content: '\ea87';
+    font-family: icomoon;
     position: absolute;
     bottom: 0;
     right: 6px;
     font-size: 24px;
     color: $thin;
   }
+  .image-thumb{
+    img{
+      border: none;
+      box-shadow: none;
+    }
+  }
 }
 
 .rakuten-item-box::after{
-  content: '\f25d';
+  content: '\e903';
+  font-family: icomoon;
 }
 
 .product-item-error.cf{
@@ -89,7 +97,6 @@
 }
 
 .swatchimages{
-  display: block;
   display: flex;
   flex-wrap: wrap;
   margin-top: 3px;
@@ -113,7 +120,6 @@
 
   &:hover{
     .si-thumb{
-      display: block;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -173,7 +179,7 @@
     width: 90%;
     display: block;
     margin: 0px auto 8px;
-    padding: 10px 0;
+    padding: 6px 12px;
     text-decoration: none;
     font-size: 13px;
     font-weight: bold;
@@ -191,6 +197,11 @@
 
 .product-item-buttons{
   margin-top: 1em;
+}
+
+.product-item-image-only img{
+  border: 0;
+  box-shadow: none;
 }
 
 
@@ -254,7 +265,6 @@
       }
     }
     >*{
-      width: 31.5%;
       margin: 0.5%;
       box-sizing: border-box;
     }
@@ -287,6 +297,9 @@
   background: #e60033;
   position: relative;
 }
+.shoplinkdmm a {
+  background: #00bcd4;
+}
 .shoplinkseven a {
   background: #008837;
 }
@@ -318,7 +331,7 @@
   background: #15b0e7;
 }
 .shoplinkjalan a{
-  background: #FF5800;
+  background: #ff5600;
 }
 .shoplinkjtb a{
   background: #C71628;
@@ -357,9 +370,9 @@
     min-width: 90px;
   }
 
-  .product-item-buttons a{
-    padding: 5px 0;
-  }
+  // .product-item-buttons a{
+  //   padding: 5px 8px;
+  // }
 }
 
 .pis-l{
@@ -375,10 +388,6 @@
 
 .item-price{
   color: #c9171e;
-}
-
-.item-review::before{
-  @include fontawesome('\f086');
 }
 
 .acquired-date{
@@ -411,15 +420,15 @@
     //clear: both;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    //justify-content: space-between;
     >*{
       width: auto;
       margin: 0 .5% !important;
-      flex: 1 1 auto;
+      //flex: 1 1 auto;
       >a{
         width: auto;
         font-size: 11px;
-        padding: 6px 0;
+        //padding: 6px 0;
       }
     }
   }
@@ -447,7 +456,7 @@
   .tomarebalink-link1,
   .product-item-buttons{
     >*{
-      width: 49%;
+      width: 100%;
       margin: 0 .5% !important;
     }
   }

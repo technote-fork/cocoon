@@ -74,19 +74,20 @@ function cocoon_blocks_cgb_editor_assets() { // phpcs:ignore
 		'cocoon-blocks-js', // Handle.
 		get_template_directory_uri().'/blocks/dist/blocks.build.js',
 		//plugins_url( '/dist/blocks.build.js', dirname( __FILE__ ) ), // Block.build.js: We register the block here. Built with Webpack.
-		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor' ), // Dependencies, defined above.
+		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor' ) // Dependencies, defined above.
 		// filemtime( plugin_dir_path( __DIR__ ) . 'dist/blocks.build.js' ), // Version: File modification time.
-		true // Enqueue the script in the footer.
+		// true // Enqueue the script in the footer.
   );
   //ショートコードオブジェクトの取得
-  $baloons = get_speech_balloons();
-  $templates = get_function_texts();
-  $affiliates = get_affiliate_tags();
-  $rankings = get_item_rankings();
+  $balloons = get_speech_balloons(null, 'title');
+  $templates = get_function_texts(null, 'title');
+  $affiliates = get_affiliate_tags(null, 'title');
+  $rankings = get_item_rankings(null, 'title');
   $is_templates_visible = (has_valid_shortcode_item($templates) && is_block_editor_template_shortcode_dropdown_visible()) ? 1 : 0;
   $is_affiliates_visible = (has_valid_shortcode_item($affiliates) && is_block_editor_affiliate_shortcode_dropdown_visible()) ? 1 : 0;
   $is_rankings_visible = (has_valid_shortcode_item($rankings) && is_block_editor_ranking_shortcode_dropdown_visible()) ? 1 : 0;
-  $dropdowns = array(
+  $gutenberg_settings = array(
+    'isRubyVisible' => is_block_editor_ruby_button_visible() ? 1 : 0,
     'isLetterVisible' => is_block_editor_letter_style_dropdown_visible() ? 1 : 0,
     'isMarkerVisible' => is_block_editor_marker_style_dropdown_visible() ? 1 : 0,
     'isBadgeVisible'  => is_block_editor_badge_style_dropdown_visible() ? 1 : 0,
@@ -95,6 +96,11 @@ function cocoon_blocks_cgb_editor_assets() { // phpcs:ignore
     'isTemplateVisible' => $is_templates_visible,
     'isAffiliateVisible' => $is_affiliates_visible,
     'isRankingVisible' => $is_rankings_visible,
+    'isSpeechBalloonEnable' => $balloons ? 1 : 0,
+    'speechBalloonDefaultIconUrl' => get_template_directory_uri().'/images/anony.png',
+    'siteIconFont' => ' '.get_site_icon_font_class(),
+    'pageTypeClass' => get_editor_page_type_class(),
+    'isDebugMode' => DEBUG_MODE,
   );
 
 
@@ -105,19 +111,19 @@ function cocoon_blocks_cgb_editor_assets() { // phpcs:ignore
   ///////////////////////////////////////////
   wp_localize_script(
     'cocoon-blocks-js', //値を渡すjsファイルのハンドル名
-    'dropdowns', //任意のオブジェクト名
-    $dropdowns //プロバティ
+    'gbSettings', //任意のオブジェクト名
+    $gutenberg_settings //プロバティ
   );
 
   ///////////////////////////////////////////
   // オブジェクト渡し
   ///////////////////////////////////////////
   //吹き出し情報を渡す
-  //_v($baloons);
+  //_v($balloons);
   wp_localize_script(
     'cocoon-blocks-js', //値を渡すjsファイルのハンドル名
-    'speechBaloons', //任意のオブジェクト名
-    $baloons //プロバティ
+    'gbSpeechBalloons', //任意のオブジェクト名
+    $balloons //プロバティ
   );
   //テーマのキーカラーを渡す
   wp_localize_script(
@@ -130,7 +136,7 @@ function cocoon_blocks_cgb_editor_assets() { // phpcs:ignore
   if ($is_templates_visible) {
     wp_localize_script(
       'cocoon-blocks-js', //値を渡すjsファイルのハンドル名
-      'templates', //任意のオブジェクト名
+      'gbTemplates', //任意のオブジェクト名
       $templates //プロバティ
     );
   }
@@ -140,7 +146,7 @@ function cocoon_blocks_cgb_editor_assets() { // phpcs:ignore
   if ($is_affiliates_visible) {
     wp_localize_script(
       'cocoon-blocks-js', //値を渡すjsファイルのハンドル名
-      'affiliateTags', //任意のオブジェクト名
+      'gbAffiliateTags', //任意のオブジェクト名
       $affiliates //プロバティ
     );
   }
@@ -150,11 +156,24 @@ function cocoon_blocks_cgb_editor_assets() { // phpcs:ignore
   if ($is_rankings_visible) {
     wp_localize_script(
       'cocoon-blocks-js', //値を渡すjsファイルのハンドル名
-      'itemRankings', //任意のオブジェクト名
+      'gbItemRankings', //任意のオブジェクト名
       $rankings //プロバティ
     );
   }
 
+  //カラーパレット情報渡し
+  wp_localize_script(
+    'cocoon-blocks-js', //値を渡すjsファイルのハンドル名
+    'cocoonPaletteColors', //任意のオブジェクト名
+    get_cocoon_editor_color_palette_colors() //カラーパレット
+  );
+
+  //言語情報渡し
+  wp_localize_script(
+    'cocoon-blocks-js', //値を渡すjsファイルのハンドル名
+    'gbCodeLanguages', //任意のオブジェクト名
+    get_block_editor_code_languages() //カラーパレット
+  );
 
 
   // Styles.
@@ -173,7 +192,7 @@ if (is_admin()) {
 }
 if ( !function_exists( 'add_cocoon_theme_block_categories' ) ):
 function add_cocoon_theme_block_categories( $categories, $post ){
-	return array_merge(
+  $block_categories = array_merge(
 		$categories,
 		array(
 			array(
@@ -207,7 +226,10 @@ function add_cocoon_theme_block_categories( $categories, $post ){
         //'icon' => 'heart',
 			),
 		)
-	);
+  );
+  //ブロックカテゴリーのフィルターフック
+  $block_categories = apply_filters('cocoon_theme_block_categories', $block_categories);
+	return $block_categories;
 }
 endif;
 
@@ -223,115 +245,13 @@ endif;
 add_action('after_setup_theme', 'cocoon_editor_color_palette_setup');
 if ( !function_exists( 'cocoon_editor_color_palette_setup' ) ):
 function cocoon_editor_color_palette_setup() {
+    $colors = get_cocoon_editor_color_palette_colors();
     // カラーパレットの設定
-    add_theme_support('editor-color-palette', array(
-        array(
-            'name' => __( 'キーカラー', THEME_NAME ),
-            'slug' => 'key-color',
-            'color' => get_editor_key_color(),
-        ),
-        array(
-            'name' => __( '赤色', THEME_NAME ),
-            'slug' => 'red',
-            'color' => '#e60033',
-        ),
-        array(
-            'name' => __( 'ピンク', THEME_NAME ),
-            'slug' => 'pink',
-            'color' => '#e95295',
-        ),
-        array(
-            'name' => __( '紫色', THEME_NAME ),
-            'slug' => 'purple',
-            'color' => '#884898',
-        ),
-        array(
-            'name' => __( '深紫色', THEME_NAME ),
-            'slug' => 'deep',
-            'color' => '#55295b',
-        ),
-        array(
-            'name' => __( '紺色', THEME_NAME ),
-            'slug' => 'indigo',
-            'color' => '#1e50a2',
-        ),
-        array(
-            'name' => __( '青色', THEME_NAME ),
-            'slug' => 'blue',
-            'color' => '#0095d9',
-        ),
-        array(
-            'name' => __( '天色', THEME_NAME ),
-            'slug' => 'light-blue',
-            'color' => '#2ca9e1',
-        ),
-        array(
-            'name' => __( '浅葱色', THEME_NAME ),
-            'slug' => 'cyan',
-            'color' => '#00a3af',
-        ),
-        array(
-            'name' => __( '深緑色', THEME_NAME ),
-            'slug' => 'teal',
-            'color' => '#007b43',
-        ),
-        array(
-            'name' => __( '緑色', THEME_NAME ),
-            'slug' => 'green',
-            'color' => '#3eb370',
-        ),
-        array(
-            'name' => __( '黄緑色', THEME_NAME ),
-            'slug' => 'light-green',
-            'color' => '#8bc34a',
-        ),
-        array(
-            'name' => __( 'ライム', THEME_NAME ),
-            'slug' => 'lime',
-            'color' => '#c3d825',
-        ),
-        array(
-            'name' => __( '黄色', THEME_NAME ),
-            'slug' => 'yellow',
-            'color' => '#ffd900',
-        ),
-        array(
-            'name' => __( 'アンバー', THEME_NAME ),
-            'slug' => 'amber',
-            'color' => '#ffc107',
-        ),
-        array(
-            'name' => __( 'オレンジ', THEME_NAME ),
-            'slug' => 'orange',
-            'color' => '#f39800',
-        ),
-        array(
-            'name' => __( 'ディープオレンジ', THEME_NAME ),
-            'slug' => 'deep-orange',
-            'color' => '#ea5506',
-        ),
-        array(
-            'name' => __( '茶色', THEME_NAME ),
-            'slug' => 'brown',
-            'color' => '#954e2a',
-        ),
-        array(
-            'name' => __( '灰色', THEME_NAME ),
-            'slug' => 'grey',
-            'color' => '#949495',
-        ),
-        array(
-            'name' => __( '黒', THEME_NAME ),
-            'slug' => 'black',
-            'color' => '#333',
-        ),
-        array(
-            'name' => __( '白', THEME_NAME ),
-            'slug' => 'white',
-            'color' => '#fff',
-        ),
-    ));
-    // 自由色選択を無効
+    add_theme_support('editor-color-palette', $colors);
+    // カスタム色を無効
     add_theme_support('disable-custom-colors');
+    // カスタムフォントサイズを無効
+    add_theme_support('disable-custom-font-sizes');
+    return $colors;
 }
 endif;

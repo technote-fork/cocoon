@@ -51,12 +51,26 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           </th>
           <td>
             <?php
-            generate_color_picker_tag(OP_EDITOR_BACKGROUND_COLOR,  get_editor_background_color(), '背景色');
+            generate_color_picker_tag(OP_EDITOR_BACKGROUND_COLOR,  get_editor_background_color(), __( '背景色', THEME_NAME ));
 
             generate_tips_tag(__( 'エディターの背景色を指定します。', THEME_NAME ));
 
-            generate_color_picker_tag(OP_EDITOR_TEXT_COLOR,  get_editor_text_color(), '文字色');
+            generate_color_picker_tag(OP_EDITOR_TEXT_COLOR,  get_editor_text_color(), __( '文字色', THEME_NAME ));
             generate_tips_tag(__( 'エディターのテキスト色を指定します。', THEME_NAME ));
+            ?>
+          </td>
+        </tr>
+
+        <!-- タグ -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag(OP_EDITOR_TAG_CHECK_LIST_ENABLE, __('タグ', THEME_NAME) ); ?>
+          </th>
+          <td>
+            <?php
+            generate_checkbox_tag(OP_EDITOR_TAG_CHECK_LIST_ENABLE , is_editor_tag_check_list_enable(), __( 'タグ選択をチェックリスト形式にする', THEME_NAME ));
+            generate_image_preview_tag('https://im-cocoon.net/wp-content/uploads/tag-check-box.png');
+            generate_tips_tag(__( 'エディターでチェックリストを選択する形でタグを選択する用に変更します。', THEME_NAME ));
             ?>
           </td>
         </tr>
@@ -76,6 +90,19 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
   <table class="form-table">
     <tbody>
     <p><?php _e( 'ブロックエディターのみに適用される設定です。', THEME_NAME ) ?></p>
+
+        <!-- ボタン -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag('', __('ボタン', THEME_NAME) ); ?>
+          </th>
+          <td>
+            <?php
+            generate_checkbox_tag(OP_BLOCK_EDITOR_RUBY_BUTTON_VISIBLE , is_block_editor_ruby_button_visible(), __( 'ふりがな（ルビ）ボタン表示', THEME_NAME ));
+            generate_tips_tag(__( 'Cocoonのルビボタン表示を切り替えます。プラグインのルビ機能を利用していてエラーが出る場合は無効にしてください。', THEME_NAME ));
+            ?>
+          </td>
+        </tr>
 
         <!-- スタイルドロップダウン -->
         <tr>
@@ -117,6 +144,39 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 
             generate_checkbox_tag(OP_BLOCK_EDITOR_RANKING_SHORTCODE_DROPDOWN_VISIBLE , is_block_editor_ranking_shortcode_dropdown_visible(), __( 'ランキング表示', THEME_NAME ));
             generate_tips_tag(__( 'ツールバーのランキングショートコードドロップダウンを表示するか。', THEME_NAME ));
+            ?>
+          </td>
+        </tr>
+
+
+        <!-- ブロックオプション -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag('', __('ブロックオプション', THEME_NAME) ); ?>
+          </th>
+          <td>
+            <?php
+            generate_checkbox_tag(OP_BLOCK_EDITOR_STYLE_BLOCK_OPTION_VISIBLE , is_block_editor_style_block_option_visible(), __( 'スタイル表示', THEME_NAME ));
+            generate_tips_tag(__( 'ブロックエディターのスタイルオプションの表示を表示するか。', THEME_NAME ));
+            ?>
+          </td>
+        </tr>
+
+        <!-- 拡張カラーパレット色 -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag('', __('拡張カラーパレット色', THEME_NAME) ); ?>
+          </th>
+          <td>
+            <?php
+            generate_color_picker_tag(OP_BLOCK_EDITOR_EXTENDED_PALETTE_COLOR_A,  get_block_editor_extended_palette_color_a(), __( '拡張色A', THEME_NAME ));
+            generate_color_picker_tag(OP_BLOCK_EDITOR_EXTENDED_PALETTE_COLOR_B,  get_block_editor_extended_palette_color_b(), __( '拡張色B', THEME_NAME ));
+            generate_color_picker_tag(OP_BLOCK_EDITOR_EXTENDED_PALETTE_COLOR_C,  get_block_editor_extended_palette_color_c(), __( '拡張色C', THEME_NAME ));
+            generate_color_picker_tag(OP_BLOCK_EDITOR_EXTENDED_PALETTE_COLOR_D,  get_block_editor_extended_palette_color_d(), __( '拡張色D', THEME_NAME ));
+            generate_color_picker_tag(OP_BLOCK_EDITOR_EXTENDED_PALETTE_COLOR_E,  get_block_editor_extended_palette_color_e(), __( '拡張色E', THEME_NAME ));
+            generate_color_picker_tag(OP_BLOCK_EDITOR_EXTENDED_PALETTE_COLOR_F,  get_block_editor_extended_palette_color_f(), __( '拡張色F', THEME_NAME ));
+
+            generate_tips_tag(__( '任意のカラーパレット色を設定できます。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/gutenberg-color-palette/'));
             ?>
           </td>
         </tr>

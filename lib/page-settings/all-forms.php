@@ -32,12 +32,12 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             <?php generate_select_color_tip_tag(); ?>
           </th>
           <td>
-            <?php //_v(OP_SITE_KEY_COLOR.'='.get_skin_option(OP_SITE_KEY_COLOR));
-            generate_color_picker_tag(OP_SITE_KEY_COLOR,  get_site_key_color(), 'サイトキーカラー');
+            <?php
+            generate_color_picker_tag(OP_SITE_KEY_COLOR,  get_site_key_color(), __( 'サイトキーカラー', THEME_NAME ));
 
             generate_tips_tag(__( 'サイト全体のポイントとなる部分に適用される背景色を指定します。', THEME_NAME ));
 
-            generate_color_picker_tag(OP_SITE_KEY_TEXT_COLOR,  get_site_key_text_color(), 'サイトキーテキストカラー');
+            generate_color_picker_tag(OP_SITE_KEY_TEXT_COLOR,  get_site_key_text_color(), __( 'サイトキーテキストカラー', THEME_NAME ));
             generate_tips_tag(__( 'サイト全体のポイントとなる部分に適用されるテキスト色を指定します。', THEME_NAME ));
             ?>
           </td>
@@ -54,14 +54,18 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
                 <?php
                 //フォント
                 $options = array(
-                  'yu_gothic' => __( '游ゴシック体, ヒラギノ角ゴ', THEME_NAME ),
+                  'hiragino' => __( 'ヒラギノ角ゴ, メイリオ', THEME_NAME ).__( '（デフォルト）', THEME_NAME ),
                   'meiryo' => __( 'メイリオ, ヒラギノ角ゴ', THEME_NAME ),
+                  'yu_gothic' => __( '游ゴシック体, ヒラギノ角ゴ', THEME_NAME ),
                   'ms_pgothic' => __( 'ＭＳ Ｐゴシック, ヒラギノ角ゴ', THEME_NAME ),
                   'noto_sans_jp' => __( 'Noto Sans JP（WEBフォント）', THEME_NAME ),
+                  'noto_serif_jp' => __( 'Noto Serif JP（WEBフォント）', THEME_NAME ),
                   'mplus_1p' => __( 'Mplus 1p（WEBフォント）', THEME_NAME ),
                   'rounded_mplus_1c' => __( 'Rounded Mplus 1c（WEBフォント）', THEME_NAME ),
-                  'hannari' => __( 'はんなり明朝（WEBフォント）', THEME_NAME ),
-                  'kokoro' => __( 'こころ明朝（WEBフォント）', THEME_NAME ),
+                  'kosugi' => __( '小杉ゴシック（WEBフォント）', THEME_NAME ),
+                  'kosugi_maru' => __( '小杉丸ゴシック（WEBフォント）', THEME_NAME ),
+                  // 'hannari' => __( 'はんなり明朝（WEBフォント）', THEME_NAME ),
+                  // 'kokoro' => __( 'こころ明朝（WEBフォント）', THEME_NAME ),
                   'sawarabi_gothic' => __( 'さわらびゴシック（WEBフォント）', THEME_NAME ),
                   'sawarabi_mincho' => __( 'さわらび明朝（WEBフォント）', THEME_NAME ),
                 );
@@ -86,7 +90,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
                 generate_tips_tag(__( 'サイト全体のフォントサイズを変更します。', THEME_NAME ));
 
                 //文字色
-                generate_color_picker_tag(OP_SITE_TEXT_COLOR,  get_site_text_color(), '文字色');
+                generate_color_picker_tag(OP_SITE_TEXT_COLOR,  get_site_text_color(), __( '文字色', THEME_NAME ));
 
                 generate_tips_tag(__( 'サイト全体の文字色を変更します。', THEME_NAME ));
                 ?>
@@ -126,6 +130,24 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
         </tr>
 
 
+        <!-- サイトアイコフォント  -->
+        <tr>
+          <th scope="row">
+            <?php generate_label_tag(OP_SITE_ICON_FONT, __('サイトアイコンフォント', THEME_NAME) ); ?>
+          </th>
+          <td>
+            <?php
+            $options = array(
+              'font_awesome_4' => __( 'Font Awesome 4', THEME_NAME ),
+              'font_awesome_5' => __( 'Font Awesome 5', THEME_NAME ),
+            );
+            generate_radiobox_tag(OP_SITE_ICON_FONT, $options, get_site_icon_font());
+            generate_tips_tag(__('サイト全体で使用するアイコンフォントを選択します。', THEME_NAME).get_help_page_tag('https://wp-cocoon.com/site-iconfont/'));
+            ?>
+          </td>
+        </tr>
+
+
         <!-- サイト背景色 -->
         <tr>
           <th scope="row">
@@ -134,7 +156,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           </th>
           <td>
             <?php
-            generate_color_picker_tag(OP_SITE_BACKGROUND_COLOR,  get_site_background_color(), '背景色');
+            generate_color_picker_tag(OP_SITE_BACKGROUND_COLOR,  get_site_background_color(), __( '背景色', THEME_NAME ));
             generate_tips_tag(__( 'サイト全体の背景色を選択します。', THEME_NAME ));
             ?>
           </td>
@@ -175,7 +197,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           </th>
           <td>
             <?php
-            generate_color_picker_tag(OP_SITE_LINK_COLOR,  get_site_link_color(), 'リンク色');
+            generate_color_picker_tag(OP_SITE_LINK_COLOR,  get_site_link_color(), __( 'リンク色', THEME_NAME ));
             generate_tips_tag(__( 'サイトで利用されるリンク色を選択します。', THEME_NAME ));
             ?>
           </td>
@@ -189,7 +211,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           </th>
           <td>
             <?php
-            generate_color_picker_tag(OP_SITE_SELECTION_COLOR,  get_site_selection_color(), '選択文字色');
+            generate_color_picker_tag(OP_SITE_SELECTION_COLOR,  get_site_selection_color(), __( '選択文字色', THEME_NAME ));
             generate_tips_tag(__( 'サイト内のテキストを選択した際の文字色です。', THEME_NAME ));
             ?>
           </td>
@@ -203,7 +225,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           </th>
           <td>
             <?php
-            generate_color_picker_tag(OP_SITE_SELECTION_BACKGROUND_COLOR,  get_site_selection_background_color(), '選択文字背景色');
+            generate_color_picker_tag(OP_SITE_SELECTION_BACKGROUND_COLOR,  get_site_selection_background_color(), __( '選択文字背景色', THEME_NAME ));
             generate_tips_tag(__( 'サイト内のテキストを選択した際の背景色です。', THEME_NAME ));
             ?>
           </td>
@@ -237,10 +259,11 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             $options = array(
               'display_all' => __( '全てのページで表示', THEME_NAME ),
               'no_display_all' => __( '全てのページで非表示', THEME_NAME ),
-              'no_display_front_page' => __( 'フロントページで非表示（固定ページがトップページの場合）', THEME_NAME ),
+              'no_display_front_page' => __( 'フロントページで非表示', THEME_NAME ),
               'no_display_index_pages' => __( 'インデックスページで非表示', THEME_NAME ),
               'no_display_pages' => __( '固定ページで非表示', THEME_NAME ),
               'no_display_singles' => __( '投稿ページで非表示', THEME_NAME ),
+              'no_display_404_pages' => __( '404ページで非表示', THEME_NAME ),
             );
             //アドミンバーに独自管理メニューを表示
             generate_radiobox_tag(OP_SIDEBAR_DISPLAY_TYPE, $options, get_sidebar_display_type());
@@ -298,7 +321,7 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
             generate_textbox_tag(OP_SITE_DATE_FORMAT, get_site_date_format(), '');
             generate_tips_tag(__( 'テーマ全体に使われている日付のフォーマット形式を入力してください（初期値：Y.m.d）。', THEME_NAME ));
             ?>
-            <p><?php _e( '<a href="https://wpdocs.osdn.jp/Formatting_Date_and_Time">日付と時刻の書式の解説</a>', THEME_NAME ) ?></p>
+            <p><?php _e( '<a href="https://ja.wordpress.org/support/article/formatting-date-and-time/">日付と時刻の書式の解説</a>', THEME_NAME ) ?></p>
           </td>
         </tr>
 

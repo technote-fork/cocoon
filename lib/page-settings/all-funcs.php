@@ -27,14 +27,15 @@ endif;
 define('OP_SITE_FONT_FAMILY', 'site_font_family');
 if ( !function_exists( 'get_site_font_family' ) ):
 function get_site_font_family(){
-  return get_theme_option(OP_SITE_FONT_FAMILY, 'yu_gothic');
+  return get_theme_option(OP_SITE_FONT_FAMILY, 'hiragino');
 }
 endif;
 if ( !function_exists( 'is_site_font_family_local' ) ):
 function is_site_font_family_local(){
   switch (get_site_font_family()) {
-    case 'yu_gothic':
     case 'meiryo':
+    case 'yu_gothic':
+    case 'hiragino':
     case 'ms_pgothic':
       return true;
       break;
@@ -71,6 +72,29 @@ define('OP_SITE_FONT_WEIGHT', 'site_font_weight');
 if ( !function_exists( 'get_site_font_weight' ) ):
 function get_site_font_weight(){
   return get_theme_option(OP_SITE_FONT_WEIGHT, 400);
+}
+endif;
+
+//サイトアイコンフォント
+define('OP_SITE_ICON_FONT', 'site_icon_font');
+if ( !function_exists( 'get_site_icon_font' ) ):
+function get_site_icon_font(){
+  return get_theme_option(OP_SITE_ICON_FONT, 'font_awesome_4');
+}
+endif;
+if ( !function_exists( 'is_site_icon_font_font_awesome_4' ) ):
+function is_site_icon_font_font_awesome_4(){
+  return get_site_icon_font() == 'font_awesome_4';
+}
+endif;
+if ( !function_exists( 'is_site_icon_font_font_awesome_5' ) ):
+function is_site_icon_font_font_awesome_5(){
+  return get_site_icon_font() == 'font_awesome_5';
+}
+endif;
+if ( !function_exists( 'get_site_icon_font_class' ) ):
+function get_site_icon_font_class(){
+  return str_replace('_', '-', get_site_icon_font());
 }
 endif;
 
@@ -145,7 +169,7 @@ endif;
 
 //サイトアイコン
 define('OP_SITE_ICON_URL', 'site_icon_url');
-//Wordpressデフォルトのget_site_icon_url関数とかぶるため名前変更
+//WordPressデフォルトのget_site_icon_url関数とかぶるため名前変更
 if ( !function_exists( 'get_site_icon_url2' ) ):
 function get_site_icon_url2(){
   //return get_theme_option(OP_SITE_ICON_URL, get_default_site_icon_url());
@@ -171,7 +195,7 @@ function add_default_site_icon_tag(){
   $tag .= '<link rel="icon" href="'.DEFAULT_SITE_ICON_192.'" sizes="192x192" />'.PHP_EOL;
   $tag .= '<link rel="apple-touch-icon" href="'.DEFAULT_SITE_ICON_180.'" />'.PHP_EOL;
   $tag .= '<meta name="msapplication-TileImage" content="'.DEFAULT_SITE_ICON_270.'" />'.PHP_EOL;
-  echo $tag;
+  echo apply_filters('add_default_site_icon_tag', $tag);
 }
 endif;
 

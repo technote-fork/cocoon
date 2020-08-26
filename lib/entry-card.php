@@ -75,14 +75,21 @@ function get_entry_card_thumbnail_size($count){
       $thumbnail_size = get_entry_card_default_thumbnail_size();
       break;
   }
-  return $thumbnail_size;
+  return apply_filters('get_entry_card_thumbnail_size', $thumbnail_size, $count);
 }
 endif;
 
 if ( !function_exists( 'get_entry_card_no_image_tag' ) ):
 function get_entry_card_no_image_tag($count){
-  $thumbnail_tag_320 = '<img src="'.get_no_image_320x180_url().'" alt="" class="entry-card-thumb-image no-image list-no-image" width="'.THUMB320WIDTH.'" height="'.THUMB320HEIGHT.'" />';
-  $thumbnail_tag_large = '<img src="'.get_no_image_large_url().'" alt="" class="entry-card-thumb-image no-image list-no-image" />';
+  //通常の大きさのNO IMAGEサムネイル
+  //後で消す
+  //  $thumbnail_tag_320 = '<img src="'.get_no_image_320x180_url().'" alt="" class="no-image entry-card-thumb-image list-no-image" width="'.THUMB320WIDTH.'" height="'.THUMB320HEIGHT.'" />';
+  $thumbnail_tag_320 = get_original_image_tag(get_the_ID(), get_no_image_320x180_url(), THUMB320WIDTH, THUMB320HEIGHT, 'no-image entry-card-thumb-image list-no-image', '');
+
+  //大きなNO IMAGEサムネイル
+  //後で消す
+  // $thumbnail_tag_large = '<img src="'.get_no_image_large_url().'" alt="" class="no-image entry-card-thumb-image list-no-image" />';
+  $thumbnail_tag_large = get_original_image_tag(get_the_ID(), get_no_image_large_url(), THUMB_LARGE_NO_IMAGE_WIDTH, THUMB_LARGE_NO_IMAGE_HEIGHT, 'no-image entry-card-thumb-image list-no-image', '');
   $thumbnail_tag = $thumbnail_tag_large;
   switch (get_entry_card_type()) {
     case 'big_card_first':
@@ -105,21 +112,22 @@ endif;
 
 //新着記事のサムネイルサイズ（エイリアス）
 if ( !function_exists( 'get_new_entries_thumbnail_size' ) ):
-function get_new_entries_thumbnail_size($entry_type = ET_DEFAULT){
-  return get_widget_entries_thumbnail_size($entry_type);
+function get_new_entries_thumbnail_size($type = ET_DEFAULT){
+  return get_widget_entries_thumbnail_size($type);
 }
 endif;
 //ウィジェットエントリーのサムネイルサイズ
 if ( !function_exists( 'get_widget_entries_thumbnail_size' ) ):
-function get_widget_entries_thumbnail_size($entry_type = ET_DEFAULT){
-  $thumb_size = ($entry_type == ET_DEFAULT) ? THUMB120 : THUMB320;
-  return $thumb_size;
+function get_widget_entries_thumbnail_size($type = ET_DEFAULT){
+  $thumb_size = is_widget_entry_card_large_image_use($type) ? THUMB320 : THUMB120;
+  return apply_filters('get_widget_entries_thumbnail_size', $thumb_size, $type);
 }
 endif;
 
 //人気記事のサムネイルサイズ
 if ( !function_exists( 'get_popular_entries_thumbnail_size' ) ):
-function get_popular_entries_thumbnail_size($entry_type = ET_DEFAULT){
-  return get_widget_entries_thumbnail_size($entry_type);
+function get_popular_entries_thumbnail_size($type = ET_DEFAULT){
+  $thumb_size = get_widget_entries_thumbnail_size($type);
+  return apply_filters('get_popular_entries_thumbnail_size', $thumb_size, $type);
 }
 endif;

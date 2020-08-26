@@ -22,15 +22,17 @@ define('THEME_CHILD_DIR', THEME_NAME.'-child');
 //テーマ設定ページ用のURLクエリ
 define('THEME_SETTINGS_PAFE', 'theme-settings');
 //ホームバスの取得
-define('ROOT_PATH', trailingslashit($_SERVER['DOCUMENT_ROOT']));
+$document_root = isset($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : '';
+define('ROOT_PATH', trailingslashit($document_root));
 //PWA Service Workerのバージョン
 define('PWA_SERVICE_WORKER_VERSION', '20190523');
 
 //開発関係の場合デバッグ値を有効にする
-define('DEBAG_VALU', $_SERVER["HTTP_HOST"] == THEME_NAME.'.local' ? 1 : 0);
+$http_host = isset($_SERVER["HTTP_HOST"]) ? $_SERVER["HTTP_HOST"] : '';
+define('DEBAG_VALUE', ($http_host == THEME_NAME.'.local') /*|| ($http_host == 'wp-cocoon.com')*/ ? 1 : 0);
 
 //デバッグモード
-define('DEBUG_MODE', DEBAG_VALU);
+define('DEBUG_MODE', DEBAG_VALUE);
 define('DEBUG_CACHE_ENABLE', 1);//キャッシュ機能を有効にするか（def：1）
 define('DEBUG_ADMIN_DEMO_ENABLE', apply_filters('cocoon_setting_all_previews', true));//設定ページのプレビューを有効にするか（def：1）
 
@@ -47,18 +49,32 @@ define('SETTING_NAME_TOP', THEME_NAME_CAMEL.' '.__( '設定', THEME_NAME ));
 define('ET_DEFAULT',        'default');
 define('ET_LARGE_THUMB',    'large_thumb');
 define('ET_LARGE_THUMB_ON', 'large_thumb_on');
+define('ET_BORDER_PARTITION',    'border_partition');
+define('ET_BORDER_SQUARE', 'border_square');
 //ウィジェットモードデフォルト
 define('WM_DEFAULT', 'all');
 //人気ウィジェット集計期間デフォルト
 define('PCD_DEFAULT', 30);
 //新着・人気ウィジェットのデフォルト表示数字
 define('EC_DEFAULT', 5);
+//おすすめカードのデフォルト値
+define('RC_DEFAULT', 'center_white_title');
+
+//ウィジェットエントリーカードのプレフィックス
+define('WIDGET_NEW_ENTRY_CARD_PREFIX', 'new');
+define('WIDGET_RELATED_ENTRY_CARD_PREFIX', 'widget-related');
+define('WIDGET_NAVI_ENTRY_CARD_PREFIX', 'navi');
+
 //目次のインデックス番号
 global $_TOC_INDEX;
 $_TOC_INDEX = 1;
 //目次利用フラグ
 global $_TOC_WIDGET_OR_SHORTCODE_USE;
 $_TOC_WIDGET_OR_SHORTCODE_USE = false;
+//有効な目次見出しカウント
+global $_TOC_AVAILABLE_H_COUNT;
+$_TOC_AVAILABLE_H_COUNT = 0;
+
 //モバイルフッターメニューのキャプション
 global $_MENU_CAPTION;
 $_MENU_CAPTION = null;
@@ -68,6 +84,10 @@ $_MENU_ICON = null;
 //モバイルフッターコピーボタン
 global $_MOBILE_COPY_BUTTON;
 $_MOBILE_COPY_BUTTON = null;
+
+// //モバイルフッターコピーボタン
+// global $_IS_HTTP_MINIFY;
+// $_IS_HTTP_MINIFY = false;
 
 //エディターキーカラー
 define('DEFAULT_EDITOR_KEY_COLOR', '#19448e');
@@ -92,9 +112,29 @@ define('DATA_AD_FORMAT_LINK', 'link');
 //ナビゲーションメニュー
 define('NAV_MENU_HEADER', 'navi-header');
 define('NAV_MENU_HEADER_MOBILE', 'navi-mobile');
+define('NAV_MENU_HEADER_MOBILE_BUTTONS', 'navi-header-mobile');
+define('NAV_MENU_RECOMMENDED', 'navi-recommended');
 define('NAV_MENU_FOOTER', 'navi-footer');
-define('NAV_MENU_FOOTER_MOBILE', 'navi-footer-mobile');
+define('NAV_MENU_FOOTER_MOBILE_BUTTONS', 'navi-footer-mobile');
 define('NAV_MENU_MOBILE_SLIDE_IN', 'navi-mobile-slide-in');
+
+//親テーマのstyle.cssのURL
+define('PARENT_THEME_STYLE_CSS_URL', get_template_directory_uri().'/style.css');
+//親テーマのstyle.cssのファイルパス
+define('PARENT_THEME_STYLE_CSS_FILE', get_template_directory().'/style.css');
+//親テーマのkeyframes.cssのURL
+define('PARENT_THEME_KEYFRAMES_CSS_URL', get_template_directory_uri().'/keyframes.css');
+//親テーマのkeyframes.cssのファイルパス
+define('PARENT_THEME_KEYFRAMES_CSS_FILE', get_template_directory().'/keyframes.css');
+//子テーマのstyle.cssのURL
+define('CHILD_THEME_STYLE_CSS_URL', get_stylesheet_directory_uri().'/style.css');
+//子テーマのstyle.cssのファイルパス
+define('CHILD_THEME_STYLE_CSS_FILE', get_stylesheet_directory().'/style.css');
+//子テーマのkeyframes.cssのURL
+define('CHILD_THEME_KEYFRAMES_CSS_URL', get_stylesheet_directory_uri().'/keyframes.css');
+//子テーマのkeyframes.cssのファイルパス
+define('CHILD_THEME_KEYFRAMES_CSS_FILE', get_stylesheet_directory().'/keyframes.css');
+
 
 //メインカラム用の広告フォーマット集
 global $_MAIN_DATA_AD_FORMATS;
@@ -158,10 +198,14 @@ $_MOBILE_WIDGET_DATA_AD_FORMATS = array(
 );
 // define('MOBILE_WIDGET_DATA_AD_FORMATS', $_MOBILE_WIDGET_DATA_AD_FORMATS);
 
-//設定向けのグローバル変数
+//スキン制御向けのグローバル変数
 global $_THEME_OPTIONS;
 if (is_null($_THEME_OPTIONS)) {
   $_THEME_OPTIONS = array();
+}
+global $_FORM_SKIN_OPTIONS;
+if (is_null($_FORM_SKIN_OPTIONS)) {
+  $_FORM_SKIN_OPTIONS = array();
 }
 
 
@@ -192,6 +236,7 @@ define('NO_IMAGE_160', get_template_directory_uri().'/images/no-image-160.png');
 define('NO_IMAGE_120', get_template_directory_uri().'/images/no-image-120.png');
 define('NO_IMAGE_150', get_template_directory_uri().'/images/no-image-150.png');
 define('NO_IMAGE_LARGE', get_template_directory_uri().'/images/no-image-large.png');
+define('NO_IMAGE_RSS', get_template_directory_uri().'/images/no-image-rss.png');
 
 ///////////////////////////////////////
 // キャッシュ
@@ -207,9 +252,9 @@ define('TRANSIENT_BLOGCARD_PREFIX', THEME_NAME.'_bcc_');
 //AMPのプレフィックス
 define('TRANSIENT_AMP_PREFIX', THEME_NAME.'_amp_');
 //Amazon APIのプレフィックス
-define('TRANSIENT_AMAZON_API_PREFIX', THEME_NAME.'_amazon_api_asin_');
+define('TRANSIENT_AMAZON_API_PREFIX', THEME_NAME.'_amazon_paapi_v5_asin_');
 //Amazon APIのバックアッププレフィックス
-define('TRANSIENT_BACKUP_AMAZON_API_PREFIX', THEME_NAME.'_backup_amazon_api_asin_');
+define('TRANSIENT_BACKUP_AMAZON_API_PREFIX', THEME_NAME.'_backup_amazon_paapi_v5_asin_');
 //楽天APIのプレフィックス
 define('TRANSIENT_RAKUTEN_API_PREFIX', THEME_NAME.'_rakuten_api_id_');
 //楽天APIのバックアッププレフィックス
@@ -221,26 +266,32 @@ define('BEFORE_1ST_H2_AD_PRIORITY_STANDARD', 10001);
 define('BEFORE_1ST_H2_TOC_PRIORITY_STANDARD', 10003);
 define('BEFORE_1ST_H2_TOC_PRIORITY_HIGH', 10000);
 
-
+//ショートコード
+define('MATH_SHORTCODE', '[math]');
 
 //URLの正規表現
 define('URL_REG_STR', '(https?|ftp)(:\/\/[-_.!~*\'()a-zA-Z0-9;\/?:\@&=+\$,%#]+)');
 define('URL_REG', '/'.URL_REG_STR.'/');
 
-//タグのベースURL
-define('TAG_BASE_URL', home_url('/').'tag/');
-
 //Font Awesome4.7のCDN
-define('FONT_AWESOME4_CDN_URL', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+define('FONT_AWESOME_4_CDN_URL', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 //Font Awesome5のCDN
-define('FONT_AWESOME5_CDN_URL', 'https://use.fontawesome.com/releases/v5.8.2/css/all.css');
+define('FONT_AWESOME_5_CDN_URL', 'https://use.fontawesome.com/releases/v5.11.1/css/all.css');
 
 //Font Awesome4
-define('FONT_AWESOME4_URL', get_template_directory_uri().'/webfonts/fontawesome/css/font-awesome.min.css');
+define('FONT_AWESOME_4_URL', get_template_directory_uri().'/webfonts/fontawesome/css/font-awesome.min.css');
+define('FONT_AWESOME_4_WOFF2_URL', get_template_directory_uri().'/webfonts/fontawesome/fonts/fontawesome-webfont.woff2?v=4.7.0');
 //Font Awesome5
-define('FONT_AWESOME5_URL', get_template_directory_uri().'/webfonts/fontawesome5/css/all.min.css');
+define('FONT_AWESOME_5_URL', get_template_directory_uri().'/webfonts/fontawesome5/css/all.min.css');
+define('FONT_AWESOME_5_BRANDS_WOFF2_URL', get_template_directory_uri().'/webfonts/fontawesome5/webfonts/fa-brands-400.woff2');
+define('FONT_AWESOME_5_REGULAR_WOFF2_URL', get_template_directory_uri().'/webfonts/fontawesome5/webfonts/fa-regular-400.woff2');
+define('FONT_AWESOME_5_SOLID_WOFF2_URL', get_template_directory_uri().'/webfonts/fontawesome5/webfonts/fa-solid-900.woff2');
+//Font Awesome5アップデート
+define('FONT_AWESOME_5_UPDATE_URL', get_template_directory_uri().'/css/fontawesome5.css');
 //IcoMoonフォント
 define('FONT_ICOMOON_URL', get_template_directory_uri() . '/webfonts/icomoon/style.css');
+define('FONT_ICOMOON_WOFF_URL', get_template_directory_uri() . '/webfonts/icomoon/fonts/icomoon.woff?3o5bkh');
+define('FONT_ICOMOON_TTF_URL', get_template_directory_uri() . '/webfonts/icomoon/fonts/icomoon.ttf?3o5bkh');
 
 //親テーマのJavaScript
 define('THEME_JS_URL', get_template_directory_uri() . '/javascript.js');
@@ -275,18 +326,27 @@ define('THEME_HTTPS_REDIRECT_HTACCESS_END',   '#END '  .THEME_NAME_UPPER.' HTTPS
 define('THEME_HTTPS_REDIRECT_HTACCESS_REG', '{'.THEME_HTTPS_REDIRECT_HTACCESS_BEGIN.'.+?'.THEME_HTTPS_REDIRECT_HTACCESS_END.'}s');
 define('THEME_HTTPS_REWRITERULE_REG', '/RewriteRule .+ https:\/\/%{HTTP_HOST}%{REQUEST_URI}/i');
 
+//サービスドメイン
+define('AMAZON_DOMAIN', __( 'www.amazon.co.jp', THEME_NAME ));
+
 //Amazon ASINエラー
 define('AMAZON_ASIN_ERROR_MESSAGE', __( '商品を取得できませんでした。存在しないASINを指定している可能性があります。', THEME_NAME ));
 //Amazonメール広告
 define('THEME_MAIL_AMAZON_PR', "
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[PR]━┓
-　ここに広告を入れるかも。
+　▼▼ クラウド型レンタルサーバー ColorfulBox（カラフルボックス） ▼▼
+　https://px.a8.net/svt/ejp?a8mat=2ZNCKS+45FZ0Q+42SG+5YZ77
+　480円から始められるコスパ無双レンタルサーバー
+　https://nelog.jp/colorfulbox
+　サイト作成方法はこちら
+　https://nelog.jp/making-colorfulbox-wordpress-site
+　10％OFFクーポンはこちら
+　https://nelog.jp/colorfulbox-coupon-code
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛");
 
 //楽天メール広告
 define('THEME_MAIL_RAKUTEN_PR', "
-楽天で代替え商品を調べる。
-https://a.r10.to/hllTWS");
+楽天で代替え商品を検索する。");
 
 //メール関連
 define('THEME_MAIL_CREDIT', "

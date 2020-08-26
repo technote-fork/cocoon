@@ -32,13 +32,16 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 
               <?php endif ?>
               <?php if (is_eyecatch_visible()){
-              $content = '<p><a href="https://simplicity.sample.mixh.jp/wp-content/uploads/2017/09/cup.jpeg" target="_blank">
-                  <img src="https://simplicity.sample.mixh.jp/wp-content/uploads/2017/09/cup-370.jpg" alt="デモ画像">
+              $content = '<p><a href="https://im-cocoon.net/wp-content/uploads/cocoon.jpg" target="_blank" rel="noopener">
+                  <img src="https://im-cocoon.net/wp-content/uploads/cocoon-267.jpg" alt="デモ画像">
                 </a>&nbsp;
-                <a href="https://simplicity.sample.mixh.jp/wp-content/uploads/2017/09/tree.jpg" target="_blank">
-                  <img src="https://simplicity.sample.mixh.jp/wp-content/uploads/2017/09/tree300.jpg" alt="デモ画像">
+                <a href="https://im-cocoon.net/wp-content/uploads/tree.jpg" target="_blank" rel="noopener">
+                  <img src="https://im-cocoon.net/wp-content/uploads/tree-300.jpg" alt="デモ画像">
                 </a></p>
                 ';
+                if (is_spotlight_effect_enable()) {
+                  $content = add_spotlight_property($content);
+                }
                 if (is_lightbox_effect_enable()) {
                   $content = add_lightbox_property($content);
                 }
@@ -103,11 +106,11 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           <td>
             <?php
             $options = array(
-              'none' => 'なし',
-              'border' => 'ボーダー（薄い枠線）',
-              'border_bold' => 'ボーダー（薄い太線）',
-              'shadow' => 'シャドー（薄い影）',
-              'shadow_paper' => 'シャドー（ペーパー）',
+              'none' => __( 'なし', THEME_NAME ),
+              'border' => __( 'ボーダー（薄い枠線）', THEME_NAME ),
+              'border_bold' => __( 'ボーダー（薄い太線）', THEME_NAME ),
+              'shadow' => __( 'シャドー（薄い影）', THEME_NAME ),
+              'shadow_paper' => __( 'シャドー（ペーパー）', THEME_NAME ),
             );
             generate_radiobox_tag(OP_IMAGE_WRAP_EFFECT, $options, get_image_wrap_effect());
             generate_tips_tag(__( '画像の枠線の設定です。有効にすると白系の画像でも画像と認識しやすくなります。', THEME_NAME ));
@@ -123,13 +126,14 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
           <td>
             <?php
             $options = array(
-              'none' => 'なし',
-              'baguettebox' => __( 'baguetteBox（スマホ向け）', THEME_NAME ),
-              'lity' => __( 'Lity（単機能・軽量）', THEME_NAME ),
-              'lightbox' => __( 'Lightbox', THEME_NAME ),
+              'none' => __( 'なし', THEME_NAME ),
+              'spotlight' => get_image_preview_tag('https://im-cocoon.net/wp-content/uploads/spotlight.gif').__( 'Spotlight（軽量・高機能ギャラリー）', THEME_NAME ),
+              'baguettebox' => get_image_preview_tag('https://im-cocoon.net/wp-content/uploads/baguettebox.gif').__( 'baguetteBox（軽量・スマホ向け）', THEME_NAME ),
+              'lity' => get_image_preview_tag('https://im-cocoon.net/wp-content/uploads/lity.gif').__( 'Lity（軽量・1枚ずつ表示）', THEME_NAME ),
+              'lightbox' => get_image_preview_tag('https://im-cocoon.net/wp-content/uploads/lightbox.gif').__( 'Lightbox', THEME_NAME ),
             );
             generate_radiobox_tag(OP_IMAGE_ZOOM_EFFECT, $options, get_image_zoom_effect());
-            generate_tips_tag(__( 'リンク画像をクリックしたときの拡大効果の設定です。', THEME_NAME ));
+            generate_tips_tag(__( 'リンク画像をクリックしたときの拡大効果の設定です。', THEME_NAME ).get_help_page_tag('https://wp-cocoon.com/lightbox-libraries/'));
             ?>
           </td>
         </tr>
@@ -202,8 +206,8 @@ if ( !defined( 'ABSPATH' ) ) exit; ?>
 
     <p><?php _e( 'これらの設定で変更されるサムネイル部分はこちら。', THEME_NAME ); ?></p>
     <ol>
-      <li><?php echo get_image_preview_tag('https://im-cocoon.net/wp-content/uploads/index.jpg', __( 'インデックス．アーカイブ、検索結果ページのエントリーカードのサムネイル。', THEME_NAME )).__('インデックスカード', THEME_NAME); ?></li>
-      <li><?php echo get_image_preview_tag('https://im-cocoon.net/wp-content/uploads/new.png', __( '新着記事ウィジェットもサムネイル。', THEME_NAME ), THUMB320WIDTH).__('新着記事', THEME_NAME); ?></li>
+      <li><?php echo get_image_preview_tag('https://im-cocoon.net/wp-content/uploads/index.jpg', __( 'インデックス、アーカイブ、検索結果ページのエントリーカードのサムネイル。', THEME_NAME )).__('インデックスカード', THEME_NAME); ?></li>
+      <li><?php echo get_image_preview_tag('https://im-cocoon.net/wp-content/uploads/new.png', __( '新着記事ウィジェットのサムネイル。', THEME_NAME ), THUMB320WIDTH).__('新着記事', THEME_NAME); ?></li>
       <li><?php echo get_image_preview_tag('https://im-cocoon.net/wp-content/uploads/popular.png', __( '人気記事ウィジェットのサムネイル。', THEME_NAME ), THUMB320WIDTH).__('人気記事', THEME_NAME); ?></li>
       <li><?php echo get_image_preview_tag('https://im-cocoon.net/wp-content/uploads/related.png', __( '関連記事のエントリーカードのサムネイル。', THEME_NAME )).__('関連記事', THEME_NAME); ?></li>
       <li><?php echo get_image_preview_tag('https://im-cocoon.net/wp-content/uploads/carousel.png', __( 'カルーセルカードのサムネイル。', THEME_NAME )).__('カルーセル', THEME_NAME); ?></li>

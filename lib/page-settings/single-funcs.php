@@ -18,6 +18,29 @@ function get_category_tag_display_type(){
 }
 endif;
 
+//カテゴリ・タグ表示位置
+define('OP_CATEGORY_TAG_DISPLAY_POSITION', 'category_tag_display_position');
+if ( !function_exists( 'get_category_tag_display_position' ) ):
+function get_category_tag_display_position(){
+  return get_theme_option(OP_CATEGORY_TAG_DISPLAY_POSITION, 'content_bottom');
+}
+endif;
+if ( !function_exists( 'is_category_tag_display_position_title_top' ) ):
+function is_category_tag_display_position_title_top(){
+  return get_category_tag_display_position() == 'title_top';
+}
+endif;
+if ( !function_exists( 'is_category_tag_display_position_content_top' ) ):
+function is_category_tag_display_position_content_top(){
+  return get_category_tag_display_position() == 'content_top';
+}
+endif;
+if ( !function_exists( 'is_category_tag_display_position_content_bottom' ) ):
+function is_category_tag_display_position_content_bottom(){
+  return get_category_tag_display_position() == 'content_bottom';
+}
+endif;
+
 //関連記事の表示
 define('OP_RELATED_ENTRIES_VISIBLE', 'related_entries_visible');
 if ( !function_exists( 'is_related_entries_visible' ) ):
@@ -66,7 +89,9 @@ endif;
 define('OP_RELATED_ENTRY_TYPE', 'related_entry_type');
 if ( !function_exists( 'get_related_entry_type' ) ):
 function get_related_entry_type(){
-  return get_theme_option(OP_RELATED_ENTRY_TYPE, 'entry_card');
+  $res = get_theme_option(OP_RELATED_ENTRY_TYPE, 'entry_card');
+  $res = str_replace('vartical', 'vertical', $res);
+  return $res;
 }
 endif;
 
@@ -171,6 +196,50 @@ endif;
 if ( !function_exists( 'is_post_navi_type_spuare' ) ):
 function is_post_navi_type_spuare(){
   return get_post_navi_type() == 'square';
+}
+endif;
+
+//ページ送りナビの表示位置
+define('OP_POST_NAVI_POSITION', 'post_navi_position');
+if ( !function_exists( 'get_post_navi_position' ) ):
+function get_post_navi_position(){
+  return get_theme_option(OP_POST_NAVI_POSITION, 'under_related');
+}
+endif;
+if ( !function_exists( 'is_post_navi_position_under_content' ) ):
+function is_post_navi_position_under_content(){
+  return get_post_navi_position() == 'under_content';
+}
+endif;
+if ( !function_exists( 'is_post_navi_position_over_related' ) ):
+function is_post_navi_position_over_related(){
+  return get_post_navi_position() == 'over_related';
+}
+endif;
+if ( !function_exists( 'is_post_navi_position_under_related' ) ):
+function is_post_navi_position_under_related(){
+  return get_post_navi_position() == 'under_related';
+}
+endif;
+if ( !function_exists( 'is_post_navi_position_under_comment' ) ):
+function is_post_navi_position_under_comment(){
+  return get_post_navi_position() == 'under_comment';
+}
+endif;
+
+//ページ送りナビに表示するカテゴリーは同一にする
+define('OP_POST_NAVI_SAME_CATEGORY_ENABLE', 'post_navi_same_category_enable');
+if ( !function_exists( 'is_post_navi_same_category_enable' ) ):
+function is_post_navi_same_category_enable(){
+  return get_theme_option(OP_POST_NAVI_SAME_CATEGORY_ENABLE);
+}
+endif;
+
+//ページ送りナビで除外するカテゴリーID
+define('OP_POST_NAVI_EXCLUDE_CATEGORY_IDS', 'post_navi_exclude_category_ids');
+if ( !function_exists( 'get_post_navi_exclude_category_ids' ) ):
+function get_post_navi_exclude_category_ids(){
+  return get_theme_option(OP_POST_NAVI_EXCLUDE_CATEGORY_IDS, array());
 }
 endif;
 

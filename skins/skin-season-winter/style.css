@@ -6,7 +6,7 @@
   Author URI: https://ponhiro.com/
   Screenshot URI: https://im-cocoon.net/wp-content/uploads/skin-season-winter.png
   Version: 1.0.2
-  Priority: 93
+  Priority: 9870004000
 */
 /*以下にスタイルシートを記入してください*/
 
@@ -16,6 +16,7 @@
 ************************************/
 body {
 	background: none;
+	color: #44566d;
 }
 /************************************
 ** main
@@ -26,13 +27,12 @@ body {
 /************************************
 ** p
 ************************************/
-.main p, .sidebar p {
+.entry-content > p, .sidebar p {
 	margin: 2em 0;
-	color: #44566d;
 	line-height: 2;
 }
-.entry-content {
-	color: #44566d;
+.entry-content .wp-caption-text {
+	margin: 0;
 }
 /************************************
 ** a
@@ -42,14 +42,24 @@ a {
 }
 /************************************
 ** セレクトボックス
+**
+** セレクトボックスが移動しなくなっていたのでCSSセレクタ修正
+** 詳細：https://wp-cocoon.com/community/postid/34615/
 ************************************/
-.select-box {
+.widget_categories,
+.widget_archive{
+	position: relative;
+}
+
+.widget_categories form,
+.widget_archive form {
 	overflow: hidden;
 	width: 90%;
 	margin: 2em auto;
 	text-align: center;
 }
-.select-box select {
+.widget_categories form select,
+.widget_archive form select {
 	width: 100%;
 	padding-right: 1em;
 	cursor: pointer;
@@ -63,16 +73,19 @@ a {
 	-webkit-appearance: none;
 	appearance: none;
 }
-.select-box select::-ms-expand {
- display: none;
+.widget_categories form select::-ms-expand,
+.widget_archive form select::-ms-expand {
+    display: none;
 }
-.select-box {
+.widget_categories form,
+.widget_archive form {
 	position: relative;
 	border: 1px solid #bbbbbb;
 	border-radius: 2px;
 	background: #ffffff;
 }
-.select-box::before {
+.widget_categories form::before,
+.widget_archive form::before {
 	position: absolute;
 	top: 1.6em;
 	right: 0.9em;
@@ -82,12 +95,13 @@ a {
 	content: '';
 	border-left: 6px solid transparent;
 	border-right: 6px solid transparent;
-	border-top: 6px solid #69788a;
+	border-top: 6px solid #666666;
 	pointer-events: none;
 }
-.select-box select {
+.widget_categories form select,
+.widget_archive form select {
 	padding: 1em;
-	color: #69788a;
+	color: #666666;
 }
 /************************************
 ** sitetitle
@@ -126,6 +140,9 @@ a {
 }
 #header-container .navi{
   background: #88abda;
+}
+#header-container.fixed-header{
+	background-color: #88abda;
 }
 #header-container .navi a{
   color: #fff;
@@ -241,44 +258,44 @@ a {
 	border-radius: 0;
 }
 .blogcard-title {
-	color: #69788a;
-	margin-bottom: 0.4em;
+    color: #666;
+    margin-bottom: 0.4em;
 }
-.blogcard-type .blogcard::before {
-	padding: 5px 15px;
-	font-weight: 600;
-	font-size: 0.7em;
-	opacity: 0.8;
+.blogcard-label {
+    padding: 5px 15px;
+    font-weight: 600;
+    font-size: 0.7em;
+    opacity: 0.8;
 }
-.blogcard-wrap {
-	margin: 2.5em auto;
+.blogcard-wrap{
+	margin:2.5em auto;
 }
-.blogcard-snipet {
-	color: #b4bbc5;
+.blogcard-snippet{
+	color:#999;
 }
-.bct-related .blogcard::before {
-	background: #fd79a8;
+.bct-related .blogcard-label{
+		background:#fd79a8;
 }
-.bct-reference .blogcard::before {
-	background: #1abc9c;
+.bct-reference .blogcard-label{
+		background:#1abc9c;
 }
-.bct-popular .blogcard::before {
-	background: #ffa502;
+.bct-popular .blogcard-label{
+		background:#ffa502;
 }
-.bct-together .blogcard::before {
-	background: #0984e3;
+.bct-together .blogcard-label{
+		background:#0984e3;
 }
-.bct-detail .blogcard::before {
-	background: #848ee3;
+.bct-detail .blogcard-label{
+		background:#848ee3;
 }
-.bct-check .blogcard::before {
-	background: #ED4C67;
+.bct-check .blogcard-label{
+		background:#ED4C67;
 }
-.bct-pickup .blogcard::before {
-	background: #F79F1F;
+.bct-pickup .blogcard-label{
+		background:#F79F1F;
 }
-.bct-official .blogcard::before {
-	background: #636e72;
+.bct-official .blogcard-label{
+		background:#636e72;
 }
 /************************************
 ** ページネーション
@@ -402,7 +419,13 @@ article .tag-link:hover {
 	background: none;
 	color: #88abda;
 }
-.sidebar .widget_recent_entries ul li a:before, .sidebar .widget_categories ul li a:before, .sidebar .widget_archive ul li a:before, .sidebar .widget_pages ul li a:before, .sidebar .widget_meta ul li a:before, .sidebar .widget_rss ul li a:before, .sidebar .widget_nav_menu ul li a:before {
+.sidebar .widget_recent_entries ul li a:before,
+.sidebar .widget_categories ul li a:before,
+.sidebar .widget_archive ul li a:before,
+.sidebar .widget_pages ul li a:before,
+.sidebar .widget_meta ul li a:before,
+.sidebar .widget_rss ul li a:before,
+.sidebar .widget_nav_menu ul li a:before {
 	font-family: "FontAwesome";
 	content: "\f138";
 	position: absolute;
@@ -444,17 +467,17 @@ article .tag-link:hover {
 	max-width: 100%;
 	margin: 0 auto;
 }
-#sidebar .author-box .author-name {
+.nwa .author-box .author-name {
 	margin-bottom: 20px;
 }
-#sidebar .author-box .author-name a {
+.nwa .author-box .author-name a {
 	color: #88abda;
 }
-#sidebar .author-box p {
+.nwa .author-box p {
 	margin: 1em 0;
 	line-height: 1.7;
 }
-#sidebar .author-box .sns-follow-buttons a.follow-button {
+.nwa .author-box .sns-follow-buttons a.follow-button {
 	font-size: 25px;
 	width: 35px;
 	height: 35px;
@@ -462,6 +485,7 @@ article .tag-link:hover {
 	line-height: 1.5;
 	margin: 4px;
 	opacity: 0.8;
+	padding: 0 !important;
 }
 .author-widget-name {
 	position: relative;
@@ -495,11 +519,11 @@ article .tag-link:hover {
 	border-width: 21px;
 	margin-left: -21px;
 }
-#sidebar .author-box a {
+.nwa .author-box .sns-follow-buttons a {
 	color: #fff;
 	border: none;
 }
-#sidebar .author-box .sns-follow-message {
+.nwa .author-box .sns-follow-message {
 	margin: 2.3em 0 0;
 	display: block;
 	font-size: 1em;
@@ -525,6 +549,12 @@ article .tag-link:hover {
 .author-box .youtube-button {
 	background-color: #ef1515 !important;
 }
+.author-box .linkedin-button {
+	background-color: #0077b5 !important;
+}
+.author-box .note-button {
+	background-color: #41c9b4 !important;
+}
 .author-box .flickr-button {
 	background-color: #0063dc !important;
 }
@@ -540,7 +570,13 @@ article .tag-link:hover {
 .author-box .rakuten-room-button {
 	background-color: #c42e7f !important;
 }
+.author-box .slack-button {
+	background-color: #e01563 !important;
+}
 .author-box .github-button {
+	background-color: #333 !important;
+}
+.author-box .codepen-button {
 	background-color: #333 !important;
 }
 .author-box .feedly-button {
@@ -599,7 +635,7 @@ article .tag-link:hover {
 .toc {
 	border: 1px solid #88abda;
 	border-radius: 5px;
-	padding: 0.5em;
+	padding: 1em 2em;
 }
 .toc-title {
 	color: #88abda;
@@ -918,6 +954,9 @@ input[type='submit']:hover {
 .mobile-menu-buttons .menu-button > a {
 	color: #fff;
 }
+.mobile-menu-buttons .menu-button > a:hover{
+	color:#333;
+}
 .mobile-menu-buttons .menu-caption {
 	font-size: 0.7em;
 }
@@ -926,6 +965,9 @@ input[type='submit']:hover {
 }
 .mobile-menu-buttons .menu-button:last-child {
 	border-right: none;
+}
+.mobile-menu-buttons .menu-content{
+	color: #555;
 }
 .author-box .sns-follow-buttons a.follow-button {
 	color: #fff;
@@ -954,8 +996,8 @@ input[type='submit']:hover {
 }
 }
 
-/*1030px以下*/
-@media screen and (max-width: 1030px) {
+/*1023px以下*/
+@media screen and (max-width: 1023px){
 	#header-container .menu-mobile{
 		display:none;
 	}
@@ -981,15 +1023,9 @@ input[type='submit']:hover {
   }
   #header-container .navi a {
 	  font-size: 0.8em;
-	  padding: 1em 1.2em;
   }
-  .navi-footer-in > .menu-footer li.menu-item {
+  #footer #navi-footer .navi-footer-in > .menu-footer li.menu-item {
 	  border: none;
-	  border-left: 1px solid #fff;
-	  margin-bottom:5px;
-  }
-  .navi-footer-in > .menu-footer li.menu-item:nth-child(odd) {
-	  border: none !important;
   }
   #sidebar {
 	  padding: 0 2em;
@@ -1316,4 +1352,25 @@ table th {
 }
 .ranking-items p {
 	margin-top: 0;
+}
+
+.wpforo-list-item p {
+	margin: 0;
+}
+
+/************************************
+** Font Awesome 5対応
+************************************/
+.font-awesome-5 .related-entry-heading:before,
+.font-awesome-5 .sidebar .widget_recent_entries ul li a:before,
+.font-awesome-5 .sidebar .widget_categories ul li a:before,
+.font-awesome-5 .sidebar .widget_archive ul li a:before,
+.font-awesome-5 .sidebar .widget_pages ul li a:before,
+.font-awesome-5 .sidebar .widget_meta ul li a:before,
+.font-awesome-5 .sidebar .widget_rss ul li a:before,
+.font-awesome-5 .sidebar .widget_nav_menu ul li a:before,
+.font-awesome-5 #comments:before,
+.font-awesome-5 #footer .cat-item a::before {
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
 }

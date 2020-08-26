@@ -210,14 +210,30 @@ function is_responsive_table_enable(){
 }
 endif;
 
+//レスポンシブテーブルの1列目の見出し固定する
+define('OP_RESPONSIVE_TABLE_FIRST_COLUMN_STICKY_ENABLE', 'responsive_table_first_column_sticky_enable');
+if ( !function_exists( 'is_responsive_table_first_column_sticky_enable' ) ):
+function is_responsive_table_first_column_sticky_enable(){
+  return get_theme_option(OP_RESPONSIVE_TABLE_FIRST_COLUMN_STICKY_ENABLE);
+}
+endif;
+
 //横スクロールレスポンシブテーブル用の要素の追加
 if (is_responsive_table_enable()) {
   add_filter('the_content', 'add_responsive_table_tag');
+  add_filter('the_category_tag_content', 'add_responsive_table_tag');
 }
 if ( !function_exists( 'add_responsive_table_tag' ) ):
 function add_responsive_table_tag($the_content) {
-  $the_content = preg_replace('/<table/i', '<div class="scrollable-table"><table', $the_content);
+  $first_column_sticky = null;
+  if (is_responsive_table_first_column_sticky_enable()) {
+    $first_column_sticky = ' stfc-sticky';
+  }
+  //テーブル対応
+  $the_content = preg_replace('/<table/i', '<div class="scrollable-table'.$first_column_sticky.'"><table', $the_content);
   $the_content = preg_replace('/<\/table>/i', '</table></div>', $the_content);
+  // //テーブルブロック対応
+  // $the_content = str_replace('<figure class="wp-block-table ', '<figure class="wp-block-table scrollable-block-table ', $the_content);
   return $the_content;
 }
 endif;

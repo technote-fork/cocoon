@@ -6,7 +6,7 @@
   Author URI: https://web.no-koto.net/
   Screenshot URI: https://im-cocoon.net/wp-content/uploads/m-tomato.jpg
   Version: 0.1.0
-  Priority: 200301
+  Priority: 9930000000
 */
 
 /* Cocoon skin m-tomato */
@@ -250,7 +250,7 @@ h3.widget-title:before {
 	list-style-type: none!important;
 	text-shadow: 1px 1px 1px #fff;
 }
-.article ul li:before {
+.article ul li::before {
 	position: absolute;
 	font-family: FontAwesome;
 	content:"\f046";
@@ -419,5 +419,23 @@ h3.widget-title:before {
   color: #333;
 }
 
+.font-awesome-5 #under-entry-body h2:before,
+.font-awesome-5 .article h4:before,
+.font-awesome-5 h5:before,
+.font-awesome-5 .article h5::before{
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+}
+.font-awesome-5 .article ul li:before{
+	font-family: "Font Awesome 5 Free";
+	font-weight: 400;
+	content: "\f14a";
+}
+.font-awesome-5 #under-entry-body h2:before,
+.font-awesome-5 .article h4:before{
+	content: "\f303";
+}
 
-
+.article .timeline .timeline-item::before{
+	content: "";
+}

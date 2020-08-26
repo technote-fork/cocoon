@@ -33,10 +33,7 @@ endif;
 //count.jsoonからTwitterのツイート数を取得
 if ( !function_exists( 'fetch_twitter_count' ) ):
 function fetch_twitter_count($url = null) {
-
-  //_v('$res');
-  global $post;
-  $transient_id = TRANSIENT_SHARE_PREFIX.'twitter_'.$post->ID;
+  $transient_id = TRANSIENT_SHARE_PREFIX.'twitter_'.get_share_cache_ID();
   //DBキャッシュからカウントの取得
   if (is_sns_share_count_cache_enable()) {
     $count = get_transient( $transient_id );
@@ -136,8 +133,7 @@ endif;
 //Facebookシェア数を取得する
 if ( !function_exists( 'fetch_facebook_count' ) ):
 function fetch_facebook_count($url = null) {
-  global $post;
-  $transient_id = TRANSIENT_SHARE_PREFIX.'facebook_'.$post->ID;
+  $transient_id = TRANSIENT_SHARE_PREFIX.'facebook_'.get_share_cache_ID();
   //DBキャッシュからカウントの取得
   if (is_sns_share_count_cache_enable()) {
     $count = get_transient( $transient_id );
@@ -201,9 +197,7 @@ endif;
 
 if ( !function_exists( 'fetch_hatebu_count' ) ):
 function fetch_hatebu_count($url = null) {
-
-  global $post;
-  $transient_id = TRANSIENT_SHARE_PREFIX.'hatebu_'.$post->ID;
+  $transient_id = TRANSIENT_SHARE_PREFIX.'hatebu_'.get_share_cache_ID();
   //DBキャッシュからカウントの取得
   if (is_sns_share_count_cache_enable()) {
     $count = get_transient( $transient_id );
@@ -269,9 +263,7 @@ endif;
 //Google＋カウントの取得
 if ( !function_exists( 'fetch_google_plus_count' ) ):
 function fetch_google_plus_count($url = null) {
-
-  global $post;
-  $transient_id = TRANSIENT_SHARE_PREFIX.'google_plus_'.$post->ID;
+  $transient_id = TRANSIENT_SHARE_PREFIX.'google_plus_'.get_share_cache_ID();
   //DBキャッシュからカウントの取得
   if (is_sns_share_count_cache_enable()) {
     $count = get_transient( $transient_id );
@@ -337,9 +329,7 @@ endif;
 //Pocketカウントの取得
 if ( !function_exists( 'fetch_pocket_count' ) ):
 function fetch_pocket_count($url = null) {
-
-  global $post;
-  $transient_id = TRANSIENT_SHARE_PREFIX.'pocket_'.$post->ID;
+  $transient_id = TRANSIENT_SHARE_PREFIX.'pocket_'.get_share_cache_ID();
   //DBキャッシュからカウントの取得
   if (is_sns_share_count_cache_enable()) {
     $count = get_transient( $transient_id );
@@ -431,12 +421,22 @@ function is_scc_push7_exists(){
 //シェア対象ページのURLを取得する
 if ( !function_exists( 'get_share_page_url' ) ):
 function get_share_page_url(){
+  $url = get_requested_url();
   if ( is_singular() ) {
     $url = get_the_permalink();
-  } else {
-    $url = get_requested_url();
+  } elseif (is_category() && !is_paged()) {
+    //カテゴリートップページ
+    $cat_id = get_query_var('cat');
+    $url = get_category_link($cat_id);
+  } elseif (is_tag() && !is_paged()) {
+    //タグトップページ
+    $name = single_tag_title('', false);
+    $tag = get_term_by('name', $name, 'post_tag');
+    $url = get_tag_link($tag->term_id);
+  } elseif (is_front_page() && !is_paged()) {
+    //フロントトップページ
+    $url = user_trailingslashit(get_home_url());
   }
-  //$url = get_requested_url();
   return $url;
 }
 endif;
@@ -497,7 +497,7 @@ function get_hatebu_share_url(){
   } else {
     $u = preg_replace('/http:\/\//', '', $url);
   }
-  return '//b.hatena.ne.jp/entry/'.$u;
+  return '//b.hatena.ne.jp/entry/'.htmlspecialchars($u, ENT_QUOTES, 'UTF-8');;
 }
 endif;
 
@@ -526,6 +526,13 @@ endif;
 if ( !function_exists( 'get_pinterest_share_url' ) ):
 function get_pinterest_share_url(){
   return '//www.pinterest.com/pin/create/button/?url='.urlencode(get_share_page_url());
+}
+endif;
+
+//LinkedInのシェアURLを取得
+if ( !function_exists( 'get_linkedin_share_url' ) ):
+function get_linkedin_share_url(){
+  return '//www.linkedin.com/shareArticle?mini=true&url='.urlencode(get_share_page_url());
 }
 endif;
 
@@ -620,13 +627,56 @@ function is_pinterest_share_button_visible($option){
 }
 endif;
 
+//LinkedInシェアボタンを表示するか
+if ( !function_exists( 'is_linkedin_share_button_visible' ) ):
+function is_linkedin_share_button_visible($option){
+  $res = (is_bottom_linkedin_share_button_visible() && $option == SS_BOTTOM) ||
+         (is_top_linkedin_share_button_visible() && $option == SS_TOP) ||
+         ($option == SS_MOBILE);
+  return apply_filters('is_linkedin_share_button_visible', $res, $option);
+}
+endif;
+
 //コピーシェアボタンを表示するか
 if ( !function_exists( 'is_copy_share_button_visible' ) ):
 function is_copy_share_button_visible($option){
   $res = (is_bottom_copy_share_button_visible() && $option == SS_BOTTOM) ||
-         (is_top_copy_share_button_visible() && $option == SS_TOP);
+         (is_top_copy_share_button_visible() && $option == SS_TOP) ||
+         ($option == SS_MOBILE);
   return apply_filters('is_copy_share_button_visible', $res, $option);
 }
 endif;
 
+//コメントボタンを表示するか
+if ( !function_exists( 'is_comment_share_button_visible' ) ):
+function is_comment_share_button_visible($option){
+  $res = (is_bottom_comment_share_button_visible() && $option == SS_BOTTOM) ||
+         (is_top_comment_share_button_visible() && $option == SS_TOP) ||
+         ($option == SS_MOBILE);
+  return apply_filters('is_comment_share_button_visible', $res, $option);
+}
+endif;
 
+//シェアページのIDを取得する
+if ( !function_exists( 'get_share_cache_ID' ) ):
+function get_share_cache_ID(){
+  $id = 'nuknown';
+  if ( is_singular() ) {
+    global $post;
+    $id = $post->ID;
+  } elseif (is_category() && !is_paged()) {
+    //カテゴリートップページ
+    $cat_id = get_query_var('cat');
+    $id = 'cat_'.$cat_id;
+  } elseif (is_tag() && !is_paged()) {
+    //タグトップページ
+    $name = single_tag_title('', false);
+    $tag = get_term_by('name', $name, 'post_tag');
+    $id = 'tag_'.$tag->term_id;
+  } elseif (is_front_page() && !is_paged()) {
+    //フロントトップページ
+    $id = 'front_top_page';
+  }
+  return $id;
+}
+endif;

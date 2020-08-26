@@ -63,7 +63,7 @@ function admin_print_styles_custom() {
 
     $select_index = 0;
     if (isset($_POST['select_index'])) {
-    $select_index = intval($_POST[SELECT_INDEX_NAME]);
+      $select_index = intval($_POST[SELECT_INDEX_NAME]);
     }
     $data = 'jQuery(document).ready( function() {
          tabify("#tabs").select( '.$select_index.' );
@@ -77,6 +77,8 @@ function admin_print_styles_custom() {
     wp_enqueue_lity();
     //画像リンク拡大効果がbaguetteboxのとき
     wp_enqueue_baguettebox();
+    //画像リンク拡大効果がspotlightのとき
+    wp_enqueue_spotlight();
     //カルーセル用
     wp_enqueue_slick();
     //ツリー型モバイルボタン（iframeで読み込むので不要）
@@ -162,9 +164,19 @@ function customize_admin_manage_posts_columns($columns) {
     unset($columns['date']);
   }
 
+  //投稿ID表示
+  if (is_admin_list_post_id_visible()) {
+    $columns['post-id'] = __( 'ID', THEME_NAME );
+  }
+
   //文字数表示
   if (is_admin_list_word_count_visible()) {
     $columns['word-count'] = __( '文字数', THEME_NAME );
+  }
+
+  //文字数表示
+  if (is_admin_list_pv_visible()) {
+    $columns['pv'] = __( 'PV', THEME_NAME );
   }
 
   //アイキャッチ表示
@@ -189,6 +201,10 @@ add_action( 'manage_posts_custom_column', 'customize_admin_add_column', 10, 2 );
 add_action( 'manage_pages_custom_column', 'customize_admin_add_column', 10, 2 );
 if ( !function_exists( 'customize_admin_add_column' ) ):
 function customize_admin_add_column($column_name, $post_id) {
+  //投稿ID
+  if ( 'post-id' == $column_name ) {
+    $thum = $post_id;
+  }
 
   //文字数表示
   if ( 'word-count' == $column_name ) {
@@ -215,6 +231,52 @@ function customize_admin_add_column($column_name, $post_id) {
         '</span>'.
         '<span class="word-count-coutent-count">'.
           sprintf( '%s', $content_count ).
+        '</span>'.
+      '</div>'.
+    '</div>';
+  }
+
+  //PV表示
+  if ( 'pv' == $column_name ) {
+    //テーマで設定されているサムネイルを利用する場合
+    $post = get_post($post_id);
+    //_v($post);
+    $title_count = mb_strlen(strip_tags($post->post_title));
+    $content_count = mb_strlen(strip_tags($post->post_content));
+    $digit = max(array(strlen($title_count), strlen($content_count)));
+    //var_dump($digit);
+    $thum =
+    '<div class="pv-wrap">'.
+      '<div class="pv-title">'.
+        '<span class="pv-title-label">'.
+          __( '日：', THEME_NAME ).
+        '</span>'.
+        '<span class="pv-title-count">'.
+          get_todays_pv().
+        '</span>'.
+      '</div>'.
+      '<div class="pv-title">'.
+        '<span class="pv-title-label">'.
+          __( '週：', THEME_NAME ).
+        '</span>'.
+        '<span class="pv-title-count">'.
+          get_last_7days_pv().
+        '</span>'.
+      '</div>'.
+      '<div class="pv-title">'.
+        '<span class="pv-title-label">'.
+          __( '月：', THEME_NAME ).
+        '</span>'.
+        '<span class="pv-title-count">'.
+          get_last_30days_pv().
+        '</span>'.
+      '</div>'.
+      '<div class="pv-title">'.
+        '<span class="pv-title-label">'.
+          __( '全：', THEME_NAME ).
+        '</span>'.
+        '<span class="pv-title-count">'.
+          get_all_pv().
         '</span>'.
       '</div>'.
     '</div>';
@@ -438,27 +500,30 @@ add_action('restrict_manage_posts', 'custmuize_restrict_manage_posts');
 if ( !function_exists( 'custmuize_restrict_manage_posts' ) ):
 function custmuize_restrict_manage_posts(){
   global $post_type, $tag;
-  if ( is_object_in_taxonomy( $post_type, 'post_tag' ) ) {
-  $dropdown_options = array(
-    'show_option_all' => get_taxonomy( 'post_tag' )->labels->all_items,
-    'hide_empty' => 0,
-    'hierarchical' => 1,
-    'show_count' => 0,
-    'orderby' => 'name',
-    'selected' => $tag,
-    'name' => 'tag',
-    'taxonomy' => 'post_tag',
-    'value_field' => 'slug'
-  );
-  wp_dropdown_categories( $dropdown_options );
+  if (($post_type == 'post') || ($post_type == 'page')) {
+    if ( is_object_in_taxonomy( $post_type, 'post_tag' ) ) {
+      $dropdown_options = array(
+        'show_option_all' => get_taxonomy( 'post_tag' )->labels->all_items,
+        'hide_empty' => 0,
+        'hierarchical' => 1,
+        'show_count' => 0,
+        'orderby' => 'name',
+        'selected' => $tag,
+        'name' => 'tag',
+        'taxonomy' => 'post_tag',
+        'value_field' => 'slug'
+      );
+      wp_dropdown_categories( $dropdown_options );
+      }
+
+      wp_dropdown_users(
+      array(
+        'show_option_all' => 'すべてのユーザー',
+        'name' => 'author'
+      )
+    );
   }
 
-  wp_dropdown_users(
-  array(
-    'show_option_all' => 'すべてのユーザー',
-    'name' => 'author'
-  )
-  );
 }
 endif;
 
@@ -547,31 +612,33 @@ jQuery(function($) {
 }
 endif;
 
-
 //デフォルトの抜粋入力欄をビジュアルエディターにする
 add_action( 'add_meta_boxes', array ( 'VisualEditorExcerpt', 'switch_boxes' ) );
 if ( !class_exists( 'VisualEditorExcerpt' ) ):
 class VisualEditorExcerpt{
   public static function switch_boxes()
   {
-    if ( ! post_type_supports( $GLOBALS['post']->post_type, 'excerpt' ) )    {
+    if ( isset($GLOBALS['post']) && ! post_type_supports( $GLOBALS['post']->post_type, 'excerpt' ) )    {
       return;
     }
+    $current_screen = get_current_screen();
+    if ( ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) || ( function_exists( 'is_gutenberg_page' ) && is_gutenberg_page() ) ) {
+    } else {
+      remove_meta_box(
+        'postexcerpt' // ID
+      ,   ''      // スクリーン、空だと全ての投稿タイプをサポート
+      ,   'normal'    // コンテキスト
+      );
 
-    remove_meta_box(
-      'postexcerpt' // ID
-    ,   ''      // スクリーン、空だと全ての投稿タイプをサポート
-    ,   'normal'    // コンテキスト
-    );
-
-    add_meta_box(
-      'postexcerpt2'   // Reusing just 'postexcerpt' doesn't work.
-    ,   __( 'Excerpt' )  // タイトル
-    ,   array ( __CLASS__, 'show' ) // 表示関数
-    ,   null          // スクリーン
-    ,   'normal'      // コンテキスト
-    ,   'core'        // 優先度
-    );
+      add_meta_box(
+        'postexcerpt2'   // Reusing just 'postexcerpt' doesn't work.
+      ,   __( 'Excerpt' )  // タイトル
+      ,   array ( __CLASS__, 'show' ) // 表示関数
+      ,   null          // スクリーン
+      ,   'normal'      // コンテキスト
+      ,   'core'        // 優先度
+      );
+    }
   }
 
 
@@ -628,7 +695,10 @@ function tiny_mce_before_init_custom( $mceInit ) {
 
   //旧ビジュアルエディター
   if (isset($mceInit['body_class'])) {
-    $mceInit['body_class'] .= ' main article';
+    //if (!is_plugin_fourm_page()) {
+      $fa_class = ' '.get_site_icon_font_class();
+      $mceInit['body_class'] .= ' body main article'.$fa_class.get_editor_page_type_class();
+    //}
 
     if (is_admin()) {
       $mceInit['body_class'] .= ' admin-page';
@@ -650,3 +720,40 @@ function tiny_mce_before_init_custom( $mceInit ) {
 }
 endif;
 
+//無害化したプレビューのテンプレートファイル呼び出し
+if ( !function_exists( 'get_sanitize_preview_template_part' ) ):
+function get_sanitize_preview_template_part($slug, $name = null){
+  restore_global_skin_theme_options();
+  // global $_THEME_OPTIONS;
+  // _v($_THEME_OPTIONS);
+  ob_start();
+  get_template_part($slug, $name);
+  $tag = ob_get_clean();
+  $tag = preg_replace('{<form.+?</form>}is', '', $tag);
+  $tag = change_fa($tag);
+  echo $tag;
+  clear_global_skin_theme_options();
+}
+endif;
+
+// テーマが指定するプレビュー画面かどうか
+// if ( !function_exists( 'is_cocoon_settings_preview' ) ):
+// function is_cocoon_settings_preview(){
+//   return isset($_GET['preview']) && $_GET['preview'] == 'theme-settings';
+// }
+// endif;
+
+//グーテンベルグとクラシックエディターのタグをチェックリストボックス形式にする
+//参考：https://nldot.info/how-to-change-the-tags-to-checkbox-in-gutenberg/
+if (is_editor_tag_check_list_enable()) {
+  add_action( 'init', 'register_tag_check_list', 1 );
+}
+if ( !function_exists( 'register_tag_check_list' ) ):
+function register_tag_check_list() {
+  $tag_slug_args = get_taxonomy('post_tag'); // returns an object
+  $tag_slug_args->hierarchical = true;
+  $tag_slug_args->meta_box_cb = 'post_categories_meta_box';
+
+  register_taxonomy( 'post_tag', 'post',(array) $tag_slug_args);
+}
+endif;

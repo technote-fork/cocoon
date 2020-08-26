@@ -26,7 +26,11 @@ if ( $id && ($action == 'item_delete') && isset($_GET['del_no']) && isset($_GET[
 <?php if ($id): ?>
   <p class="preview-label" style="max-width: 1000px;"><?php _e( 'プレビュー', THEME_NAME ) ?></p>
   <div class="demo" style="width: 1000px; height: 460px;margin-bottom: 2em;resize: both;">
-  <?php generate_item_ranking_tag($id); ?>
+        <?php
+        ob_start();
+        generate_item_ranking_tag($id);
+        $tag = change_fa(ob_get_clean());
+        echo $tag; ?>
   </div>
 <?php endif ?>
 
@@ -75,7 +79,7 @@ if ( $id && ($action == 'item_delete') && isset($_GET['del_no']) && isset($_GET[
     echo '<br>';
 
     //TinyMCE表示
-    generate_checkbox_tag('visible' , $visible, __( 'ビジュアルエディターのリストに表示', THEME_NAME ));
+    generate_checkbox_tag('visible' , $visible, __( 'エディターのリストに表示', THEME_NAME ));
     generate_tips_tag(__( 'エディターのドロップダウンリストに表示しなくて良い場合は、無効にしてください。', THEME_NAME ));
     echo '<br>';
 
@@ -119,8 +123,8 @@ if ( $id && ($action == 'item_delete') && isset($_GET['del_no']) && isset($_GET[
 
       </div>
       <div class="ranking-item-rating">
+      <label style="float:left;"><?php _e('評価：', THEME_NAME); ?></label>
         <?php
-        generate_label_tag('', __('評価：', THEME_NAME) );
         $options = array(
           'none' => __( 'なし', THEME_NAME ),
           '0.0'    => __( '0',    THEME_NAME ),

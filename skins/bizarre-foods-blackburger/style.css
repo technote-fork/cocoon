@@ -2,12 +2,12 @@
 /*
   Skin Name: Bizarre-food（ブラックバーガー）
   Description: Simple & Flat skin
-  Skin URI: https://takasaki.work/cocoon_skin/
+  Skin URI: https://31navi.com/cocoon-skin
   Author: takasaki
   Author URI: https://takasaki.work/
   Screenshot URI: https://im-cocoon.net/wp-content/uploads/bizarre-foods-blackburger.png
   Version: 1.0
-  Priority: 89.1
+  Priority: 9900000000
 */
 
 /*Common*********************************************************/
@@ -18,7 +18,6 @@ body {
 }
 
 a{
-    text-decoration:none;
     color: #292929;
 }
 
@@ -44,7 +43,6 @@ a{
 /*header*/
 
 header.article-header.entry-header {
-     max-width: 880px;
      position:relative;
      margin:auto;
 }
@@ -67,7 +65,7 @@ span.site-name-text {
     color: #545454;
 }
 
-.item-label {
+#navi .navi-in a, #navi .navi-in a:hover {
     color: slategrey;
 }
 
@@ -128,7 +126,6 @@ div#header-container {
     padding:0;
     border:none;
     background:transparent;
-    margin-right:20px;
 }
 
 .sidebar h3{
@@ -339,6 +336,14 @@ aside .ranking-item-rating {
 	.ranking-item-rating {
     font-size: .9em;
     }
+    .go-to-top {
+        right: 10px;
+        bottom: 10px;
+    }
+    .go-to-top-button {
+        width: 40px;
+        height: 40px;
+    }
 }
 
 @media screen and (max-width: 480px){
@@ -457,12 +462,11 @@ div#list {
 h2.entry-card-title.card-title.e-card-title {
     font-weight: 100;
     color: #545454;
-    padding: 20px 0 20px 20px;
+    padding: 20px 0 20px 0;
 }
 
 .entry-card-snippet.card-snippet.e-card-snippet {
     color: slategray;
-    padding-left: 20px;
 }
 
 .entry-card-info.e-card-info {
@@ -501,6 +505,10 @@ h2.entry-card-title.card-title.e-card-title {
     box-shadow: 0 1px 1px slategrey;
 }
 
+.pager-prev-next .page-numbers{
+    border-radius: 20px;
+}
+
 a.page-numbers:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 5px slategrey;
@@ -519,7 +527,6 @@ main > article {
 }
 
 .entry-content {
-    max-width: 880px;
      padding:1em;
     margin: 1em auto 3em auto;
 }
@@ -530,7 +537,6 @@ header .article-header{
 }
 
 footer.article-footer.entry-footer {
-    max-width: 880px;
     margin: auto;
 }
 
@@ -552,6 +558,19 @@ footer.article-footer.entry-footer {
     text-shadow: 2px 2px 5px whitesmoke;
 }
 
+.article-header.category-header h1,
+.article-header.tag-header h1{
+    position: static;
+}
+
+.review-rating .rating-star{
+    background-color: transparent;
+    width: auto;
+    position: absolute;
+    z-index: 1;
+    right: 0;
+}
+
 .eye-catch {
     position: relative;
     margin-bottom: .6em;
@@ -568,7 +587,7 @@ footer.article-footer.entry-footer {
 }
 
 .eye-catch img {
-     height:260px;
+     height: 260px !important;
     -webkit-filter: blur(5px);
      filter:blur(5px);
      opacity: .5;
@@ -612,11 +631,11 @@ a.tag-link {
 
 /*share-button*/
 
-.sns-share.ss-col-6.ss-high-and-low-lc.bc-brand-color.sbc-hide.ss-top {
+/*.sns-share.ss-col-6.ss-high-and-low-lc.bc-brand-color.sbc-hide.ss-top {
     position: absolute;
     bottom: 0;
     width: 100%;
-}
+}*/
 
 .share-button a{
     color:#292929;
@@ -645,79 +664,78 @@ a.tag-link {
     color:#545454;
 }
 
-.bc-brand-color.sns-share .website-button, .bc-brand-color.sns-follow .website-button,
-.bc-brand-color.sns-share .twitter-button, .bc-brand-color.sns-follow .twitter-button,
-.bc-brand-color.sns-share .facebook-button, .bc-brand-color.sns-follow .facebook-button,
-.bc-brand-color.sns-share .hatebu-button, .bc-brand-color.sns-follow .hatebu-button,
-.bc-brand-color.sns-share .instagram-button, .bc-brand-color.sns-follow .instagram-button,
-.bc-brand-color.sns-share .youtube-button, .bc-brand-color.sns-follow .youtube-button,
-.bc-brand-color.sns-share .flickr-button, .bc-brand-color.sns-follow .flickr-button,
-.bc-brand-color.sns-share .pinterest-button, .bc-brand-color.sns-follow .pinterest-button,
-.bc-brand-color.sns-share .pocket-button, .bc-brand-color.sns-follow .pocket-button,
-.bc-brand-color.sns-share .line-button, .bc-brand-color.sns-follow .line-button,
-.bc-brand-color.sns-share .amazon-button, .bc-brand-color.sns-follow .amazon-button,
-.bc-brand-color.sns-share .rakuten-room-button, .bc-brand-color.sns-follow .rakuten-room-button,
-.bc-brand-color.sns-share .github-button, .bc-brand-color.sns-follow .github-button,
-.bc-brand-color.sns-share .feedly-button, .bc-brand-color.sns-follow .feedly-button,
-.bc-brand-color.sns-share .rss-button, .bc-brand-color.sns-follow .rss-button,
+.bc-brand-color.sns-share .sns-buttons a,
+.bc-brand-color.sns-follow  .sns-buttons a,
 .bc-monochrome .sns-buttons a{
     background:#fff;
     border:none;
 }
 
-.bc-brand-color.sns-share .twitter-button, .bc-brand-color.sns-follow .twitter-button {
+.bc-brand-color a.twitter-button {
     color: #1da1f2;
 }
 
-.bc-brand-color.sns-share .facebook-button, .bc-brand-color.sns-follow .facebook-button {
+.bc-brand-color a.facebook-button {
     color:#3b5998;
 }
 
-.bc-brand-color.sns-share .hatebu-button, .bc-brand-color.sns-follow .hatebu-button {
+.bc-brand-color a.hatebu-button {
     color:#2c6ebd;
 }
 
-.bc-brand-color.sns-share .instagram-button, .bc-brand-color.sns-follow .instagram-button {
+.bc-brand-color a.instagram-button {
     color: #405de6;
 }
 
-.bc-brand-color.sns-share .youtube-button, .bc-brand-color.sns-follow .youtube-button {
+.bc-brand-color a.youtube-button {
     color: #cd201f;
 }
 
-.bc-brand-color.sns-share .flickr-button, .bc-brand-color.sns-follow .flickr-button {
+.bc-brand-color a.linkedin-button {
+    color: #0077b5;
+}
+
+.bc-brand-color a.note-button {
+    color: #41c9b4;
+}
+
+.bc-brand-color a.flickr-button {
     color: #111;
 }
 
-.bc-brand-color.sns-share .pinterest-button, .bc-brand-color.sns-follow .pinterest-button {
+.bc-brand-color a.pinterest-button {
     color: #bd081c;
 }
 
-.bc-brand-color.sns-share .pocket-button, .bc-brand-color.sns-follow .pocket-button {
+.bc-brand-color a.pocket-button {
     color:#ef4056;
 }
 
-.bc-brand-color.sns-share .line-button, .bc-brand-color.sns-follow .line-button {
+.bc-brand-color a.line-button {
     color:#00c300;
 }
 
-.bc-brand-color.sns-share .amazon-button, .bc-brand-color.sns-follow .amazon-button {
+.bc-brand-color a.amazon-button {
     color: #ff9900;
 }
 
-.bc-brand-color.sns-share .rakuten-room-button, .bc-brand-color.sns-follow .rakuten-room-button {
+.bc-brand-color a.rakuten-room-button {
     color: #c61e79;
 }
 
-.bc-brand-color.sns-share .github-button, .bc-brand-color.sns-follow .github-button {
+.bc-brand-color a.slack-button {
+    color: #e01563;
+}
+
+.bc-brand-color a.github-button {
     color: #4078c0;
 }
 
-.bc-brand-color.sns-share .feedly-button, .bc-brand-color.sns-follow .feedly-button {
+.bc-brand-color a.feedly-button {
     color:#2bb24c;
 }
 
-.bc-brand-color.sns-share .rss-button, .bc-brand-color.sns-follow .rss-button {
+.bc-brand-color a.rss-button {
     color:#f26522;
 }
 
@@ -769,14 +787,12 @@ span.related-entry-main-heading.main-caption:before{
 }
 
 .related-list {
-   max-width: 880px;
    margin: auto;
 }
 
 /*comments*/
 
 section.comment-list,div#respond,.comment-btn {
-    max-width: 880px;
     margin: auto;
 }
 
@@ -846,6 +862,10 @@ a.comment-reply-link {
 
 @media (max-width: 480px){
     .article h2:before{top:.75em;}
+
+    h2.entry-card-title.card-title.e-card-title {
+        padding: 10px 0 0px 0;
+    }
 }
 
 
@@ -1089,7 +1109,7 @@ ul.menu-drawer:after{
     border-radius: 5px;
 }
 
-
+/*
 #slide-in-recent-posts-2 .widget-title:before,
 #slide-in-recent-comments-2 .widget-title:before,
 #slide-in-archives-2 .widget-title:before,
@@ -1116,7 +1136,7 @@ ul.menu-drawer:after{
 #slide-in-fb_like_box-2 .widget-title:before{content:"\f164";}
 #slide-in-author_box-2 .widget-title:before{content:"\f007";}
 #slide-in-item_ranking-2 .widget-title:before{content:"\f06d";}
-#slide-in-tag_cloud-2 .widget-title:before{content:"\f02c";}
+#slide-in-tag_cloud-2 .widget-title:before{content:"\f02c";} */
 
 .widget-entry-cards .widget-entry-card-content {
     color: slategray;
@@ -1137,7 +1157,7 @@ ul.menu-drawer:after{
     font-size: 1em;
      transition:all 500ms ease-in-out;
 }
-.notice-area-wrap:hover {
+.notice-area-link:hover {
     opacity: .8;
 }
 .notice-area:hover{
@@ -1193,8 +1213,8 @@ h1#archive-title {
 .article-header h1#archive-title{
     color: #545454;
 }
-span.fa.fa-search:before {
-    content: "\f002";
+.archive-title .fa-search:before,
+.search-submit .fa-search:before {
     color: #292929;
 }
 
@@ -1216,6 +1236,10 @@ span.fa.fa-search:before {
     background: #292929;
     color: white;
     z-index:1;
+}
+
+.main .blogcard-type .blogcard::before{
+    color: white;
 }
 
 /*author-info*/
@@ -1249,3 +1273,18 @@ h3.wpforo-forum-title::before {
     display: none;
 }
 
+/************************************
+** Font Awesome 5対応
+************************************/
+.font-awesome-5 .posts-not-found h2:before,
+.font-awesome-5 .toc-title:before,
+.font-awesome-5 .blogcard::before{
+	font-family: "Font Awesome 5 Free";
+	font-weight: 900;
+}
+.font-awesome-5 .blogcard::before{
+	content: "\f35d";
+}
+#container .blogcard-label{
+    display: none;
+}

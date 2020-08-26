@@ -39,11 +39,19 @@ function get_ad_link_unit_code(){
 }
 endif;
 
+//関連コンテンツユニットコード
+define('OP_AD_RELATED_CONTENTS_UNIT_CODE', 'ad_related_contents_unit_code');
+if ( !function_exists( 'get_ad_related_contents_unit_code' ) ):
+function get_ad_related_contents_unit_code(){
+  return stripslashes_deep(get_theme_option(OP_AD_RELATED_CONTENTS_UNIT_CODE));
+}
+endif;
+
 //広告ラベル
-define('OP_AD_LABEL', 'ad_label');
-if ( !function_exists( 'get_ad_label' ) ):
-function get_ad_label(){
-  return get_theme_option(OP_AD_LABEL, __( 'スポンサーリンク', THEME_NAME ));
+define('OP_AD_LABEL_CAPTION', 'ad_label_caption');
+if ( !function_exists( 'get_ad_label_caption' ) ):
+function get_ad_label_caption(){
+  return get_theme_option(OP_AD_LABEL_CAPTION, __( 'スポンサーリンク', THEME_NAME ));
 }
 endif;
 
@@ -51,7 +59,9 @@ endif;
 define('OP_ADSENSE_DISPLAY_METHOD', 'adsense_display_method');
 if ( !function_exists( 'get_adsense_display_method' ) ):
 function get_adsense_display_method(){
-  return get_theme_option(OP_ADSENSE_DISPLAY_METHOD, 'by_myself');
+  $display_method = get_theme_option(OP_ADSENSE_DISPLAY_METHOD, 'by_myself');
+  $display_method = $display_method ? $display_method : 'by_myself';
+  return $display_method;
 }
 endif;
 
@@ -82,11 +92,9 @@ function is_adsense_display_method_by_myself(){
 endif;
 
 //自動AdSenseコードを有効にする
-//define('OP_AUTO_ADSENSE_ENABLE', 'auto_adsense_enable');
 if ( !function_exists( 'is_auto_adsense_enable' ) ):
 function is_auto_adsense_enable(){
   return is_adsense_display_method_by_auto() || is_adsense_display_method_by_auto_and_myself();
-  // return get_theme_option(OP_AUTO_ADSENSE_ENABLE);
 }
 endif;
 
@@ -314,6 +322,14 @@ function is_ad_pos_all_content_middle_visible(){
 }
 endif;
 
+//投稿・固定ページ本文中の広表示数
+define('OP_AD_POS_CONTENT_MIDDLE_COUNT', 'ad_pos_content_middle_count');
+if ( !function_exists( 'get_ad_pos_content_middle_count' ) ):
+function get_ad_pos_content_middle_count(){
+  return get_theme_option(OP_AD_POS_CONTENT_MIDDLE_COUNT, -1);
+}
+endif;
+
 //投稿・固定ページ本文下の広告表示
 define('OP_AD_POS_CONTENT_BOTTOM_VISIBLE', 'ad_pos_content_bottom_visible');
 if ( !function_exists( 'is_ad_pos_content_bottom_visible' ) ):
@@ -431,6 +447,31 @@ define('OP_AD_SHORTCODE_LABEL_VISIBLE', 'ad_shortcode_label_visible');
 if ( !function_exists( 'is_ad_shortcode_label_visible' ) ):
 function is_ad_shortcode_label_visible(){
   return get_theme_option(OP_AD_SHORTCODE_LABEL_VISIBLE, 1);
+}
+endif;
+
+//LinkSwitch有効
+define('OP_AD_LINKSWITCH_ENABLE', 'ad_linkswitch_enable');
+if ( !function_exists( 'is_ad_linkswitch_enable' ) ):
+function is_ad_linkswitch_enable(){
+  return get_theme_option(OP_AD_LINKSWITCH_ENABLE);
+}
+endif;
+
+//LinkSwitch ID
+define('OP_AD_LINKSWITCH_ID', 'ad_linkswitch_id');
+if ( !function_exists( 'get_ad_linkswitch_id' ) ):
+function get_ad_linkswitch_id(){
+  $linkswitch_id = get_theme_option(OP_AD_LINKSWITCH_ID);
+  $linkswitch_id = trim($linkswitch_id);
+  $linkswitch_id = strip_tags($linkswitch_id);
+  return $linkswitch_id;
+}
+endif;
+//LinkSwitchトータルとして有効か
+if ( !function_exists( 'is_all_linkswitch_enable' ) ):
+function is_all_linkswitch_enable(){
+  return is_all_ads_visible() && is_ad_linkswitch_enable() && get_ad_linkswitch_id();
 }
 endif;
 

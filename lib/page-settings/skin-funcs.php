@@ -75,11 +75,13 @@ endif;
 //スキンファイルリストの並べ替え用の関数
 if ( !function_exists( 'skin_files_comp' ) ):
 function skin_files_comp($a, $b) {
-  $f1 = (float)$a['priority'];
-  $f2 = (float)$b['priority'];
+  $f1 = (float)isset($a['priority']) ? $a['priority'] : 99999999999;
+  $f2 = (float)isset($b['priority']) ? $b['priority'] : 99999999999;
   //優先度（priority）で比較する
   if ($f1 == $f2) {
-      return 0;
+      $n1 = (float)isset($a['skin_name']) ? $a['skin_name'] : 99999999999;
+      $n2 = (float)isset($b['skin_name']) ? $b['skin_name'] : 99999999999;
+      return $n1 > $n2;
   }
   return ($f1 < $f2) ? -1 : 1;
 }
@@ -102,21 +104,12 @@ function get_skin_dirs($dir) {
 }
 endif;
 
-//var_dump(get_skin_dirs($dir = get_template_directory().'/skins/'));
-
-
 //スキン情報の取得
 if ( !function_exists( 'get_skin_infos' ) ):
 function get_skin_infos(){
   if (!defined('FS_METHOD')) {
     define( 'FS_METHOD', 'direct' );
   }
-
-  // $parent = true;
-  // // 子テーマで 親skins の取得有無の設定
-  // if(function_exists('include_parent_skins')){
-  //   $parent = include_parent_skins();
-  // }
 
   $skin_dirs  = array();
   $child_dirs  = array();
@@ -142,9 +135,7 @@ function get_skin_infos(){
 
   $results = array();
   foreach($skin_dirs as $dir){
-    //$dir = str_replace('\\', '/', $dir);
     $style_css_file = $dir.'/style.css';
-    //var_dump($style_css_file);
 
     //スキンフォルダ内にstyle.cssがある場合
     if (file_exists($style_css_file)){
@@ -230,5 +221,50 @@ function get_skin_infos(){
   uasort($results, 'skin_files_comp');//スキンを優先度順に並び替え
 
   return $results;
+}
+endif;
+
+//除外スキン設定
+if ( !function_exists( 'get_exclude_skins' ) ):
+function get_exclude_skins(){
+  //除外するスキンのフォルダ名を追加していく
+  $exclude_skins = array(
+    'veilnui-simplog-cyan',
+    'veilnui-simplog-deep-orange',
+    'veilnui-simplog-light-blue',
+    'veilnui-simplog-light-green',
+    'veilnui-simplog-lime',
+    'veilnui-simplog-purple',
+    'veilnui-simplog-yellow',
+  );
+  return apply_filters('get_exclude_skins', $exclude_skins);
+}
+endif;
+
+//エディター除外スキン設定
+if ( !function_exists( 'get_editor_exclude_skins' ) ):
+function get_editor_exclude_skins(){
+  //除外するスキンのフォルダ名を追加していく
+  $exclude_skins = array(
+    'skin-dark-enji',
+    'skin-dark-ruri',
+    'skin-dark-kamonoha',
+  );
+  return apply_filters('get_editor_exclude_skins', $exclude_skins);
+}
+endif;
+
+//除外するスキンかどうか
+if ( !function_exists( 'is_exclude_skin' ) ):
+function is_exclude_skin($url, $exclude_skins = array()){
+  if (empty($exclude_skins)) {
+    $exclude_skins = get_exclude_skins();
+  }
+  foreach ($exclude_skins as $exclude_skin) {
+    if (includes_string($url, $exclude_skin.'/style.css')) {
+      return true;
+    }
+  }
+  return false;
 }
 endif;

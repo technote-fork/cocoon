@@ -9,7 +9,21 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 //ソースコードをハイライト表示するか
 update_theme_option(OP_CODE_HIGHLIGHT_ENABLE);
+
+//ソースコードの行番号を表示するか
+update_theme_option(OP_CODE_ROW_NUMBER_ENABLE);
+
+//ソースコードのライブラリ
+update_theme_option(OP_CODE_HIGHLIGHT_PACKAGE);
+
 //ソースコードのハイライトスタイル
 update_theme_option(OP_CODE_HIGHLIGHT_STYLE);
+
 //ソースコードをハイライト表示するCSSセレクタ
 update_theme_option(OP_CODE_HIGHLIGHT_CSS_SELECTOR);
+
+if (DEBUG_MODE) {
+  //数式を表示するか
+  update_theme_option(OP_FORMULA_ENABLE);
+}
+

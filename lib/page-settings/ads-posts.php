@@ -15,14 +15,14 @@ update_theme_option(OP_ALL_ADSENSES_VISIBLE);
 update_theme_option(OP_AD_CODE);
 //リンクユニット広告コード
 update_theme_option(OP_AD_LINK_UNIT_CODE);
+//関連コンテンツユニットコード
+update_theme_option(OP_AD_RELATED_CONTENTS_UNIT_CODE);
 //広告ラベル
-update_theme_option(OP_AD_LABEL);
+update_theme_option(OP_AD_LABEL_CAPTION);
 
 
 //アドセンス表示方式
 update_theme_option(OP_ADSENSE_DISPLAY_METHOD);
-// //自動AdSense有効
-// update_theme_option(OP_AUTO_ADSENSE_ENABLE);
 
 //インデックストップの広告表示
 update_theme_option(OP_AD_POS_INDEX_TOP_VISIBLE);
@@ -88,6 +88,8 @@ update_theme_option(OP_AD_POS_CONTENT_MIDDLE_FORMAT);
 update_theme_option(OP_AD_POS_CONTENT_MIDDLE_LABEL_VISIBLE);
 //投稿・固定ページ本文中の全てのH2見出し手前に広告表示
 update_theme_option(OP_AD_POS_ALL_CONTENT_MIDDLE_VISIBLE);
+//投稿・固定ページ本文中の広表示数
+update_theme_option(OP_AD_POS_CONTENT_MIDDLE_COUNT);
 
 //投稿・固定ページ本文下の広告表示
 update_theme_option(OP_AD_POS_CONTENT_BOTTOM_VISIBLE);
@@ -123,6 +125,12 @@ update_theme_option(OP_AD_SHORTCODE_ENABLE);
 update_theme_option(OP_AD_SHORTCODE_FORMAT);
 //[ad]ショートコード広告ラベル表示
 update_theme_option(OP_AD_SHORTCODE_LABEL_VISIBLE);
+
+
+//LinkSwitch有効
+update_theme_option(OP_AD_LINKSWITCH_ENABLE);
+//LinkSwitch ID
+update_theme_option(OP_AD_LINKSWITCH_ID);
 
 //広告除外記事ID
 update_theme_option(OP_AD_EXCLUDE_POST_IDS);
